@@ -9,7 +9,7 @@ alternate_lang: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/Da
 
 # Dados abertos
 
-A frente de dados abertos do Open Finance faz referência à [fase 1 do Open Finance](../Ecossistema/OFB-Ecossistema.html). A Fase 1 possibilita que as instituições participantes do Open Finance publiquem seus dados de forma pública e acessível via API, para que qualquer requisição possa recuperar essa informações. Os dados são referentes a informações não sensíveis das próprias instituições.
+A frente de dados abertos do Open Finance faz referência à [fase 1 do Open Finance](../Ecossistema/OFB-Ecossistema.html). A Fase 1 possibilita que as instituições participantes do Open Finance publiquem seus dados de forma pública e acessível via API, para que qualquer requisição possa recuperar essas informações. Os dados são referentes a informações não sensíveis das próprias instituições.
 
 ## Dados listados
 
@@ -23,21 +23,21 @@ A frente de dados abertos do Open Finance faz referência à [fase 1 do Open Fin
 
 ### Produtos
 
-- Contas
-- Empréstimos
-- Financiamentos
-- Antecipação de recebíveis
-- Cartão de crédito
-- Adiantamento a depositantes
-- Investimentos
-- Câmbio
-- Credenciamento
-- Títulos de capitalização
-- Seguros
-- Previdência
+- Contas;
+- Empréstimos;
+- Financiamentos;
+- Antecipação de recebíveis;
+- Cartão de crédito;
+- Adiantamento a depositantes;
+- Investimentos;
+- Câmbio;
+- Credenciamento;
+- Títulos de capitalização;
+- Seguros;
+- Previdência.
 
 > - No caso dos produtos financeiros, todos devem ser separados entre pessoa natural e jurídica.  
-> - Todos os valores monetários ou de taxas representados dentro das estruturas abaixo são separados em diferentes faixas. Ao todo são 4 faixas de igual proporção que dividem o intervalo do menor até o maior valor. Há um valor correspondente para cada faixa que é o valor da mediana de cada uma dessas faixas. Acompanhado a cada faixa, tem-se o percentual de clientes em cada uma dessas faixas (para o serviço x, 10% dos clientes daquele serviço x estão na faixa 1, 15% na faixa 2, 20% na faixa 3 e 55% na faixa 4).
+> - Todos os valores monetários ou de taxas representados dentro das estruturas abaixo são separados em diferentes faixas. Ao todo, são 4 faixas de igual proporção que dividem o intervalo do menor até o maior valor. Há um valor correspondente para cada faixa, o qual é o valor da mediana de cada uma dessas faixas. Acompanhado a cada faixa, tem-se o percentual de clientes em cada uma dessas faixas (para o serviço x, 10% dos clientes daquele serviço estão na faixa 1, 15% na faixa 2, 20% na faixa 3 e 55% na faixa 4).
 
 ## Critério de obrigatoriedade
 
@@ -49,7 +49,7 @@ A **Plataforma Opus Open Finance** implementa a API de dados abertos e basta uma
 
 1. Ter concluído a [implantação do produto][Implantação].
 
-2. Realizar a integração concomitante a integração do Transmissor de Dados. (ideal é que ambos os perfis entrem em produção ao mesmo tempo)
+2. Realizar a integração concomitante à integração do Transmissor de Dados. (ideal é que ambos os perfis entrem em produção ao mesmo tempo)
 
 > A integração é realizada por meio de uma estrutura em formato JSON gerada dinâmica ou estaticamente para reportar os dados ao ecossistema do *Open Finance Brasil*.
 

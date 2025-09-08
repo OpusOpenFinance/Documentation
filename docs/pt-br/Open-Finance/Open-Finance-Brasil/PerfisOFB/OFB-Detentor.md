@@ -15,7 +15,7 @@ O perfil de participação como **Detentor de Conta** no *Open Finance Brasil* r
 
 ## Ecossistema Open Finance - Detentor de Conta
 
-Os Detentores de Contas são as instituições onde os clientes possuem contas de deposito à vista, contas de poupança e contas de pagamento pré-pagas, que podem ser acessadas no contexto do *Open Finance Brasil* para processar iniciações de pagamento. Quem envia os pedidos de pagamento são instituições homologadas como *iniciadores de transação de pagamento*.
+Os Detentores de Contas são as instituições onde os clientes possuem contas de depósito à vista, contas de poupança e contas de pagamento pré-pagas, que podem ser acessadas no contexto do *Open Finance Brasil* para processar iniciações de pagamento. Quem envia os pedidos de pagamento são instituições homologadas como *iniciadoras de transação de pagamento*.
 
 ---
 
@@ -23,11 +23,11 @@ Os Detentores de Contas são as instituições onde os clientes possuem contas d
 
 Atualmente, os meios de pagamento previstos no Open Finance incluem:
 
-- **Pix**
-- **Boleto***
-- **Débito em Conta***
-- **TED/TEF***
-- **Cartão de Crédito***
+- **Pix**;
+- **Boleto**;*
+- **Débito em Conta**;*
+- **TED/TEF**;*
+- **Cartão de Crédito**.*
 
 *Os itens marcados com asterisco ainda não estão disponíveis no Open Finance e não possuem previsão de entrada.*
 
@@ -43,17 +43,17 @@ O processo de autorização para efetuar pagamentos é feito pelo cliente por me
 
 ### Funcionalidades já disponíveis
 
-- **Pagamento Pix imediato**
-- **Pagamento Pix agendado**
-- **Recorrência de pagamentos agendados**
-- **Transferências automáticas entre contas de mesma titularidade** (recurso também conhecido como *sweeping accounts* ou *transferências inteligentes*)
+- **Pagamento Pix imediato**;
+- **Pagamento Pix agendado**;
+- **Recorrência de pagamentos agendados**;
+- **Transferências automáticas entre contas de mesma titularidade** (recurso também conhecido como *sweeping accounts* ou *transferências inteligentes*).
 
 ### Funcionalidades previstas
 
-- **Pagamentos em lote (1:n)**
-- **Pagamentos sem redirecionamento** (ausência do redirecionamento para a Detentora de Conta na perspectiva do usuário)
-- **Pagamentos recorrentes** (Variable Recurring Payment - VRP - implementado pelo *Pix Automático*)
-- **Pix por aproximação**
+- **Pagamentos em lote (1:n)**;
+- **Pagamentos sem redirecionamento** (ausência do redirecionamento para a Detentora de Conta na perspectiva do usuário);
+- **Pagamentos recorrentes** (Variable Recurring Payment - VRP - implementado pelo *Pix Automático*);
+- **Pix por aproximação**.
 
 O [portal do desenvolvedor](https://openfinancebrasil.atlassian.net/wiki/spaces/DraftOF/calendars) oferece um calendário com as próximas entregas.
 
