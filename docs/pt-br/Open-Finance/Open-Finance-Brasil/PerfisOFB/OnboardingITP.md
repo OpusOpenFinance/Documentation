@@ -11,15 +11,15 @@ alternate_lang: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/On
 
 Para se tornar uma instituição apta a realizar **Iniciações de Transação de Pagamento (ITP)**, é necessário cumprir uma série de pré-requisitos e requisitos organizados em 3 macro-etapas:
 
-1. **Autorização e regulação com o Banco Central**
-2. **Etapa pré-homologatória do Open Finance**
-3. **Etapa homologatória do Open Finance**
+1. **Autorização e regulação com o Banco Central**;
+2. **Etapa pré-homologatória do Open Finance**;
+3. **Etapa homologatória do Open Finance**.
 
 Ao concluir essas etapas, a instituição estará apta a realizar pagamentos em produção.
 
 ---
 
-## Visão Geral para se Tornar um ITP
+## Visão Geral para se tornar um ITP
 
 | **Etapa**                     | **Descrição**                                                                                     | **Sistemas Envolvidos**            | **Observações**                                                                                                                                                                |
 |-------------------------------|---------------------------------------------------------------------------------------------------|-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -37,11 +37,11 @@ Ao concluir essas etapas, a instituição estará apta a realizar pagamentos em 
 
 O propósito dessa documentação não é entrar no detalhe de como obter uma autorização do Banco Central, a qual contém uma complexidade extremamente alta. Dessa forma, focaremos em regras de negócio para essa etapa. Caso você ou sua instituição tenha interesse em se tornar uma autorizada, podemos indicar parceiros especialistas mais voltados para a realidade jurídica para atingir esse objetivo.
 
-Atualmente, o Banco Central incluiu como Instituição de Pagamento mais uma modalidade, o Iniciador de Transação de Pagamento (ITP). Como o próprio nome já induz, é uma modalidade 100% vinculada ao Open Finance. Nessa perspectiva, pode-se entender que dentro desse ecossistema existem dois tipos diferentes de ITPs, os que são autorizados pelo Banco Central e os ITPs que já possuem autorização da governança de Open Finance para iniciar sua atividades de iniciação de pagamento.
+Atualmente, o Banco Central incluiu como Instituição de Pagamento mais uma modalidade, o Iniciador de Transação de Pagamento (ITP). Como o próprio nome já induz, é uma modalidade 100% vinculada ao Open Finance. Nessa perspectiva, pode-se entender que dentro desse ecossistema existem dois tipos diferentes de ITPs, os que são autorizados pelo Banco Central e os ITPs que já possuem autorização da governança de Open Finance para iniciar suas atividades de iniciação de pagamento.
 
 > Um ITP autorizado para funcionar pelo Banco Central ainda não pode iniciar chamadas de iniciação de pagamento, é necessário ainda ter êxito nas etapas 2 e 3 na sequência.
 
-Em geral, a autorização do ITP é focada para instituições que procuram uma regulação mais simplificada, contudo outros tipos de instituições que já são autorizadas tem mais facilidade na hora de se tornar um ITP.
+Em geral, a autorização do ITP é focada para instituições que procuram uma regulação mais simplificada, contudo, outros tipos de instituições que já são autorizadas têm mais facilidade na hora de se tornar um ITP.
 
 > Para o processo de autorização, é fundamental que sua área de compliance seja envolvida.
 
@@ -49,24 +49,24 @@ Em geral, a autorização do ITP é focada para instituições que procuram uma 
 
 #### Pré-requisitos
 
-Assim que a instituição já está autorizada para funcionar como ITP, é necessário estar de acordo com os pré-requisitos que antecedem a etapa homologatória do ITP no Open Finance. Os pré-requisitos são divididos em 4:
+Assim que a instituição já está autorizada para funcionar como ITP, é necessário estar segundo os pré-requisitos que antecedem a etapa homologatória do ITP no Open Finance. Os pré-requisitos são divididos em 4:
 
 1. [**Certificação OpenID RP**](../OFB-Certificações.html):
    - Deve estar publicada no [site oficial da OpenID](https://openid.net/certification/#FAPI_RPs).
    - A Opus pode ajudar a concluir o processo em poucas semanas.
 
 2. **Publicação no Portal do Cidadão**:
-   O Portal do Cidadão apresenta todas as instituições habilitadas na modalidade de participação do Open Finance. Para que seja possível iniciar o processo de homologação, é necessário estar listado dentro desse portal na modalidade instituição prestadora de serviço de iniciação de pagamento.
-   Para a instituição ser publicada é necessário que toda a configuração no diretório de participantes (nos ambientes de homologação e de produção) seja feito. Assim, automaticamente, a instituição será listada nessa categoria.
+   O Portal do Cidadão apresenta todas as instituições habilitadas na modalidade de participação do Open Finance. Para ser possível iniciar o processo de homologação, é necessário estar listado dentro desse portal na modalidade instituição prestadora de serviço de iniciação de pagamento.
+   Para a instituição ser publicada, é necessário que toda a configuração no diretório de participantes (nos ambientes de homologação e de produção) seja feita. Assim, automaticamente, a instituição será listada nessa categoria.
 
-   > Dentro da implantação do produto, a Opus conduz todo o processo de configuração do diretório, para você não se preocupar.
+   > Na implantação do produto, a Opus conduz todo o processo de configuração do diretório, para você não se preocupar.
 
 3. **Certificação e publicação de APIs Payment** (se a instituição também for Detentora de Conta):
     Para o caso de a instituição ser participantes do Open Finance como Detentora de Conta também, é necessário estar de acordo com toda a regulação desse perfil antes mesmo de poder começar a homologação como ITP. O perfil de Detentora de Conta exige a publicação da [certificação OpenID OP](../OFB-Certificações.html) e que suas APIs estejam devidamente publicadas.
 
 4. **Publicação no PDF de participantes do Pix**:
-    Pode-se dizer que esse pré-requisito é o caminho crítico, pois é o mais longo e está vinculado ao arranjo Pix. [O PDF do Pix](https://www.bcb.gov.br/estabilidadefinanceira/participantespix) (acesso a direita) é uma lista com todas as instituições participantes do Pix e, para ser homologado como ITP, é necessário que a sua instituição esteja presente nela listado na coluna Iniciação de Transação de Pagamento.
-    Para fazê-lo, sua instituição precisa demonstrar interesse para o Banco Central, através de um formulário de adesão ao Pix. [O processo está descrito na página oficial do Banco Central](https://www.bcb.gov.br/estabilidadefinanceira/participantespix). A tabela sintetiza os principais formulários.
+    Pode-se dizer que esse pré-requisito é o caminho crítico, pois é o mais longo e está vinculado ao arranjo Pix. [O PDF do Pix](https://www.bcb.gov.br/estabilidadefinanceira/participantespix) (acesso à direita) é uma lista com todas as instituições participantes do Pix e, para ser homologado como ITP, é necessário que a sua instituição esteja presente nela listado na coluna Iniciação de Transação de Pagamento.
+    Para fazê-lo, sua instituição precisa demonstrar interesse para o Banco Central, por meio de um formulário de adesão ao Pix. [O processo está descrito na página oficial do Banco Central](https://www.bcb.gov.br/estabilidadefinanceira/participantespix). A tabela sintetiza os principais formulários.
     O processo se divide em três etapas para cadastro dentro do arranjo Pix:
 
 #### **Etapa 1 _PIX_- Cadastral**
@@ -108,7 +108,7 @@ Em suma, a nova Iniciadora terá que realizar 6 pagamentos em produção e obter
 
 Ao final do processo, será divulgado em um [Informa](https://mailchi.mp/afc5cfe5cc93/open-banking-informa-10116651?e=447d7abb9f) que o processo foi concluído e que a sua instituição está apta para começar pagamentos em produção.
 
-> Durante todo a etapa 3, a Opus estará ombro a ombro com a sua instituição para facilitar e dar celeridade ao processo homologatório.
+> Durante toda a etapa 3, a Opus estará ombro a ombro com a sua instituição para facilitar e conferir celeridade ao processo homologatório.
 
 A Opus estará ao lado da instituição durante toda a etapa homologatória, agilizando o processo e oferecendo suporte técnico.
 
