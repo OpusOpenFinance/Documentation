@@ -23,16 +23,16 @@ A criação de um consentimento exige interação com o cliente final da institu
 
 ## Integração aos sistemas de retaguarda para atendimento de requisições
 
-As requisições, por sua vez, são feitas através de chamadas à API regulatória realizadas pela instituição que está demandando serviços, que podem ser pedidos de envio de dados de clientes - no caso de compartilhamento de dados - ou de efetivação de pagamentos. Para atendê-las, a plataforma realiza todas as validações necessárias para garantir que se tratam de requisições válidas e que estão de acordo com os consentimentos associados a elas. A cada chamada, após fazer as validações, a plataforma aciona os sistemas de retaguarda da instituição financeira para efetivar o atendimento à requisição. Esse acionamento e realizado através de uma *camada de integração* (ou *integration layer*).
+As requisições, por sua vez, são feitas via chamadas à API regulatória realizadas pela instituição que está demandando serviços, que podem ser pedidos de envio de dados de clientes - no caso de compartilhamento de dados - ou de efetivação de pagamentos. Para atendê-las, a plataforma realiza todas as validações necessárias para garantir que se tratam de requisições válidas e que estão conforme os consentimentos associados a elas. A cada chamada, após fazer as validações, a plataforma aciona os sistemas de retaguarda da instituição financeira para efetivar o atendimento à requisição. Esse acionamento é realizado por meio de uma *camada de integração* (ou *integration layer*).
 
-A abordagem de concentrar a integração entre a plataforma e os sistemas de retaguarda da instituição financeira em uma camada distinta proporciona isolamento funcional entre os componentes, garantindo que a solução mantenha uma mesma base de implementação para todos os clientes que a utilizam. As características específicas dos sistemas de retaguarda cada instituição financeira ficam contidas nessa camada. Naturalmente, há um incentivo econômico para isso: o custo de manutenção evolutiva da plataforma é rateado entre todos os clientes que utilizam a plataforma.
+A abordagem de concentrar a integração entre a plataforma e os sistemas de retaguarda da instituição financeira em uma camada distinta proporciona isolamento funcional entre os componentes, garantindo que a solução mantenha uma mesma base de implementação para todos os clientes que a utilizam. As características específicas dos sistemas de retaguarda de cada instituição financeira ficam contidas nessa camada. Naturalmente, há um incentivo econômico para isso: o custo de manutenção evolutiva da plataforma é rateado entre todos os clientes que utilizam a plataforma.
 
-Em linhas gerais, as requisições do *Open Finance Brasil* estão divididos em duas categorias distintas:
+Em linhas gerais, as requisições do *Open Finance Brasil* estão divididas em duas categorias distintas:
 
-- Consultas a Dados de clientes
-- Realização de pagamentos
+- Consultas a dados de clientes;
+- Realização de pagamentos.
 
-Dadas as características específicas de cada categoria de requisições, a plataforma utiliza modelos de integração diferentes para cada uma. Em ambos os casos **é necessária a construção de artefatos de software** que realizarão a interação entre a plataforma e os sistemas de retaguarda da instituição financeira.
+Dadas as características específicas de cada categoria de requisições, a plataforma utiliza modelos de integração diferentes para cada uma. Em ambos os casos, **é necessária a construção de artefatos de software** que realizarão a interação entre a plataforma e os sistemas de retaguarda da instituição financeira.
 
 No caso da integração de dados, necessária para o [perfil *transmissor de dados*][Transmissor], o detalhamento do modelo de integração pode ser encontrado [**neste link**][Camada de integração].
 

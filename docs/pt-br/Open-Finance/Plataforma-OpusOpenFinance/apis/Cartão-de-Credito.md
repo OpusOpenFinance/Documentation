@@ -17,7 +17,7 @@ Antes de qualquer *endpoint* ser acionado, a plataforma já verificou a autentic
 
 Existem *endpoints* para:
 
-- Obter a lista de contas pós-pagas do mantidas pelo cliente na instituição transmissora;
+- Obter a lista de contas pós-pagas mantidas pelo cliente na instituição transmissora;
 - Obter dados de identificação de um cartão;
 - Obter lista de faturas de um cartão;
 - Obter a lista de transações de um cartão;
@@ -31,6 +31,6 @@ A documentação da API de cartão de crédito a ser construída na *camada de i
 Para fazer o download do arquivo YAML/OAS que contém a especificação da API clique [**aqui**](credit-cards-2-3-1.yml){:download="credit-cards-2-3-1.yml"}.
 
 {: .destaque}
-Alguns navegadores internet, como *Chrome*, ocasionalmente sinalizam como *não segura* a operação de *download* de arquivos YAML, exigindo o desbloqueio manual pelo usuário. Eses arquivos, entretanto, tem conteúdo do tipo texto e não apresentam risco por si.
+Alguns navegadores de internet, como *Chrome*, ocasionalmente sinalizam como *não segura* a operação de *download* de arquivos YAML, exigindo o desbloqueio manual pelo usuário. Esses arquivos, entretanto, têm conteúdo do tipo texto e não apresentam risco por si.
 
 [API-Cartão-de-crédito]: ../../../../swagger-ui/index.html?api=Cartão-de-crédito

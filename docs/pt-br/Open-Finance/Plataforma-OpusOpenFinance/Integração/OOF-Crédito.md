@@ -16,10 +16,10 @@ O consentimento para compartilhamento de dados efetuado pelo cliente é realizad
 
 As diferentes modalidades de operações de crédito são:
 
-- Empréstimos
-- Financiamentos
-- Adiantamento a depositantes
-- Direitos creditórios descontados
+- Empréstimos;
+- Financiamentos;
+- Adiantamento a depositantes;
+- Direitos creditórios descontados.
 
 Dado que cada uma dessas modalidades possui suas próprias características, a *camada de integração* deve implementar quatro APIs distintas, considerando seus diferentes tipos de dados.
 
@@ -27,12 +27,12 @@ Na documentação oficial do *Open Finance Brasil* há uma tabela que resume as 
 
 Todas as APIs compartilham algumas características importantes definidas pelo regulatório:
 
-- Todas as operações de crédito dos últimos 12 meses são escopo de exposição no *Open Finance Brasil*, salvas as exceções apresentadas nos itens subsequentes abaixo;
+- Todas as operações de crédito dos últimos 12 meses são escopos de exposição no *Open Finance Brasil*, salvas as exceções apresentadas nos itens subsequentes abaixo;
 - Operações de crédito liquidadas há mais de 12 meses em relação à data de consulta pela instituição receptora não estarão mais disponíveis (há um *status* de retorno nas APIs, *UNAVAILABLE*, para sinalizar eventuais consultas específicas a operações que excederam esse limite de prazo);
-- Casos de uso em que um cliente final efetue um consentimento para a qual um dos contratos exija a aprovação de múltiplas alçadas (*PENDING_AUTHORISATION*) e outro(s) contrato(s) esteja(m) disponível para consulta (*AVAILABLE*), o comportamento esperado é que cada contrato tenha seu *status* representado de forma independente, disponibilizando imediatamente os contratos já aprovados.
-- Operações de credito canceladas não são escopo de exposição.
-- Operações de crédito que tenham ido para perda não são escopo de exposição no Open Finance;
-- Operações de crédito que portadas para outra instituição deixam de ser escopo de exposição.
+- Casos de uso em que um cliente final efetue um consentimento para a qual um dos contratos exija a aprovação de múltiplas alçadas (*PENDING_AUTHORISATION*) e outro(s) contrato(s) esteja(m) disponível para consulta (*AVAILABLE*), o comportamento esperado é que cada contrato tenha seu *status* representado de forma independente, disponibilizando imediatamente os contratos já aprovados;
+- Operações de crédito canceladas não são escopo de exposição;
+- Operações de crédito que tenham ido para a perda não são escopo de exposição no Open Finance;
+- Operações de crédito que tenham sido portadas para outra instituição deixam de ser escopo de exposição.
 
 Contratos cancelados, que tenham ido para perda ou portados, se tiverem sido compartilhados anteriormente, deverão ser sinalizados com *status UNAVAILABLE*.
 

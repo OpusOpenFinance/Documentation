@@ -14,15 +14,15 @@ A plataforma é oferecida em três modalidades:
 
 - Na nuvem do cliente, com ambiente administrado pelo time do cliente;
 - Na nuvem do cliente, como uma subconta, com o ambiente sendo administrado pelo time da Opus Software;
-- Em modelo de Software as a Service (SaaS)
+- Em modelo de Software as a Service (SaaS).
 
-A solução tem sido utilizada sucesso pelos clientes nos seguintes ambientes:
+A solução tem sido utilizada com sucesso pelos clientes nos seguintes ambientes:
 
 - **Ambientes Kubernetes como serviços gerenciados**:
-  - Google GKE
-  - AWS AKS
-  - Azure EKS
-- **Clusters Kubernetes on-premise gerenciados manualmente**
+  - Google GKE;
+  - AWS AKS;
+  - Azure EKS.
+- **Clusters Kubernetes on-premise gerenciados manualmente**.
 
 ---
 
@@ -30,20 +30,20 @@ A solução tem sido utilizada sucesso pelos clientes nos seguintes ambientes:
 
 ## Componentes e Ferramentas
 
-Para sua execução a plataforma necessita dos seguintes componentes:
+Para sua execução, a plataforma necessita dos seguintes componentes:
 
-- Banco de dados *PostgreSQL* (tipicamente utilizado como serviço gerenciado)
-- Fila de mensagens
+- Banco de dados *PostgreSQL* (tipicamente utilizado como serviço gerenciado);
+- Fila de mensagens:
   - Diferentes mecanismos de fila têm sido usados pelos nossos clientes, incluindo SQS/SNS, GCP Pub/Sub e Kafka;
   - A plataforma utiliza um componente de abstração que suporta os principais mecanismos de filas de mensagens do mercado.
-- Sistema gerenciador de logs distribuidos
+- Sistema gerenciador de logs distribuídos:
   - A solução padrão empacotada com a plataforma é o *Grafana Loki*, mas outras soluções têm sido usadas por nossos clientes como *Datadog* e *Elastic Stack*;
 
-  A plataforma embute ainda um API Gateway que é empacotado junto com o produto e que pode funcionar atrás do produto padrão utilizado pelo cliente, se for o caso.
+  A plataforma embute ainda um API Gateway empacotado com o produto, que pode funcionar atrás do produto padrão utilizado pelo cliente, se for o caso.
 
-  A solução demanda também um *Web Application Firewall* (*WAF*) fornecido pelo cliente e que deve suportar o protocolo *Mutual TLS* (*mTLS*).
+  A solução demanda também um *Web Application Firewall* (*WAF*) fornecido pelo cliente, e deve suportar o protocolo *Mutual TLS* (*mTLS*).
 
-  Finalmente, em ambientes gerenciados pelo time da Opus utilizamos a combinação *Prometheus/Grafana* para visibilidade e monitoramento da solução em execução. Outras soluções como *Dynatrace* têm sido utilizadas com sucesso por nossos clientes.
+  Finalmente, em ambientes gerenciados pelo time da Opus, utilizamos a combinação *Prometheus/Grafana* para visibilidade e monitoramento da solução em execução. Outras soluções como *Dynatrace* têm sido utilizadas com sucesso por nossos clientes.
 
 ---
 
@@ -60,10 +60,10 @@ A arquitetura baseada em microsserviços adotada pela solução, executando em c
 
 - **Distribuição e Gerenciamento**:
   - Utiliza **Helm charts** para:
-    - Definição
-    - Instalação
-    - Upgrade da aplicação
-    - Seleção de recursos para execução no cluster
+    - Definição;
+    - Instalação;
+    - Upgrade da aplicação;
+    - Seleção de recursos para execução no cluster.
 
 - **Scripts Terraform**:
   - Disponibilizados para instalação e configuração dos componentes de infraestrutura.
