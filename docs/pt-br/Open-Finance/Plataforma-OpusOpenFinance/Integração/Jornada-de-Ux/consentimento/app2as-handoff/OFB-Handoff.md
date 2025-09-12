@@ -15,16 +15,16 @@ O Authorization Server (AS) do Opus Open Finance suporta o fluxo de *handoff* e 
 
 A biblioteca de *handoff* foi feita para a instituição obter todas as informações relativas ao fluxo de *handoff* de um consentimento, desde os dados para exibição do QR até os eventos relativos ao fluxo.
 
-O Authorization Server do Opus Opus Finance hospeda a biblioteca na URL `https://as.instituicao.com.br/auth/handoff/v1/oob-handoff.js` e deve ser referenciada diretamente ao invés de ser copiada e referenciada em outro servidor web.
+O Authorization Server do Opus Open Finance hospeda a biblioteca na URL `https://as.instituicao.com.br/auth/handoff/v1/oob-handoff.js` e deve ser referenciada diretamente ao invés de ser copiada e referenciada em outro servidor web.
 
 ## Fluxo do Opus Opus Finance com *Handoff*
 
-O chamador (instituição receptor de dados ou iniciador de transação de pagamento) desconhece se a instalação de Open Finance que ele está chamando utiliza ou não *handoff* e isso de fato não é de sua responsabilidade. O fluxo OIDC iniciado por ele acaba redirecionando o navegador do cliente para o Authorization Server do Opus Open Finance e esse, por usa vez, redireciona o navegador para a página de exibição do *handoff* feita pela instituição.
+O chamador (instituição receptora de dados ou iniciador de transação de pagamento) desconhece se a instalação de Open Finance que ele está chamando utiliza ou não *handoff* e isso de fato não é de sua responsabilidade. O fluxo OIDC iniciado por ele acaba redirecionando o navegador do cliente para o Authorization Server do Opus Open Finance e esse, por sua vez, redireciona o navegador para a página de exibição do *handoff* feita pela instituição.
 
-O Authorization Server possui uma configuração que define o *template* da URL de *handoff* feita pela instituição. Desta forma o identificador da intenção de consentimento que será tratado pela página de *handoff* pode ser mesclado na URL da forma que a
+O Authorization Server possui uma configuração que define o *template* da URL de *handoff* feita pela instituição. Desta forma, o identificador da intenção de consentimento que será tratado pela página de *handoff* pode ser mesclado na URL da forma que a
 instituição desejar.
 
-A mescla permite a instituição receber o identificador através da `query-string`, `fragment` ou `url`, como exibido na tabela abaixo:
+A mescla permite à instituição receber o identificador através da `query-string`, `fragment` ou `url`, como exibido na tabela abaixo:
 
 | Formato      | URL Exemplo                                                         |
 | ------------ | ------------------------------------------------------------------- |
@@ -32,13 +32,13 @@ A mescla permite a instituição receber o identificador através da `query-stri
 | Fragment     | `https://ev.instituicao.com.br/handoff.html#<IDENTIFICADOR>`        |
 | URL          | `https://ev.instituicao.com.br/<IDENTIFICADOR>/handoff.html`        |
 
-A página de *handoff* deverá obter o identificador e utilizá-lo durante a inicialização da biblioteca como veremos mais abaixo. O exemplo fornecido na documentação trafega o identificador através do `fragment` da URL e deve ser o formato utilizado se possível. Ele também remove o identificador do histórico de navegação, evitando qualquer confusão por parte do cliente em tentar utilizar uma URL antiga de consentimento.
+A página de *handoff* deverá obter o identificador e utilizá-lo durante a inicialização da biblioteca, como veremos mais abaixo. O exemplo fornecido na documentação trafega o identificador através do `fragment` da URL e deve ser o formato utilizado, se possível. Ele também remove o identificador do histórico de navegação, evitando qualquer confusão por parte do cliente em tentar utilizar uma URL antiga de consentimento.
 
 A página também deve apontar para a instalação do Authorization Server (endereço público) ao iniciar a biblioteca através da configuração **oobAsPublicUrl** conforme instrução abaixo.
 
 ## Como usar a biblioteca
 
-Após importar a biblioteca na página HTML a variável `oobHandoff` conterá o ponto de entrada da biblioteca, é necessário iniciá-la através do método `init` passando o identificador recebido durante o redirect do Authorization Server e os tratadores dos eventos que serão disparados.
+Após importar a biblioteca na página HTML a variável `oobHandoff` conterá o ponto de entrada da biblioteca.É necessário iniciá-la através do método `init` passando o identificador recebido durante o redirect do Authorization Server e os tratadores dos eventos que serão disparados.
 
 ```Javascript
 oobHandoff.init({
