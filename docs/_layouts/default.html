@@ -1,57 +1,8 @@
----
-layout: table_wrappers
----
-
 <!DOCTYPE html>
-
-<html lang="{{ site.lang | default: 'en-US' }}">
-{% include head.html %}
-<body>
-  <a class="skip-to-main" href="#main-content">Skip to main content</a>
-  {% include icons/icons.html %}
-  {% if page.nav_enabled == true %}
-    {% include components/sidebar.html page_lang=page.lang %}  <!-- Passa page.lang como parâmetro -->
-  {% elsif layout.nav_enabled == true and page.nav_enabled == nil %}
-    {% include components/sidebar.html page_lang=page.lang %}  <!-- Passa page.lang como parâmetro -->
-  {% elsif site.nav_enabled != false and layout.nav_enabled == nil and page.nav_enabled == nil %}
-    {% include components/sidebar.html page_lang=page.lang %}  <!-- Passa page.lang como parâmetro -->
-  {% endif %}
-  <div class="main" id="top">
-    {% include components/header.html %}
-    <div class="main-content-wrap">
-      {% include components/breadcrumbs.html %}
-      <div id="main-content" class="main-content">
-        <main>
-          {% if site.heading_anchors != false %}
-            {% include anchor_headings.html html=content beforeHeading="true" anchorBody="<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><use xlink:href=\"#svg-link\"></use></svg>" anchorClass="anchor-heading" anchorAttrs="aria-labelledby=\"%html_id%\"" %}
-          {% else %}
-            {{ content }}
-          {% endif %}
-          {% if page.has_toc != false %}
-            {% include components/children_nav.html %}
-          {% endif %}
-        </main>
-        {% include components/footer.html %}
-      </div>
-    </div>
-    {% if site.search_enabled != false %}
-      {% include components/search_footer.html %}
-    {% endif %}
-  </div>
-
-  {% if site.mermaid %}
-    {% include components/mermaid.html %}
-  {% endif %}
-
-  <!-- Insere o script para abertura de links externos em nova aba -->
-  <script src="{{ '/assets/js/open-links.js' | relative_url }}" defer></script>
+<html lang="{{ site.lang | default: 'en' }}">
+  {% include head.html %}
   
-  <!-- Insere o script que corrige o problema de sobreposição da lista de resultados da caixa
-       de pesquisa pela página de conteúdo -->
-  <script src="{{ '/assets/js/fix-search.js' | relative_url }}" defer></script>
-
-  <!-- Insere o script de deteção de idioma do navegador e adequado redirecionamento -->
-  <!-- <script src="{{ site.baseurl }}/assets/js/language-redirect.js"></script> -->
-
-</body>
+  <body>
+    {{ content }}
+  </body>
 </html>
