@@ -394,3 +394,11 @@ eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKj
 Como resposta a marca deve receber uma URL para qual deve redirecionar o cliente.
 
 <!-- Adicionar "Guia de uso da solução -->
+
+## Informações de contato
+
+Caso tenha alguma dúvida ou sugestão, você pode contatar os e-mails abaixo:
+
+✉ E-mail: walter.ferreira@opus-software.com.br
+✉ E-mail: barbara.santos@opus-software.com.br
+🕒 Horário: 9h-18h (segunda a sexta)
