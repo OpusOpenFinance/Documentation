@@ -24,6 +24,8 @@ A solução está em conformidade com todas as diretrizes do Open Finance Brasil
 3. **Experiência do Usuário**:
 Através de uma interface que resolve as exigências regulatórias, os clientes podem visualizar e gerenciar seus consentimentos diretamente na plataforma, com uma navegação intuitiva.
 
+---
+
 ## Itens resolvidos pela nossa solução
 
 Aqui estão os principais elementos que nossa solução oferece:
@@ -40,6 +42,8 @@ Aqui estão os principais elementos que nossa solução oferece:
 
 - **Gestão de consentimentos:** Oferecemos uma interface unificada para gestão integrada das funcionalidades do Open Finance.
 
+---
+
 ## Itens que você precisará desenvolver
 
 Embora nossa solução implemente todas as exigências regulatórias, alguns elementos exigem personalização ou integração específica da sua parte:
@@ -54,6 +58,8 @@ Embora nossa solução implemente todas as exigências regulatórias, alguns ele
 
 - **Implementação do aceite de consentimento Web e/ou App:** Você precisará ajustar seus sites/aplicativos para receber (em webview) as telas que nossa solução implementa.
 
+---
+
 ## O que a nossa solução implementa
 
 Uma vez que o usuário efetue o login através da sua aplicação, ele terá acesso a uma série de telas em conformidade com o que há de mais atualizado na regulação do Banco Central.  
@@ -65,6 +71,8 @@ As telas desenvolvidas são organizadas em:
 - **Telas de Aceite de Consentimento**, que tratam da revisão das informações e aceite do consentimento. compartilhamento de dados;
 
 Após a autenticação do usuário, este terá acesso as telas descritas:
+
+---
 
 ### Telas de Aceite de Consentimento
 
@@ -93,6 +101,8 @@ Essas telas estão associadas ao processo de confirmação de identidade do usu�
 Essas telas foram projetadas para fornecer uma experiência segura e amigável, onde o usuário tem controle total sobre suas permissões e vínculos no Open Finance.
 
 Utilizando nossa solução de consentimento compartilhado, sua equipe pode economizar tempo no desenvolvimento e assegurar que todas as exigências regulatórias sejam atendidas. Nossa plataforma oferece uma implementação fácil e em conformidade com o Open Finance Brasil, permitindo que você foque em desenvolver funcionalidades específicas, enquanto nossa solução cuida do resto.
+
+---
 
 ## O que você deve implementar
 
@@ -139,6 +149,8 @@ Esse par de chaves de assinatura fica a encargo da Instituição Cliente, que de
 }
 ```
 
+---
+
 ### Fluxo de aceite de consentimento APP
 
 O fluxo via aplicativo para dispositivos móveis requer alguns tratamentos importantes, mais especificamente a triagem da URL inicial do aceite de consentimento da marca e o tratamento de redirecionamentos internos no webview para as páginas de autenticação do correntista e de senha de transação.
@@ -161,4 +173,224 @@ Outro caso que precisa ser tratado via interceptação de URL é o redirecioname
 
 >No caso de erros sem redirecionamento para o ITP, o consentimento compartilhado irá redirecionar o usuário de volta para a homepage da marca, de forma que também será necessário interceptar a url *homePageRedirectBrandUrl*. O componente de webview deve também permitir a execução de JavaScript e o armazenamento do DOM (*domStorageEnabled = true*).
 
-<!--Terminar de adicionar-->
+---
+
+#### Exemplo
+
+Abaixo um exemplo de implementação em Kotlin:
+
+<!-- Adicionar imagem -->
+
+---
+
+#### Checklist de implementação APP
+
+Confira a implementação do app com o checklist abaixo:
+
+<div id="checklist-app">
+  <p><input type="checkbox"> Disponiblizar URLs públicas para os conteúdos dos links <code>assetlinks.json</code> e <code>apple-app-site-association</code></p>
+  <p><input type="checkbox"> Deeplink / Universal link na URL de autenticação da marca</p>
+  <p><input type="checkbox"> Webview deve permitir execução de código JavaScript</p>
+  <p><input type="checkbox"> Webview deve usar User-Agent com valor "<code>openfinance-webview</code>" (sem aspas)</p>
+  <p><input type="checkbox"> Abrir webview com a URL completa (query string inclusa) do deeplink / Universal link imediatamente</p>
+  <p><input type="checkbox"> Direcionar para tela de autenticação quando webview navegar para <code>authenticationBrandUrl</code>></p>
+  <p><input type="checkbox"> Direcionar para tela de senha transação (se existir) quando webview navegar para <code>transactionAuthenticationBrandUrl</code></p>
+  <p><input type="checkbox"> Direcionar para a tela principal ou para um tratamento de erro quando a webview navegar para <code>homePageBrandUrl</code></p>
+  <p><input type="checkbox"> Delegar para o sistema operacional a abertura de URLs diferentes do FQDN Opus e URLs da marca</p>
+</div>
+
+---
+
+### Fluxo de aceite de consentimento WEB
+
+O fluxo de autenticação de consentimento é mais simples que o tratado pelo APP, bastando a marca implementar as URLs *authenticationBrandUrl* e *transactionAuthenticationBrandUrl* e realizar o tratamento das chamadas de backend descritas abaixo para informar o resultado das operações num chamada backend-to-backend e redirecionar o navegador para a URL retornada na chamada de backend.
+
+#### Checklist de implementação WEB
+
+Confira a implementação web com o checklist abaixo:
+
+<div id="checklist-web">
+  <p><input type="checkbox"> Implementar as URLs <code>authenticationBrandUrl</code> e <code>transactionAuthenticationBrandUrl</code></p>
+  <p><input type="checkbox"> Realizar o tratamento das chamadas de backend (backend-to-backend) para informar o resultado das operações</p>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const checklists = document.querySelectorAll("div[id^='checklist-']");
+    checklists.forEach(list => {
+      const boxes = list.querySelectorAll("input[type=checkbox]");
+      const listId = list.id;
+
+      boxes.forEach((box, i) => {
+        // Restaurar estado salvo localmente
+        box.checked = localStorage.getItem(listId + "-box" + i) === "true";
+        // Salvar alterações
+        box.addEventListener("change", () => {
+          localStorage.setItem(listId + "-box" + i, box.checked);
+        });
+      });
+    });
+  });
+</script>
+
+## Fluxos
+
+### Fluxo das URLs e chamadas backend-to-backend
+
+Nesta seção será apresentado o fluxo de integração entre a API de consentimento compartilhado e a autenticação da marca. A integração se dá em duas etapas: na **tela de autenticação do cliente**, e posteriormente através de uma **tela de senha de transação**.
+
+Todo o fluxo será controlado pela aplicação do consentimento compartilhado, sendo que o usuário será redirecionado para as páginas da marca apenas para fazer sua autenticação. Dessa forma, cada uma dessas telas deve ser desenvolvida de forma responsiva pois poderão ser acessadas tanto por dispositivos móveis quanto por desktop.
+
+### Fluxo de Autenticação de Consentimento
+
+Nesta seção será apresentado o fluxo de integração entre a API de consentimento compartilhado e a autenticação da marca. A integração se dá em duas etapas: na **tela de autenticação do cliente**, e posteriormente através de uma **tela de senha de transação**.
+
+Todo o fluxo será controlado pela aplicação do consentimento compartilhado, sendo que o usuário será redirecionado para as páginas da marca apenas para fazer sua autenticação. Dessa forma, cada uma dessas telas deve ser desenvolvida de forma responsiva pois poderão ser acessadas tanto por dispositivos móveis quanto por desktop.
+
+#### Página de Autenticação da Marca
+
+O fluxo tem início quando um usuário deseja compartilhar seus dados ou iniciar um pagamento em outra instituição financeira, sendo necessário redirecioná-lo para a página de autenticação da detentora dos dados.   
+
+Como cada marca possui um mecanismo de autenticação diferente, a API de consentimento compartilhado redireciona o cliente para a página cadastrada pela marca, passando as informações da instituição iniciadora do compartilhamento/pagamento. Assim, a marca utiliza a própria autenticação existente para os correntistas. As informações enviadas no GET (fragment) são:  
+
+- **authenticationId**: O identificador do comando. Este campo deve estar presente no JWT de redirecionamento.
+
+#### Exemplo 1
+
+``` shell
+GET <authenticationBrandUrl>#authenticationId=sPzx8uBDm4ZYGm0EJErCE HTTP/1.1 
+```
+
+Com o identificador da autenticacão, a marca pode recuperar os detalhes da requisição através do endpoint *GET /authentication/{authenticationId}/details*, o qual retornará os detalhes conforme o exemplo abaixo:
+
+``` shell
+{  
+  "authenticationId": "auth12345",  
+  "tppName": "TPP Bank",  
+  "tppLogoUrl": https://example.com/tpp-logo.png,  
+  "type": "DATA_SHARING" 
+} 
+```
+
+Onde:
+
+- **tppName**: O nome do TPP que solicitou o consentimento;
+- **tppLogoUrl**: O logotipo do TPP que solicitou o consentimento;
+- **type**: O tipo do consentimento da autenticação. Pode ser “DATA_SHARING”, “PAYMENT”, “ENROLLMENT” ou “MANAGEMENT”.
+
+Após autenticar ou rejeitar o usuário, o backend da marca que realizou a autenticação deve fazer um **POST** contendo um JWT assinado com a chave da marca, e obter a **URL do retorno do POST** e redirecionar o browser do usuário para tal URL.
+
+Exemplo para tokens do tipo “DATA_SHARING”, “PAYMENT” ou “ENROLLMENT”:
+
+``` shell
+POST /authentication/result HTTP/1.1  
+Host: consentimento.compartilhado.com.br  
+Content-Type: application/jwt 
+Content-Length: *  
+  
+eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKjFAmJ2bVDOqyCdFO1Q_bwKZ1qAcvF8AhVdg424QjTDdVeP0iBANQKvMc0p2IIEnumDL-tbuhdy6WF0VtrKR6B1Hdd0t3Up6H6L0t_1L1TmNZnFFpvKRmlaH283Y4vzPRqEC0zgdY8hV4saEFEa05YOhwYUeVXxgwSqnWp6y-DIsn66PY-AeqoOafk3Zq7913nsspNRQUQSJ_ob2OAoDpgKjMnGH... 
+```
+
+O JWT deve conter as seguintes *claims*:
+
+| Claim            | Descrição                                               | Obrigatoriedade | Detalhes                                          |
+|:----------------:|:-------------------------------------------------------:|:---------------:|:-------------------------------------------------:|
+| jti              | Identificador único do token                            | Obrigatório     |                                                   |
+| iat              | Data de emissão do token no formato unix epoch          | Obrigatório     | O emissor deve ter seu relógio sincronizado, dado que essa claim será usada para calcular a expiração do token |
+| authenticationId | O id enviado no POST para a página de autenticação      | Obrigatório apenas para autenticação de consentimentos |            |
+| brandId          | O identificador da marca a qual a autenticação pertence | Obrigatório     |                                                   |
+| name             | Nome do cliente autenticado                             |                 |                                                   |
+| cpf              | CPF do cliente autenticado                              | Obrigatório     |                                                   |
+| cnpj             | CNPJ do cliente autenticado                             | Obrigatório apenas para cliente PJ |                                |
+| refused          | Variável booleana que indica se a autenticação foi recusada pela marca. Ela também serve para casos negativos como a senha ou usuário incorreto. Será considerado o valor padrão false se não for enviada |                                     |                                                   |
+| deviceId         | Identificador do dispositivo                            |                 |                                                   |
+| accountIds       | Lista de contas a serem filtradas pelo conector         |                 |                                                   |
+
+Além dessas informações, também é permitido adicionar outras claims que sejam necessárias para a tela de senha de transação, contanto que elas estejam dentro do objeto “*customClaims*”.
+
+#### Exemplo 2
+
+``` shell
+{ 
+  "jti": "1cd2a25f-efd4-4cb8-9caf-57cddaf6df07", 
+  "brandId": "08438716000187", 
+  "name": "José da Silva", 
+  "cpf": "12312312387", 
+  "cnpj": "32575976000189", 
+  "iat": 1633526347.068, 
+  "refused": false, 
+  "deviceId": "00000000-54b3-e7c7-0000-000046bffd97", 
+  "authenticationId": "123123123123", 
+  "customClaims": {
+    "custom_claim1": "valor_personalizado1",  
+    "custom_claim2": "valor_personalizado2"  
+  } 
+}
+```
+
+### Página de Senha de Transação
+
+Para consentimentos do tipo “**PAYMENT**” ou “**ENROLLMENT**”, é possível configurar uma segunda página de autenticação para aprovar uma transação. Ela será exibida após o cliente revisar e aceitar as informações do consentimento, dando a possibilidade de se solicitar uma segunda senha.
+
+Assim como ocorre na tela de autenticação, o cliente será redirecionado para a página de senha de transação da marca, que deve receber um GET com o identificador da autenticação no frontchannel, de posse do identificar é possível obter os detalhes da requisição através do backchannel, incluindo as claims adicionais recebidas anteriormente.
+
+Após obter os detalhes da autenticação, o cliente deve inserir a senha na página da marca para que ela possa enviar o resultado da operação, em um JWT semelhante ao citado anteriormente. Como resposta do endpoint de transação, a marca deve receber uma URL para qual o navegador do cliente deve ser redirecionado. Nela, o cliente poderá dar continuidade ao fluxo pelo consentimento compartilhado.
+
+#### Exemplos
+
+##### Redirecionamento para marca
+
+``` shell
+GET /transactionAuthenticationBrandUrl#authenticationId={id} HTTP/1.1 
+```
+
+##### Endpoint de detalhes de autenticação
+
+``` shell
+ GET /transactionAuthentication/{authenticationId}/details, que responderá algo como: 
+
+{ 
+  "authenticationId": "_OVbMtNWJLgI8XFMpcP2G", 
+  "type": "PAYMENT", 
+  "tppName": "OOB Client Um", 
+  "tppLogoUrl": https://opus-open-banking.s3.sa-east-1.amazonaws.com/opus-redondo.svg", 
+  "brandId: "08438716000187" 
+
+ 
+  "cpf": "12312312387", 
+  "cnpj": "32575976000189", 
+  "deviceId": "00000000-54b3-e7c7-0000-000046bffd97", 
+  "customClaims": { 
+    "custom_claim1": "valor_personalizado1", 
+    "custom_claim2": "valor_personalizado2" 
+  } 
+} 
+```
+
+##### Endpoint de confirmação de senha de transacão
+
+``` shell
+POST /transactionAuthentication/result HTTP/1.1 
+Host: consentimento.compartilhado.com.br 
+Content-Type: application/jwt 
+Content-Length: * 
+ 
+eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKjFAmJ2bVDOqyCdFO1Q_bwKZ1qAcvF8AhVdg424QjTDdVeP0iBANQKvMc0p2IIEnumDL-... 
+```
+
+#### Redirecionamento para Gestão de Consentimentos
+
+Além da autenticação para a criação de consentimentos, o consentimento compartilhado também permite que o usuário gerencie os compartilhamentos efetuados. Para isso, o usuário deve estar logado na marca, de forma que o consentimento compartilhado espera receber um token assinado semelhante ao enviado pela tela de autorização da marca, com a diferença de que não é necessário o envio da claim *authenticationId* e que o endereço de callback deve seguir o exemplo:
+
+``` shell
+POST /management/result HTTP/1.1 
+Host: consentimento.compartilhado.com.br 
+Content-Type: application/jwt 
+Content-Length: * 
+ 
+eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKjFAmJ2bVDOqyCdFO1Q_bwKZ1qAcvF8AhVdg424QjTDdVeP0iBANQKvMc0p2IIEnumDL-... 
+```
+
+Como resposta a marca deve receber uma URL para qual deve redirecionar o cliente.
+
+<!-- Adicionar "Guia de uso da solução -->
