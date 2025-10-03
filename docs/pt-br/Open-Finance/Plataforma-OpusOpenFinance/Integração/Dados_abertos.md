@@ -70,6 +70,7 @@ São apresentadas abaixo as APIs regulatórias referentes a Dados Abertos e exem
 >
 >Voltamos a ressaltar que é necessário disponibilizar arquivos JSON apenas para os produtos financeiros efetivamente oferecidos pela instituição.
 
+<!-- markdownlint-disable MD059 -->
 |API                               |Link Open API          |Link Exemplo JSON           |
 |----------------------------------|:---------------------:|:--------------------------:|
 |Canais de atendimento             |[Link][Channels]       |[JSON][Channels-JSON]       |
@@ -86,6 +87,7 @@ São apresentadas abaixo as APIs regulatórias referentes a Dados Abertos e exem
 |Previdência                       |[Link][Pension]        |[JSON][Pension-JSON]        |
 |Câmbio                            |[Link][Exchange]       |[JSON][Exchange-JSON]       |
 
+<!-- markdownlint-enable MD059 -->
 [Acquiring]: ../../../../swagger-ui/index.html?api=open-data-acquiring
 [Accounts]: ../../../../swagger-ui/index.html?api=open-data-accounts
 [Capitalization]: ../../../../swagger-ui/index.html?api=open-data-capitalization
