@@ -74,19 +74,19 @@ Este guia contém a descrição das telas desenvolvidas, organizadas em:
 
 O usuário pode selecionar a instituição de origem e revisar as informações do consentimento de Recepção de dados de dados, disparando o redirecionamento para a Instituição Transmissora. A tela mostra os dados autorizados e as finalidades.
 
-<!--Adicionar imagem-->
+![Tela de Solicitação do Consentimento](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela1-SolicitConsent.png)
 
 #### Tela 2: Redirecionamento para a Instituição Transmissora
 
 Informa ao usuário seu redirecionamento da Instituição Receptora (onde o processo foi iniciado) para a Instituição Transmissora. Lá, ele deve autenticar-se e aceitar o consentimento.
 
-<!--Adicionar imagem-->
+![Tela de Redirecionamento para a Instituição Transmissora](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela2-Redirect.png)
 
 #### Tela 3: Efetivação da Solicitação
 
 Após o consentimento ser aceito na Instituição Transmissora, o usuário é redirecionado novamente para a Instituição Receptora dos dados, exibindo as informações do consentimento efetivado.
 
-<!--Adicionar imagem-->
+![Tela de Efetivação da Solicitação](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela3-EfetivSoluc.png)
 
 ---
 
@@ -106,7 +106,7 @@ Os dados necessários das marcas são:
 |:------------------------:|:---------------------------------------------------------------:|:-------------------:|:--------------------------:|
 | brandId                  | CNPJ da marca                                                   | Instituição Cliente | *28811839000129*             |
 | authorisationServerUrl   | Endereço base da instalação do OOB da marca                     | Instituição Cliente | *https://authorization-server.com.br* |
-| URL de callback          | Url padrão onde a marca será chamada quando o fluxo sair da Instituição Transmissora e voltar para ela | Instituição Cliente | *https://shared-consent.dock.tech/marca/callback* |
+| URL de callback          | Url padrão onde a marca será chamada quando o fluxo sair da Instituição Transmissora e voltar para ela | Instituição Cliente | *https://shared-consent.instituicao-cliente.tech/marca/callback* |
 | URL de fim de fluxo      | Url para qual o usuário será redirecionado em caso de sessão expirada ou erros. A marca pode redirecionar o usuário para a home ou interceptar a URL e realizar alguma tratativa de erro, como fechar o app.                    | Marca               | *https://marca.com.br/home* |
 | isAppOnly                | Booleana que indica se a marca só tem aplicativo                | Marca               | false                      |
 | assetLinksUrl            | Url pública com o conteúdo do assetlinks.json                   | Marca               | *https://marca.com.br/assentlinks* |
@@ -118,7 +118,7 @@ A comunicação da marca com o Consentimento Compartilhado necessita de um jwt a
 
 #### Chave de assinatura
 
-Esse par de chaves de assinatura fica a encargo da dock, que deve expor a chave pública em uma url de jwks e usar a chave privada para assinar o jwt enviado nas respostas ao Consentimento Compartilhado. Esse método foi escolhido para facilitar a troca da chave de assinatura sempre que necessário por parte das marcas. Exemplo de resposta do jwks:
+Esse par de chaves de assinatura fica a encargo da Instituição Cliente, que deve expor a chave pública em uma url de jwks e usar a chave privada para assinar o jwt enviado nas respostas ao Consentimento Compartilhado. Esse método foi escolhido para facilitar a troca da chave de assinatura sempre que necessário por parte das marcas. Exemplo de resposta do jwks:
 
 ``` shell
 { 
@@ -170,9 +170,9 @@ O fluxo via aplicativo para dispositivos móveis requer alguns tratamentos impor
 
 #### Deeplink e Universal Link
 
-É necessário a aplicação do Issuer fazer deeplink (Android) ou universal link (iOS) na URL de callback (solicite sua URL à Dock) para o correto tratamento de redirecionamentos app-to-app regulatório do Open Finance Brasil. Através dessa URL, você receberá o estímulo de abertura do seu app a partir do retorno da Instituição Transmissora.  
+É necessário a aplicação do Issuer fazer deeplink (Android) ou universal link (iOS) na URL de callback para o correto tratamento de redirecionamentos app-to-app regulatório do Open Finance Brasil. Através dessa URL, você receberá o estímulo de abertura do seu app a partir do retorno da Instituição Transmissora.  
 
-Os arquivos *assetlinks.json* e *apple-app-site-association* precisam ser hospedados e ter as URL enviadas para a Dock, que fará o serviço de proxy de tais arquivos garantindo assim independência da marca na gestão de seus aplicativos.  
+Os arquivos *assetlinks.json* e *apple-app-site-association* precisam ser hospedados e ter as URL enviadas para a Instituição Cliente, que fará o serviço de proxy de tais arquivos garantindo assim independência da marca na gestão de seus aplicativos.  
 
 #### Webview
 
@@ -189,6 +189,8 @@ O componente de webview deve também permitir a execução de JavaScript e o arm
 2. **URL de fim de fluxo:** Quando esta URL é retornada, o fluxo webview se encerrou e o usuário já teve um feedback do erro/fim de fluxo (o webview já cuida desse feedback). Ao receber esta URL, o App do Issuer deve redirecionar o usuário para a tela de onde o fluxo se iniciou. Por exemplo: O cliente realizou uma recepção de dados, e essa opção estava contida em um menu Open Finance, logo o usuário deve ser redirecionado novamente para esta tela;
 
 3. **Outras URLs:** Delegar a abertura dessas URLs para o Sistema. Essas URLs representam o redirecionamento do usuário para outras Instituições Financeiras no processo de Recepção de Dados.
+
+---
 
 #### Checklist implementação APP
 
@@ -258,6 +260,8 @@ Confira a implementação do app com o checklist abaixo:
     });
 </script>
 
+---
+
 ## Fluxos
 
 ### Fluxo das URLs e chamadas backend-to-backend
@@ -278,6 +282,8 @@ eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKj
 ```
 
 Como resposta a marca deve receber uma URL para qual deve redirecionar o cliente.
+
+---
 
 ## Informações de contato
 
