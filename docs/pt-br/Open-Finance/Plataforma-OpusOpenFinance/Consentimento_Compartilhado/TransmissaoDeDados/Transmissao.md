@@ -175,7 +175,7 @@ Outro caso que precisa ser tratado via interceptação de URL é o redirecioname
 
 Abaixo um exemplo de implementação em Kotlin:
 
-<!-- Adicionar imagem -->
+![Implementação em Kotlin](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/ImplementacaoKotlin.png)
 
 ---
 
