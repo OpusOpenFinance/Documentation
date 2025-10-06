@@ -6,7 +6,8 @@ nav_order: 1
 lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Arquitetura/OOF-Arquitetura/"
 ---
-# Visão Geral da Arquitetura
+
+## Visão Geral da Arquitetura
 
 A arquitetura da solução é baseada em **microsserviços**, projetada para suportar escalabilidade horizontal automática, e implementada em contêineres (**Docker**) rodando em um ambiente de execução clusterizado Kubernetes.
 
