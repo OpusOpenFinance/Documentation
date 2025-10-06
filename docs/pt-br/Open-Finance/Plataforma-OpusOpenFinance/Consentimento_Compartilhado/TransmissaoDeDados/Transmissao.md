@@ -84,19 +84,19 @@ Essas telas estão associadas ao processo de confirmação de identidade do usu�
 
 - O usuário pode revisar o consentimento de compartilhamento de dados, pagamentos e vínculos de contas antes de finalizar o processo. A tela mostra os dados autorizados e as finalidades.
 
-<!-- Adicionar imagem -->
+![Tela de Revisão de Consentimento](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela1-RevisaoConsent.png)
 
 #### Tela 2: Confirmação de Consentimento
 
 - Informa ao usuário as informações coletadas na etapa anterior, detalhando as permissões concedidas e fornecendo um resumo do que está sendo autorizado.
 
-<!-- Adicionar imagem -->
+![Tela Confirmação de Consentimento](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela2-ConfirmConsent.png)
 
 #### Tela 3: Handoff  
 
 - Informa ao usuário que sua jornada deverá seguir pelo app do cliente, apresentando um QRCode que deve ser escaneado pela câmera do celular. Esta tela será exibida somente para clientes que só possuem a opção app, sem internet banking.
 
-<!-- Adicionar imagem -->
+![Tela de Handoff](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela3-Handoff.png)
 
 Essas telas foram projetadas para fornecer uma experiência segura e amigável, onde o usuário tem controle total sobre suas permissões e vínculos no Open Finance.
 
@@ -149,8 +149,6 @@ Esse par de chaves de assinatura fica a encargo da Instituição Cliente, que de
 }
 ```
 
----
-
 ### Fluxo de aceite de consentimento APP
 
 O fluxo via aplicativo para dispositivos móveis requer alguns tratamentos importantes, mais especificamente a triagem da URL inicial do aceite de consentimento da marca e o tratamento de redirecionamentos internos no webview para as páginas de autenticação do correntista e de senha de transação.
@@ -172,8 +170,6 @@ Além disso é necessário interceptar o carregamento de novas URLs e ao detecta
 Outro caso que precisa ser tratado via interceptação de URL é o redirecionamento do retorno ao ITP que não pode ser aberto no webview, devemos então verificar que a URL não é a *authenticationBrandUrl* e *transactionAuthenticationBrandUrl*, tão pouco possui os FQDNs fornecidos pela Instituição Cliente. Caso seja uma URL de redirect para o ITP, o aplicativo deve disparar então delegar a abertura da URL ao sistema operacional.
 
 >No caso de erros sem redirecionamento para o ITP, o consentimento compartilhado irá redirecionar o usuário de volta para a homepage da marca, de forma que também será necessário interceptar a url *homePageRedirectBrandUrl*. O componente de webview deve também permitir a execução de JavaScript e o armazenamento do DOM (*domStorageEnabled = true*).
-
----
 
 #### Exemplo
 
@@ -199,11 +195,11 @@ Confira a implementação do app com o checklist abaixo:
   <p><input type="checkbox"> Delegar para o sistema operacional a abertura de URLs diferentes do FQDN Opus e URLs da marca</p>
 </div>
 
----
-
 ### Fluxo de aceite de consentimento WEB
 
 O fluxo de autenticação de consentimento é mais simples que o tratado pelo APP, bastando a marca implementar as URLs *authenticationBrandUrl* e *transactionAuthenticationBrandUrl* e realizar o tratamento das chamadas de backend descritas abaixo para informar o resultado das operações num chamada backend-to-backend e redirecionar o navegador para a URL retornada na chamada de backend.
+
+---
 
 #### Checklist de implementação WEB
 
@@ -232,6 +228,8 @@ Confira a implementação web com o checklist abaixo:
     });
   });
 </script>
+
+---
 
 ## Fluxos
 
@@ -394,6 +392,8 @@ eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKj
 Como resposta a marca deve receber uma URL para qual deve redirecionar o cliente.
 
 <!-- Adicionar "Guia de uso da solução -->
+
+---
 
 ## Informações de contato
 
