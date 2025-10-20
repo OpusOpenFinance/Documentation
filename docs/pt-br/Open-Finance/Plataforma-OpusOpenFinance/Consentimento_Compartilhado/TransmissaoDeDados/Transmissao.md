@@ -72,8 +72,6 @@ As telas desenvolvidas são organizadas em:
 
 Após a autenticação do usuário, este terá acesso as telas descritas:
 
----
-
 ### Telas de Aceite de Consentimento
 
 **Observação:** As telas apresentadas nesta seção estão contidas no Guia de Experiência do Usuário, Item 02 (Compartilhamento de dados), Item 03 (Iniciação de pagamentos), Item 04 (Jornadas alternativas de iniciação de pagamento – Jornada sem Redirecionamento – Etapa 3). Mais detalhes no [link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio).
@@ -124,8 +122,8 @@ Os dados necessários das marcas são:
 | transactionAuthenticationBrandUrl | Url da senha de transação do cliente na marca | Marca | *https://marca.instituicao.com.br/user/password* |
 | homePageRedirectBrandUrl | Url para qual o usuário será redirecionado em caso de sessão expirada ou erros. A marca pode redirecionar o usuário para a home ou interceptar a URL e realizar alguma tratativa de erro como fechar o app. | Marca | *https://marca.instituicao.com.br/home* |
 | isAppOnly | Booleana que indica se a marca só tem aplicativo | Marca | false |
-| assetLinksUrl | Url pública com o conteúdo do assetlinks.json | Marca | *https://marca.instituicao.com.br/assentlinks* |
-| appleAppSiteUrl | Url pública com o conteúdo do apple-app-site-association | Marca | *https://marca.instituicao.com.br/appleappsite* |
+| assetLinksUrl | Url pública com o conteúdo do *assetlinks.json* | Marca | *https://marca.instituicao.com.br/assentlinks* |
+| appleAppSiteUrl | Url pública com o conteúdo do *apple-app-site-association* | Marca | *https://marca.instituicao.com.br/appleappsite* |
 
 #### Chaves
 
@@ -177,8 +175,6 @@ Abaixo um exemplo de implementação em Kotlin:
 
 ![Implementação em Kotlin](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/ImplementacaoKotlin.png)
 
----
-
 #### Checklist de implementação APP
 
 Confira a implementação do app com o checklist abaixo:
@@ -188,8 +184,8 @@ Confira a implementação do app com o checklist abaixo:
   <p><input type="checkbox"> Deeplink / Universal link na URL de autenticação da marca</p>
   <p><input type="checkbox"> Webview deve permitir execução de código JavaScript</p>
   <p><input type="checkbox"> Webview deve usar User-Agent com valor "<code>openfinance-webview</code>" (sem aspas)</p>
-  <p><input type="checkbox"> Abrir webview com a URL completa (query string inclusa) do deeplink / Universal link imediatamente</p>
-  <p><input type="checkbox"> Direcionar para tela de autenticação quando webview navegar para <code>authenticationBrandUrl</code>></p>
+  <p><input type="checkbox"> Abrir webview com a URL completa (query string inclusa) do Deeplink / Universal link imediatamente</p>
+  <p><input type="checkbox"> Direcionar para tela de autenticação quando webview navegar para <code>authenticationBrandUrl</code></p>
   <p><input type="checkbox"> Direcionar para tela de senha transação (se existir) quando webview navegar para <code>transactionAuthenticationBrandUrl</code></p>
   <p><input type="checkbox"> Direcionar para a tela principal ou para um tratamento de erro quando a webview navegar para <code>homePageBrandUrl</code></p>
   <p><input type="checkbox"> Delegar para o sistema operacional a abertura de URLs diferentes do FQDN Opus e URLs da marca</p>
@@ -198,8 +194,6 @@ Confira a implementação do app com o checklist abaixo:
 ### Fluxo de aceite de consentimento WEB
 
 O fluxo de autenticação de consentimento é mais simples que o tratado pelo APP, bastando a marca implementar as URLs *authenticationBrandUrl* e *transactionAuthenticationBrandUrl* e realizar o tratamento das chamadas de backend descritas abaixo para informar o resultado das operações num chamada backend-to-backend e redirecionar o navegador para a URL retornada na chamada de backend.
-
----
 
 #### Checklist de implementação WEB
 
@@ -376,7 +370,7 @@ Content-Length: *
 eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKjFAmJ2bVDOqyCdFO1Q_bwKZ1qAcvF8AhVdg424QjTDdVeP0iBANQKvMc0p2IIEnumDL-... 
 ```
 
-#### Redirecionamento para Gestão de Consentimentos
+### Redirecionamento para Gestão de Consentimentos
 
 Além da autenticação para a criação de consentimentos, o consentimento compartilhado também permite que o usuário gerencie os compartilhamentos efetuados. Para isso, o usuário deve estar logado na marca, de forma que o consentimento compartilhado espera receber um token assinado semelhante ao enviado pela tela de autorização da marca, com a diferença de que não é necessário o envio da claim *authenticationId* e que o endereço de callback deve seguir o exemplo:
 

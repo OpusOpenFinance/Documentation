@@ -178,19 +178,17 @@ Os arquivos *assetlinks.json* e *apple-app-site-association* precisam ser hosped
 
 As telas de Webview serão enviadas ao app como retorno do post na API */received-consent/result*. Ao receber esse retorno, o aplicativo deve abrir imediatamente um webview e navegar para a URL completa que foi retornada pela API.
 
-Para garantir que a requisição vem de um aplicativo que está tratando o fluxo de consentimento corretamente, é necessário configurar o user-agent do webview com o valor “openfinance-webview” (sem aspas).
+Para garantir que a requisição vem de um aplicativo que está tratando o fluxo de consentimento corretamente, é necessário configurar o user-agent do webview com o valor “*openfinance-webview*” (sem aspas).
 
-O componente de webview deve também permitir a execução de JavaScript e o armazenamento do DOM (domStorageEnabled = true). 
+O componente de webview deve também permitir a execução de JavaScript e o armazenamento do DOM (*domStorageEnabled = true*).
 
-É necessário um tratamento específico das URLs que são recebidas como retorno das chamadas ao webview, de acordo com os seguintes casos: 
+É necessário um tratamento específico das URLs que são recebidas como retorno das chamadas ao webview, de acordo com os seguintes casos:
 
 1. **URL possui “shared-consent” ou o FQDN da Instituição Cliente:** Abrir a URL diretamente com o Webview;
 
 2. **URL de fim de fluxo:** Quando esta URL é retornada, o fluxo webview se encerrou e o usuário já teve um feedback do erro/fim de fluxo (o webview já cuida desse feedback). Ao receber esta URL, o App do Issuer deve redirecionar o usuário para a tela de onde o fluxo se iniciou. Por exemplo: O cliente realizou uma recepção de dados, e essa opção estava contida em um menu Open Finance, logo o usuário deve ser redirecionado novamente para esta tela;
 
 3. **Outras URLs:** Delegar a abertura dessas URLs para o Sistema. Essas URLs representam o redirecionamento do usuário para outras Instituições Financeiras no processo de Recepção de Dados.
-
----
 
 #### Checklist implementação APP
 
@@ -282,13 +280,3 @@ eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKj
 ```
 
 Como resposta a marca deve receber uma URL para qual deve redirecionar o cliente.
-
----
-
-## Informações de contato
-
-Caso tenha alguma dúvida ou sugestão, você pode contatar os e-mails abaixo:
-
-✉ E-mail: walter.ferreira@opus-software.com.br
-✉ E-mail: barbara.santos@opus-software.com.br
-🕒 Horário: 9h-18h (segunda a sexta)
