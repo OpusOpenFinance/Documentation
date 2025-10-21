@@ -11,11 +11,11 @@ alternate_lang: "/Documentation/en/index/"
 
 Bem-vindo à documentação da **Plataforma Opus Open Finance**!
 
-Aqui você encontrará detalhes sobre a solução ideal para sua instituição se homologar no ecossistema do *Open Finance Brasil*. O produto da **Opus Software** é responsável por garantir a boa operação da sua instituição com as demandas exigidas pelo regulador, além de garantir a atualização de novas versões e evolução de funcionalidades definidos pelas normas regulatórias.
+Aqui você encontrará detalhes sobre a solução ideal para sua instituição se homologar no ecossistema do *Open Finance Brasil*. O produto da **Opus Software** é responsável por garantir a boa operação da sua instituição com as demandas exigidas pelo regulador, além de garantir a atualização de novas versões e evoluções de funcionalidades definidas pelas normas regulatórias.
 
-A plataforma foi projetada para abstrair toda a complexidade regulatória do *Open Finance Brasil*, a camada que não traz o diferencial para sua empresa. Dessa forma, você pode focar em seus **seus objetivos estratégicos**.
+A plataforma foi projetada para elucidar toda a complexidade regulatória do *Open Finance Brasil*, a camada que não traz o diferencial para sua empresa. Dessa forma, você pode focar em **seus objetivos estratégicos**.
 
-Ao mesmo tempo em que oferece cobertura completa das exigências regulatórias para todos os perfis de participação no *Open Finance Brasil*, a **Plataforma Opus Open Finance** dispõe também de módulos opcionais que permitem ir além do regulatório, estabelecendo uma base para implementar estratégias que maximizem o retorno sobre o investimento das instituições financeiras e possibilitem extrair o melhor valor possível de sua participação no ecossistema.
+Ao mesmo tempo, em que oferece cobertura completa das exigências regulatórias para todos os perfis de participação no *Open Finance Brasil*, a **Plataforma Opus Open Finance** dispõe também de módulos opcionais que permitem ir além do regulatório, estabelecendo uma base para implementar estratégias que maximizem o retorno sobre o investimento das instituições financeiras e possibilitem extrair o melhor valor possível de sua participação no ecossistema.
 
 ---
 
@@ -40,9 +40,9 @@ Este documento está organizado para fornecer uma visão geral sobre os conceito
 
 ## Sobre a Opus Software
 
-A Opus Software é uma empresa de desenvolvimento de software que atua há 38 anos no mercado. Ao longo de sua história a empresa sempre esteve envolvida com projetos de alto valor agregado, grande volume transacional e com requisitos exigentes em termos de desempenho, qualidade, e prazos agressivos. O principal segmento de atuação da empresa é mercado financeiro atendendo a bancos, instituições de pagamento, empresas de meios de pagamento e seguradoras. A empresa atua também junto a empresas de varejo, especialmente atendendo a demandas de suas áreas financeiras e de atendimento.
+A Opus Software é uma empresa de desenvolvimento de software que atua há 38 anos no mercado. Ao longo de sua história, a empresa sempre esteve envolvida com projetos de alto valor agregado, grande volume transacional e com requisitos exigentes em termos de desempenho, qualidade e prazos agressivos. O principal segmento de atuação da empresa é o mercado financeiro, atendendo a bancos, instituições de pagamento, empresas de meios de pagamento e seguradoras. A empresa atua também junto a empresas de varejo, especialmente atendendo a demandas de suas áreas financeiras e de atendimento.
 
-Em sua trajetória, a Opus Software também tem desenvolvido soluções próprias. Em sua origem, a empresa desenvolveu protocolos de comunicação e software básico, posteriormente construindo uma oferta de automação bancária que rodou por diversos anos em várias instituições financeiras do mercado nacional. Em 2020 a empresa criou uma unidade de negócios voltada para Open Finance, construindo a solução Opus Open Finance, que é utilizada atualmente por diversas instituições financeiras de destaque do cenário brasileiro.
+Em sua trajetória, a Opus Software também tem desenvolvido soluções próprias. Em sua origem, a empresa desenvolveu protocolos de comunicação e software básico, posteriormente construindo uma oferta de automação bancária que rodou por diversos anos em várias instituições financeiras do mercado nacional. No ano de 2020, a empresa criou uma unidade de negócios voltada para Open Finance, construindo a solução Opus Open Finance, que é utilizada atualmente por diversas instituições financeiras de destaque do cenário brasileiro.
 
 Unindo sua vocação na prestação de serviços de desenvolvimento de software customizado com a capacidade de seu time de construir sistemas distribuídos de alto desempenho, confiabilidade e resiliência, a oferta da **Plataforma Opus Open Finance** agrega a padronização demandada pelas regras regulatórias do *Open Finance Brasil* com a capacidade de adaptação às necessidades específicas das instituições financeiras.
 

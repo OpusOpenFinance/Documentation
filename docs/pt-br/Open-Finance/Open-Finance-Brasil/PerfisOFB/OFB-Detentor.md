@@ -7,61 +7,61 @@ lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Detentor/"
 ---
 
-# Detentor de Conta
+## Detentor de Conta
 
 O perfil de participação como **Detentor de Conta** no *Open Finance Brasil* representa a instituição que recebe solicitações de pagamento de um **Iniciador de Transação de Pagamento (ITP)**. Este perfil na **Plataforma Opus Open Finance** é responsável por atender todas as exigências regulatórias estabelecidas pelo Banco Central.
 
 ---
 
-## Ecossistema Open Finance - Detentor de Conta
+### Ecossistema Open Finance - Detentor de Conta
 
-Os Detentores de Contas são as instituições onde os clientes possuem contas de deposito à vista, contas de poupança e contas de pagamento pré-pagas, que podem ser acessadas no contexto do *Open Finance Brasil* para processar iniciações de pagamento. Quem envia os pedidos de pagamento são instituições homologadas como *iniciadores de transação de pagamento*.
+Os Detentores de Contas são as instituições onde os clientes possuem contas de depósito à vista, contas de poupança e contas de pagamento pré-pagas, que podem ser acessadas no contexto do *Open Finance Brasil* para processar iniciações de pagamento. Quem envia os pedidos de pagamento são instituições homologadas como *iniciadoras de transação de pagamento*.
 
 ---
 
-## Meios de Pagamento no Open Finance
+### Meios de Pagamento no Open Finance
 
 Atualmente, os meios de pagamento previstos no Open Finance incluem:
 
-- **Pix**
-- **Boleto***
-- **Débito em Conta***
-- **TED/TEF***
-- **Cartão de Crédito***
+- **Pix**;
+- **Boleto**;*
+- **Débito em Conta**;*
+- **TED/TEF**;*
+- **Cartão de Crédito**.*
 
 *Os itens marcados com asterisco ainda não estão disponíveis no Open Finance e não possuem previsão de entrada.*
 
 ---
 
-## Jornada de Consentimento
+### Jornada de Consentimento
 
 O processo de autorização para efetuar pagamentos é feito pelo cliente por meio de uma **jornada completa de consentimento**. Mais detalhes podem ser encontrados [aqui](../JornadaConsentimento/OFB-JornadaConsentimento.html).
 
 ---
 
-## Roadmap Regulatório
+### Roadmap Regulatório
 
-### Funcionalidades já disponíveis
+#### Funcionalidades já disponíveis
 
-- **Pagamento Pix imediato**
-- **Pagamento Pix agendado**
-- **Recorrência de pagamentos agendados**
-- **Transferências automáticas entre contas de mesma titularidade** (recurso também conhecido como *sweeping accounts* ou *transferências inteligentes*)
+- **Pagamento Pix imediato**;
+- **Pagamento Pix agendado**;
+- **Recorrência de pagamentos agendados**;
+- **Transferências automáticas entre contas de mesma titularidade** (recurso também conhecido como *sweeping accounts* ou *transferências inteligentes*).
 
-### Funcionalidades previstas
+#### Funcionalidades previstas
 
-- **Pagamentos em lote (1:n)**
-- **Pagamentos sem redirecionamento** (ausência do redirecionamento para a Detentora de Conta na perspectiva do usuário)
-- **Pagamentos recorrentes** (Variable Recurring Payment - VRP - implementado pelo *Pix Automático*)
-- **Pix por aproximação**
+- **Pagamentos em lote (1:n)**;
+- **Pagamentos sem redirecionamento** (ausência do redirecionamento para a Detentora de Conta na perspectiva do usuário);
+- **Pagamentos recorrentes** (Variable Recurring Payment - VRP - implementado pelo *Pix Automático*);
+- **Pix por aproximação**.
 
 O [portal do desenvolvedor](https://openfinancebrasil.atlassian.net/wiki/spaces/DraftOF/calendars) oferece um calendário com as próximas entregas.
 
 ---
 
-## APIs Regulatórias
+### APIs Regulatórias
 
-### APIs Vigentes
+#### APIs Vigentes
 
 |**Descrição**                     | **Link para o Portal do Desenvolvedor**                           |
 |----------------------------------|:-------------------------------------------------------------------:|
@@ -69,7 +69,7 @@ O [portal do desenvolvedor](https://openfinancebrasil.atlassian.net/wiki/spaces/
 |**Iniciação de Pagamentos Automáticos**        |[Acesse aqui](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/198410569/SV+API+-+Pagamentos+Autom+ticos) |
 |**Iniciação de Pagamento**        |[Acesse aqui](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento) |
 
-## Plataforma Opus Open Finance
+### Plataforma Opus Open Finance
 
 Para utilizar a **Plataforma Opus Open Finance** para atender às exigências regulatórias do perfil de participação Detentor de Conta, é necessário concluir as seguintes etapas:
 

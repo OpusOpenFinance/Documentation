@@ -7,7 +7,7 @@ lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Unarranged/"
 ---
 
-# Exemplo de arquivo JSON
+## Exemplo de arquivo JSON
 
 Este é um exemplo de arquivo JSON de resposta da API ***OpenData Unarranged Account Overdraft***.
 
