@@ -13,19 +13,6 @@ This page was created to assist users who are using the tool for the first time.
 
 ---
 
-## Benefits of using our solution
-
-1. **Ease of Implementation**:
-Our solution already addresses all regulatory requirements, saving your development team time and effort. Main processes such as displaying and confirming consent have already been implemented and are ready to use.
-
-2. **Regulatory Compliance**:
-The solution complies with all Open Finance Brazil guidelines, ensuring that you follow best practices for consent acceptance and management.
-
-3. **User Experience**:
-Through an interface that meets regulatory requirements, customers can view and manage their consents directly on the platform with intuitive navigation.
-
----
-
 ## Items resolved by our solution
 
 Here are the main elements our solution offers:
@@ -66,10 +53,6 @@ Once the user logs in through your application, they will have access to a serie
 
 Our aim is to ensure that throughout the entire Open Finance journey, clients have **full control** over their **data** and **sharing permissions**, efficiently managing their linked accounts and consents.
 
-The screens developed are organized into:
-
-- **Consent Acceptance Screens**, which handle the review of the information and consent acceptance for data sharing.
-
 After user authentication, they will have access to the described screens:
 
 ### Consent Acceptance Screens
@@ -82,19 +65,19 @@ These screens are associated with the user's identity confirmation and consent p
 
 - The user can review the data sharing, payments, and account linkages consent before finalizing the process. The screen shows authorized data and purposes.
 
-<!--Adicionar imagem-->
+![Screen of Consent Review](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela1-RevisaoConsent.png)
 
 #### Screen 2: Consent Confirmation
 
 - Notifies the user of the information collected in the previous step, detailing the permissions granted and providing a summary of what is being authorized.
 
-<!--Adicionar imagem-->
+![Screen of Consent Confirmation](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela2-ConfirmConsent.png)
 
 #### Screen 3: Handoff
 
 Informs the user that their journey should continue through the client app, presenting a QR Code to be scanned by the mobile camera. This screen will only be displayed for clients who only have the app option without internet banking.
 
-<!--Adicionar imagem-->
+![Screen of Handoff](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela3-Handoff.png)
 
 These screens were designed to provide a secure and friendly experience where the user has full control over their permissions and linkages in Open Finance.
 
@@ -173,7 +156,7 @@ Another case that needs URL interception handling is the redirect return to the 
 
 Below is an implementation example in Kotlin:
 
-<!--Adicionar imagem-->
+![Impementation in Kotlin](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/ImplementacaoKotlin.png)
 
 #### App Implementation Checklist
 
