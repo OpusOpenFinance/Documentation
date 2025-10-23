@@ -16,3 +16,16 @@ Nossa solução foi desenvolvida para facilitar a adesão ao Open Finance Brasil
 ![Jornada da Experiência de Compartilhamento de Dados, Pagamentos e Vínculos](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/images/Diagrama-Webview-Transmissao.png)
 
 ![Jornada de Recepção de Dados](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/images/Diagrama-Webview-Recepcao.png)
+
+---
+
+## Benefícios de usar nossa solução
+
+1. **Facilidade de Implementação:**
+Nossa solução atende a todas as exigências regulatórias, poupando tempo e esforço da sua equipe de desenvolvimento. Com os principais processos de exibição, confirmação e gestão de consentimentos já implementados, tudo está pronto para uso imediato.
+
+2. **Conformidade Regulamentar:**
+Estamos em total conformidade com as diretrizes do Open Finance Brasil, assegurando que você adote as melhores práticas na gestão de consentimentos.
+
+3. **Experiência do Usuário:**
+Oferecemos uma interface intuitiva que permite aos clientes visualizar e gerenciar seus consentimentos diretamente na plataforma, facilitando a navegação e garantindo o cumprimento das exigências regulatórias.

@@ -25,7 +25,7 @@ Após a autenticação do usuário, este terá acesso as telas descritas:
 
 As telas de gestão são focadas no gerenciamento dos consentimentos do Open Finance. Essas telas fornecem ao usuário um controle claro e eficiente sobre seus compartilhamentos de dados, autorizações de pagamento e vínculos de contas.  
 
-![Telas de Gestão - Transmissão](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/TelasDeGestao-Transmis.png)
+![Telas de Gestão - Transmissão](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/TelasDeGestão-Transmis.png)
 
 #### Tela 1: Painel de Controle de Consentimentos - Transmissão
 
@@ -66,11 +66,3 @@ Apresenta todos os consentimentos ativos e inativos, permitindo ao usuário visu
 O usuário pode revogar um consentimento diretamente dessa tela, recebendo um aviso de que essa ação é irreversível e quais serviços serão afetados.
 
 ![Tela de Revogação de Consentimento](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela3-RevogConsent.png)
-
-## Informações de contato
-
-Caso tenha alguma dúvida ou sugestão, você pode contatar os e-mails abaixo:
-
-✉ E-mail: walter.ferreira@opus-software.com.br
-✉ E-mail: barbara.santos@opus-software.com.br
-🕒 Horário: 9h-18h (segunda a sexta)

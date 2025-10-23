@@ -13,19 +13,6 @@ Nossa solução de consentimento compartilhado foi desenvolvida para facilitar a
 
 ---
 
-## Benefícios de usar nossa solução
-
-1. **Facilidade de Implementação**:
-Nossa solução já resolve todas as exigências regulatórias, poupando tempo e esforço de sua equipe de desenvolvimento. Os principais processos, como a exibição, confirmação e gestão de consentimentos, já possuem a implementação concluída e estão prontos para uso.
-
-2. **Conformidade Regulamentar**:
-Nossa solução está em conformidade com todas as diretrizes do Open Finance Brasil, garantindo que você siga as melhores práticas para gestão de consentimentos.
-
-3. **Experiência do Usuário**:
-Através de uma interface que resolve as exigências regulatórias, os clientes podem visualizar e gerenciar seus consentimentos diretamente na plataforma, com uma navegação intuitiva.
-
----
-
 ## Itens resolvidos pela nossa solução
 
 Aqui estão os principais elementos que nossa solução oferece:
@@ -57,10 +44,6 @@ Embora nossa solução implemente todas as exigências regulatórias, alguns ele
 Uma vez que o usuário efetue o login através da sua aplicação, ele terá acesso a uma série de telas desenvolvidas pela Instituição Cliente, em conformidade com o que há de mais atualizado na regulação do Banco Central.
 
 Nosso objetivo é assegurar que, ao longo de toda a jornada de Open Finance, os clientes tenham controle total sobre seus dados e as permissões de compartilhamento, gerenciando de maneira simples e eficiente suas contas vinculadas e consentimentos.
-
-Este guia contém a descrição das telas desenvolvidas, organizadas em:
-
-- **Telas de Solicitação e Efetivação de Consentimento de Recepção de Dados**, que tratam da revisão das informações e aceite do consentimento.
 
 ### Telas de Solicitação e Efetivação de Consentimento
 
