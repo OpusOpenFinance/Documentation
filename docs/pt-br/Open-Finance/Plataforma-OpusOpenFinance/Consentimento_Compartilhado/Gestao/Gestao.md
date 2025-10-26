@@ -59,7 +59,7 @@ As telas de gestão são focadas no gerenciamento dos consentimentos do Open Fin
 
 Apresenta todos os consentimentos ativos e inativos, permitindo ao usuário visualizar e revogar. Cada consentimento é detalhado com informações como a data de criação e as instituições envolvidas.
 
-![Tela de Listagem de Compartilhamentos (Recebidos e Transmitidos)](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela1-PainelDeContrConsent-Recepcao.png)
+![Tela de Listagem de Compartilhamentos (Recebidos e Transmitidos)](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela2-ListDeCompart.png)
 
 #### Tela 3: Revogação de Consentimento
 
