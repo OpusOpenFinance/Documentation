@@ -13,19 +13,6 @@ Our shared consent solution was developed to facilitate adherence to Open Financ
 
 ---
 
-## Benefits of using our solution
-
-1. **Ease of Implementation**:
-   Our solution already addresses all regulatory requirements, saving your development team time and effort. Key processes such as display, confirmation, and management of consents have already been implemented and are ready for use.
-
-2. **Regulatory Compliance**:
-   Our solution complies with all guidelines of Open Finance Brazil, ensuring that you follow best practices for consent management.
-
-3. **User Experience**:
-   Through an interface that fulfills regulatory requirements, customers can view and manage their consents directly on the platform, with intuitive navigation.
-
----
-
 ## Items resolved by our solution
 
 Here are the main elements our solution offers:
@@ -39,6 +26,8 @@ Here are the main elements our solution offers:
 - **Revocation of Consents**: We have implemented a simple way for users to revoke consents, payments, or linkages when necessary;
 
 - **Unique Client Institution Portal**: We offer a unified interface for integrated management of Open Finance functionalities.
+
+---
 
 ## Items you will need to develop
 
@@ -72,15 +61,19 @@ This guide contains descriptions of the developed screens, organized into:
 
 The user can select the origin institution and review the Data Reception consent information, triggering the redirection to the Transmitting Institution. The screen shows authorized data and purposes.
 
-<!--Adicionar imagem-->
+![Screen of Consent Request](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela1-SolicitConsent.png)
 
 #### Screen 2: Redirection to Transmitting Institution
 
 Informs the user about the redirection from the Receiving Institution (where the process was initiated) to the Transmitting Institution. There, the user must authenticate and accept the consent.
 
+![Screen of Redirection to Transmitting Institution](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela2-Redirect.png)
+
 #### Screen 3: Request Effectuation
 
 After the consent is accepted at the Transmitting Institution, the user is redirected again to the Receiving Institution, displaying the information of the effectuated consent.
+
+![Screen of Request Effectuation](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela3-EfetivSoluc.png)
 
 ---
 
