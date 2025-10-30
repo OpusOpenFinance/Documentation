@@ -25,25 +25,25 @@ After user authentication, they will have access to the described screens:
 
 The management screens focus on managing Open Finance consents. These screens provide the user with clear and efficient control over their data sharing, payment authorizations, and account linkages.
 
-![Management Screens - Transmission](/Documentation/docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/TelasDeGestão-Transmis.png)
+![Management Screens - Transmission](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/TelasDeGestão-Transmis.png)
 
 #### Screen 1: Consent Control Panel - Transmission
 
 Displays all active and inactive consents, allowing the user to view and revoke. Each consent is detailed with information such as expiration date and involved institutions.
 
-![Consent Control Panel Screen](/Documentation/docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela1-PainelDeControle.png)
+![Consent Control Panel Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela1-PainelDeControle.png)
 
 #### Screen 2: Consent Revocation
 
 The user can revoke a consent directly from this screen, receiving a warning that this action is irreversible and which services will be affected.
 
-![Consent Revocation Screen](/Documentation/docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela2-RevogDeConsent.png)
+![Consent Revocation Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela2-RevogDeConsent.png)
 
 #### Screen 3: Linked Accounts Management
 
 Shows all account linkages from the Non-Redirected Journey (JSR) flow in Open Finance, allowing the user to view or revoke linkages. Information about each account such as linkage type and validity are clearly displayed.
 
-![Linked Accounts Management Screen](/Documentation/docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela3-GestDeContVinc.png)
+![Linked Accounts Management Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela3-GestDeContVinc.png)
 
 ### Reception - Management Screens (Item 05 - Management Area)
 
@@ -53,16 +53,16 @@ The management screens focus on managing Open Finance consents. These screens pr
 
 #### Screen 1: Consent Control Panel - Reception
 
-![Consent Control Panel - Reception Screen](/Documentation/docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela1-PainelDeContrConsent-Recepcao.png)
+![Consent Control Panel - Reception Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela1-PainelDeContrConsent-Recepcao.png)
 
 #### Screen 2: List of Sharing (Received and Transmitted)
 
 Displays all active and inactive consents, allowing the user to view and revoke. Each consent is detailed with information such as the creation date and involved institutions.
 
-![Sharing List Screen (Received and Transmitted)](/Documentation/docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela2-ListDeCompart.png)
+![Sharing List Screen (Received and Transmitted)](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela2-ListDeCompart.png)
 
 #### Screen 3: Consent Revocation
 
 The user can revoke a consent directly from this screen, receiving a warning that this action is irreversible and which services will be affected.
 
-![Consent Revocation Screen](/Documentation/docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela3-RevogConsent.png)
+![Consent Revocation Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/Gestao/images/Tela3-RevogConsent.png)
