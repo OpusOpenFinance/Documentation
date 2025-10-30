@@ -38,6 +38,7 @@ rm -rf "$BUILD_TMP" "$FINAL_DEST"
 # Redirecionamento (index.html raiz)
 build_redirect() {
   echo "🌐 Gerando página de redirecionamento (index.html)..."
+  # Use um config temporário sem JS customizados
   bundle exec jekyll build \
     --config _config.yml,_config-redirect.yml \
     --destination "$BUILD_TMP/index"

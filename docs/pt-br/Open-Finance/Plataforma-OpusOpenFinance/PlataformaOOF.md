@@ -2,7 +2,7 @@
 layout: default
 title: "Opus Open Finance"
 parent: "Plataforma Opus Open Finance"
-nav_order: 2
+nav_order: 3
 has_children: true
 lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/PlataformaOOF/"

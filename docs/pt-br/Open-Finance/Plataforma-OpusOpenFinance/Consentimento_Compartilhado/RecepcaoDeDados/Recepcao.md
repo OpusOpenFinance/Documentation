@@ -2,7 +2,7 @@
 layout: default
 title: "Recepção de Dados"
 parent: "Consentimento Compartilhado"
-nav_order: 4
+nav_order: 3
 lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Recepção/"
 ---
@@ -57,19 +57,19 @@ Nosso objetivo é assegurar que, ao longo de toda a jornada de Open Finance, os 
 
 O usuário pode selecionar a instituição de origem e revisar as informações do consentimento de Recepção de dados de dados, disparando o redirecionamento para a Instituição Transmissora. A tela mostra os dados autorizados e as finalidades.
 
-![Tela de Solicitação do Consentimento](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela1-SolicitConsent.png)
+![Tela de Solicitação do Consentimento](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela1-SolicitConsent.png)
 
 #### Tela 2: Redirecionamento para a Instituição Transmissora
 
 Informa ao usuário seu redirecionamento da Instituição Receptora (onde o processo foi iniciado) para a Instituição Transmissora. Lá, ele deve autenticar-se e aceitar o consentimento.
 
-![Tela de Redirecionamento para a Instituição Transmissora](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela2-Redirect.png)
+![Tela de Redirecionamento para a Instituição Transmissora](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela2-Redirect.png)
 
 #### Tela 3: Efetivação da Solicitação
 
 Após o consentimento ser aceito na Instituição Transmissora, o usuário é redirecionado novamente para a Instituição Receptora dos dados, exibindo as informações do consentimento efetivado.
 
-![Tela de Efetivação da Solicitação](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela3-EfetivSoluc.png)
+![Tela de Efetivação da Solicitação](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela3-EfetivSoluc.png)
 
 ---
 

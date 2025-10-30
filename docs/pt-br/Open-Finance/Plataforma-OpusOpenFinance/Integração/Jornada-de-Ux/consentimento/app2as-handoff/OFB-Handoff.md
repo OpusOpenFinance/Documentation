@@ -7,7 +7,7 @@ lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as-handoff/OFB-Handoff/"
 ---
 
-# *Hybrid-flow* com *Handoff*
+## *Hybrid-flow* com *Handoff*
 
 Instituições que possuem autenticação de usuários apenas em aplicativos mobile precisam suportar o fluxo *Hybrid-flow* com *Handoff* para permitir consentimentos iniciados em dispositivos que não suportam a execução dos aplicativos, tipicamente um desktop ou um laptop.
 

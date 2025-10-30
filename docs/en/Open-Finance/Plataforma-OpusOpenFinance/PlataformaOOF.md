@@ -8,7 +8,7 @@ lang: "en"
 alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/PlataformaOOF/"
 ---
 
-# Opus Open Finance
+## Opus Open Finance
 
 In this section, you will find the details of the **Opus Open Finance Platform** for each of the participation profiles in *Open Finance Brazil*, as well as general components that are part of the product.
 

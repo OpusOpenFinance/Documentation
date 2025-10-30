@@ -2,7 +2,7 @@
 layout: default
 title: "Data Reception"
 parent: "Shared Consent"
-nav_order: 4
+nav_order: 3
 lang: "en"
 alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Recepção/"
 ---
@@ -61,19 +61,19 @@ This guide contains descriptions of the developed screens, organized into:
 
 The user can select the origin institution and review the Data Reception consent information, triggering the redirection to the Transmitting Institution. The screen shows authorized data and purposes.
 
-![Consent Request Screen](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela1-SolicitConsent.png)
+![Consent Request Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela1-SolicitConsent.png)
 
 #### Screen 2: Redirection to Transmitting Institution
 
 Informs the user about the redirection from the Receiving Institution (where the process was initiated) to the Transmitting Institution. There, the user must authenticate and accept the consent.
 
-![Redirection to Transmitting Institution Screen](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela2-Redirect.png)
+![Redirection to Transmitting Institution Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela2-Redirect.png)
 
 #### Screen 3: Request Effectuation
 
 After the consent is accepted at the Transmitting Institution, the user is redirected again to the Receiving Institution, displaying the information of the effectuated consent.
 
-![Request Effectuation Screen](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela3-EfetivSoluc.png)
+![Request Effectuation Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela3-EfetivSoluc.png)
 
 ---
 

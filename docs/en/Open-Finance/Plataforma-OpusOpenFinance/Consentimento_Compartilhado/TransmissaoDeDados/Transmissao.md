@@ -2,7 +2,7 @@
 layout: default
 title: "Data Transmission"
 parent: "Shared Consent"
-nav_order: 4
+nav_order: 2
 lang: "en"
 alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Transmissão/"
 ---
@@ -65,19 +65,19 @@ These screens are associated with the user's identity confirmation and consent p
 
 - The user can review the data sharing, payments, and account linkages consent before finalizing the process. The screen shows authorized data and purposes.
 
-![Consent Review Screen](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela1-RevisaoConsent.png)
+![Consent Review Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela1-RevisaoConsent.png)
 
 #### Screen 2: Consent Confirmation
 
 - Notifies the user of the information collected in the previous step, detailing the permissions granted and providing a summary of what is being authorized.
 
-![Consent Confirmation Screen](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela2-ConfirmConsent.png)
+![Consent Confirmation Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela2-ConfirmConsent.png)
 
 #### Screen 3: Handoff
 
 Informs the user that their journey should continue through the client app, presenting a QR Code to be scanned by the mobile camera. This screen will only be displayed for clients who only have the app option without internet banking.
 
-![Handoff Screen](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela3-Handoff.png)
+![Handoff Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela3-Handoff.png)
 
 These screens were designed to provide a secure and friendly experience where the user has full control over their permissions and linkages in Open Finance.
 
@@ -156,7 +156,7 @@ Another case that needs URL interception handling is the redirect return to the 
 
 Below is an implementation example in Kotlin:
 
-![Implementation in Kotlin](docs/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/ImplementacaoKotlin.png)
+![Implementation in Kotlin](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/ImplementacaoKotlin.png)
 
 #### App Implementation Checklist
 

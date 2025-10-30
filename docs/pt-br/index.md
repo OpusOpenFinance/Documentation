@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Plataforma Opus Open Finance"
-nav_order: 1    # Página principal do site. DEVERIA SER 1, trocar quando gerar a versão completa com redirecionamento!!!!
+nav_order: 1
 has_children: true
 lang: "pt-br"
 alternate_lang: "/Documentation/en/index/"

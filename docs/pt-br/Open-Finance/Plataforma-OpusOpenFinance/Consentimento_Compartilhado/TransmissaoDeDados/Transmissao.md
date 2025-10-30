@@ -2,7 +2,7 @@
 layout: default
 title: "Transmissão de Dados"
 parent: "Consentimento Compartilhado"
-nav_order: 4
+nav_order: 2
 lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Transmissão/"
 ---
@@ -65,19 +65,19 @@ Essas telas estão associadas ao processo de confirmação de identidade do usu�
 
 - O usuário pode revisar o consentimento de compartilhamento de dados, pagamentos e vínculos de contas antes de finalizar o processo. A tela mostra os dados autorizados e as finalidades.
 
-![Tela de Revisão de Consentimento](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela1-RevisaoConsent.png)
+![Tela de Revisão de Consentimento](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela1-RevisaoConsent.png)
 
 #### Tela 2: Confirmação de Consentimento
 
 - Informa ao usuário as informações coletadas na etapa anterior, detalhando as permissões concedidas e fornecendo um resumo do que está sendo autorizado.
 
-![Tela Confirmação de Consentimento](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela2-ConfirmConsent.png)
+![Tela Confirmação de Consentimento](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela2-ConfirmConsent.png)
 
 #### Tela 3: Handoff  
 
 - Informa ao usuário que sua jornada deverá seguir pelo app do cliente, apresentando um QRCode que deve ser escaneado pela câmera do celular. Esta tela será exibida somente para clientes que só possuem a opção app, sem internet banking.
 
-![Tela de Handoff](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela3-Handoff.png)
+![Tela de Handoff](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela3-Handoff.png)
 
 Essas telas foram projetadas para fornecer uma experiência segura e amigável, onde o usuário tem controle total sobre suas permissões e vínculos no Open Finance.
 
@@ -156,7 +156,7 @@ Outro caso que precisa ser tratado via interceptação de URL é o redirecioname
 
 Abaixo um exemplo de implementação em Kotlin:
 
-![Implementação em Kotlin](docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/ImplementacaoKotlin.png)
+![Implementação em Kotlin](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/ImplementacaoKotlin.png)
 
 #### Checklist de implementação APP
 
