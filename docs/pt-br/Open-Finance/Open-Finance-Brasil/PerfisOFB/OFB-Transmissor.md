@@ -4,7 +4,11 @@ title: "Transmissor de Dados"
 parent: "Perfis de participação"
 nav_order: 2
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Transmissor/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Transmissor/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Transmissor/"
+      lang: "es"
 ---
 
 ## Transmissor de Dados

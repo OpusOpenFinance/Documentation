@@ -4,7 +4,11 @@ title: "Detentor de Conta"
 parent: "Perfis de participação"
 nav_order: 3
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Detentor/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Detentor/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Detentor/"
+      lang: "es"
 ---
 
 ## Detentor de Conta

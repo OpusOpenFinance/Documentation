@@ -5,7 +5,11 @@ parent: "Open Finance Brasil"
 nav_order: 2
 has_children: true
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+      lang: "es"
 ---
 
 ## Perfis de Participação
