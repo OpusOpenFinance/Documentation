@@ -2,14 +2,14 @@
 layout: default
 title: "Deploy da Plataforma"
 parent: "Implantação da Plataforma"
-nav_order: 6
+nav_order: 1
 lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Implantação/OOF-Deploy/"
 ---
 
 ## Infraestrutura da Plataforma Opus Open Finance
 
-A **Plataforma Opus Open Finance** foi construída visando oferecer resiliência, escalabilidade e segurança. Para oferecer esses predicados ela se baseia em componentes de infraestrutura de software adequados para execução em ambiente de *cloud computing*. Apresentamos a seguir esses componentes e a configuração necessária para execução adequada da plataforma.
+A **Plataforma Opus Open Finance** foi construída visando oferecer resiliência, escalabilidade e segurança. Para oferecer esses predicados, ela se baseia em componentes de infraestrutura de software adequados para execução em ambiente de *cloud computing*. Apresentamos a seguir esses componentes e a configuração necessária para a execução adequada da plataforma.
 
 ---
 
@@ -24,18 +24,18 @@ A **Plataforma Opus Open Finance** foi construída visando oferecer resiliência
 Para utilizar a Plataforma Opus Open Finance, os seguintes requisitos devem ser atendidos:
 
 1. **Cluster Kubernetes**:
-   - Configurado com uma Storage Class para discos usados por componentes que persistem dados.
+   - Configurado com uma Storage Class para discos usados por componentes que persistem dados;
    - Suporte a versões do Kubernetes até **1.30**.
 
 2. **Banco de Dados PostgreSQL**:
    - Versões recomendadas: >= 14.
 
 3. **Ferramentas na Máquina de Acesso**:
-   - **Kubectl** (Instruções de instalação disponíveis na [documentação do Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/))
-   - **Terraform** v1.8.x (Instruções de instalação disponíveis na [documentação do Terraform](https://developer.hashicorp.com/terraform/install#linux))
-   - **Terragrunt** v.0.43.x (Instruções de instalação disponíveis na [documentação do Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/))
-   - **Age** v1.x.x (Instruções de instalação disponíveis na [Documentação do Age](https://github.com/FiloSottile/age?tab=readme-ov-file#installation))
-   - **Sops** v3.x.x (Instruções de instalação disponíveis na [Documentação do Sops](https://github.com/getsops/sops?tab=readme-ov-file#1download))
+   - **Kubectl** (Instruções de instalação disponíveis na [documentação do Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/));
+   - **Terraform** v1.8.x (Instruções de instalação disponíveis na [documentação do Terraform](https://developer.hashicorp.com/terraform/install#linux));
+   - **Terragrunt** v.0.43.x (Instruções de instalação disponíveis na [documentação do Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/));
+   - **Age** v1.x.x (Instruções de instalação disponíveis na [Documentação do Age](https://github.com/FiloSottile/age?tab=readme-ov-file#installation));
+   - **Sops** v3.x.x (Instruções de instalação disponíveis na [Documentação do Sops](https://github.com/getsops/sops?tab=readme-ov-file#1download)).
 
 4. **Serviço de Mensageria**:
    - Necessário para comunicação entre serviços distribuídos.
@@ -70,17 +70,17 @@ A hierarquia do código é essencial para garantir modularidade e reutilização
 
 ### Core
 
-- **Módulos Terraform**: Contém o código Terraform para os componentes.
-- **Templates Terragrunt**: Arquivos Terragrunt usados como "templates". Estes definem grande parte da "inteligência" do código, incluindo variáveis padrão para cada contexto e a lógica de dependência entre componentes. Sempre que quiser entender como uma variável é configurada, este é o primeiro lugar a verificar.
-- **Scripts**: Scripts auxiliares, como os que lidam com a lógica encriptar e decriptar os arquivos `secrets.tfvars.encrypted`.
-- **secrets.hcl**: Contém os hooks para decriptar os arquivos `secrets.tfvars.encrypted` durante o runtime.
+- **Módulos Terraform**: Contém o código Terraform para os componentes;
+- **Templates Terragrunt**: Arquivos Terragrunt usados como "templates". Estes definem grande parte da "inteligência" do código, incluindo variáveis padrão para cada contexto e a lógica de dependência entre componentes. Sempre que quiser entender como uma variável é configurada, este é o primeiro lugar a verificar;
+- **Scripts**: Scripts auxiliares, como os que lidam com a lógica encriptar e decriptar os arquivos `secrets.tfvars.encrypted`;
+- **secrets.hcl**: Contém os hooks para decriptar os arquivos `secrets.tfvars.encrypted` durante o runtime;
 - **opus.hcl**: Contém configurações específicas do Opus usadas por determinados componentes, como o endereço do repositório de imagens do produto.
 
 ### Client
 
-- **client.hcl**: Configurações globais para todos os ambientes, como informações da organização e da marca.
-- **env.hcl**: Configurações específicas do ambiente, definindo versões a serem usadas (tanto para aplicações quanto para o core), informações do diretório de participantes do Open Banking, endereços de banco de dados, modificações de URL, entre outros.
-- **namespace.hcl**: Configurações específicas do namespace no cluster Kubernetes.
+- **client.hcl**: Configurações globais para todos os ambientes, como informações da organização e da marca;
+- **env.hcl**: Configurações específicas do ambiente, definindo versões a serem usadas (tanto para aplicações quanto para o core), informações do diretório de participantes do Open Banking, endereços de banco de dados, modificações de URL, entre outros;
+- **namespace.hcl**: Configurações específicas do namespace no cluster Kubernetes;
 - **Componente**: Um "componente" é qualquer diretório contendo um arquivo `terragrunt.hcl`. É aqui que a utilidade do Terragrunt deve ser executada, pois seus includes aplicam toda a hierarquia.
 
 ---
@@ -120,7 +120,7 @@ sops `secrets.encrypted.tfvars`: When the file is saved, **sops** automatically 
 
 ### Passos
 
-1. **Remova o arquivo local contendo as chaves**
+1. **Remova o arquivo local contendo as chaves:**
 
    ```shell
    rm $HOME/.config/sops/age/keys.txt
@@ -188,7 +188,7 @@ A arquitetura de microsserviços é complementada pelo uso do **Dapr** (Distribu
 
 A instalação dos componentes do Opus Open Banking é realizada via **Helm**. Os valores do Helm para cada componente podem ser personalizados usando a variável `values_custom` no lado do Client.
 
-Essa variável é análoga à variável `values_template` no template. Caso haja dúvidas, recomenda-se consultar o template. Essencialmente, trata-se de um YAML indentado em formato heredoc, interpretado pelo módulo Terraform como um arquivo YAML.
+Essa variável é análoga à variável `values_template` no template. Caso haja dúvidas, recomenda-se consultar o template. Essencialmente, trata-se de um YAML identado em formato heredoc, interpretado pelo módulo Terraform como um arquivo YAML.
 
 ### Nota Importante
 
@@ -231,11 +231,11 @@ Algumas considerações importantes ao trabalhar com um ambiente de staging/prod
 
 ### Banco de Dados
 
-- A aplicação requer o uso do componente **PostgreSQL**, mas recomenda-se criar um banco de dados separado do cluster. Caso um provedor de nuvem seja utilizado, aconselhamos optar por um serviço gerenciado de banco de dados. O template para este componente inclui as consultas necessárias para criar os bancos de dados e os usuários exigidos pelo produto.
-- Após a criação da instância, o host deve ser configurado no campo `db_host` do arquivo `env.hcl`. Além disso, os arquivos `secrets.encrypted.tfvars` dos componentes que se conectam ao banco de dados devem ser atualizados com a senha do respectivo usuário.
-- Por exemplo, no arquivo `secrets.encrypted.tfvars` do componente **oob-consent**, você deve substituir `changeThis` pela senha do usuário **oob_consent_user**, e assim por diante.
+- A aplicação requer o uso do componente **PostgreSQL**, mas recomenda-se criar um banco de dados separado do cluster. Caso um provedor de nuvem seja utilizado, aconselhamos optar por um serviço gerenciado de banco de dados. O template para este componente inclui as consultas necessárias para criar os bancos de dados e os usuários exigidos pelo produto;
+- Após a criação da instância, o host deve ser configurado no campo `db_host` do arquivo `env.hcl`. Além disso, os arquivos `secrets.encrypted.tfvars` dos componentes que se conectam ao banco de dados devem ser atualizados com a senha do respectivo usuário;
+- Como exemplo, no arquivo `secrets.encrypted.tfvars` do componente **oob-consent**, você deve substituir `changeThis` pela senha do usuário **oob_consent_user**, e assim por diante.
 
 ### Componente Cert-manager
 
-- Útil em ambientes de staging para gerar automaticamente certificados Let's Encrypt.
+- Útil em ambientes de staging para gerar automaticamente certificados Let's Encrypt;
 - Em produção, não é necessário, pois todos os certificados de produção devem ser obtidos de uma autoridade certificadora conforme as especificações regulatórias do ecossistema.

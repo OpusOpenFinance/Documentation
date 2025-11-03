@@ -7,7 +7,7 @@ lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/web2as/OOF-Internet-Banking/"
 ---
 
-# Internet Banking
+## Internet Banking
 
 Caso a instituição necessite, ela pode autenticar seus clientes através de sua própria página de login no *Internet Banking*. Uma vez realizado o login, a instituição pode optar por utilizar as telas de geração de consentimento padrão do Opus Open Banking ou então suas próprias telas customizadas.
 
@@ -44,7 +44,6 @@ Caso a instituição opte por utilizar suas próprias telas de geração de cons
 ## Open API Specification
 
 As definições da API REST disponibilizado pelo Authorization Server podem ser consultadas [aqui][API-Mobile]
-
 
 ## Diagrama de sequência
 

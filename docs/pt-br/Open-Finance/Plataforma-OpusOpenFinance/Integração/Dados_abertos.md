@@ -7,12 +7,12 @@ lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Dados_abertos/"
 ---
 
-# Dados Abertos
+## Dados Abertos
 
 O perfil de dados abertos corresponde aos dados públicos que as instituições participantes do Open Finance devem divulgar ao ecossistema. Para saber mais informações sobre o perfil de dados abertos, [veja aqui][Perfis-Open-Finance-Brasil].
 O perfil de dados abertos é exigido para todos os participantes do ecossistema, e os dados devem ser acessíveis através de APIs. A Plataforma Opus Open Finance implementa a totalidade dessas APIs.
 
-## Integração
+### Integração
 
 A integração do perfil de dados abertos não exige conexão com os sistemas de retaguarda do cliente, uma vez que raramente as instituições financeiras mantém essas informações estruturadas e armazenadas em um repositório central. Além disso, as informações referentes aos dados abertos - canais de atendimento e produtos financeiros ofertados pela instituição - normalmente não mudam com muita frequência.
 
@@ -28,9 +28,9 @@ A Plataforma Opus Open Finance possui um parâmetro de configuração para indic
 >1. Alterar o sistema em questão para gerar arquivos JSON no formato exigido pelo regulatório (ou desenvolver um programa específico que extraia essas informações e gere esse arquivo). Essa é a opção mais simples e, portanto, a recomendada;
 >2. Integrar diretamente a Plataforma Opus Open Finance ao sistema de retaguarda desenvolvendo conectores especializados. Nesse caso, durante o processo de implantação será fornecida documentação específica para a construção desses conectores.
 
-## APIs de dados abertos
+### APIs de dados abertos
 
-### Canais de atendimento
+#### Canais de atendimento
 
 A API de canais de atendimento disponibiliza informações sobre os canais de atendimento da instituição. Os canais de atendimento previstos na regulação são:
 
@@ -40,7 +40,7 @@ A API de canais de atendimento disponibiliza informações sobre os canais de at
 4. Correspondentes bancários da IF
 5. Terminais de autoatendimento
 
-### Produtos
+#### Produtos
 
 As APIs de produtos são referentes aos produtos que a instituição oferece. Tipos possíveis:
 
@@ -57,7 +57,7 @@ As APIs de produtos são referentes aos produtos que a instituição oferece. Ti
 11. Previdência
 12. Câmbio
 
-## Arquivo JSON para integração
+### Arquivo JSON para integração
 
 São apresentadas abaixo as APIs regulatórias referentes a Dados Abertos e exemplos de arquivos JSON para o atendimento às chamadas dessas APIs.
 

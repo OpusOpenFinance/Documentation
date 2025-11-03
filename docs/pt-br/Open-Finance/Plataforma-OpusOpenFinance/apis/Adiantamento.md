@@ -7,7 +7,7 @@ lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/Adiantamento"
 ---
 
-# API de Adiantamento a Depositantes
+## API de Adiantamento a Depositantes
 
 API da *camada de integração* que retorna informações de operações de crédito do tipo *adiantamento a depositantes*, mantidas nas instituições transmissoras por seus clientes, incluindo dados como denominação, modalidade, número do contrato, tarifas, prazo, prestações, pagamentos (ao menos para os últimos 12 meses), amortizações, garantias, encargos e taxas de juros remuneratórios.
 
@@ -23,13 +23,13 @@ Existem *endpoints* para:
 - Obter a lista de garantias vinculadas a um contrato de adiantamento a depositantes;
 - Obter os dados de pagamento de um contrato de adiantamento a depositantes.
 
-## *Open API Specification* da API
+### *Open API Specification* da API
 
 A documentação da API de Adiantamento a Depositantes a ser construída na *camada de integração* pode ser encontrada [**aqui**][API-Adiantamento].
 
 Para fazer o download do arquivo YAML/OAS que contém a especificação da API clique [**aqui**](overdraft-2-4-0.yml){:download="overdraft-2-4-0.yml"}.
 
 {: .destaque}
-Alguns navegadores internet, como *Chrome*, ocasionalmente sinalizam como *não segura* a operação de *download* de arquivos YAML, exigindo o desbloqueio manual pelo usuário. Eses arquivos, entretanto, tem conteúdo do tipo texto e não apresentam risco por si.
+Alguns navegadores de internet, como *Chrome*, ocasionalmente sinalizam como *não segura* a operação de *download* de arquivos YAML, exigindo o desbloqueio manual pelo usuário. Esses arquivos, entretanto, têm conteúdo do tipo texto e não apresentam risco por si.
 
 [API-Adiantamento]: ../../../../swagger-ui/index.html?api=Adiantamento

@@ -7,7 +7,7 @@ lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/Empréstimo/"
 ---
 
-# Empréstimos
+## Empréstimos
 
 API da *camada de integração* que retorna informações de operações de crédito do tipo *empréstimo*, mantidas nas instituições transmissoras por seus clientes, incluindo dados como denominação, modalidade, número do contrato, tarifas, prazo, prestações, pagamentos (ao menos para os últimos 12 meses), amortizações, garantias, encargos e taxas de juros remuneratórios.
 
@@ -23,13 +23,13 @@ Existem *endpoints* para:
 - Obter a lista de garantias vinculadas a um contrato de empréstimo;
 - Obter os dados de pagamento de um contrato de empréstimo.
 
-## *Open API Specification* da API
+### *Open API Specification* da API
 
 A documentação da API de Empréstimos a ser construída na *camada de integração* pode ser encontrada [**aqui**][API-Empréstimo].
 
 Para fazer o download do arquivo YAML/OAS que contém a especificação da API clique [**aqui**](loans-2-4-0.yml){:download="loans-2-4-0.yml"}.
 
 {: .destaque}
-Alguns navegadores internet, como *Chrome*, ocasionalmente sinalizam como *não segura* a operação de *download* de arquivos YAML, exigindo o desbloqueio manual pelo usuário. Eses arquivos, entretanto, tem conteúdo do tipo texto e não apresentam risco por si.
+Alguns navegadores de internet, como *Chrome*, ocasionalmente sinalizam como *não segura* a operação de *download* de arquivos YAML, exigindo o desbloqueio manual pelo usuário. Esses arquivos, entretanto, t~em conteúdo do tipo texto e não apresentam risco por si.
 
 [API-Empréstimo]: ../../../../swagger-ui/index.html?api=Empréstimo

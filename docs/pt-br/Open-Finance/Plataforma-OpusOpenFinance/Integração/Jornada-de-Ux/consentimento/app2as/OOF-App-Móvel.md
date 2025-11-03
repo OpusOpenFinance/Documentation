@@ -7,7 +7,7 @@ lang: "pt-br"
 alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as/OOF-App-Móvel/"
 ---
 
-# Aplicativo Mobile
+## Aplicativo Mobile
 
 A integração por aplicativo mobile para a geração do consentimento é a que proporciona a melhor experiência de uso para o cliente da instituição, pois permite que a jornada de consentimento e gestão de consentimentos sejam realizadas de maneira fluida e natural.
 

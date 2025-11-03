@@ -5,10 +5,14 @@ parent: "Open Finance Brasil"
 nav_order: 2
 has_children: true
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+      lang: "es"
 ---
 
-# Perfis de Participação
+## Perfis de Participação
 
 As instituições financeiras podem participar do *Open Finance Brasil* cumprindo vários papéis específicos, aqui denominados Perfis de Participação. Algumas instituições financeiras são obrigadas a participar com determinados perfis, mas todas as instituições podem, voluntariamente, exercer todos os perfis existentes.
 
@@ -16,19 +20,19 @@ As instituições financeiras podem participar do *Open Finance Brasil* cumprind
 
 Os perfis exercidos pelas instituições financeiras podem ser divididos nos dois ecossistemas existentes: compartilhamento de dados e pagamentos. Em cada um deles existe uma parte ativa (que é quem inicia uma ação) e uma parte passiva, que responde à ação disparada pela parte ativa.
 
-## No ecossistema de Dados
+### No ecossistema de Dados
 
 - **Transmissora de Dados** - Parte passiva.
 - **Receptora de Dados** - Parte ativa.
 
-## No ecossistema de Pagamentos
+### No ecossistema de Pagamentos
 
 - **Detentora de Conta** - Parte passiva.
 - **Iniciadora de Transação de Pagamento (ITP)** - Parte ativa.
 
 ---
 
-## Nomenclatura TPP
+### Nomenclatura TPP
 
 O termo **TPP** (Third-Party Provider) é utilizado para representar ambas as partes ativas do ecossistema, ou seja:
 
@@ -37,7 +41,7 @@ O termo **TPP** (Third-Party Provider) é utilizado para representar ambas as pa
 
 ---
 
-## Perfis de Participação no Open Finance Brasil
+### Perfis de Participação no Open Finance Brasil
 
 Os perfis de atuação podem ser entendidos conforme a tabela abaixo:
 
@@ -48,7 +52,7 @@ Os perfis de atuação podem ser entendidos conforme a tabela abaixo:
 
 ---
 
-## Plataforma Opus Open Finance
+### Plataforma Opus Open Finance
 
 A Plataforma Opus Open Finance oferece uma solução completa para atender aos requisitos necessários a todos os perfis de participação do *Open Finance Brasil*.
 

@@ -38,6 +38,7 @@ rm -rf "$BUILD_TMP" "$FINAL_DEST"
 # Redirecionamento (index.html raiz)
 build_redirect() {
   echo "🌐 Gerando página de redirecionamento (index.html)..."
+  # Use um config temporário sem JS customizados
   bundle exec jekyll build \
     --config _config.yml,_config-redirect.yml \
     --destination "$BUILD_TMP/index"
@@ -57,6 +58,14 @@ build_en() {
   JEKYLL_ENV=en bundle exec jekyll build \
     --config _config.yml,_config-en.yml \
     --destination "$BUILD_TMP/en"
+}
+
+# Build es isolado
+build_es() {
+  echo "🌐 🇪🇸 Gerando versão em espanhol (es)..."
+  JEKYLL_ENV=es bundle exec jekyll build \
+    --config _config.yml,_config-es.yml \
+    --destination "$BUILD_TMP/es"
 }
 
 # Montagem final em _site/Documentation
@@ -99,6 +108,16 @@ assemble_final_site() {
     fi
   fi
 
+  if [ -d "$BUILD_TMP/es" ]; then
+    echo "📁 Movendo es..."
+    mv "$BUILD_TMP/es/es" "$DOCS_DEST/"
+    if [ -d "$BUILD_TMP/assets/js" ]; then
+      mv "$BUILD_TMP/es/assets/js/search-data.json" "$DOCS_DEST/assets/js/search-data-es.json"
+    else
+      mv "$BUILD_TMP/es/assets" "$DOCS_DEST/"
+    fi
+  fi
+
   if [ -f "$BUILD_TMP/index/index.html" ]; then
     echo "📄 Movendo index.html..."
     mkdir -p "$FINAL_DEST"
@@ -115,10 +134,14 @@ case "$1" in
   en|-en)
     build_en
     ;;
+  es|-es)
+    build_es
+    ;;
   *)
     build_redirect
     build_pt_br
     build_en
+    build_es
     ;;
 esac
 

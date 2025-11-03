@@ -4,18 +4,22 @@ title: "O Ecossistema"
 parent: "Open Finance Brasil"
 nav_order: 1
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Open-Finance-Brasil/Ecossistema/OFB-Ecossistema/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/Ecossistema/OFB-Ecossistema/"
+      lang: "en" 
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/Ecossistema/OFB-Ecossistema/"
+      lang: "es"
 ---
 
 ## O Ecossistema
 
-O Open Finance Brasil carrega um peso significativo na transformação do sistema de pagamentos do país. Assim como o Pix foi um sucesso, o Open Finance possui diversos benefícios para toda a população brasileira, especialmente a médio e longo prazo. Para o Banco Central, o propósito do Open Finance é incentivar um ambiente de maior competição no sistema financeiro, melhorando os qualidade dos serviços, promovendo inovação e proporcionando maior disputa pelos clientes, tendendo à natural redução das taxas e custos pelo mercado.
+O Open Finance Brasil carrega um peso significativo na transformação do sistema de pagamentos do país. Assim como o Pix foi um sucesso, o Open Finance possui diversos benefícios para toda a população brasileira, especialmente a médio e longo prazo. Para o Banco Central, o propósito do Open Finance é incentivar um ambiente de maior competição no sistema financeiro, melhorando a qualidade dos serviços, promovendo inovação e proporcionando maior disputa pelos clientes, tendendo à natural redução das taxas e custos pelo mercado.
 
 Para saber mais, [acesse o site](https://openfinancebrasil.org.br/conheca-o-open-finance/) e assista aos vídeos disponibilizados.
 
 ---
 
-## Escopo do Open Finance
+### Escopo do Open Finance
 
 O Open Finance tem um escopo de implementação em 4 diferentes fases, conhecidas como:
 
@@ -31,13 +35,13 @@ Cada fase é descrita em detalhes na imagem abaixo:
 
 ---
 
-## Estrutura do Open Finance
+### Estrutura do Open Finance
 
 Para garantir a implementação do Open Finance, o Banco Central definiu uma estrutura para concretizar os objetivos do ecossistema. A estrutura está dividida da seguinte forma:
 
 ![Organograma Open Finance](./images/Organograma_OF.png)
 
-### Banco Central
+#### Banco Central
 
 É responsável pela definição das diretrizes estratégicas do Open Finance e mantém contato direto com o Conselho Deliberativo para analisar o andamento das atividades. O principal canal para divulgação de novas diretrizes e requisitos é através da publicação de instruções normativas.
 
@@ -45,19 +49,19 @@ Para garantir a implementação do Open Finance, o Banco Central definiu uma est
 
 ---
 
-### Conselho Deliberativo
+#### Conselho Deliberativo
 
 Decide as questões estratégicas necessárias para a implementação do projeto no Brasil e propõe os padrões técnicos ao [Banco Central](https://www.bcb.gov.br/).
 
 ---
 
-### Secretariado
+#### Secretariado
 
 Atua como elo principal com o Conselho Deliberativo, informando sobre o andamento do projeto por meio de relatórios, acompanhamento de cronogramas técnicos e regulatórios, gestão de fornecedores e organização dos grupos de trabalho (GTs).
 
 ---
 
-### Grupos de Trabalho (GTs)
+#### Grupos de Trabalho (GTs)
 
 São responsáveis por estudos, propostas técnicas e planos voltados para a implementação e gestão do Open Finance. Incluem profissionais de empresas de tecnologia e acadêmicos. Atualmente, existem oito GTs:
 
@@ -74,13 +78,13 @@ Há também 6 GTs internos para suporte adicional às demandas recebidas.
 
 ---
 
-### Instituições Participantes
+#### Instituições Participantes
 
 As instituições participantes devem acompanhar o andamento do ecossistema para garantir conformidade com os requisitos regulatórios. É essencial monitorar os principais canais de informação.
 
 ---
 
-## Links Relevantes para o Regulatório
+### Links Relevantes para o Regulatório
 
 - [Informas](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17367115/Reposit+rio+de+Informes)
 - [Portal do desenvolvedor](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/overview)
