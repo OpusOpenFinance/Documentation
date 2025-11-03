@@ -4,7 +4,11 @@ title: Jornada de Consentimento
 parent: "Open Finance Brasil"
 nav_order: 3
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento/"
+    lang: "es"
 ---
 
 ## Jornada de Consentimento

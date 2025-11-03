@@ -4,7 +4,11 @@ title: "Plataforma Opus Open Finance"
 nav_order: 1
 has_children: true
 lang: "pt-br"
-alternate_lang: "/Documentation/en/index/"
+alternate_lang: 
+    - path: "/Documentation/en/index/"
+      lang: "en"
+    - path: "/Documentation/es/index/"
+      lang: "es"
 ---
 
 # Documentação da Plataforma Opus Open Finance
