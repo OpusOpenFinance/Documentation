@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Configurações
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const baseUrl = isLocal ? '' : '/Documentation';
-    const supportedLangs = ["pt-br", "en"];
-    const defaultLang = "pt-br";
+    const supportedLangs = ["pt-br", "en", "es"];
+    const defaultLang = "en";
 
     // Detecta idioma
     const userLang = navigator.language || navigator.userLanguage || defaultLang;
@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
     
     if (userLang.toLowerCase().startsWith('pt')) {
         detectedLang = 'pt-br';
+    } else if (userLang.toLowerCase().startsWith('es')) {
+        detectedLang = 'es';
     } else if (userLang.toLowerCase().startsWith('en')) {
         detectedLang = 'en';
     }

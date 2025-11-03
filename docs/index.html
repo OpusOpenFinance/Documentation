@@ -4,94 +4,30 @@
     <meta charset="utf-8">
     <title>Redirecting...</title>
     <script>
-        const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-        const base = isLocal ? '' : '/Documentation';
-        const lang = navigator.language.startsWith('pt') ? 'pt-br' : 'en';
-        location.replace(base + '/' + lang + '/');
+        document.addEventListener("DOMContentLoaded", function () {
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const baseUrl = isLocal ? '' : '/Documentation';
+            const userLang = navigator.language || navigator.userLanguage || 'en';
+            let targetLang = "en"; // Default fallback
+
+            if (userLang.toLowerCase().startsWith('pt')) {
+                targetLang = 'pt-br';
+            } else if (userLang.toLowerCase().startsWith('es')) {
+                targetLang = 'es';
+            }
+
+            const targetUrl = baseUrl + '/' + targetLang + '/';
+            const currentPath = window.location.pathname;
+
+            // Redireciona apenas se estiver na página raiz
+            if (currentPath === '/' || currentPath === `${baseUrl}/` || currentPath === '') {
+                window.location.replace(targetUrl);
+            }
+        });
     </script>
-    <meta http-equiv="refresh" content="0;url=/Documentation/pt-br/">
+    <meta http-equiv="refresh" content="0;url=/Documentation/en/">
 </head>
 <body>
-    <p>Redirecting... <a href="/Documentation/pt-br/">Click here</a></p>
+    <p>Redirecting to your language... <a href="/Documentation/en/">Click here if not redirected</a></p>
 </body>
 </html>
-
-<!--
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Opus Open Finance Documentation</title>
-
-  <script src="/Documentation/assets/js/auto-redirect.js"></script>  <!-- "Documentation" is the baseurl in _config.yml 
-
-</head>
-<body>
-  <p>Redirecting para páginas em português<p>
-</body>
-</html>
-
-
-<!--
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selecione o Idioma | Select Language</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
-        .language-menu {
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .language-menu h1 {
-            margin-bottom: 30px;
-            color: #333;
-        }
-        .language-menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .language-menu li {
-            margin-bottom: 15px;
-        }
-        .language-menu a {
-            display: inline-block;
-            padding: 12px 25px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease;
-        }
-        .language-menu a:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <div class="language-menu">
-        <h1>Selecione o Idioma | Select Language</h1>
-        <ul>
-            <li><a href="./en/">English</a></li>
-            <li><a href="./pt-br/">Português</a></li>
-        </ul>
-    </div>
-</body>
-</html>
--->

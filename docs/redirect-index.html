@@ -5,27 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
     <script>
-        // Redirecionamento simples por meta tag
         (function() {
             const isLocal = window.location.hostname === 'localhost' || 
                            window.location.hostname === '127.0.0.1';
             const baseUrl = isLocal ? '' : '/Documentation';
             const userLang = navigator.language || navigator.userLanguage || 'en';
-            let targetLang = 'en';
-            
+            let targetLang = 'en'; // Default fallback
+
             if (userLang.toLowerCase().startsWith('pt')) {
                 targetLang = 'pt-br';
+            } else if (userLang.toLowerCase().startsWith('es')) {
+                targetLang = 'es';
             }
-            
+
             const targetUrl = baseUrl + '/' + targetLang + '/';
             window.location.replace(targetUrl);
         })();
     </script>
     <noscript>
-        <meta http-equiv="refresh" content="0;url=/Documentation/pt-br/">
+        <meta http-equiv="refresh" content="0;url=/Documentation/en/">
     </noscript>
 </head>
 <body>
-    <p>Redirecting to your language... <a href="/Documentation/pt-br/">Click here if not redirected</a></p>
+    <p>Redirecting to your language... <a href="/Documentation/en/">Click here if not redirected</a></p>
 </body>
 </html>
