@@ -4,7 +4,11 @@ title: "Mobile Banking"
 parent: "App e Web"
 nav_order: 1
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as/OOF-App-Móvel/"
+alternate_lang: 
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as/OOF-App-Móvel/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as/OOF-App-Móvel/"
+      lang: "es"
 ---
 
 ## Aplicativo Mobile

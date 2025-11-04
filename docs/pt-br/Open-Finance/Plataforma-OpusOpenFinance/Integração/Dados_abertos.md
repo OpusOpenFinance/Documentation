@@ -4,7 +4,11 @@ title: "Dados Abertos"
 parent: "Integração da Plataforma"
 nav_order: 1
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Dados_abertos/"
+alternate_lang: 
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integration/OpenData/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integration/OpenData/"
+      lang: "es"
 ---
 
 ## Dados Abertos

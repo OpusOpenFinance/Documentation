@@ -4,7 +4,11 @@ title: "API de Direitos Creditórios"
 parent: "Operações de Crédito"
 nav_order: 4
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/DireitosCreditórios/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/DireitosCreditórios/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/DireitosCreditórios/"
+      lang: "es"
 ---
 
 ## Direitos Creditórios Descontados

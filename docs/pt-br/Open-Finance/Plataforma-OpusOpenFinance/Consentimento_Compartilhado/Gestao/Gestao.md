@@ -4,7 +4,11 @@ title: "Gestão de Consentimento"
 parent: "Consentimento Compartilhado"
 nav_order: 1
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Gestão/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Gestão/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Gestão/"
+      lang: "es"
 ---
 
 ## O que a nossa solução implementa

@@ -4,7 +4,11 @@ title: "API de Dados Cadastrais"
 parent: "Compartilhamento de Dados"
 nav_order: 1
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/Dados-Cadastrais/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/Dados-Cadastrais/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/Dados-Cadastrais/"
+      lang: "es"
 ---
 
 ## API de Dados Cadastrais

@@ -4,7 +4,11 @@ title: "Exemplo Seguros"
 parent: "Dados Abertos"
 nav_order: 9
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Insurance/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Insurance/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Insurance/"
+      lang: "es"
 ---
 
 ## Exemplo de arquivo JSON

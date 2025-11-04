@@ -5,7 +5,11 @@ parent: "Integração da Plataforma"
 nav_order: 2
 has_children: true
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/CamadaIntegração/"
+alternate_lang: 
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/CamadaIntegração/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/CamadaIntegração/"
+      lang: "es"
 ---
 
 ## Compartilhamento de dados

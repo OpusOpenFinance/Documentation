@@ -24,7 +24,7 @@ Atualmente, os meios de pagamento previstos no Open Finance incluem:
 - **Boleto**;*
 - **Débito em Conta**;*
 - **TED/TEF**;*
-- **Cartão de Crédito**;*
+- **Cartão de Crédito**.*
 
 {: .nota}
 Os itens marcados com asterisco ainda não estão disponíveis no Open Finance e não possuem previsão de entrada.

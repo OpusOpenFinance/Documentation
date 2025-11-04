@@ -4,7 +4,11 @@ title: "Exemplo Previdência"
 parent: "Dados Abertos"
 nav_order: 12
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Pension/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Pension/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Pension/"
+      lang: "es"
 ---
 
 ## Exemplo de arquivo JSON

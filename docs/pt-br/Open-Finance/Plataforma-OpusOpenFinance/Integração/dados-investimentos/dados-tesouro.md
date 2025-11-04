@@ -4,7 +4,11 @@ title: "API de Títulos do Tesouro Direto"
 parent: "Investimentos"
 nav_order: 5
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dados-investimentos/dados-tesouro/"
+alternate_lang: 
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dados-investimentos/dados-tesouro/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dados-investimentos/dados-tesouro/"
+      lang: "es"
 ---
 
 ## API de Títulos do Tesouro Direto

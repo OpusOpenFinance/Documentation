@@ -5,7 +5,11 @@ parent: "Integração da Plataforma"
 nav_order: 4
 has_children: true
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/App-e-Web/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/App-e-Web/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/App-e-Web/"
+      lang: "es"
 ---
 
 ## Integração de canais digitais de atendimento
