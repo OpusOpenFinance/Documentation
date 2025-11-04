@@ -4,7 +4,11 @@ title: "Recepção de Dados"
 parent: "Consentimento Compartilhado"
 nav_order: 3
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Recepção/"
+alternate_lang: 
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Recepção/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Recepção/"
+      lang: "es"
 ---
 
 ## Introdução

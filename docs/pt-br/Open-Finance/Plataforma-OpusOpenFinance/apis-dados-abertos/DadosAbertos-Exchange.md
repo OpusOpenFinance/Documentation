@@ -4,7 +4,11 @@ title: "Exemplo Câmbio"
 parent: "Dados Abertos"
 nav_order: 13
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Exchange/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Exchange/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Exchange/"
+      lang: "es"
 ---
 
 ## Exemplo de arquivo JSON

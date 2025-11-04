@@ -5,7 +5,11 @@ parent: "Integração da Plataforma"
 nav_order: 3
 has_children: true
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/CamadaIntegraçãoPagamentos/"
+alternate_lang: 
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/CamadaIntegraçãoPagamentos/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/CamadaIntegraçãoPagamentos/"
+      lang: "es"
 ---
 
 ## Integração com Pagamentos
@@ -252,7 +256,7 @@ O campo `consent.debtorAccount` estará também sempre preenchido com as informa
 
 **Onde encontrar a data do pagamento para cada cenário ou tipo de pagamento?**
 
-Conferir [como identificar a data do pagamento](/pt-br/integração-plugin/recomendacoes/cenarios-pagamentos/readme.md#Como-Identificar-a-Data-de-Efetivação-do-Pagamento)
+Conferir [como identificar a data do pagamento](/pt-br/integração-plugin/recomendacoes/cenarios-pagamentos/readme.md#Como-Identificar-a-Data-de-Efetivação-do-Pagamento).
 
 **A retaguarda da instituição financeira precisa suportar Agendamentos Recorrentes?**
 

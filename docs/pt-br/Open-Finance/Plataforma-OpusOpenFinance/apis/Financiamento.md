@@ -4,7 +4,11 @@ title: "API de Financiamento"
 parent: "Operações de Crédito"
 nav_order: 2
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/Financiamento/"
+alternate_lang: 
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/Financiamento/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/Financiamento/"
+      lang: "es"
 ---
 
 ## Financiamento

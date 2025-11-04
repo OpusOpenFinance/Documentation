@@ -16,11 +16,11 @@ The Payment Initiation Service Provider (*PISP*) is the *Open Finance Brasil* pr
 
 Currently, the payment methods foreseen in *Open Finance Brasil* include:
 
-- **Pix**
-- **Boleto***
-- **Debit in Account***
-- **TED/TEF***
-- **Credit Card***
+- **Pix**;
+- **Boleto**;*
+- **Debit in Account**;*
+- **TED/TEF**;*
+- **Credit Card**.*
 
 {: .note}
 The items marked with an asterisk are not yet available in *Open Finance Brasil* and have no scheduled release date.
@@ -35,17 +35,17 @@ The authorization process to make payments is done through a **complete consent 
 
 ### Available Features
 
-- **Instant Pix payment**
-- **Scheduled Pix payment**
-- **Recurring scheduled payments**
-- **Automatic transfers between accounts of the same account holder** (known as *sweeping accounts*)
+- **Instant Pix payment**;
+- **Scheduled Pix payment**;
+- **Recurring scheduled payments**;
+- **Automatic transfers between accounts of the same account holder** (known as *sweeping accounts*).
 
 ### Planned Features
 
-- **Batch payments (1:n)**
-- **Payments without redirection** (no redirection to the Account Holder from the user's perspective)
-- **Recurring payments** (Variable Recurring Payment - VRP)
-- **Pix via proximity**
+- **Batch payments (1:n)**;
+- **Payments without redirection** (no redirection to the Account Holder from the user's perspective);
+- **Recurring payments** (Variable Recurring Payment - VRP);
+- **Pix via proximity**.
 
 The [developer portal][Dev-Portal] offers a calendar with upcoming deliveries.
 

@@ -4,7 +4,11 @@ title: "API de Câmbio"
 parent: "Compartilhamento de Dados"
 nav_order: 6
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/Câmbio/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/Câmbio/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/Câmbio/"
+      lang: "es"
 ---
 
 ## API de Operações de Câmbio

@@ -4,7 +4,11 @@ title: "Transmissão de Dados"
 parent: "Consentimento Compartilhado"
 nav_order: 2
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Transmissão/"
+alternate_lang: 
+  - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Transmissão/"
+    lang: "en"
+  - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Transmissão/"
+    lang: "es"
 ---
 
 ## Introdução
@@ -224,7 +228,7 @@ Todo o fluxo será controlado pela aplicação do consentimento compartilhado, s
 
 #### Página de Autenticação da Marca
 
-O fluxo tem início quando um usuário deseja compartilhar seus dados ou iniciar um pagamento em outra instituição financeira, sendo necessário redirecioná-lo para a página de autenticação da detentora dos dados.   
+O fluxo tem início quando um usuário deseja compartilhar seus dados ou iniciar um pagamento em outra instituição financeira, sendo necessário redirecioná-lo para a página de autenticação da detentora dos dados.
 
 Como cada marca possui um mecanismo de autenticação diferente, a API de consentimento compartilhado redireciona o cliente para a página cadastrada pela marca, passando as informações da instituição iniciadora do compartilhamento/pagamento. Assim, a marca utiliza a própria autenticação existente para os correntistas. As informações enviadas no GET (fragment) são:  
 

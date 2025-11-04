@@ -4,7 +4,11 @@ title: "Exemplo Contas"
 parent: "Dados Abertos"
 nav_order: 2
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Accounts/"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Accounts/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Accounts/"
+      lang: "es"
 ---
 
 ## Exemplo de arquivo JSON

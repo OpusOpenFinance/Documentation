@@ -4,7 +4,11 @@ title: "APIs de Gestão de Consentimentos"
 parent: "Opus Open Finance"
 nav_order: 2
 lang: "pt-br"
-alternate_lang: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/APIs_de_backoffice/OOF-APIBack/"
+alternate_lang: 
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/APIs_de_backoffice/OOF-APIBack/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/APIs_de_backoffice/OOF-APIBack/"
+      lang: "es"
 ---
 
 ## APIs de Gestão de Consentimento
