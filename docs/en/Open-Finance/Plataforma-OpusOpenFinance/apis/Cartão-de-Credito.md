@@ -4,10 +4,14 @@ title: "Credit Cards API"
 parent: "Data Sharing"
 nav_order: 2
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Cartão-de-Credito/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Cartão-de-Credito/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/Cartão-de-Credito/"
+      lang: "es"
 ---
 
-# Credit Cards API
+## Credit Cards API
 
 The *integration layer* API that returns information about *postpaid payment accounts* held by transmitting institutions for their clients, including data such as denomination, product, brand, credit limits, payment transaction details, and invoices.
 
@@ -24,7 +28,7 @@ There are endpoints for:
 - Retrieving the credit limits for a card;
 - Retrieving the list of recent transactions (last 7 days) for a card.
 
-## *Open API Specification* of the API
+### *Open API Specification* of the API
 
 The documentation for the Credit Card API to be built in the *integration layer* can be found [**here**][API-Cartão-de-crédito].
 

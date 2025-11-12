@@ -5,10 +5,14 @@ parent: "Data Sharing"
 nav_order: 4
 has_children: true
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/OOF-Crédito/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/OOF-Crédito/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/OOF-Crédito/"
+      lang: "es"
 ---
 
-# Credit Operations
+## Credit Operations
 
 All types of credit operations are eligible for data sharing within the scope of *Open Finance Brasil*.
 

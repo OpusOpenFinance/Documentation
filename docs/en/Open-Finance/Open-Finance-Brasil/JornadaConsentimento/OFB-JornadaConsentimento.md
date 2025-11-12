@@ -4,10 +4,14 @@ title: "Consent Journey"
 parent: "Open Finance Brazil"
 nav_order: 3
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento/"
+      lang: "es"
 ---
 
-# Consent Journey
+## Consent Journey
 
 In Open Finance, any operation can only be performed — whether it is data sharing or making a payment — if there is consent approved by the user (client of a financial institution) who initiated the journey. Therefore, it is always necessary to perform a *consent journey* for the user to authorize the operation.
 
@@ -15,7 +19,7 @@ In Open Finance, any operation can only be performed — whether it is data shar
 
 ---
 
-## Consent Journey for Data Sharing
+### Consent Journey for Data Sharing
 
 1. The user accesses the **Data Receiver's** environment and requests the initiation of a new data sharing via Open Finance.
 2. After making the request and choosing the **Data Transmitter**, the user is automatically redirected to the Transmitter's environment.
@@ -25,7 +29,7 @@ In Open Finance, any operation can only be performed — whether it is data shar
 
 ---
 
-## Consent Journey for Payments
+### Consent Journey for Payments
 
 1. The user accesses the **Payment Initiator Service Provider (PISP)** environment and requests the initiation of a new payment via Open Finance.
 2. After making the request and choosing the **Account Holder**, the user is automatically redirected to the Account Holder's environment.
@@ -37,7 +41,7 @@ For more details on possible consent statuses and the payment state machine, ple
 
 ---
 
-## Differences Between Consent Journeys
+### Differences Between Consent Journeys
 
 Although similar, the journeys have particularities due to their distinct purposes:
 

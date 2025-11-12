@@ -4,10 +4,14 @@ title: "Accounts API"
 parent: "Data Sharing"
 nav_order: 3
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Contas/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Contas/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/Contas/"
+      lang: "es"
 ---
 
-# Accounts API
+## Accounts API
 
 The *integration layer* API that returns information about *checking accounts*, *savings accounts*, and *prepaid payment accounts* held by transmitting institutions for their clients, including account identification data, balances, limits, and transactions.
 
@@ -26,7 +30,7 @@ There are endpoints for:
 
 Additionally, it is necessary to implement another regulatory API for verifying a customer's account, whether an individual (PF) or a legal entity (PJ), at a given institution. This API is called *common* and checks whether a customer abandoned the consent flow due to not having an account at the institution.
 
-## *Open API Specification* of the API
+### *Open API Specification* of the API
 
 The documentation for the Accounts API to be built in the *integration layer* can be found [**here**][API-Contas].
 

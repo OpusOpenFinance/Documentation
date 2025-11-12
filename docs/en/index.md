@@ -1,10 +1,14 @@
 ---
 layout: default
 title: "Opus Open Finance Platform"
-nav_order: 1    # Main page of the site.
+nav_order: 1
 has_children: true
 lang: "en"
-alternate_lang: "/Documentation/pt-br/index/"
+alternate_lang:
+    - path: "/Documentation/pt-br/index/"
+      lang: "pt-br"
+    - path: "/Documentation/es/index/"
+      lang: "es"
 ---
 
 # Opus Open Finance Platform Documentation

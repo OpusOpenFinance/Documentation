@@ -4,10 +4,14 @@ title: "Example Capitalization Bonds"
 parent: "Open Data"
 nav_order: 11
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Capitalization/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Capitalization/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Capitalization/"
+      lang: "es"
 ---
 
-# JSON File Example
+## JSON File Example
 
 This is an example of a JSON response file from the ***OpenData Capitalization-bonds*** API.
 

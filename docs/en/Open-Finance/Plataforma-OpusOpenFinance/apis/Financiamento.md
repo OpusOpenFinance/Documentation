@@ -4,10 +4,14 @@ title: "Financing API"
 parent: "Credit Operations"
 nav_order: 2
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Financiamento/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Financiamento/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/Financiamento/"
+      lang: "es"
 ---
 
-# Financing
+## Financing
 
 The *integration layer* API that returns information on credit operations of the *financing* type, maintained by transmitting institutions for their clients, including data such as denomination, modality, contract number, fees, term, installments, payments (at least for the last 12 months), amortizations, guarantees, charges, and interest rates.
 
@@ -23,7 +27,7 @@ There are *endpoints* for:
 - Retrieving the list of guarantees linked to a financing contract;
 - Retrieving the payment details of a financing contract.
 
-## *Open API Specification* of the API
+### *Open API Specification* of the API
 
 The documentation for the Financing API to be built in the *integration layer* can be found [**here**][API-Financiamento].
 

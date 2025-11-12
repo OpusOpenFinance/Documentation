@@ -4,10 +4,14 @@ title: "Unarranged Accounts Overdraft API"
 parent: "Credit Operations"
 nav_order: 3
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Adiantamento"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Adiantamento"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/Adiantamento"
+      lang: "es"
 ---
 
-# Unarranged Accounts Overdraft API
+## Unarranged Accounts Overdraft API
 
 The *integration layer* API that returns information on credit operations of the *arranged overdraft* type, maintained by transmitting institutions for their clients, including data such as denomination, modality, contract number, fees, term, installments, payments (at least for the last 12 months), amortizations, guarantees, charges, and remunerative interest rates.
 
@@ -26,7 +30,7 @@ There are endpoints for:
 - Retrieving the list of guarantees linked to an advance to depositors contract;
 - Retrieving the payment data of an advance to depositors contract.
 
-## *Open API Specification* of the API
+### *Open API Specification* of the API
 
 The documentation for the Unarranged Accounts Overdraft API to be built in the *integration layer* can be found [**here**][API-Adiantamento].
 

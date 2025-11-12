@@ -4,10 +4,14 @@ title: "Certifications and Certificates"
 parent: "Open Finance Brazil"
 nav_order: 4
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/OFB-Certificações/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/OFB-Certificações/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/OFB-Certificações/"
+      lang: "es"
 ---
 
-# Certifications and Certificates
+## Certifications and Certificates
 
 To participate in Open Finance, financial institutions must complete procedures to obtain two types of certifications:
 
@@ -28,20 +32,20 @@ Additionally, the ecosystem requires participants to acquire some digital certif
 
 ---
 
-## OpenID Security Certification
+### OpenID Security Certification
 
 The security protocol adopted by Open Finance Brasil follows the requirements of the [OpenID Foundation](https://openid.net/).
 
 A security compliance engine ensures that an institution meets the requirements of this protocol, performing the necessary tests in the FAPI-BR layer within the OpenID framework.
 
-### Types of Certification
+#### Types of Certification
 
 1. **OpenID Providers (OP)**:
    Required for the Account Holder and Data Transmitter profiles.
 2. **Relying Parties (RP)**:
    Required for the Payment Initiation Service Provider (PISP) and Data Receiver profiles.
 
-### Certification Resources
+#### Certification Resources
 
 - [Compliance Certification Guide](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/155910145/Guia+de+Certifica+o+de+Conformidade)
 - [Technical Guidelines for Compliance Certification](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378905/Diretrizes+T+cnicas+de+Certifica+o+de+Conformidade)
@@ -51,13 +55,13 @@ A security compliance engine ensures that an institution meets the requirements 
 
 ---
 
-## Functional Certification
+### Functional Certification
 
 In the context of Open Finance Brasil qualification, various API specifications must be implemented by the participating institution. To ensure that the participant meets all expectations for the functionality's journey, Open Finance Brasil governance provides a functional engine. Within this engine, various test plans are provided for each regulatory API to be tested and certified based on how closely its behavior aligns with regulatory standards.
 
 You can track published tests from participating institutions [through this link](https://web.conformance.directory.openbankingbrasil.org.br/plans.html?public=true).
 
-### Certification Steps
+#### Certification Steps
 
 1. Create an account on the [sandbox](https://web.sandbox.directory.openbankingbrasil.org.br/organisations) directory for participants.
 2. Configure the [sandbox](https://web.sandbox.directory.openbankingbrasil.org.br/organisations) directory.
@@ -69,7 +73,7 @@ You can track published tests from participating institutions [through this link
 
 ---
 
-## Digital Certificates
+### Digital Certificates
 
 Digital certificates are divided into 4 types:
 
@@ -86,7 +90,7 @@ Digital certificates are divided into 4 types:
 4. **Signature Certificate**:
    - Signs the payload using JWS (JSON Web Signature).
 
-### Certificate Requirements by Profile
+#### Certificate Requirements by Profile
 
 | Certificate         | Account Holder | ITP | Data Transmitter | Data Receiver |
 |---------------------|:--------------:|:---:|:----------------:|:-------------:|
@@ -95,7 +99,7 @@ Digital certificates are divided into 4 types:
 | Authentication      | Yes            | Yes | Yes              | Yes           |
 | Signature           | Yes            | No  | Yes              | No            |
 
-### Open Finance Brasil Authorized Certification Authorities
+#### Open Finance Brasil Authorized Certification Authorities
 
 - **CertiSign**
 - **Serpro**

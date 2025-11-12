@@ -5,7 +5,11 @@ parent: "Opus Open Finance Platform"
 nav_order: 2
 has_children: true
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/OpenFinanceBrasil/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/OpenFinanceBrasil/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/OpenFinanceBrasil/"
+      lang: "es"
 ---
 
 ## Open Finance Brasil

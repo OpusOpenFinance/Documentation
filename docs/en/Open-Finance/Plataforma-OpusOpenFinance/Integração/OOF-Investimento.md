@@ -5,10 +5,14 @@ parent: "Data Sharing"
 nav_order: 5
 has_children: true
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/OOF-Investimento/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/OOF-Investimento/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/OOF-Investimento/"
+      lang: "es"
 ---
 
-# Investments
+## Investments
 
 All types of investments are eligible for data sharing within the scope of *Open Finance Brasil*.
 

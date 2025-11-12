@@ -4,10 +4,14 @@ title: "Consent Management APIs"
 parent: "Opus Open Finance Brazil"
 nav_order: 2
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/APIs_de_backoffice/OOF-APIBack/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/APIs_de_backoffice/OOF-APIBack/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/APIs_de_backoffice/OOF-APIBack/"
+      lang: "es"
 ---
 
-# Consent Management APIs
+## Consent Management APIs
 
 Consent (both data sharing and payment) plays a central role in the entire operational model of *Open Finance Brasil*, ensuring that all transactions and operations within the ecosystem are carried out with the explicit permission of the end customer.
 
@@ -21,7 +25,7 @@ Thus, the entire creation, lifecycle management, and revocation of consents is t
 
 The Consent Management API allows financial institution applications to extract information about the consents (whether active or not) related to payments made and data shared by their customers.
 
-## *Open API Specification*
+### *Open API Specification*
 
 The definitions of the API in Open API Specification format can be found [**here**][API-backoffice].
 

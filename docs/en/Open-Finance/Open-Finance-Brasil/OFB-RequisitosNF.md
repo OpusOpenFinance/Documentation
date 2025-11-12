@@ -4,7 +4,11 @@ title: "Non-Functional Requirements"
 parent: "Open Finance Brazil"
 nav_order: 6
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/OFB-RequisitosNF/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/OFB-RequisitosNF/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/OFB-RequisitosNF/"
+      lang: "es"
 ---
 
 # Non-functional Requirements

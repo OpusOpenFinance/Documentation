@@ -4,46 +4,50 @@ title: "Data Receiver"
 parent: "Participation Profiles"
 nav_order: 4
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Receptor/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Receptor/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Receptor/"
+      lang: "es"
 ---
 
-# Data Receiver
+## Data Receiver
 
 The Data Receiver is a profile in Open Finance that has the authority to request data from other institutions that are Data Transmitters. According to Open Finance regulations, there are several products listed by Transmitters that can be collected by the Receiver.
 
 ---
 
-## Shared Data
+### Shared Data
 
 When sharing occurs, the ecosystem is prepared to provide the following information:
 
-### **Account Holder Information**
+#### **Account Holder Information**
 
 - Account holder details
 
-### **Checking Account**
+#### **Checking Account**
 
 - Statement
 - Balance
 
-### **Credit Card**
+#### **Credit Card**
 
 - Invoice
 - Credit limits
 - Transactions
 
-### **Credit Operations**
+#### **Credit Operations**
 
 - Loans
 - Financing
 - Overdraft (advance to depositors)
 - Discounted receivables (receivables anticipation)
 
-### **Foreign Exchange**
+#### **Foreign Exchange**
 
 - Foreign exchange operations
 
-### **Investments**
+#### **Investments**
 
 - Bank-fixed income (CDB, LCI, LCA - protected by FGC)
 - Credit-fixed income (CRI, CRA, Debenture)
@@ -55,7 +59,7 @@ When sharing occurs, the ecosystem is prepared to provide the following informat
 
 ---
 
-## Consent Journey
+### Consent Journey
 
 The authorization process for data sharing follows a **complete consent journey**. For more information, click [here](../JornadaConsentimento/OFB-JornadaConsentimento.html).
 
@@ -63,13 +67,13 @@ The authorization process for data sharing follows a **complete consent journey*
 
 ---
 
-## Mandatory Certification
+### Mandatory Certification
 
 For an institution to become a Data Receiver, it is necessary to undergo the OpenID RP certification tests - *Relying parties*. More details about the certification can be found [here](../OFB-Certificações.html).
 
 ---
 
-## Usage
+### Usage
 
 To start using the software, there are some prerequisites:
 

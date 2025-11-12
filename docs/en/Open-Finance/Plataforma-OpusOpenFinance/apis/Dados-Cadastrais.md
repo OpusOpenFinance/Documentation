@@ -4,10 +4,14 @@ title: "Customers"
 parent: "Data Sharing"
 nav_order: 1
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Dados-Cadastrais/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Dados-Cadastrais/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/Dados-Cadastrais/"
+      lang: "es"
 ---
 
-# Personal Data API
+## Personal Data API
 
 The *integration layer* API that returns *customers data* for clients and their representatives, including identification data, financial qualification information, details about registered representatives, and the financial relationship between the client and the transmitting financial institution.
 
@@ -24,7 +28,7 @@ In general, there are *endpoints* for:
 - Retrieving qualification records for legal entities;
 - Retrieving relationship records with the financial institution and representatives of the legal entity.
 
-## *Open API Specification* of the API
+### *Open API Specification* of the API
 
 The documentation for the Personal Data API to be built in the *integration layer* can be found [**here**][API-Dados-cadastrais].
 

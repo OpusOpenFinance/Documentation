@@ -4,10 +4,14 @@ title: Platform Architecture
 parent: "Opus Open Finance Brazil"
 nav_order: 1
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Arquitetura/OOF-Arquitetura/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Arquitetura/OOF-Arquitetura/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Arquitetura/OOF-Arquitetura/"
+      lang: "es"
 ---
 
-# Architecture Overview
+## Architecture Overview
 
 The solution architecture is based on **microservices**, designed to support automatic horizontal scalability, and implemented in **Docker** containers running in a Kubernetes cluster environment.
 
@@ -29,7 +33,7 @@ The solution has been successfully used by clients in the following environments
 
 ![General Architecture](./images/visão_geral.png)
 
-## Components and Tools
+### Components and Tools
 
 For execution, the platform requires the following components:
 
@@ -48,13 +52,13 @@ For execution, the platform requires the following components:
 
 ---
 
-## Horizontal Scalability
+### Horizontal Scalability
 
 The microservices-based architecture adopted by the solution, running in containers managed by Kubernetes, is ideal for handling the variable demand of the *Open Finance Brasil* ecosystem because it allows efficient horizontal scalability. Each microservice can be scaled independently, ensuring that only the necessary components receive more resources during high demand periods. Kubernetes facilitates this process by automatically monitoring resource usage and scaling execution instances as needed, maintaining system availability and performance without wasting resources.
 
 ![Scalability-focused Architecture](./images/arquitetura_pods.png)
 
-## Infrastructure and Configuration
+### Infrastructure and Configuration
 
 - **Autoscaling Configuration**:
   - All system modules support autoscaling, allowing Kubernetes to adjust the number of instances based on CPU and memory usage.

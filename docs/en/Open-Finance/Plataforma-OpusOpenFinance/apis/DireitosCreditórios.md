@@ -4,10 +4,14 @@ title: "Invoice Financing API"
 parent: "Credit Operations"
 nav_order: 4
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/DireitosCreditórios/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/DireitosCreditórios/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/DireitosCreditórios/"
+      lang: "es"
 ---
 
-# Invoice Financing
+## Invoice Financing
 
 This *integration layer* API returns information on credit operations of the *invoice financing* type or, more generally, *receivables discounting*, carried out by transmitting institutions for its clients. The returned information includes data such as denomination, modality, contract number, fees, term, installments, payments (at least for the last 12 months), amortizations, guarantees, charges, and interest rates.
 
@@ -23,7 +27,7 @@ There are *endpoints* for:
 - Retrieving the list of guarantees linked to a receivables discounting contract;
 - Retrieving the payment details of a receivables discounting contract.
 
-## *Open API Specification* of the API
+### *Open API Specification* of the API
 
 The documentation for the Invoice Financing API to be built in the *integration layer* can be found [**here**][API-Direitos-Creditórios].
 

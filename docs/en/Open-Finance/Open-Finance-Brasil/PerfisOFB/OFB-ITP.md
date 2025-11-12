@@ -5,14 +5,18 @@ parent: "Participation Profiles"
 nav_order: 5
 has_children: true
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-ITP/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-ITP/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-ITP/"
+      lang: "es"
 ---
 
-# Payment Initiation Service Provider
+## Payment Initiation Service Provider
 
 The Payment Initiation Service Provider (*PISP*) is the *Open Finance Brasil* profile authorized to perform payment initiations within the ecosystem. The Payment Initiation Service Provider will initiate consent journeys (for making payments) in participating *Open Finance Brasil* institutions that are Account Holders. This profile enables a range of new use cases, as the Payment Initiation Service Provider does not need to be the custodian of the money at any point during the transaction and also does not need to be the owner of the bank account that will settle the payment.
 
-## Payment Methods in *Open Finance Brasil*
+### Payment Methods in *Open Finance Brasil*
 
 Currently, the payment methods foreseen in *Open Finance Brasil* include:
 
@@ -25,22 +29,22 @@ Currently, the payment methods foreseen in *Open Finance Brasil* include:
 {: .note}
 The items marked with an asterisk are not yet available in *Open Finance Brasil* and have no scheduled release date.
 
-## Consent Journey
+### Consent Journey
 
 The authorization process to make payments is done through a **complete consent journey**. More details can be found [here][Consent-Journey].
 
 > Additionally, the [sequence diagram][Sequence-Diagram] illustrates the consent flow according to each [API offered by the product][API-pagamentos];
 
-## Regulatory Roadmap
+### Regulatory Roadmap
 
-### Available Features
+#### Available Features
 
 - **Instant Pix payment**;
 - **Scheduled Pix payment**;
 - **Recurring scheduled payments**;
 - **Automatic transfers between accounts of the same account holder** (known as *sweeping accounts*).
 
-### Planned Features
+#### Planned Features
 
 - **Batch payments (1:n)**;
 - **Payments without redirection** (no redirection to the Account Holder from the user's perspective);
@@ -49,7 +53,7 @@ The authorization process to make payments is done through a **complete consent 
 
 The [developer portal][Dev-Portal] offers a calendar with upcoming deliveries.
 
-## Opus Open Finance Platform
+### Opus Open Finance Platform
 
 To start using the software, there are some prerequisites:
 

@@ -4,10 +4,14 @@ title: "Variable Income API"
 parent: "Investments"
 nav_order: 3
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dados-investimentos/dados-renda-variavel/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dados-investimentos/dados-renda-variavel/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dados-investimentos/dados-renda-variavel/"
+      lang: "es"
 ---
 
-# Variable Income API
+## Variable Income API
 
 Integration layer API that returns data on variable income held by the client at the Data Transmitting Institution.
 
@@ -19,7 +23,7 @@ In general, there are *endpoints* for:
 - Retrieving transaction history records for the last 12 months;
 - Retrieving history records for the last seven days.
 
-## *Open API Specification* of the API
+### *Open API Specification* of the API
 
 The documentation for the variable income API to be built in the integration layer can be found [**here**][API-Variable-Income]
 

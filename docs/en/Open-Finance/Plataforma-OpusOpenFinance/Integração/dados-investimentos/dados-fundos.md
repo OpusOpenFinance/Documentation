@@ -4,10 +4,14 @@ title: "Investment Funds API"
 parent: "Investments"
 nav_order: 4
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dados-investimentos/dados-fundos/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dados-investimentos/dados-fundos/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dados-investimentos/dados-fundos/"
+      lang: "es"
 ---
 
-# Investment Funds API
+## Investment Funds API
 
 Integration layer API that returns data on investment funds held by the client at the Data Transmitting Institution.
 
@@ -19,7 +23,7 @@ In general, there are *endpoints* for:
 - Retrieving transaction history records for the last 12 months;
 - Retrieving history records for the last seven days.
 
-## *Open API Specification* of the API
+### *Open API Specification* of the API
 
 The documentation for the investment funds API to be built in the integration layer can be found [**here**][API-Investment-Funds]
 

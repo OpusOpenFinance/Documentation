@@ -4,10 +4,14 @@ title: "Handoff"
 parent: "Mobile App and Web"
 nav_order: 3
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as-handoff/OFB-Handoff/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as-handoff/OFB-Handoff/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as-handoff/OFB-Handoff/"
+      lang: "es"
 ---
 
-# *Hybrid-flow* with *Handoff*
+## *Hybrid-flow* with *Handoff*
 
 Institutions that authenticate users only through mobile apps need to support the *Hybrid-flow* with *Handoff* to allow consents initiated on devices that do not support app execution, typically a desktop or a laptop.
 
@@ -17,7 +21,7 @@ The *handoff* library was created to allow the institution to obtain all the inf
 
 The Opus Open Finance Authorization Server hosts the library at the URL `https://as.instituicao.com.br/auth/handoff/v1/oob-handoff.js` and it should be referenced directly instead of being copied and hosted on another web server.
 
-## Opus Open Finance Flow with *Handoff*
+### Opus Open Finance Flow with *Handoff*
 
 The caller (the data-receiving institution or the payment transaction initiator) is unaware if the Open Finance installation they are calling uses *handoff*, and this is not their responsibility. The OIDC flow initiated by them redirects the client's browser to the Opus Open Finance Authorization Server, which in turn redirects the browser to the *handoff* page created by the institution.
 
@@ -35,7 +39,7 @@ The *handoff* page must obtain the identifier and use it when initializing the l
 
 The page must also point to the Authorization Server installation (public address) when initializing the library through the configuration **oobAsPublicUrl** as shown below.
 
-## How to use the library
+### How to use the library
 
 After importing the library into the HTML page, the variable `oobHandoff` will contain the entry point to the library, and it must be initialized through the `init` method by passing the identifier received during the Authorization Server redirect and the event handlers that will be triggered.
 
@@ -63,7 +67,7 @@ oobHandoff.init({
 
 The event parameters contain necessary information for each moment. The objects are detailed below.
 
-### handoffReady
+#### handoffReady
 
 Schema:
 
@@ -85,7 +89,7 @@ Schema:
 | `tppName`       | Name of the initiating payment institution                                                                            |
 | `tppLogoUrl`    | Logo URL of the initiating payment institution                                                                       |
 
-### handoffCompleted
+#### handoffCompleted
 
 Schema based on the `completedCommand` from the APP2AS interface:
 
@@ -110,7 +114,7 @@ Schema based on the `completedCommand` from the APP2AS interface:
 | `tpp.logoUrl`                        | URL with the TPP logo to be displayed on the return screen                |
 | `completedCommand.redirect.redirectTo`| URL for redirection after displaying the return screen to the user        |
 
-### handoffError
+#### handoffError
 
 Schema based on the `errorCommand` from the APP2AS interface:
 
@@ -141,7 +145,7 @@ Schema based on the `errorCommand` from the APP2AS interface:
 
 The information `tpp.name`, `tpp.logoUrl`, `errorCommand.message`, and `errorCommand.redirect.redirectTo` may not be present in the response.
 
-## Cancellation
+### Cancellation
 
 The *handoff* screen reacts passively to events occurring in the flow. At any time, the user can actively abort the *handoff* flow. To do this, a "Cancel" button must be available on the screen.
 
@@ -149,7 +153,7 @@ To cancel the flow, a request must be made to the API `https://as.instituicao.co
 
 After cancellation, the screen should redirect the user back to the calling institution, and the app should inform the user (e.g., with an error message), interrupting the *handoff* flow.
 
-## Example
+### Example
 
 A functional example application is available. There is an example *handoff* page that handles all the flow events. This example page is the one that the institution should create, host, and configure the URL for in the **Plataforma Opus Open Finance** installation.
 
@@ -177,7 +181,6 @@ It is possible to start the mocked scenarios using the following URLs:
 | CPF_MISMATCH| <http://lvh.me:3030/sample.html#L3YxL21vY2svY3BmLWVycm9y> |
 | Timeout     | <http://lvh.me:3030/sample.html#L3YxL21vY2svdGltZW91dA==> |
 
-## Customizable *handoff* Page
+### Customizable *handoff* Page
 
 If the institution prefers not to implement its own *handoff* page, it is possible to use the solution provided by Opus Open Finance: a complete page that configures the main aesthetic and content characteristics to adapt to the institution's style.
-

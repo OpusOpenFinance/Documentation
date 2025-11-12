@@ -5,10 +5,14 @@ parent: "Platform Integration"
 nav_order: 2
 has_children: true
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/CamadaIntegração/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/CamadaIntegração/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/CamadaIntegração/"
+      lang: "es"
 ---
 
-# Data Sharing
+## Data Sharing
 
 The *data transmitter* participation profile in *Open Finance Brasil* requires the financial institution to be able to respond to data requests from other participating institutions. Before another financial institution can make data requests related to the transmitting institution’s customers, the customer must have previously authorized the sharing of their data through a **data sharing consent**.
 
@@ -44,26 +48,26 @@ We now present the different types of data involved in handling requests from th
 >
 >Thus, one of the most common requests made by receiving institutions is to query all the financial products the end customer holds with the transmitting financial institution (provided the consent granted by the customer is broad enough). In this case, the platform already handles the necessary processing, activating the integration layer for each specific product to adequately handle such requests.
 
-## Customer Data
+### Customer Data
 
 Customer and representative identification data, financial qualification information, registered representative details, and the financial relationship between the customer and the data-transmitting institution.
 There is a separation between individual and corporate entities.
 
 Detailed information on the *endpoints* and data required to handle this type of request can be found on the [customer data page][Dados-Cadastrais].
 
-## Credit Card
+### Credit Card
 
 Information on post-paid payment accounts held at transmitting institutions by their customers, including data such as account name, product, brand, credit limits, payment transaction details, and invoices. There is no distinction between individual and corporate entities.
 
 Detailed information on the *endpoints* and data required to handle this type of request can be found on the [credit card page][Cartão-crédito].
 
-## Accounts
+### Accounts
 
 Information on checking accounts, savings accounts, and prepaid payment accounts held at transmitting institutions by their customers, including account identification data, balances, limits, and transactions. There is no distinction between individual and corporate entities.
 
 Detailed information on the *endpoints* and data required to handle this type of request can be found on the [accounts page][Contas].
 
-## Credit Operations
+### Credit Operations
 
 In the case of credit operations, the customer shares data by product grouping, meaning all types of credit operations are shared within the scope of *Open Finance Brasil*. Below is a list of the operations:
 
@@ -74,7 +78,7 @@ In the case of credit operations, the customer shares data by product grouping, 
 
 Detailed information on the data required for each of these operations can be found on the [credit operations page][Crédito].
 
-## Investments
+### Investments
 
 Investments are also divided into different products. Below is a list of possible investment products, along with links to detailed documents on the product data:
 
@@ -86,7 +90,7 @@ Investments are also divided into different products. Below is a list of possibl
 
 Detailed information on the data required for this product can be found on the [investments page](./OOF-Investimento.html).
 
-## Foreign Exchange
+### Foreign Exchange
 
 Information on foreign exchange operations carried out at transmitting institutions by their customers, including data such as the contracted operation details, the operation value in local and foreign currency, operation classification, delivery method, VET, and, when applicable, the settlement value. Any operation changes, if they exist, along with modified details, will also be shared. There is no distinction between individual and corporate entities.
 

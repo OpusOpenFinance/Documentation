@@ -4,10 +4,14 @@ title: "Treasury Bonds API"
 parent: "Investments"
 nav_order: 5
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dados-investimentos/dados-tesouro/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dados-investimentos/dados-tesouro/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dados-investimentos/dados-tesouro/"
+      lang: "es"
 ---
 
-# Treasury Bonds API
+## Treasury Bonds API
 
 Integration layer API that returns data on *treasury bonds* held by the client at the Data Transmitting Institution.
 
@@ -22,7 +26,7 @@ In general, there are *endpoints* for:
 - Retrieving transaction history records for the last 12 months;
 - Retrieving history records for the last seven days.
 
-## *Open API Specification* of the API
+### *Open API Specification* of the API
 
 The documentation for the treasury bonds API to be built in the integration layer can be found [**here**][API-Treasury-Bonds]
 

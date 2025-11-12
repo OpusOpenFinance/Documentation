@@ -4,15 +4,19 @@ title: "Open Data"
 parent: "Platform Integration"
 nav_order: 1
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Dados_abertos/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Dados_abertos/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Dados_abertos/"
+      lang: "es"
 ---
 
-# Open Data
+## Open Data
 
 The open data profile corresponds to the public data that participating institutions in Open Finance must disclose to the ecosystem. To learn more about the open data profile, [see here][Perfis-Open-Finance-Brasil].
 The open data profile is required for all participants in the ecosystem, and the data must be accessible through APIs. The Opus Open Finance Platform implements all of these APIs.
 
-## Integration
+### Integration
 
 The integration of the open data profile does not require connection to the client's back-end systems, as financial institutions rarely maintain this information structured and stored in a central repository. Furthermore, the information regarding open data - service channels and financial products offered by the institution - usually does not change very frequently.
 
@@ -26,9 +30,9 @@ Therefore, in a standard deployment, it will only be necessary to create a JSON 
 >1. Modify the system in question to generate JSON files in the format required by the regulator (or develop a specific program that extracts this information and generates this file). This is the simplest and therefore recommended option;
 >2. Directly integrate the Opus Open Finance Platform with the back-end system by developing specialized connectors. In this case, specific documentation for the construction of these connectors will be provided during the deployment process.
 
-## Open Data APIs
+### Open Data APIs
 
-### Service channels
+#### Service channels
 
 The service channels API provides information about the institution's service channels. The service channels provided for in the regulation are:
 
@@ -38,7 +42,7 @@ The service channels API provides information about the institution's service ch
 4. Banking agents
 5. Self-service terminals (ATMs)
 
-### Products
+#### Products
 
 The product APIs refer to the products that the institution offers. Possible types:
 
@@ -55,7 +59,7 @@ The product APIs refer to the products that the institution offers. Possible typ
 11. Pension
 12. Exchange
 
-## JSON File for Integration
+### JSON File for Integration
 
 Below are the regulatory APIs related to Open Data and examples of JSON files to fulfill the calls to these APIs.
 

@@ -4,10 +4,14 @@ title: "Mobile Banking"
 parent: "Mobile App and Web"
 nav_order: 1
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as/OOF-App-Móvel/"
+alternate_lang:
+    - path: /Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as/OOF-App-Móvel/"
+      lang: "pt-br"
+    - path: /Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as/OOF-App-Móvel/"
+      lang: "es"
 ---
 
-# Mobile App
+## Mobile App
 
 The mobile app integration for generating consent provides the best user experience for the institution's client, as it allows the consent journey and consent management to be performed in a fluid and natural way.
 
@@ -15,7 +19,7 @@ In the context of *Open Finance Brazil*, the mobile app is triggered when the cl
 
 Similarly, when the client authorizes a *payment transaction initiator* to send a payment request to the account-holding financial institution, a consent journey will be triggered that will activate the mobile app to authenticate and confirm the transaction.
 
-## Deep Link and Universal Link
+### Deep Link and Universal Link
 
 The institution's app needs to intercept calls from the data receiver (who is requesting the creation of data sharing consent) or the payment transaction initiator and send them to the Authorization Server when they occur on the user's mobile device, allowing consent generation within the app.
 
@@ -28,7 +32,7 @@ Thus, we have two URL standards that need to be intercepted by the institution's
 | Same device                | `https://<EV-FQDN-open-banking>/auth/auth`              |
 | Another device (*HandOff*) | `https://<EV-FQDN-open-banking>/auth/handoff/{id}`      |
 
-### What to do when intercepting a URL?
+#### What to do when intercepting a URL?
 
 Once the application is intercepting the URLs and being triggered during a consent request, the next step is to process the actual consent generation.
 
@@ -38,17 +42,17 @@ Knowing that the request was made by the app, the Authorization Server will func
 
 The response from the initial `GET` is the first of a series of commands the app must execute during an event loop coming from the Authorization Server. The definition of this event loop will be detailed when starting the integration project of the mobile app with the Opus platform.
 
-## Sequence Diagram
+### Sequence Diagram
 
 The following sequence diagram summarizes the interaction between the institution's mobile app and the Authorization Server.
 
 ![Sequence Diagram](images/sequencia-app2as.svg)
 
-## Open API Specification
+### Open API Specification
 
 The definitions of the REST API provided by the Authorization Server for the mobile app can be found [here][API-Mobile]
 
-## Mock for Integration
+### Mock for Integration
 
 To assist in the development of the integration, a *mock* is available in the [Mockoon](https://mockoon.com/) tool and is defined in this [JSON file](./mockoon.json).
 

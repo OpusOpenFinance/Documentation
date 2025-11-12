@@ -4,14 +4,18 @@ title: "Internet Banking"
 parent: "Mobile App and Web"
 nav_order: 2
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/web2as/OOF-Internet-Banking/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/web2as/OOF-Internet-Banking/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/web2as/OOF-Internet-Banking/"
+      lang: "es"
 ---
 
-# Internet Banking
+## Internet Banking
 
 If the institution requires it, it can authenticate its customers through its own login page on *Internet Banking*. Once the login is completed, the institution can choose to use the standard consent generation screens provided by Opus Open Banking or use its own custom screens.
 
-## Starting the Custom Web Login Flow
+### Starting the Custom Web Login Flow
 
 The flow starts with the first `GET` request to the authentication URL at the Authorization Server of the **Opus Open Finance Platform**. The URL follows this pattern: (`https://<EV-FQDN-open-banking>/auth/auth`).
 
@@ -33,7 +37,7 @@ If this configuration is defined, the Authorization Server will understand that 
 
 Communication between the institution's web application and the Authorization Server will happen through `commands` within an event loop. The definition of this event loop will be detailed when starting the integration project of the mobile application with the Opus platform.
 
-## Using the Custom Consent Generation Flow
+### Using the Custom Consent Generation Flow
 
 The institution can choose between using the standard consent generation screens provided by Opus Open Finance or opting to use its own custom consent generation screens.
 
@@ -41,11 +45,11 @@ There is a setting in the Authorization Server that allows defining the institut
 
 If the institution chooses to use its own consent generation screens, the part of the flow related to selecting resources and approving/denying consent, as well as the final screen responsible for transitioning the consent generation back to the financial institution that made the request, will be handled by the institution itself. It must communicate via API with the Authorization Server to inform the selected resources and the approval/denial of the consent in question.
 
-## Open API Specification
+### Open API Specification
 
 The definitions of the REST API provided by the Authorization Server can be consulted [here][API-Mobile].
 
-## Sequence Diagram
+### Sequence Diagram
 
 The following sequence diagram illustrates the interaction between the institution's web application and the Authorization Server, covering the authentication step followed by the consent generation flow, both for the use of standard screens and custom screens.
 

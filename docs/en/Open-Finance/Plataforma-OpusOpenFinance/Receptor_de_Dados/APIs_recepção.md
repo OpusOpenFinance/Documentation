@@ -1,24 +1,24 @@
-# Recepção de Dados Cadastrais e Transacionais
+## Recepção de Dados Cadastrais e Transacionais
 
 A API de Recepção de Dados Cadastrais e Transacionais trata da criação, consulta e revogação de consentimentos de compartilhamento de dados e também da obtenção dos dados consentidos pelos usuários.
 
-## OpenAPI Specification
+### OpenAPI Specification
 
 Uma descrição da API pode ser encontrada no [OAS](oas-dados.yml) disponibilizado.
 
-## Utilização do consentimento
+### Utilização do consentimento
 
 > **ATENÇÃO:** Os endpoints listados a seguir só podem ser utilizados após o fluxo de autorização do consentimento pelo usuário, descrito [aqui](../readme.md).
 
-### Consulta de status do consentimento - GET /opus-open-finance/consents/v1/consents/{consentId}
+#### Consulta de status do consentimento - GET /opus-open-finance/consents/v1/consents/{consentId}
 
 Permite a consulta do status e as informações de um consentimento.
 
-### Revogação de consentimento - DELETE /opus-open-finance/consents/v1/consents/{consentId}
+#### Revogação de consentimento - DELETE /opus-open-finance/consents/v1/consents/{consentId}
 
 A revogação do consentimento para pagamento pode ser realizada pelo usuário, pela Iniciadora, ou pela Transmissora de Dados.
 
-### Obtenção de dados
+#### Obtenção de dados
 
 As APIs de obtenção de dados estão detalhadas no [OAS](oas-dados.yml) disponibilizado, e incluem:
 
@@ -36,7 +36,7 @@ As APIs de obtenção de dados estão detalhadas no [OAS](oas-dados.yml) disponi
 - **Treasure Titles**: dados de operações de títulos de tesouro direto.
 - **Funds**: dados de operações de fundos de investimento.
 
-## Orientações importantes
+### Orientações importantes
 
 - Todas as datas seguem o padrão da [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) e formato "zulu".
 - Não há separação funcional entre pessoa natural e pessoa jurídica.
@@ -46,7 +46,7 @@ As APIs de obtenção de dados estão detalhadas no [OAS](oas-dados.yml) disponi
 - Caso a instituição receptora envie permissões divergentes do agrupamento especificado na tabela, a transmissora rejeita o pedido da receptora (ex.: código HTTP 400 Bad Request).
 - A transmissora remove as permissões de produtos não suportados da lista de permissões requisitadas.  O subconjunto de produtos suportados é retornado com código HTTP 201 (Created). Caso o subconjunto de produtos suportados resultante seja vazio, a instituição transmissora retorna o código HTTP Code 422 (Unprocessable Entity).
 
-## APIs
+### APIs
 
 | Tipo Request   | Endpoint                                                                | Descrição                                                 | Sucesso  |
 | -------------- | ----------------------------------------------------------------------- | --------------------------------------------------------- | -------- |
@@ -59,7 +59,7 @@ As APIs de obtenção de dados estão detalhadas no [OAS](oas-dados.yml) disponi
 | GET            | /opus-open-finance/dcm                                                  | Obtenção dos dados de dcm dos brand clients               | 200      |
 | PUT            | /opus-open-finance/dcm                                                  | Atualização dos dados de dcm dos brand clients            | 200      |
 
-### Exemplo de um payload de criação de consentimento
+#### Exemplo de um payload de criação de consentimento
 
 ```JSON
 {
@@ -115,7 +115,7 @@ As APIs de obtenção de dados estão detalhadas no [OAS](oas-dados.yml) disponi
 Para mais informações sobre os campos veja a [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369335/API+-+Consentimento)
 do Open Finance Brasil.
 
-### Exemplo de response (POST e GET)
+#### Exemplo de response (POST e GET)
 
 ```JSON
 {

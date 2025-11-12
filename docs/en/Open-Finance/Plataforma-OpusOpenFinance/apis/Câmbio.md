@@ -4,10 +4,14 @@ title: "Foreign Exchange API"
 parent: "Data Sharing"
 nav_order: 6
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Câmbio/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Câmbio/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/Câmbio/"
+      lang: "es"
 ---
 
-# Foreign Exchange API
+## Foreign Exchange API
 
 The *integration layer* API that returns information on *Foreign Exchange* operations conducted by transmitting institutions for their clients, including data such as contracted operation details, operation value in both local and foreign currencies, operation classification, delivery method, VET, and, when applicable, value to be settled. Changes to the operation will also be shared, if any, with the modified information.
 
@@ -29,7 +33,7 @@ There are endpoints for:
 - Retrieving data of a foreign exchange operation;
 - Retrieving data on events related to a foreign exchange operation.
 
-## *Open API Specification* of the API
+### *Open API Specification* of the API
 
 The documentation for the Foreign Exchange API to be built in the *integration layer* can be found [**here**][API-Câmbio].
 

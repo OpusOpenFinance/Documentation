@@ -5,10 +5,14 @@ parent: "Opus Open Finance Brazil"
 nav_order: 4
 has_children: true
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/OOF-Integração/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/OOF-Integração/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/OOF-Integração/"
+      lang: "es"
 ---
 
-# Platform Integration with the Financial Institution
+## Platform Integration with the Financial Institution
 
 The **Opus Open Finance Platform** acts as the *interface* between financial institutions and the *Open Finance Brasil* ecosystem, handling all activities inherent to this *interface*, such as implementing regulatory APIs, creating and managing consents, and validating each call received from other financial institutions. The platform functions as a layer that abstracts the specific aspects of the Open Finance ecosystem, interacting with the financial institution's systems to meet regulatory requirements.
 
@@ -17,11 +21,11 @@ For operations implemented within the scope of *Open Finance Brasil*, the platfo
 - When creating a consent;
 - When handling requests coming from other financial institutions.
 
-## Integration for Consent Creation
+### Integration for Consent Creation
 
 The creation of a consent requires interaction with the end customer of the financial institution. In fact, the same applies to the removal of consents. Therefore, it is necessary to integrate the systems that implement the institution’s main digital service channels—typically the mobile app and Internet Banking Web—with the platform. The integration of service channels with the platform is detailed [here][Integração app-web].
 
-## Integration with Back-End Systems for Handling Requests
+### Integration with Back-End Systems for Handling Requests
 
 Requests are made through calls to the regulatory API by the institution requesting services, which may be requests for customer data— in the case of data sharing—or requests for payment execution. To handle these, the platform performs all necessary validations to ensure they are valid requests and comply with the associated consents. After validating each call, the platform triggers the financial institution's back-end systems to fulfill the request. This trigger is performed through an *integration layer*.
 

@@ -4,10 +4,14 @@ title: "Example Service Channels"
 parent: "Open Data"
 nav_order: 1
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Channels/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Channels/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Channels/"
+      lang: "es"
 ---
 
-# JSON File Example
+## JSON File Example
 
 This is an example of a JSON response file from the ***OpenData Channels*** API.
 

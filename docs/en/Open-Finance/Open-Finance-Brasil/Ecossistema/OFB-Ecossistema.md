@@ -4,10 +4,14 @@ title: "The Ecosystem"
 parent: "Open Finance Brazil"
 nav_order: 1
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/Ecossistema/OFB-Ecossistema/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/Ecossistema/OFB-Ecossistema/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/Ecossistema/OFB-Ecossistema/"
+      lang: "es"
 ---
 
-# The Ecosystem
+## The Ecosystem
 
 Open Finance Brasil plays a significant role in the transformation of the country’s payment system. Just as Pix was a success, Open Finance has various benefits for the entire Brazilian population, especially in the medium and long term. For the Central Bank, the purpose of Open Finance is to foster a more competitive environment in the financial system, improving service quality, promoting innovation, and increasing competition for customers, which naturally leads to a reduction in rates and costs by the market.
 
@@ -15,7 +19,7 @@ To learn more, [visit the website](https://openfinancebrasil.org.br/conheca-o-op
 
 ---
 
-## Scope of Open Finance
+### Scope of Open Finance
 
 Open Finance has a scope of implementation in 4 different phases, known as:
 
@@ -33,13 +37,13 @@ Open Finance has a scope of implementation in 4 different phases, known as:
 
 ---
 
-## Open Finance Structure
+### Open Finance Structure
 
 To ensure the implementation of Open Finance, the Central Bank has defined a structure to achieve the ecosystem’s objectives. The structure is divided as follows:
 
 ![Open Finance Organization Chart](./images/Organograma_OF.png)
 
-### Central Bank
+#### Central Bank
 
 It is responsible for defining the strategic guidelines for Open Finance and maintains direct contact with the Deliberative Council to analyze the progress of activities. The main channel for publishing new guidelines and requirements is through the issuance of normative instructions.
 
@@ -47,19 +51,19 @@ It is responsible for defining the strategic guidelines for Open Finance and mai
 
 ---
 
-### Deliberative Council
+#### Deliberative Council
 
 It decides on the strategic issues necessary for the implementation of the project in Brazil and proposes technical standards to the [Central Bank](https://www.bcb.gov.br/).
 
 ---
 
-### Secretariat
+#### Secretariat
 
 Acts as the main link with the Deliberative Council, providing information on the project's progress through reports, monitoring technical and regulatory timelines, managing suppliers, and organizing working groups (GTs).
 
 ---
 
-### Working Groups (GTs)
+#### Working Groups (GTs)
 
 They are responsible for studies, technical proposals, and plans focused on the implementation and management of Open Finance. They include professionals from technology companies and academics. Currently, there are eight GTs:
 
@@ -76,13 +80,13 @@ There are also 6 internal GTs for additional support to the received demands.
 
 ---
 
-### Participating Institutions
+#### Participating Institutions
 
 Participating institutions must monitor the progress of the ecosystem to ensure compliance with regulatory requirements. It is essential to follow the main information channels.
 
 ---
 
-## Relevant Links for the Regulatory
+### Relevant Links for the Regulatory
 
 - [Informas](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17367115/Reposit+rio+de+Informes)
 - [Developer Portal](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/overview)

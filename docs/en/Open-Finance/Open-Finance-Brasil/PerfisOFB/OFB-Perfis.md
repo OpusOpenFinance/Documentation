@@ -5,10 +5,14 @@ parent: "Open Finance Brazil"
 nav_order: 2
 has_children: true
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+      lang: "es"
 ---
 
-# Participation Profiles
+## Participation Profiles
 
 Financial institutions can participate in *Open Finance Brasil* by fulfilling several specific roles, here referred to as Participation Profiles. Some financial institutions are required to participate with specific profiles, but all institutions can voluntarily exercise all available profiles.
 
@@ -16,19 +20,19 @@ Financial institutions can participate in *Open Finance Brasil* by fulfilling se
 
 The profiles performed by financial institutions can be divided into the two existing ecosystems: data sharing and payments. In each of them, there is an active party (the one who initiates an action) and a passive party, which responds to the action initiated by the active party.
 
-## In the Data Ecosystem
+### In the Data Ecosystem
 
 - **Data Transmitter** - Passive party.
 - **Data Receiver** - Active party.
 
-## In the Payments Ecosystem
+### In the Payments Ecosystem
 
 - **Account Holder** - Passive party.
 - **Payment Initiation Service Provider (PISP)** - Active party.
 
 ---
 
-## TPP Terminology
+### TPP Terminology
 
 The term **TPP** (Third-Party Provider) is used to represent both active parties in the ecosystem, i.e.:
 
@@ -37,7 +41,7 @@ The term **TPP** (Third-Party Provider) is used to represent both active parties
 
 ---
 
-## Participation Profiles in Open Finance Brasil
+### Participation Profiles in Open Finance Brasil
 
 The roles can be understood according to the table below:
 
@@ -48,7 +52,7 @@ The roles can be understood according to the table below:
 
 ---
 
-## Opus Open Finance Platform
+### Opus Open Finance Platform
 
 The Opus Open Finance Platform provides a complete solution to meet the necessary requirements for all participation profiles in *Open Finance Brasil*.
 

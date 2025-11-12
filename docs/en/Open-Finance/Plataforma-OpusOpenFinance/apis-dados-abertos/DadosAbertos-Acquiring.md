@@ -4,10 +4,14 @@ title: "Example Acquiring"
 parent: "Open Data"
 nav_order: 10
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Acquiring/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Acquiring/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Acquiring/"
+      lang: "es"
 ---
 
-# JSON File Example
+## JSON File Example
 
 This is an example of a JSON response file from the ***OpenData Acquiring Services*** API.
 
