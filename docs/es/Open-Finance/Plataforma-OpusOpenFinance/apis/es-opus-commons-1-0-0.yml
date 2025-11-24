@@ -1,0 +1,237 @@
+openapi: 3.0.0
+info:
+  title: API Opus Commons - Integration Layer - Opus Open Finance Brasil
+  description: |
+    API de rutas que son generales para el funcionamiento de los conectores de todos los productos.
+    API con la ruta que verifica si un cliente dado tiene una cuenta en la institución financiera necesaria para las rutas.
+  version: 4.0.0-rc1
+  license:
+    name: Apache 2.0
+    url: "https://www.apache.org/licenses/LICENSE-2.0"
+tags:
+  - name: Common
+    description: Operaciones necesarias para el funcionamiento general de los conectores
+paths:
+  /check-account-holder:
+    post:
+      tags:
+        - Common
+      operationId: checkAccountHolderStatus
+      summary: Verifica si el documento consultado posee cuenta en la entidad
+      description: Método para verificar si la persona física o jurídica mantiene cuenta en la institución financiera
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckAccountHolderRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/OKResponseCheckAccountHolder"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+        "423":
+          $ref: "#/components/responses/Locked"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        "504":
+          $ref: "#/components/responses/GatewayTimeout"
+        "529":
+          $ref: "#/components/responses/SiteIsOverloaded"
+        default:
+          $ref: "#/components/responses/Default"
+components:
+  schemas:
+    RequestMeta:
+      type: object
+      description: Objeto que contiene datos referentes al contexto en el que se recibe la solicitud.
+      required:
+        - correlationId
+        - brandId
+      properties:
+        correlationId:
+          type: string
+          description: UUID que identifica el correlation ID de la solicitud realizada. Debe propagarse para todas las llamadas realizadas entre sistemas y registrarse siempre que sea posible para facilitar la trazabilidad de errores.
+          pattern: >-
+            ^(localID:)?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+          example: localID:97623ed1-4732-4bf2-8d4b-ae7aced5443b
+        brandId:
+          type: string
+          description: Identificador de la marca reportada por el participante de Open Finance
+          example: cbanco
+          minLength: 1
+          maxLength: 50
+      additionalProperties: false
+    CheckAccountHolderRequest:
+      type: object
+      description: Payload utilizado para la verificación de cuenta del titular
+      required:
+        - data
+        - requestMeta
+      properties:
+        data:
+          type: object
+          required:
+            - loggedUserDocument
+          properties:
+            loggedUserDocument:
+              type: string
+              maxLength: 11
+              description: Número del CPF del usuario.
+              example: "11111111111"
+              pattern: ^\d{11}$
+            businessEntityDocument:
+              type: string
+              maxLength: 14
+              description: Número del CNPJ de la empresa.
+              example: "11111111111111"
+              pattern: ^\d{14}$
+        requestMeta:
+          $ref: "#/components/schemas/RequestMeta"
+    CheckAccountHolderResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Verifica si el documento consultado posee cuenta en la entidad
+          required:
+            - isAccountHolder
+          properties:
+            isAccountHolder:
+              type: boolean
+              description: Indica si el documento consultado posee cuenta en la entidad
+              example: "true"
+          additionalProperties: false
+      additionalProperties: false
+    ResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Código de error específico del endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título comprensible para humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descripción comprensible para humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+  responses:
+    OKResponseCheckAccountHolder:
+      description: "Se verificó con éxito si el documento consultado posee cuenta en la entidad"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CheckAccountHolderResponse"
+    BadRequest:
+      description: "La solicitud estaba mal formada, omitiendo atributos obligatorios, ya sea en el payload o a través de atributos en la URL."
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
+    Forbidden:
+      description: El token tiene un alcance incorrecto o se ha violado una política de seguridad
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
+    GatewayTimeout:
+      description: GATEWAY TIMEOUT - La solicitud no fue atendida dentro del tiempo límite establecido
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
+    InternalServerError:
+      description: Ocurrió un error en el gateway de la API o en el microservicio
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
+    Locked:
+      description: Bloqueado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
+    MethodNotAllowed:
+      description: El consumidor intentó acceder al recurso con un método no soportado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
+    NotAcceptable:
+      description: La solicitud contenía un encabezado Accept diferente de los tipos de media permitidos o un conjunto de caracteres diferente al UTF-8
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
+    NotFound:
+      description: El recurso solicitado no existe o no ha sido implementado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
+    TooManyRequests:
+      description: "La operación fue rechazada porque se realizaron demasiadas solicitudes dentro de un período determinado o se alcanzó el límite global de solicitudes concurrentes"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
+    Unauthorized:
+      description: Cabecera de autenticación ausente/inválida o token inválido
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
+    UnprocessableEntity:
+      description: "La sintaxis de la solicitud es correcta, pero no fue posible procesar las instrucciones contenidas."
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
+    Default:
+      description: Error inesperado.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
+    SiteIsOverloaded:
+      description: "El sitio está sobrecargado y la operación fue rechazada ya que se alcanzó el límite máximo de TPS global en este momento."
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/ResponseError"
