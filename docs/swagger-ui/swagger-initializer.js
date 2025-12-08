@@ -76,7 +76,44 @@ window.onload = () => {
     "en-data-credit-fixed-incomes": "../en/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-credit-fixed-incomes.yml",
     "en-data-treasury-bonds": "../en/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-treasury-bonds.yml",
     "en-data-variable-incomes": "../en/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-variable-incomes.yml",
-    // Adicione outras APIs aqui. As linhas são terminadas por "," mesmo qdo é o último item...
+    // Adicione outras APIs aqui. As linhas são terminadas por "," mesmo qdo é o último item...*/
+
+    // -----------------
+    // APIs em espanhol
+    // -----------------
+    "es-Dados-cadastrais": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/es-customers-2-2-0.yml",
+    "es-Cartão-de-crédito": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/credit-cards-2-3-1.yml",
+    "es-Contas": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/es-accounts-2-4-1.yml",
+    "es-Empréstimo": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/loans-2-4-0.yml",
+    "es-Câmbio": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/exchange-1-0-0.yml",
+    "es-Financiamento": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/financings-2-3-0.yml",
+    "es-Adiantamento": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/overdraft-2-4-0.yml",
+    "es-Direitos-Creditórios": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/invoice-financings-2-3-0.yml",
+    "es-Opus-Commons": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/opus-commons-1-0-0.yml",
+    "es-OAS-Receptor": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/es-oas-opustpp-dados.yml",
+    "es-OAS-ITP-pagamentos": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos.yml",
+    "es-OAS-ITP-pagamentos-automaticos": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos-automaticos.yml",
+    "es-OAS-back-dados": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-oof-dados.yml",
+    "es-Mobile": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-webapp2as.yml",
+    "es-open-data-acquiring": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-acquiring-services.yml",
+    "es-open-data-accounts": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-accounts.yml",
+    "es-open-data-capitalization": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-capitalization-bonds.yml",
+    "es-open-data-channels": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-channels.yml",
+    "es-open-data-credit-cards": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-credit-cards.yml",
+    "es-open-data-exchange": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-exchange.yml",
+    "es-open-data-financings": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-financings.yml",
+    "es-open-data-insurance": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-insurance.yml",
+    "es-open-data-investments": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-investments.yml",
+    "es-open-data-invoice-financings": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-invoice-financings.yml",
+    "es-open-data-loans": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-loans.yml",
+    "es-open-data-pension": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-pension.yml",
+    "es-open-data-unarranged": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-unarranged-account-overdraft.yml",
+    "es-data-funds": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-funds.yml",
+    "es-data-bank-fixed-incomes": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-bank-fixed-incomes.yml",
+    "es-data-credit-fixed-incomes": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-credit-fixed-incomes.yml",
+    "es-data-treasury-bonds": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-treasury-bonds.yml",
+    "es-data-variable-incomes": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-variable-incomes.yml",
+    "es-payment-integration": "../es/Open-Finance/Plataforma-OpusOpenFinance/apis/payment-integration-0.1.0.yml",
   };
 
   // Determinar qual API carregar

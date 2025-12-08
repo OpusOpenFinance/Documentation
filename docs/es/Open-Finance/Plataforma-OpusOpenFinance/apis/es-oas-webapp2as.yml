@@ -8,20 +8,21 @@ info:
 tags:
   - name: DeepLink
     description: |-
-      Links para aplicação tratar via deep link/universal link e iniciar um fluxo de autenticação.
-      Os links devem ser repassados integralmente para o Authorization Server.
+      Enlaces para que la aplicación trate vía deep link/universal link e inicie un flujo de autenticación.
+      Los enlaces deben ser reenviados integralmente al Authorization Server.
   - name: App
     description: |-
-      APIs para os aplicativos da instituição (mobile e web) realizarem a autenticação e aceite dos consentimentos de fase 2 e 3 (compartilhamento de dados e pagamentos)
+      APIs para que las aplicaciones de la institución (móvil y web) realicen la autenticación y aceptación
+      de consentimientos de fase 2 y 3 (compartición de datos y pagos)
 paths:
   /auth:
     get:
       tags:
         - DeepLink
-      summary: Início do fluxo de autenticação por Third-Party Providers
+      summary: Inicio del flujo de autenticación por Third-Party Providers
       description: |-
-        Request interceptado pelo aplicativo da instituição via deeplink e
-        enviado ao Authorization Server para instruções do consentimento
+        Request interceptada por la aplicación de la institución vía deeplink y enviada
+        al Authorization Server para instrucciones del consentimiento
       operationId: getAuthAuth
       responses:
         "200":
@@ -31,22 +32,22 @@ paths:
               schema:
                 $ref: "#/components/schemas/ResponseCommandAuth"
         default:
-          description: Erro inesperado.
+          description: Error inesperado.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GeneralError'
+                $ref: "#/components/schemas/GeneralError"
   "/handoff/{id}":
     get:
       tags:
         - DeepLink
-      summary: Início do fluxo de autenticação por QR
+      summary: Inicio del flujo de autenticación por QR
       description: |-
-        Request interceptado pelo aplicativo da instituição via deeplink ou leitura direta do QR
-        e enviado ao Authorization Server para instruções do consentimento
+        Request interceptada por la aplicación de la institución vía deeplink o lectura directa del QR
+        y enviada al Authorization Server para instrucciones del consentimiento
       operationId: getAuthHandOff
       parameters:
-        - $ref: '#/components/parameters/CommandId'
+        - $ref: "#/components/parameters/CommandId"
       responses:
         "200":
           description: Success
@@ -57,21 +58,21 @@ paths:
         "404":
           description: Command not found
         default:
-          description: Erro inesperado.
+          description: Error inesperado.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GeneralError'
+                $ref: "#/components/schemas/GeneralError"
   "/app/commands/{id}":
     get:
       tags:
         - App
-      summary: Retorna informações sobre o command
+      summary: Retorna informaciones sobre el command
       description: |-
-        Retorna informações sobre o command de authenticate, a ser utilizada pelos aplicativos web ou mobile
+        Retorna informaciones sobre el command de authenticate, a ser utilizada por las aplicaciones web o móviles
       operationId: getAuthApp
       parameters:
-        - $ref: '#/components/parameters/CommandId'
+        - $ref: "#/components/parameters/CommandId"
       responses:
         "200":
           description: Success
@@ -82,26 +83,26 @@ paths:
         "404":
           description: Command not found
         default:
-          description: Erro inesperado.
+          description: Error inesperado.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GeneralError'
+                $ref: "#/components/schemas/GeneralError"
   "/app/commands/{id}/authentication":
     put:
       tags:
         - App
-      summary: Envia o resultado de um comando de autenticação para o Authorization Server do Opus Open Finance
-      description: Envia o resultado de um comando de autenticação para o Opus Open Finance Authorization Server
+      summary: Envía el resultado de un comando de autenticación al Authorization Server del Opus Open Finance
+      description: Envía el resultado de un comando de autenticación al Opus Open Finance Authorization Server
       operationId: postCommandAuthentication
       parameters:
-        - $ref: '#/components/parameters/CommandId'
+        - $ref: "#/components/parameters/CommandId"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Authenticate'
-        description: Payload para resposta do comando de autenticação
+              $ref: "#/components/schemas/Authenticate"
+        description: Payload para respuesta del comando de autenticación
         required: true
       responses:
         "200":
@@ -111,26 +112,26 @@ paths:
               schema:
                 $ref: "#/components/schemas/ResponseCommand"
         default:
-          description: Erro inesperado.
+          description: Error inesperado.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GeneralError'
+                $ref: "#/components/schemas/GeneralError"
   "/app/commands/{id}/consent":
     put:
       tags:
         - App
-      summary: Envia o resultado de um comando de consentimento para o Opus Open Finance Authorization Server
-      description: Envia o resultado de um comando de consentimento para o Opus Open Finance Authorization Server
+      summary: Envía el resultado de un comando de consentimiento al Opus Open Finance Authorization Server
+      description: Envía el resultado de un comando de consentimiento al Opus Open Finance Authorization Server
       operationId: postCommandConsent
       parameters:
-        - $ref: '#/components/parameters/CommandId'
+        - $ref: "#/components/parameters/CommandId"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Consent'
-        description: Payload para resposta do comando de autenticação
+              $ref: "#/components/schemas/Consent"
+        description: Payload para respuesta del comando de autenticación
         required: true
       responses:
         "200":
@@ -140,11 +141,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/ResponseCommandConsent"
         default:
-          description: Erro inesperado.
+          description: Error inesperado.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GeneralError'
+                $ref: "#/components/schemas/GeneralError"
 servers:
   - url: https://open-banking.instituicao.com.br/auth
 components:
@@ -164,7 +165,7 @@ components:
       properties:
         refused:
           type: boolean
-          description: Indicativo de recusa do consentimento
+          description: Indicativo de rechazo del consentimiento
           example: false
     JWT:
       type: object
@@ -176,36 +177,36 @@ components:
       properties:
         iat:
           type: integer
-          description: epoch da emissão do JWT
+          description: epoch de emisión del JWT
           example: 1618664738
         exp:
           type: integer
-          description: epoch da validade do JWT
+          description: epoch de validez del JWT
           example: 1618664798
         jti:
           type: string
-          description: id para evitar reuso do jwt
+          description: id para evitar reuso del JWT
           example: e8f172c9-6f83-4d36-9dbb-e3ce7ca8a39b
         cpf:
           type: string
-          description: cpf do usuário logado
+          description: CPF del usuario autenticado
           example: 32180490089
         cnpj:
           type: string
-          description: cnpj do usuário logado
+          description: CNPJ del usuario autenticado
           example: 77202036000182
         name:
           type: string
-          description: nome do usuário logado
+          description: Nombre del usuario autenticado
           example: João Maria José
         authExtraData:
           type: string
-          description: informações adicionais sobre o login
+          description: Informaciones adicionales sobre el inicio de sesión
           example: |-
             [ { "key": "agencia", "value": "1234" }, { "key": "conta", "value": "542345234" } ]
         consentOwner:
           type: string
-          description: identificador do dono do consentimento
+          description: Identificador del propietario del consentimiento
           example: |-
             [ { "key": "conta", "value": "542345234" }, { "key": "cnpj", "value": "77202036000182" } ]
     Authenticate:
@@ -217,8 +218,8 @@ components:
           example: "eyJhbGciOiJSUzI1NiIsImtpZCI6IkVVc01MRndYejV6TWhrSm9vMWxjbklNMnBBcExjM2tjXzJXVjhZS1lDM00ifQ.eyJpYXQiOjE2MzQyNTYwMDAsImp0aSI6ImU2Y2RlNTFmLTc5OWMtNDQxMC04YmRhLWQ2NTY3M2NiMDQzYyIsIm5hbWUiOiJKb8OjbyBNYXJpYSBKb3PDqSIsImNwZiI6IjMyMTgwNDkwMDg5IiwiY25waiI6Ijc3MjAyMDM2MDAwMTgyIiwiYXV0aEV4dHJhRGF0YSI6W3sia2V5IjoiYWdlbmNpYSIsInZhbHVlIjoiMTIzNCJ9LHsia2V5IjoiY29udGEiLCJ2YWx1ZSI6IjU0MjM0NTIzNCJ9XSwiY29uc2VudE93bmVyIjpbeyJrZXkiOiJjb250YSIsInZhbHVlIjoiNTQyMzQ1MjM0In0seyJrZXkiOiJjbnBqIiwidmFsdWUiOiI3NzIwMjAzNjAwMDE4MiJ9XX0.dN841nMHKgwumFRoNnYAogmIxzoL20tUSpdltEXTmWUIT0p1IxNWSelcS3FGjphKb-Q5vcfdnNNXgVwMvdUts_buveyda54zlLHWm9wkb71_C_IXHl6DLgsemM7JtnFjfhiBlIBvyB6p-7DRlJTLJc_9Q8R2CX7uOnMSEaST-4WxgQSSzBvAFKsGuGuZ3RvrZOXYFVQjG8idm0T9JoIC29evF7QEumgBXcOwdYmPO0oj9gMWUcOiVIWty2MfreRaDvlmUSLclSjsrae_laED9x2N19Y0uc5xCgH2LweSpAsUkJwSvsrr92dTKv2mDoKWNnXJhr9QABIJPKygWnR05g"
           type: object
           description: |-
-            JWT assinado segundo a estrutura definida, envio obrigatório
-            se não ouve recusa do consentimento.
+            JWT firmado según la estructura definida; envío obligatorio
+            si no hubo rechazo del consentimiento.
           allOf:
             - $ref: "#/components/schemas/JWT"
     Consent:
@@ -228,111 +229,111 @@ components:
       properties:
         selectedResources:
           type: array
-          description: Array com os IDs dos recursos do consentimento selecionados pelo usuário
+          description: Arreglo con los IDs de los recursos del consentimiento seleccionados por el usuario
           items:
             type: string
           maxItems: 100
         isMultipleRequirer:
           type: boolean
-          description: Define se o consentimento é de múltipla alçada(se não enviado o padrão é false)
+          description: Define si el consentimiento es de múltiple aprobación (si no enviado, el valor por defecto es false)
           example: false
         isConsentAuthorized:
           type: boolean
-          description: Define se o consentimento foi autorizado totalmente(se não enviado o padrão é true)
+          description: Define si el consentimiento fue totalmente autorizado (si no enviado, el valor por defecto es true)
           example: true
         selectedTransactionLimit:
           type: number
-          description: Limite por transação selecionado pelo cliente para os pagamentos atrelados ao vínculo de dispositivo da JSR.
-            [Restrição]  Preenchimento obrigatório para os consentimentos de tipo ENROLLMENT
+          description:
+            Límite por transacción seleccionado por el cliente para los pagos vinculados al enrolamiento de dispositivo JSR.
+            [Restricción] Relleno obligatorio para consentimientos de tipo ENROLLMENT
           example: 100000.12
           minimum: 0.01
         selectedDailyLimit:
           type: number
-          description: Limite de transação diário selecionado pelo cliente para os pagamentos atrelados ao vínculo de dispositivo da JSR.
-            [Restrição]  Preenchimento obrigatório para os consentimentos de tipo ENROLLMENT
+          description:
+            Límite diario de transacción seleccionado por el cliente para los pagos vinculados al enrolamiento de dispositivo JSR.
+            [Restricción] Relleno obligatorio para consentimientos de tipo ENROLLMENT
           example: 100000.12
           minimum: 0.01
         selectedExpirationDate:
           type: string
           maxLength: 20
-          description: Data de expiração selecionada pelo cliente para o vínculo de dispositivo da JSR. If it is not sent, the enrollment will remain valid until canceled by the client.
+          description: Fecha de expiración seleccionada por el cliente para el vínculo de dispositivo de la JSR. Si no es enviada, el enrolamiento seguirá válido hasta ser cancelado por el cliente.
           format: date-time
           example: "2021-05-21T08:30:00Z"
         selectedEnrollmentName:
           type: string
-          description: Nome do dispositivo autorizado pelo cliente para o vínculo de dispositivo da JSR.
+          description: Nombre del dispositivo autorizado por el cliente para el vínculo de dispositivo JSR.
           example: "Meu Celular"
         useOverdraftLimit:
           type: boolean
           default: true
           example: true
-          description: Indica se o usuário pagador autorizou a utilização de limite pré-aprovado (cheque especial) na sua conta para realização de pagamentos, caso o cliente possua o produto.
+          description: Indica si el pagador autorizó el uso del límite preaprobado (cheque especial) para realizar pagos, si el cliente posee el producto.
     AuthenticateCommand:
       type: object
       properties:
         acr:
           type: string
-          description: Nível exigido na autenticação
+          description: Nivel exigido en la autenticación
           enum:
             - urn:brasil:openbanking:loa2
         jti:
           type: string
-          description: jti a ser usado no JWT assinado para evitar replay attack
+          description: jti a ser utilizado en el JWT firmado para evitar replay attack
           maxLength: 40
     ConsentCommand:
       type: object
       properties:
         customerName:
           type: string
-          description: Nome do cliente autenticado
+          description: Nombre del cliente autenticado
         brand:
           type: object
-          description: Informações sobre a marca da instituição
+          description: Información sobre la marca de la institución
           properties:
             id:
               type: string
-              description: ID da marca da instituição
+              description: ID de la marca de la institución
             name:
               type: string
-              description: Nome da marca da instituição
+              description: Nombre de la marca de la institución
             logoUrl:
               type: string
-              description: URL do logotipo da marca da instituição
+              description: URL del logotipo de la marca de la institución
         consent:
           oneOf:
-            - $ref: '#/components/schemas/ConsentCustomerDataSharing'
-            - $ref: '#/components/schemas/ConsentCustomerPayment'
+            - $ref: "#/components/schemas/ConsentCustomerDataSharing"
+            - $ref: "#/components/schemas/ConsentCustomerPayment"
         permissions:
           allOf:
-            - $ref: '#/components/schemas/ResponseDomainPermissionSchema'
-          description: "Descrição das permissões do consentimento. Para consentimento de compartilhamento de dados ou vínculo de dispositivo para JSR."
+            - $ref: "#/components/schemas/ResponseDomainPermissionSchema"
+          description: "Descripción de los permisos del consentimiento. Para consentimiento de compartición de datos o vínculo de dispositivo para JSR."
         resourceTypes:
           allOf:
-            - $ref: '#/components/schemas/ResponseDomainResourceSchema'
-          description: "Tipos de recursos do consentimento. Exclusivo de consentimento de compartilhamento de dados."
-
+            - $ref: "#/components/schemas/ResponseDomainResourceSchema"
+          description: "Tipos de recursos del consentimiento. Exclusivo de consentimiento de compartición de datos."
     ResponseDomainPermissionSchema:
       type: array
       items:
-        $ref: '#/components/schemas/Permission'
+        $ref: "#/components/schemas/Permission"
 
     Permission:
       type: object
       properties:
         description:
           type: string
-          example: Permite a visualização das contas, incluindo agência e número da conta
+          example: Permite la visualización de las cuentas, incluyendo agencia y número de cuenta
         name:
           type: string
           example: ACCOUNTS_READ
         title:
           type: string
-          example: Permite a visualização das contas
-
+          example: Permite la visualización de las cuentas
     ResponseDomainResourceSchema:
       type: array
       items:
-        $ref: '#/components/schemas/ResourceType'
+        $ref: "#/components/schemas/ResourceType"
 
     ResourceType:
       type: object
@@ -346,7 +347,7 @@ components:
             type: string
         title:
           type: string
-          example: Dados da conta
+          example: Datos de la cuenta
     ErrorCommand:
       type: object
       allOf:
@@ -354,7 +355,7 @@ components:
       properties:
         type:
           type: string
-          description: Tipo do erro
+          description: Tipo de error
           enum:
             - CPF_MISMATCH
             - CNPJ_MISMATCH
@@ -372,7 +373,7 @@ components:
             - HANDOFF_ABORTED
         message:
           type: string
-          description: Mensagem de erro que deve ser exibida na tela antes do redirecionamento final
+          description: Mensaje de error que debe mostrarse en pantalla antes del redireccionamiento final
     Redirect:
       type: object
       properties:
@@ -382,14 +383,14 @@ components:
             isHandOff:
               type: boolean
               description: |-
-                Indicativo da autorização ter ocorrido via hand-off e não exigir redirect.
-                A orientação para o usuário deve ser para o mesmo continuar a transação no
-                dispositivo que iniciou a operação.
+                Indicador de que la autorización ocurrió vía hand-off y no requiere redireccionamiento.
+                La orientación al usuario debe ser continuar la transacción en el dispositivo donde inició la operación.
             redirectTo:
               type: string
               description: |-
-                URL para abrir no sistema operacional de retorno ao Third-Party Provider,
-                apenas para hybrid-flow tradicional (sem hand-off)
+                URL para abrir en el sistema operativo de retorno al Third-Party Provider,
+                solo para hybrid-flow tradicional (sin hand-off)
+
     CompletedCommand:
       type: object
       allOf:
@@ -411,18 +412,18 @@ components:
             - completed
         commandId:
           type: string
-          description: ID do comando a ser utilizado na resposta
+          description: ID del comando a ser utilizado en la respuesta
           maxLength: 40
         tpp:
           type: object
-          description: Informações sobre o Third-Party Provider (TPP)
+          description: Información sobre el Third-Party Provider (TPP)
           properties:
             name:
               type: string
-              description: "Nome do Third-Party Provider (TPP)"
+              description: "Nombre del Third-Party Provider (TPP)"
             logoUrl:
               type: string
-              description: URL do logotipo (SVG)
+              description: URL del logotipo (SVG)
         type:
           type: string
           enum:
@@ -430,9 +431,9 @@ components:
             - PAYMENT
             - ENROLLMENT
         authenticateCommand:
-          $ref: '#/components/schemas/AuthenticateCommand'
+          $ref: "#/components/schemas/AuthenticateCommand"
         errorCommand:
-          $ref: '#/components/schemas/ErrorCommand'
+          $ref: "#/components/schemas/ErrorCommand"
     ResponseCommandConsent:
       type: object
       required:
@@ -449,22 +450,22 @@ components:
             - completed
         commandId:
           type: string
-          description: ID do comando a ser utilizado na resposta
+          description: ID del comando a ser utilizado en la respuesta
           maxLength: 40
         tpp:
           type: object
-          description: Informações sobre o Third-Party Provider (TPP)
+          description: Información sobre el Third-Party Provider (TPP)
           properties:
             name:
               type: string
-              description: "Nome do Third-Party Provider (TPP)"
+              description: "Nombre del Third-Party Provider (TPP)"
             logoUrl:
               type: string
-              description: URL do logotipo (SVG)
+              description: URL del logotipo (SVG)
         errorCommand:
-          $ref: '#/components/schemas/ErrorCommand'
+          $ref: "#/components/schemas/ErrorCommand"
         completedCommand:
-          $ref: '#/components/schemas/CompletedCommand'
+          $ref: "#/components/schemas/CompletedCommand"
     ResponseCommand:
       type: object
       required:
@@ -481,24 +482,24 @@ components:
             - completed
         commandId:
           type: string
-          description: ID do comando a ser utilizado na resposta
+          description: ID del comando a ser utilizado en la respuesta
           maxLength: 40
         tpp:
           type: object
-          description: Informações sobre o Third-Party Provider (TPP)
+          description: Información sobre el Third-Party Provider (TPP)
           properties:
             name:
               type: string
-              description: "Nome do Third-Party Provider (TPP)"
+              description: "Nombre del Third-Party Provider (TPP)"
             logoUrl:
               type: string
-              description: URL do logotipo (SVG)
+              description: URL del logotipo (SVG)
         consentCommand:
-          $ref: '#/components/schemas/ConsentCommand'
+          $ref: "#/components/schemas/ConsentCommand"
         errorCommand:
-          $ref: '#/components/schemas/ErrorCommand'
+          $ref: "#/components/schemas/ErrorCommand"
     ConsentCustomerDataSharing:
-      description: Detalhes do consentimento de compartilhamento de dados
+      description: Detalles del consentimiento de compartición de datos
       type: object
       required:
         - type
@@ -509,19 +510,19 @@ components:
         - loggedUser
       properties:
         type:
-          description: Tipo do consentimento
+          description: Tipo de consentimiento
           type: string
           enum:
             - DATA_SHARING
         brandId:
           type: string
-          description: Identificador da marca reportada pelo participante do Open Banking
+          description: Identificador de la marca reportada por el participante de Open Banking
           example:
             - cbanco
           minLength: 1
           maxLength: 50
         creationDateTime:
-          description: Data e hora em que o consentimento foi criado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC (UTC time format).
+          description: Fecha y hora en la que se creó el consentimiento. Una cadena con fecha y hora conforme a la especificación RFC-3339, siempre utilizando el huso horario UTC (UTC time format).
           type: string
           format: date-time
           example:
@@ -530,33 +531,33 @@ components:
           maxLength: 20
         tpp:
           type: object
-          description: Detalhes do Third-Party Provider (TPP) que solicitou o consentimento
+          description: Detalles del Proveedor Tercero (TPP) que solicitó el consentimiento
           additionalProperties: false
           required:
             - name
           properties:
             name:
               type: string
-              description: Nome do Third-Party Provider (TPP) que solicitou o consentimento
+              description: Nombre del Proveedor Tercero (TPP) que solicitó el consentimiento
               example:
                 - GuiaBolsa
               maxLength: 100
         externalId:
           type: string
-          description: Identificador do consentimento utilizado fora da plataforma Opus Open Finance
+          description: Identificador del consentimiento utilizado fuera de la plataforma Opus Open Finance
           example:
             - urn:oob-bank:2f710909-4ccd-4998-8679-3d8de00e5ccf
           maxLength: 100
         loggedUser:
           type: object
-          description: Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
+          description: Usuario (persona natural) que se encuentra con sesión iniciada en la institución Iniciadora de Pago.
           additionalProperties: false
           required:
             - document
           properties:
             document:
               type: object
-              description: Documento de identificação oficial do usuário.
+              description: Documento de identificación oficial del usuario.
               additionalProperties: false
               required:
                 - identification
@@ -565,27 +566,27 @@ components:
                 identification:
                   type: string
                   maxLength: 11
-                  description: Número do documento de identificação oficial do usuário.
+                  description: Número del documento de identificación oficial del usuario.
                   example:
                     - "11111111111"
                   pattern: ^\d{11}$
                 rel:
                   type: string
                   maxLength: 3
-                  description: Tipo do documento de identificação oficial do usuário.
+                  description: Tipo del documento de identificación oficial del usuario.
                   example:
                     - CPF
                   pattern: ^[A-Z]{3}$
         businessDocumentType:
           type: object
-          description: Usuário (pessoa jurídica) que encontra-se logado na instituição Iniciadora de Pagamento. [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).
+          description: Usuario (persona jurídica) que se encuentra con sesión iniciada en la institución Iniciadora de Pago. [Restricción] Relleno obligatorio si el usuario autenticado en la Iniciadora de Pago es un CNPJ (persona jurídica).
           additionalProperties: false
           required:
             - document
           properties:
             document:
               type: object
-              description: Documento de identificação oficial do titular pessoa jurídica.
+              description: Documento de identificación oficial del titular persona jurídica.
               additionalProperties: false
               required:
                 - identification
@@ -594,33 +595,33 @@ components:
                 identification:
                   type: string
                   maxLength: 14
-                  description: Número do documento de identificação oficial do titular pessoa jurídica.
+                  description: Número del documento de identificación oficial del titular persona jurídica.
                   example:
                     - "11111111111111"
                   pattern: ^\d{14}$
                 rel:
                   type: string
                   maxLength: 4
-                  description: Tipo do documento de identificação oficial do titular pessoa jurídica.
+                  description: Tipo del documento de identificación oficial del titular persona jurídica.
                   example:
                     - CNPJ
                   pattern: ^[A-Z]{4}$
         resources:
-          description: Lista de recursos que podem ser selecionados pelo cliente para serem usados no consentimento. Objeto de uso nas interfaces de aceitação do consentimento
+          description: Lista de recursos que pueden ser seleccionados por el cliente para ser usados en el consentimiento. Objeto utilizado en las interfaces de aceptación del consentimiento.
           type: array
           items:
             type: object
-            description: Recursos selecionável pelo cliente
+            description: Recurso seleccionable por el cliente
             properties:
               id:
                 type: string
-                description: campo no formato GUID
+                description: Campo en formato GUID
                 example:
                   - 49fe29f1-95a9-4521-8f48-a9700e392b48
                 pattern: ^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$
                 maxLength: 36
               type:
-                description: Tipo do recurso
+                description: Tipo de recurso
                 type: string
                 enum:
                   - ACCOUNT
@@ -629,7 +630,7 @@ components:
                   - ACCOUNT
               name:
                 type: array
-                description: "Array de chave e valor com o nome do recurso, esses dados serão apresentados nos frontends no formato: 'Key1: Value1 Key2: Value2 ...'"
+                description: "Arreglo de clave y valor con el nombre del recurso; estos datos serán presentados en los frontends en el formato: 'Key1: Value1 Key2: Value2 ...'"
                 items:
                   type: object
                   required:
@@ -638,7 +639,7 @@ components:
                     key:
                       type: string
                       example:
-                        - Cartão de crédito
+                        - Tarjeta de crédito
                     value:
                       type: string
                       example:
@@ -646,12 +647,12 @@ components:
                 minItems: 1
                 maxItems: 10
               balanceCurrency:
-                description: Moeda do saldo do recurso.
+                description: Moneda del saldo del recurso.
                 type: string
                 example:
                   - BRL
               balanceAmount:
-                description: Valor do saldo do recurso.
+                description: Valor del saldo del recurso.
                 type: number
                 example:
                   - 3192.32
@@ -660,13 +661,13 @@ components:
                 example:
                   - "false"
               rejectionReason:
-                description: Objeto que indica o motivo de rejeição do recurso
+                description: Objeto que indica el motivo del rechazo del recurso
                 type: object
                 required:
                   - code
                 properties:
                   code:
-                    description: Código que determina o motivo do recurso ter sido negado
+                    description: Código que determina el motivo por el cual el recurso fue rechazado
                     type: string
                     enum:
                       - VALOR_INVALIDO
@@ -680,11 +681,11 @@ components:
                       - QRCODE_INVALIDO
                   detail:
                     type: string
-                    description: Descrição do motivo de rejeição do recurso. Estará preenchido apenas se um motivo de rejeição for enviado pelo conector.
+                    description: Descripción del motivo de rechazo del recurso. Solo estará relleno si un motivo fue enviado por el conector.
             additionalProperties: false
           maxItems: 1000
         expirationDateTime:
-          description: Data e hora de expiração da permissão. De preenchimento obrigatório, reflete a data limite de validade do consentimento. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC (UTC time format).
+          description: Fecha y hora de expiración del permiso. Obligatoria; refleja la fecha límite de validez del consentimiento. Una cadena RFC-3339 en UTC.
           type: string
           maxLength: 20
           format: date-time
@@ -693,7 +694,7 @@ components:
         permissions:
           type: array
           items:
-            description: Somente para consentimentos de compartilhamento de dados. Especifica os tipos de permissões de acesso às APIs no escopo do Open Banking Brasil - Fase 2 (compartilhamento de dados), de acordo com os blocos de consentimento fornecidos pelo usuário e necessários ao acesso a cada endpoint das APIs.
+            description: Solo para consentimientos de compartición de datos. Especifica los tipos de permisos de acceso a las APIs en el ámbito del Open Banking Brasil - Fase 2.
             type: string
             enum:
               - ACCOUNTS_READ
@@ -735,7 +736,7 @@ components:
         failingResources:
           type: array
           items:
-            description: Lista opcional de recursos que falharam no discovery
+            description: Lista opcional de recursos que fallaron en el discovery
             type: string
             enum:
               - CREDIT_CARD_ACCOUNT
@@ -745,7 +746,7 @@ components:
             - PAYMENT
       additionalProperties: false
     ConsentCustomerPayment:
-      description: Detalhes do consentimentob de pagamento
+      description: Detalles del consentimiento de pago
       type: object
       required:
         - type
@@ -756,20 +757,20 @@ components:
         - loggedUser
       properties:
         type:
-          description: Tipo do consentimento
+          description: Tipo de consentimiento
           type: string
           enum:
             - PAYMENT
             - ENROLLMENT
         brandId:
           type: string
-          description: Identificador da marca reportada pelo participante do Open Banking
+          description: Identificador de la marca reportada por el participante de Open Banking
           example:
             - cbanco
           minLength: 1
           maxLength: 50
         creationDateTime:
-          description: Data e hora em que o consentimento foi criado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC (UTC time format).
+          description: Fecha y hora en que se creó el consentimiento. Cadena RFC-3339 utilizando siempre el huso horario UTC.
           type: string
           format: date-time
           example:
@@ -777,9 +778,10 @@ components:
           pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
           maxLength: 20
         startDateTime:
-          description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+          description:
+            Fecha y hora en la que el consentimiento debe volverse válido. Cadena RFC-3339 en UTC.
 
-            [ Restrição ] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
+            [ Restricción ] Relleno obligatorio cuando el consentimiento de pago pasa a valer en una fecha futura.
           type: string
           format: date-time
           example:
@@ -788,33 +790,33 @@ components:
           maxLength: 20
         tpp:
           type: object
-          description: Detalhes do Third-Party Provider (TPP) que solicitou o consentimento
+          description: Detalles del Proveedor Tercero (TPP) que solicitó el consentimiento
           additionalProperties: false
           required:
             - name
           properties:
             name:
               type: string
-              description: Nome do Third-Party Provider (TPP) que solicitou o consentimento
+              description: Nombre del Proveedor Tercero (TPP) que solicitó el consentimiento
               example:
                 - GuiaBolsa
               maxLength: 100
         externalId:
           type: string
-          description: Identificador do consentimento utilizado fora da plataforma Opus Open Finance
+          description: Identificador del consentimiento utilizado fuera de la plataforma Opus Open Finance
           example:
             - urn:oob-bank:2f710909-4ccd-4998-8679-3d8de00e5ccf
           maxLength: 100
         loggedUser:
           type: object
-          description: Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
+          description: Usuario (persona natural) que se encuentra autenticado en la institución Iniciadora de Pago.
           additionalProperties: false
           required:
             - document
           properties:
             document:
               type: object
-              description: Documento de identificação oficial do usuário.
+              description: Documento de identificación oficial del usuario.
               additionalProperties: false
               required:
                 - identification
@@ -823,27 +825,27 @@ components:
                 identification:
                   type: string
                   maxLength: 11
-                  description: Número do documento de identificação oficial do usuário.
+                  description: Número del documento de identificación oficial del usuario.
                   example:
                     - "11111111111"
                   pattern: ^\d{11}$
                 rel:
                   type: string
                   maxLength: 3
-                  description: Tipo do documento de identificação oficial do usuário.
+                  description: Tipo del documento de identificación oficial del usuario.
                   example:
                     - CPF
                   pattern: ^[A-Z]{3}$
         businessDocumentType:
           type: object
-          description: Usuário (pessoa jurídica) que encontra-se logado na instituição Iniciadora de Pagamento. [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).
+          description: Usuario (persona jurídica) autenticado en la Iniciadora de Pago. [Restricción] Obligatorio si el usuario es un CNPJ.
           additionalProperties: false
           required:
             - document
           properties:
             document:
               type: object
-              description: Documento de identificação oficial do titular pessoa jurídica.
+              description: Documento de identificación oficial del titular persona jurídica.
               additionalProperties: false
               required:
                 - identification
@@ -852,33 +854,33 @@ components:
                 identification:
                   type: string
                   maxLength: 14
-                  description: Número do documento de identificação oficial do titular pessoa jurídica.
+                  description: Número del documento de identificación oficial del titular persona jurídica.
                   example:
                     - "11111111111111"
                   pattern: ^\d{14}$
                 rel:
                   type: string
                   maxLength: 4
-                  description: Tipo do documento de identificação oficial do titular pessoa jurídica.
+                  description: Tipo del documento de identificación oficial del titular persona jurídica.
                   example:
                     - CNPJ
                   pattern: ^[A-Z]{4}$
         resources:
-          description: Lista de recursos que podem ser selecionados pelo cliente para serem usados no consentimento. Objeto de uso nas interfaces de aceitação do consentimento
+          description: Lista de recursos que pueden ser seleccionados por el cliente para ser usados en el consentimiento. Utilizado en pantallas de aceptación del consentimiento.
           type: array
           items:
             type: object
-            description: Recursos selecionável pelo cliente
+            description: Recurso seleccionable por el cliente
             properties:
               id:
                 type: string
-                description: campo no formato GUID
+                description: Campo en formato GUID
                 example:
                   - 49fe29f1-95a9-4521-8f48-a9700e392b48
                 pattern: ^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$
                 maxLength: 36
               type:
-                description: Tipo do recurso
+                description: Tipo de recurso
                 type: string
                 enum:
                   - PAYMENT
@@ -886,7 +888,7 @@ components:
                   - PAYMENT
               name:
                 type: array
-                description: "Array de chave e valor com o nome do recurso, esses dados serão apresentados nos frontends no formato: 'Key1: Value1 Key2: Value2 ...'"
+                description: "Arreglo de clave y valor con el nombre del recurso; estos datos se mostrarán en formato: 'Key1: Value1 Key2: Value2 ...'"
                 items:
                   type: object
                   required:
@@ -895,7 +897,7 @@ components:
                     key:
                       type: string
                       example:
-                        - Cartão de crédito
+                        - Tarjeta de crédito
                     value:
                       type: string
                       example:
@@ -903,12 +905,12 @@ components:
                 minItems: 1
                 maxItems: 10
               balanceCurrency:
-                description: Moeda do saldo do recurso.
+                description: Moneda del saldo del recurso.
                 type: string
                 example:
                   - BRL
               balanceAmount:
-                description: Valor do saldo do recurso.
+                description: Valor del saldo del recurso.
                 type: number
                 example:
                   - 3192.32
@@ -917,13 +919,13 @@ components:
                 example:
                   - "false"
               rejectionReason:
-                description: Objeto que indica o motivo de rejeição do recurso
+                description: Objeto que indica el motivo del rechazo del recurso
                 type: object
                 required:
                   - code
                 properties:
                   code:
-                    description: Código que determina o motivo do recurso ter sido negado
+                    description: Código que determina la razón por la cual el recurso fue negado
                     type: string
                     enum:
                       - VALOR_INVALIDO
@@ -937,42 +939,42 @@ components:
                       - QRCODE_INVALIDO
                   detail:
                     type: string
-                    description: Descrição do motivo de rejeição do recurso. Estará preenchido apenas se um motivo de rejeição for enviado pelo conector.
+                    description: Descripción detallada del motivo de rechazo del recurso, si enviada por el conector.
             additionalProperties: false
           maxItems: 1000
         expirationDateTime:
-          description: Data e hora de expiração da permissão. De preenchimento obrigatório, reflete a data limite de validade do consentimento. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC (UTC time format).
+          description: Fecha y hora de expiración del consentimiento. Obligatoria, representa la fecha límite de validez. Cadena RFC-3339 en UTC.
           type: string
           maxLength: 20
           format: date-time
           example:
             - "2021-05-21T08:30:00Z"
         additionalInformation:
-          description: Informação adicional inserida pelo usuário pagador nos consentimentos de Pagamento Automático
+          description: Información adicional ingresada por el usuario pagador en consentimientos de Pago Automático.
           type: string
-          example: 'Minha recorrência'
+          example: "Mi recurrencia"
           pattern: '[\w\W\s]*'
           maxLength: 140
         creditors:
           type: array
-          description: Lista de possíveis recebedores do pagamento
+          description: Lista de posibles beneficiarios del pago
           items:
             allOf:
-              - $ref: '#/components/schemas/Creditor'
+              - $ref: "#/components/schemas/Creditor"
         creditor:
           deprecated: true
-          description: Será substituído futuramente pelo objeto creditors com a lista dos possíveis recebedores do pagamento.
+          description: Será reemplazado por el objeto creditors con la lista de beneficiarios.
           allOf:
-            - $ref: '#/components/schemas/Creditor'
+            - $ref: "#/components/schemas/Creditor"
         payment:
-          $ref: '#/components/schemas/PixPaymentConsent'
+          $ref: "#/components/schemas/PixPaymentConsent"
         recurringConfiguration:
-          $ref: '#/components/schemas/AutomaticPayment'
+          $ref: "#/components/schemas/AutomaticPayment"
         debtorAccount:
           type: object
           description: |
-            Para consentimentos de pagamento e vínculo de dispositivo para JSR. Objeto que contém a identificação da conta de origem do pagador.
-            As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente. Do contrário, será coletada na detentora e trazida para a iniciadora como resposta à criação do pagamento.
+            Para consentimientos de pago y vinculación de dispositivo para JSR. Contiene la identificación de la cuenta de origen del pagador.
+            Si la iniciadora ya obtuvo esta información del cliente, puede enviarla aquí; de lo contrario, será recolectada por la detentora y enviada de vuelta.
           required:
             - ispb
             - number
@@ -986,7 +988,7 @@ components:
               example:
                 - "12345678"
               description: |
-                Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
+                Debe completarse con el ISPB del participante del SPI (Sistema de Pagos Instantáneos), solo números.
             issuer:
               type: string
               maxLength: 4
@@ -994,10 +996,8 @@ components:
               example:
                 - "1774"
               description: |
-                Código da Agência emissora da conta sem dígito.
-                (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito,
-                no exercício de atividades da instituição, não podendo ser móvel ou transitória).
-                [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA), SVGS (CONTA_POUPANCA) e SLRY (CONTA_SALARIO).
+                Código de la agencia emisora de la cuenta, sin dígito verificador.
+                [Restricción] Obligatorio para CACC, SVGS y SLRY.
             number:
               type: string
               minLength: 3
@@ -1006,8 +1006,8 @@ components:
               example:
                 - "1234567890"
               description: |
-                Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir),
-                se houver valor alfanumérico, este deve ser convertido para 0.
+                Número de la cuenta transaccional del usuario pagador, con dígito verificador si existe.  
+                Cualquier carácter alfanumérico debe ser convertido a 0.
             accountType:
               type: string
               maxLength: 4
@@ -1019,19 +1019,16 @@ components:
               example:
                 - CACC
               description: |
-                Tipos de contas usadas para pagamento.
-                Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,
-                conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
-                Segue descrição de cada valor do ENUM.
-                CACC - Current - Conta Corrente.
-                SLRY - Salary - Conta-Salário.
-                SVGS - Savings - Conta de Poupança.
-                TRAN - TransactingAccount - Conta de Pagamento pré-paga.
+                Tipos de cuentas habilitadas para pago.  
+                CACC - Cuenta corriente  
+                SLRY - Cuenta salario  
+                SVGS - Cuenta de ahorro  
+                TRAN - Cuenta prepaga
           additionalProperties: false
         permissions:
           type: array
           items:
-            description: Somente para consentimentos de vínculo. Especifica os tipos de permissões de acesso às APIs no escopo do Open Banking Brasil - Fase 3, de acordo com os blocos de consentimento fornecidos pelo usuário e necessários ao acesso a cada endpoint das APIs.
+            description: Solo para consentimientos de vínculo. Permisos de acceso necesarios para iniciar pagos en Open Banking Brasil fase 3.
             type: string
             enum:
               - PAYMENTS_INITIATE
@@ -1042,7 +1039,7 @@ components:
         failingResources:
           type: array
           items:
-            description: Lista opcional de recursos que falharam no discovery
+            description: Lista opcional de recursos que fallaron en el discovery
             type: string
             enum:
               - PAYMENT
@@ -1051,7 +1048,7 @@ components:
             - PAYMENT
       additionalProperties: false
     ConsentCustomerAcceptance:
-      description: Detalhes do consentimento
+      description: Detalles del consentimiento
       type: object
       required:
         - type
@@ -1062,7 +1059,7 @@ components:
         - loggedUser
       properties:
         type:
-          description: Tipo do consentimento
+          description: Tipo de consentimiento
           type: string
           enum:
             - DATA_SHARING
@@ -1070,13 +1067,13 @@ components:
             - ENROLLMENT
         brandId:
           type: string
-          description: Identificador da marca reportada pelo participante do Open Banking
+          description: Identificador de la marca reportada por el participante de Open Banking
           example:
             - cbanco
           minLength: 1
           maxLength: 50
         creationDateTime:
-          description: Data e hora em que o consentimento foi criado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC (UTC time format).
+          description: Fecha y hora en que se creó el consentimiento. Cadena RFC-3339 utilizando siempre el huso horario UTC.
           type: string
           format: date-time
           example:
@@ -1084,9 +1081,10 @@ components:
           pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
           maxLength: 20
         startDateTime:
-          description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+          description:
+            Fecha y hora a partir de la cual el consentimiento será válido. Cadena RFC-3339 en UTC.
 
-            [ Restrição ] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
+            [ Restricción ] Obligatorio cuando el consentimiento pasa a valer en fecha futura.
           type: string
           format: date-time
           example:
@@ -1095,33 +1093,33 @@ components:
           maxLength: 20
         tpp:
           type: object
-          description: Detalhes do Third-Party Provider (TPP) que solicitou o consentimento
+          description: Detalles del Proveedor Tercero (TPP) que solicitó el consentimiento
           additionalProperties: false
           required:
             - name
           properties:
             name:
               type: string
-              description: Nome do Third-Party Provider (TPP) que solicitou o consentimento
+              description: Nombre del Proveedor Tercero (TPP) que solicitó el consentimiento
               example:
                 - GuiaBolsa
               maxLength: 100
         externalId:
           type: string
-          description: Identificador do consentimento utilizado fora da plataforma Opus Open Finance
+          description: Identificador del consentimiento utilizado fuera de la plataforma Opus Open Finance
           example:
             - urn:oob-bank:2f710909-4ccd-4998-8679-3d8de00e5ccf
           maxLength: 100
         loggedUser:
           type: object
-          description: Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
+          description: Usuario (persona natural) autenticado en la institución Iniciadora de Pago.
           additionalProperties: false
           required:
             - document
           properties:
             document:
               type: object
-              description: Documento de identificação oficial do usuário.
+              description: Documento de identificación oficial del usuario.
               additionalProperties: false
               required:
                 - identification
@@ -1130,27 +1128,27 @@ components:
                 identification:
                   type: string
                   maxLength: 11
-                  description: Número do documento de identificação oficial do usuário.
+                  description: Número del documento de identificación oficial del usuario.
                   example:
                     - "11111111111"
                   pattern: ^\d{11}$
                 rel:
                   type: string
                   maxLength: 3
-                  description: Tipo do documento de identificação oficial do usuário.
+                  description: Tipo del documento de identificación oficial del usuario.
                   example:
                     - CPF
                   pattern: ^[A-Z]{3}$
         businessDocumentType:
           type: object
-          description: Usuário (pessoa jurídica) que encontra-se logado na instituição Iniciadora de Pagamento. [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).
+          description: Usuario (persona jurídica) autenticado en la institución Iniciadora de Pago. [Restricción] Obligatorio si el usuario autenticado es un CNPJ.
           additionalProperties: false
           required:
             - document
           properties:
             document:
               type: object
-              description: Documento de identificação oficial do titular pessoa jurídica.
+              description: Documento de identificación oficial del titular persona jurídica.
               additionalProperties: false
               required:
                 - identification
@@ -1159,33 +1157,33 @@ components:
                 identification:
                   type: string
                   maxLength: 14
-                  description: Número do documento de identificação oficial do titular pessoa jurídica.
+                  description: Número del documento de identificación oficial del titular persona jurídica.
                   example:
                     - "11111111111111"
                   pattern: ^\d{14}$
                 rel:
                   type: string
                   maxLength: 4
-                  description: Tipo do documento de identificação oficial do titular pessoa jurídica.
+                  description: Tipo del documento de identificación oficial del titular persona jurídica.
                   example:
                     - CNPJ
                   pattern: ^[A-Z]{4}$
         resources:
-          description: Lista de recursos que podem ser selecionados pelo cliente para serem usados no consentimento. Objeto de uso nas interfaces de aceitação do consentimento
+          description: Lista de recursos que pueden ser seleccionados por el cliente para ser usados en el consentimiento. Utilizados en la interfaz de aceptación.
           type: array
           items:
             type: object
-            description: Recursos selecionável pelo cliente
+            description: Recurso seleccionable por el cliente
             properties:
               id:
                 type: string
-                description: campo no formato GUID
+                description: Campo en formato GUID
                 example:
                   - 49fe29f1-95a9-4521-8f48-a9700e392b48
                 pattern: ^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$
                 maxLength: 36
               type:
-                description: Tipo do recurso
+                description: Tipo de recurso
                 type: string
                 enum:
                   - ACCOUNT
@@ -1195,7 +1193,7 @@ components:
                   - PAYMENT
               name:
                 type: array
-                description: "Array de chave e valor com o nome do recurso, esses dados serão apresentados nos frontends no formato: 'Key1: Value1 Key2: Value2 ...'"
+                description: "Arreglo de clave/valor con el nombre del recurso, mostrado en formato: 'Key1: Value1 Key2: Value2 ...'"
                 items:
                   type: object
                   required:
@@ -1204,7 +1202,7 @@ components:
                     key:
                       type: string
                       example:
-                        - Cartão de crédito
+                        - Tarjeta de crédito
                     value:
                       type: string
                       example:
@@ -1212,12 +1210,12 @@ components:
                 minItems: 1
                 maxItems: 10
               balanceCurrency:
-                description: Moeda do saldo do recurso.
+                description: Moneda del saldo del recurso.
                 type: string
                 example:
                   - BRL
               balanceAmount:
-                description: Valor do saldo do recurso.
+                description: Valor del saldo del recurso.
                 type: number
                 example:
                   - 3192.32
@@ -1226,13 +1224,13 @@ components:
                 example:
                   - "false"
               rejectionReason:
-                description: Objeto que indica o motivo de rejeição do recurso
+                description: Objeto que indica el motivo por el cual el recurso fue rechazado
                 type: object
                 required:
                   - code
                 properties:
                   code:
-                    description: Código que determina o motivo do recurso ter sido negado
+                    description: Código del motivo del rechazo del recurso
                     type: string
                     enum:
                       - VALOR_INVALIDO
@@ -1246,42 +1244,42 @@ components:
                       - QRCODE_INVALIDO
                   detail:
                     type: string
-                    description: Descrição do motivo de rejeição do recurso. Estará preenchido apenas se um motivo de rejeição for enviado pelo conector.
+                    description: Descripción detallada del motivo del rechazo, si enviada por el conector.
             additionalProperties: false
           maxItems: 1000
         expirationDateTime:
-          description: Data e hora de expiração da permissão. De preenchimento obrigatório, reflete a data limite de validade do consentimento. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC (UTC time format).
+          description: Fecha y hora de expiración del consentimiento. Obligatoria; representa la fecha límite de validez. Cadena RFC-3339 en UTC.
           type: string
           maxLength: 20
           format: date-time
           example:
             - "2021-05-21T08:30:00Z"
         additionalInformation:
-          description: Informação adicional inserida pelo usuário pagador nos consentimentos de Pagamento Automático
+          description: Información adicional agregada por el usuario pagador en consentimientos de Pago Automático
           type: string
-          example: 'Minha recorrência'
+          example: "Mi recurrencia"
           pattern: '[\w\W\s]*'
           maxLength: 140
         creditors:
           type: array
-          description: Lista de possíveis recebedores do pagamento
+          description: Lista de posibles beneficiarios del pago
           items:
             allOf:
-              - $ref: '#/components/schemas/Creditor'
+              - $ref: "#/components/schemas/Creditor"
         creditor:
           deprecated: true
-          description: Será substituído futuramente pelo objeto creditors com a lista dos possíveis recebedores do pagamento.
+          description: Será sustituido por el objeto creditors con la lista de beneficiarios.
           allOf:
-            - $ref: '#/components/schemas/Creditor'
+            - $ref: "#/components/schemas/Creditor"
         payment:
-          $ref: '#/components/schemas/PixPaymentConsent'
+          $ref: "#/components/schemas/PixPaymentConsent"
         recurringConfiguration:
-          $ref: '#/components/schemas/AutomaticPayment'
+          $ref: "#/components/schemas/AutomaticPayment"
         debtorAccount:
           type: object
           description: |
-            Para consentimentos de pagamento e vínculo de dispositivo para JSR. Objeto que contém a identificação da conta de origem do pagador.
-            As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente. Do contrário, será coletada na detentora e trazida para a iniciadora como resposta à criação do pagamento.
+            Para consentimientos de pago y vinculación de dispositivo JSR. Contiene la identificación de la cuenta de origen del pagador.
+            Si la iniciadora recopiló estos datos previamente, puede enviarlos; de lo contrario, serán retornados por la detentora en la creación del pago.
           required:
             - ispb
             - number
@@ -1295,7 +1293,7 @@ components:
               example:
                 - "12345678"
               description: |
-                Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
+                Debe rellenarse con el ISPB del participante del SPI, solo números.
             issuer:
               type: string
               maxLength: 4
@@ -1303,10 +1301,8 @@ components:
               example:
                 - "1774"
               description: |
-                Código da Agência emissora da conta sem dígito.
-                (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito,
-                no exercício de atividades da instituição, não podendo ser móvel ou transitória).
-                [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA), SVGS (CONTA_POUPANCA) e SLRY (CONTA_SALARIO).
+                Código de la agencia emisora de la cuenta, sin dígito verificador.
+                [Restricción] Obligatorio para CACC, SVGS y SLRY.
             number:
               type: string
               minLength: 3
@@ -1315,8 +1311,8 @@ components:
               example:
                 - "1234567890"
               description: |
-                Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir),
-                se houver valor alfanumérico, este deve ser convertido para 0.
+                Número de cuenta del usuario pagador, con dígito verificador si existe.  
+                Cualquier carácter no numérico debe convertirse en 0.
             accountType:
               type: string
               maxLength: 4
@@ -1328,19 +1324,16 @@ components:
               example:
                 - CACC
               description: |
-                Tipos de contas usadas para pagamento.
-                Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,
-                conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
-                Segue descrição de cada valor do ENUM.
-                CACC - Current - Conta Corrente.
-                SLRY - Salary - Conta-Salário.
-                SVGS - Savings - Conta de Poupança.
-                TRAN - TransactingAccount - Conta de Pagamento pré-paga.
+                Tipos de cuentas utilizadas para pago.  
+                CACC - Cuenta corriente  
+                SLRY - Cuenta salario  
+                SVGS - Cuenta de ahorro  
+                TRAN - Cuenta prepaga
           additionalProperties: false
         permissions:
           type: array
           items:
-            description: Somente para consentimentos de compartilhamento de dados. Especifica os tipos de permissões de acesso às APIs no escopo do Open Banking Brasil - Fase 2 (compartilhamento de dados), de acordo com os blocos de consentimento fornecidos pelo usuário e necessários ao acesso a cada endpoint das APIs.
+            description: Solo para consentimientos de datos. Define permisos de acceso a las APIs en Open Banking Brasil Fase 2.
             type: string
             enum:
               - ACCOUNTS_READ
@@ -1383,7 +1376,7 @@ components:
         failingResources:
           type: array
           items:
-            description: Lista opcional de recursos que falharam no discovery
+            description: Lista opcional de recursos que fallaron en el discovery
             type: string
             enum:
               - CUSTOMER
@@ -1396,7 +1389,7 @@ components:
       additionalProperties: false
     Creditor:
       type: object
-      description: Somente para consentimentos de pagamento. Objeto contendo os dados do recebedor (creditor).
+      description: Solo para consentimientos de pago. Objeto que contiene los datos del beneficiario (creditor).
       required:
         - personType
         - cpfCnpj
@@ -1409,7 +1402,7 @@ components:
             - PESSOA_NATURAL
             - PESSOA_JURIDICA
           description: |
-            Titular, pessoa natural ou juridica a quem se referem os dados de recebedor (creditor).
+            Titular, persona natural o jurídica a quien pertenecen los datos del beneficiario (creditor).
           example:
             - PESSOA_NATURAL
         cpfCnpj:
@@ -1420,10 +1413,10 @@ components:
           example:
             - "11111111111"
           description: |
-            Identificação da pessoa envolvida na transação.
-            Preencher com o CPF ou CNPJ, de acordo com o valor escolhido no campo type.
-            O CPF será utilizado com 11 números e deverá ser informado sem pontos ou traços.
-            O CNPJ será utilizado com 14 números e deverá ser informado sem pontos ou traços.
+            Identificación de la persona involucrada en la transacción.
+            Completar con el CPF o CNPJ según el valor elegido en el campo type.
+            CPF debe informarse con 11 dígitos, sin puntos ni guiones.
+            CNPJ debe informarse con 14 dígitos, sin puntos ni guiones.
         name:
           type: string
           maxLength: 140
@@ -1431,38 +1424,38 @@ components:
           example:
             - Marco Antonio de Brito
           description: |
-            Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.
-            Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
+            Para persona natural: informar el nombre completo del titular de la cuenta del beneficiario.
+            Para persona jurídica: informar la razón social o el nombre comercial del beneficiario.
       additionalProperties: false
     ScheduleCustom:
       type: object
       description: |
-        [Restrição] As datas enviadas na lista de datas (array “dates”) não podem ser repetidas. 
-        Caso datas repetidas sejam enviadas, o detentor deve rejeitar a criação do consentimento, informando o erro PARAMETRO_INVALIDO.
+        [Restricción] Las fechas enviadas en la lista (array “dates”) no pueden repetirse.
+        Si se envían fechas repetidas, la institución debe rechazar la creación del consentimiento con el error PARAMETRO_INVALIDO.
       required:
         - dates
         - additionalInformation
       properties:
         dates:
-          description: Define os dias em que estão planejadas as ocorrências das liquidações.
+          description: Define los días en los que están previstas las liquidaciones.
           type: array
           maxItems: 60
           minItems: 2
-          example: [ '2023-08-23', '2023-09-26' ]
+          example: ["2023-08-23", "2023-09-26"]
           items:
             type: string
             format: date
             pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
             maxLength: 10
-            example: '2023-08-23'
+            example: "2023-08-23"
         additionalInformation:
           type: string
           description: |
-            Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. 
-            O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.
+            Texto libre para que el iniciador lo complete de forma comprensible para el usuario pagador/aprobador.
+            Puede utilizarse para mostrar un resumen de la transacción durante la aprobación.
           pattern: '[\w\W\s]*'
           maxLength: 255
-          example: Todas quintas e domingos por 6 meses
+          example: Todas las quintas y domingos por 6 meses
         scheduleDates:
           type: array
           items:
@@ -1470,7 +1463,8 @@ components:
             format: date
             pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
             maxLength: 10
-            example: '2023-08-23'
+            example: "2023-08-23"
+
     ScheduleMonthly:
       type: object
       required:
@@ -1479,20 +1473,20 @@ components:
         - quantity
       properties:
         dayOfMonth:
-          description: Define o dia do mês planejado para a ocorrência das liquidações.
+          description: Define el día del mes previsto para la liquidación.
           type: integer
           minimum: 1
           maximum: 31
           example: 10
         startDate:
-          description: Define o início da vigência da recorrência.
+          description: Define el inicio de vigencia de la recurrencia.
           type: string
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           maxLength: 10
-          example: '2023-08-23'
+          example: "2023-08-23"
         quantity:
-          description: Define a quantidade de pagamentos que serão enviados para liquidação.
+          description: Define la cantidad de pagos que serán enviados para liquidación.
           type: integer
           format: int32
           minimum: 2
@@ -1505,7 +1499,8 @@ components:
             format: date
             pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
             maxLength: 10
-            example: '2023-08-23'
+            example: "2023-08-23"
+
     ScheduleDaily:
       type: object
       required:
@@ -1513,27 +1508,27 @@ components:
         - quantity
       properties:
         startDate:
-          description: Define o início da vigência da recorrência.
+          description: Define el inicio de vigencia de la recurrencia.
           type: string
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           maxLength: 10
-          example: '2023-08-23'
+          example: "2023-08-23"
         quantity:
-          description: Define a quantidade de pagamentos que serão enviados para liquidação.
+          description: Define la cantidad de pagos que serán enviados para liquidación.
           type: integer
           format: int32
           minimum: 2
           maximum: 60
           example: 3
         scheduleDates:
-              type: array
-              items:
-                type: string
-                format: date
-                pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-                maxLength: 10
-                example: '2023-08-23'
+          type: array
+          items:
+            type: string
+            format: date
+            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+            maxLength: 10
+            example: "2023-08-23"
     ScheduleWeekly:
       type: object
       required:
@@ -1542,7 +1537,7 @@ components:
         - quantity
       properties:
         dayOfWeek:
-          description: Define o dia da semana planejado para a ocorrência das liquidações.
+          description: Define el día de la semana previsto para la liquidación.
           type: string
           enum:
             - SEGUNDA_FEIRA
@@ -1554,14 +1549,14 @@ components:
             - DOMINGO
           example: QUINTA_FEIRA
         startDate:
-          description: Define o início da vigência da recorrência.
+          description: Define el inicio de vigencia de la recurrencia.
           type: string
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           maxLength: 10
-          example: '2023-08-23'
+          example: "2023-08-23"
         quantity:
-          description: Define a quantidade de pagamentos que serão enviados para liquidação.
+          description: Define la cantidad de pagos a ser enviados para liquidación.
           type: integer
           format: int32
           minimum: 2
@@ -1574,7 +1569,8 @@ components:
             format: date
             pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
             maxLength: 10
-            example: '2023-08-23'
+            example: "2023-08-23"
+
     ScheduleSingle:
       type: object
       required:
@@ -1585,14 +1581,12 @@ components:
           format: date
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2023-08-23'
+          example: "2023-08-23"
           description: |
-            Define a data alvo da liquidação do pagamento.
-            O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
+            Define la fecha objetivo de la liquidación.
+            Debe utilizarse el huso horario de Brasilia para interpretación del campo.
 
-            [Restrição] Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em 
-            relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+730 corridos a 
-            partir da data do consentimento, também considerando o fuso horário de Brasília.
+            [Restricción] Debe ser siempre como mínimo D+1 respecto a la fecha de creación del consentimiento, y como máximo D+730.
     ScheduleTypeEnum:
       enum:
         - SINGLE
@@ -1603,10 +1597,11 @@ components:
       type: string
     AutomaticPayment:
       type: object
-      description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
+      description: Campo destinado a la configuración de los diferentes productos de pagos recurrentes.
       oneOf:
-        - $ref: '#/components/schemas/Automatic'
-        - $ref: '#/components/schemas/Sweeping'
+        - $ref: "#/components/schemas/Automatic"
+        - $ref: "#/components/schemas/Sweeping"
+
     Automatic:
       type: object
       required:
@@ -1614,7 +1609,7 @@ components:
       properties:
         automatic:
           type: object
-          description: Definição da configuração de recorrência para pagamentos automáticos
+          description: Definición de la configuración de recurrencia para pagos automáticos.
           required:
             - contractId
             - period
@@ -1629,7 +1624,7 @@ components:
               minLength: 1
               maxLength: 35
               example: XE00038166201907261559y6j6
-              description: Identificador do contrato de transação
+              description: Identificador del contrato de transacción.
             fixedAmount:
               type: string
               pattern: ^((\d{1,16}\.\d{2}))$
@@ -1637,9 +1632,9 @@ components:
               maxLength: 19
               example: "100000.12"
               description: |
-                Valor fixo de cobrança, caso preenchido, representa um consentimento para pagamentos de valores fixos, ou não sujeitos a alteração durante a vigência do consentimento. 
+                Valor fijo de cobro. Si se completa, representa un consentimiento para pagos de valor fijo no sujetos a variación durante la vigencia.
 
-                [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/maximumVariableAmount”
+                [Restricción] Excluyente con el campo “/data/recurringConfiguration/automatic/maximumVariableAmount”.
             maximumVariableAmount:
               type: string
               pattern: ^((\d{1,16}\.\d{2}))$
@@ -1647,22 +1642,22 @@ components:
               maxLength: 19
               example: "1000000.12"
               description: |
-                Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis. 
+                Valor máximo permitido por cobro. Si se completa, representa un consentimiento para pagos de valor variable.
 
-                [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
+                [Restricción] Excluyente con el campo “/data/recurringConfiguration/automatic/fixedAmount”.
             interval:
               type: string
               enum:
                 - SEMANAL
-                - MENSAL
+                - MENSUAL
                 - ANUAL
                 - SEMESTRAL
                 - TRIMESTRAL
               example: SEMANAL
               description: |
-                Define a periodicidade permitida para realização de transações
+                Define la periodicidad permitida para la realización de transacciones:
                 - SEMANAL
-                - MENSAL
+                - MENSUAL
                 - ANUAL
                 - SEMESTRAL
                 - TRIMESTRAL
@@ -1677,26 +1672,27 @@ components:
               maxLength: 19
               example: "100000.12"
               description: |
-                Valor definido pelo usuário recebedor. 
-                Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização, ele não poderá ser inferior ao valor mínimo (piso) definido pelo usuário recebedor. 
-                Não pode ser preenchido nas autorizações de valor fixo.
+                Valor mínimo definido por el beneficiario.
+                Si el usuario pagador define un valor máximo, este no podrá ser inferior al mínimo definido por el beneficiario.
+                No puede utilizarse en autorizaciones de valor fijo.
             isRetryAccepted:
               type: boolean
-              description: Indica se é permitido pelo cliente recebedor fazer tentativas de pagamento (extradia), conforme as regras estabelecidas no arranjo Pix.
+              description: Indica si el beneficiario permite reintentos de cobro (extradía), según reglas del Pix.
               example: false
             referenceStartDateTime:
               type: string
               format: date-time
               pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
               description: |
-                Representa a data prevista para a primeira ocorrência de um pagamento associado a recorrência. 
-                Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+                Representa la fecha prevista para la primera ocurrencia del pago recurrente.
+                Debe seguir la especificación RFC-3339 en formato UTC.
               example: 2023-05-21T08:30:00Z
             useOverdraftLimit:
               type: boolean
               default: true
               example: true
-              description: Indica se o usuário pagador autorizou a utilização de limite pré-aprovado (cheque especial) na sua conta para realização de pagamentos, caso o cliente possua o produto.
+              description: Indica si el pagador autorizó el uso de límite preaprobado (cheque especial) para realizar pagos.
+
     Sweeping:
       type: object
       required:
@@ -1707,7 +1703,7 @@ components:
           required:
             - startDateTime
             - useOverdraftLimit
-          description: Definição da configuração de recorrência para transferências automáticas de fundos.
+          description: Definición de la configuración de recurrencia para transferencias automáticas de fondos.
           properties:
             totalAllowedAmount:
               type: string
@@ -1715,14 +1711,14 @@ components:
               maxLength: 19
               pattern: ^((\d{1,16}\.\d{2}))$
               example: "100000.12"
-              description: Valor máximo a ser atingido pelo somatório de todas as transações que utilizam o consentimento autorizado pelo cliente. Caso o valor seja superado, a detentora de conta deve negar a transação solicitada pela iniciadora.
+              description: Valor máximo del total de transacciones autorizadas con este consentimiento.
             transactionLimit:
               type: string
               pattern: ^((\d{1,16}\.\d{2}))$
               minLength: 4
               maxLength: 19
               example: "1000000.12"
-              description: Valor máximo para cada transação de pagamento associada a esse consentimento. Caso valor do pagamento seja maior que esse limite, a detentora de contas deve rejeitar a transação de pagamento.
+              description: Límite máximo para cada transacción asociada al consentimiento.
             periodicLimits:
               $ref: "#/components/schemas/PeriodicLimits"
             startDateTime:
@@ -1730,103 +1726,102 @@ components:
               format: date-time
               pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
               description: |
-                Description: Data e hora em que o consentimento deve passar a ser válido. 
-                Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-
-                [Restrição] Caso esse campo não seja enviado pelo iniciador na requisição, o detentor deve preencher esse campo com o mesmo valor atribuído ao campo /data/creationDateTime.
+                Fecha y hora en la que el consentimiento comienza a ser válido.
+                Si no es enviado por el iniciador, la institución debe completar con el valor de `/data/creationDateTime`.
               example: 2023-05-21T08:30:00Z
             useOverdraftLimit:
               type: boolean
               default: true
               example: true
-              description: Indica se o usuário pagador autorizou a utilização de limite pré-aprovado (cheque especial) na sua conta para realização de pagamentos, caso o cliente possua o produto.
+              description: Indica si el pagador autorizó el uso del límite preaprobado.
+
     PeriodicLimits:
       type: object
-      description: Limites transacionais por período determinado pelo usuário pagador.
+      description: Límites transaccionales por período definidos por el pagador.
       properties:
         day:
-          $ref: '#/components/schemas/Day'
+          $ref: "#/components/schemas/Day"
         week:
-          $ref: '#/components/schemas/Week'
+          $ref: "#/components/schemas/Week"
         month:
-          $ref: '#/components/schemas/Month'
+          $ref: "#/components/schemas/Month"
         year:
-          $ref: '#/components/schemas/Year'
+          $ref: "#/components/schemas/Year"
+
     Day:
       type: object
       description: |
-        Configurar limite transacional diário determinado pelo usuário pagador.
-        
-        [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos.
+        Configura el límite transaccional diario definido por el pagador.
+        [Restricción] Si el objeto es enviado, al menos uno de los campos (`quantityLimit` o `transactionLimit`) debe completarse.
       properties:
         quantityLimit:
           type: integer
           example: 2
-          description: Quantidade limite de transações permitidas para ocorrer durante um dia.
+          description: Cantidad máxima de transacciones permitidas por día.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
           minLength: 4
           maxLength: 19
-          example: '100000.12'
-          description: Valor máximo a ser transacionado diariamente.
+          example: "100000.12"
+          description: Valor máximo transaccionado diariamente.
+
     Week:
       type: object
       description: |
-        Configurar limite transacional semanal determinado pelo usuário pagador.
-        
-        [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
+        Configura el límite transaccional semanal definido por el pagador.
+        [Restricción] Si el objeto es enviado, al menos uno de los campos debe completarse.
       properties:
         quantityLimit:
           type: integer
           example: 10
-          description: Quantidade limite de transações permitidas para ocorrer durante uma semana.
+          description: Cantidad máxima de transacciones por semana.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
           minLength: 4
           maxLength: 19
-          example: '100000.12'
-          description: Valor máximo a ser transacionado semanalmente.
+          example: "100000.12"
+          description: Valor máximo transaccionado semanalmente.
+
     Month:
       type: object
       description: |
-        Configurar limite transacional mensal determinado pelo usuário pagador.
-        
-        [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
+        Configura el límite transaccional mensual.
+        [Restricción] Al menos uno de los campos debe completarse.
       properties:
         quantityLimit:
           type: integer
           example: 30
-          description: Quantidade limite de transações permitidas para ocorrer durante um mês.
+          description: Cantidad máxima de transacciones por mes.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
           minLength: 4
           maxLength: 19
-          example: '100000.12'
-          description: Valor máximo a ser transacionado mensalmente.
+          example: "100000.12"
+          description: Valor máximo transaccionado mensualmente.
+
     Year:
       type: object
       description: |
-        Configurar limite transacional anual determinado pelo usuário pagador.
-        
-        [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
+        Configura el límite transaccional anual.
+        [Restricción] Al menos uno de los campos debe completarse.
       properties:
         quantityLimit:
           type: integer
           example: 100
-          description: Quantidade limite de transações permitidas para ocorrer durante um ano.
+          description: Cantidad máxima de transacciones por año.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
           minLength: 4
           maxLength: 19
-          example: '100000.12'
-          description: Valor máximo a ser transacionado por um ano, a partir da data definida no campo `/data/startDateTime`.
+          example: "100000.12"
+          description: Valor máximo transaccionado en un año a partir de `/data/startDateTime`.
     PixPaymentConsent:
       type: object
-      description: Somente para consentimentos de pagamento PIX. Objeto contendo dados de pagamento para consentimento.
+      description: Solo para consentimientos de pago PIX. Objeto que contiene los datos del pago para consentimiento.
       required:
         - type
         - currency
@@ -1841,7 +1836,7 @@ components:
           example:
             - PIX
           description: |
-            Este campo define o tipo de pagamento que será iniciado após a autorização do consentimento.
+            Este campo define el tipo de pago que será iniciado después de la autorización del consentimiento.
         date:
           type: string
           format: date
@@ -1849,27 +1844,27 @@ components:
           pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
           example:
             - "2021-01-01"
-          description: Data do pagamento, conforme especificação RFC-3339.
+          description: Fecha del pago, conforme a la especificación RFC-3339.
         schedule:
           description: |
-            [Restrição] Mutuamente excludente com o campo date. 
-            Este campo é obrigatório no caso de agendamento. 
-            Neste caso, o campo date não deverá ser informado. 
-            O prazo máximo para o consentimento deverá ser de dois anos, contando a partir da data de criação do consentimento retornada na criação do mesmo (campo /data/creationDateTime). 
-            Agendamento de pagamento único deve utilizar exclusivamente o objeto "single".
+            [Restricción] Mutuamente excluyente con el campo date.  
+            Este campo es obligatorio para agendamientos.  
+            En este caso, el campo date **no debe** ser informado.  
+            El plazo máximo del consentimiento es de 2 años a partir de la fecha de creación del consentimiento (/data/creationDateTime).  
+            El agendamiento de pago único debe usar exclusivamente el objeto "single".
           properties:
             type:
-              $ref: '#/components/schemas/ScheduleTypeEnum'
+              $ref: "#/components/schemas/ScheduleTypeEnum"
             single:
-              $ref: '#/components/schemas/ScheduleSingle'
+              $ref: "#/components/schemas/ScheduleSingle"
             daily:
-              $ref: '#/components/schemas/ScheduleDaily'
+              $ref: "#/components/schemas/ScheduleDaily"
             weekly:
-              $ref: '#/components/schemas/ScheduleWeekly'
+              $ref: "#/components/schemas/ScheduleWeekly"
             monthly:
-              $ref: '#/components/schemas/ScheduleMonthly'
+              $ref: "#/components/schemas/ScheduleMonthly"
             custom:
-              $ref: '#/components/schemas/ScheduleCustom'
+              $ref: "#/components/schemas/ScheduleCustom"
           additionalProperties: false
         currency:
           type: string
@@ -1878,8 +1873,8 @@ components:
           example:
             - BRL
           description: |
-            Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.
-            Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
+            Código monetario según la norma ISO-4217, es decir, “BRL”.  
+            Todos los valores monetarios se representan en la moneda vigente en Brasil.
         amount:
           type: string
           minLength: 4
@@ -1888,7 +1883,7 @@ components:
           example:
             - "100000.12"
           description: |
-            Valor da transação com 2 casas decimais.
+            Valor de la transacción con 2 decimales.
         ibgeTownCode:
           type: string
           minLength: 7
@@ -1897,14 +1892,15 @@ components:
           example:
             - "5300108"
           description: |
-            Traz o código da cidade segundo o IBGE (Instituto Brasileiro de Geografia e Estatística).
-            Para o preenchimento deste campo, o Iniciador de Pagamentos deve seguir a orientação do arranjo da forma de pagamento.
-            O preenchimento do campo tanto em pix/payments quanto /consents deve ser igual. Caso haja divergência dos valores, a instituição deve retornar HTTP 422 com o código de erro PAGAMENTO_DIVERGENTE_DO_CONSENTIMENTO.
-            Este campo faz referência ao campo CodMun do arranjo Pix.
+            Código del municipio según el IBGE (Instituto Brasileño de Geografía y Estadística).  
+            El iniciador debe seguir las reglas del arreglo del método de pago.  
+            El valor informado en /pix/payments y /consents debe ser el mismo.  
+            Si hay divergencia, la institución debe retornar HTTP 422 con PAGAMENTO_DIVERGENTE_DO_CONSENTIMENTO.  
+            Este campo corresponde al campo *CodMun* del arreglo Pix.
         details:
           type: object
           description: |
-            Objeto contendo os detalhes do pagamento.
+            Objeto que contiene los detalles del pago.
           required:
             - localInstrument
             - creditorAccount
@@ -1921,12 +1917,12 @@ components:
               example:
                 - DICT
               description: |
-                Especifica a forma de iniciação do pagamento:
-                - MANU - Inserção manual de dados da conta transacional
-                - DICT - Inserção manual de chave Pix
-                - QRDN - QR code dinâmico
-                - QRES - QR code estático
-                - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido.
+                Especifica el método de inicio del pago:  
+                - **MANU** — Inserción manual de datos bancarios  
+                - **DICT** — Inserción manual de la clave Pix  
+                - **QRDN** — QR Code dinámico  
+                - **QRES** — QR Code estático  
+                - **INIC** — Beneficiario previamente registrado con el iniciador
             qrCode:
               type: string
               maxLength: 512
@@ -1938,12 +1934,12 @@ components:
                   530515RP12345678-201950300017BR.GOV.BCB.BRCODE01051.0.080450014BR.GOV.BCB.PIX0123PADRAO.URL.PIX/0123AB
                   CD81390012BR.COM.OUTRO01190123.ABCD.3456.WXYZ6304EB76
               description: |
-                Sequência de caracteres que corresponde ao QR Code disponibilizado para o pagador.
-                É a sequência de caracteres que seria lida pelo leitor de QR Code, e deve propiciar o retorno dos dados do pagador após consulta na DICT.
-                Essa funcionalidade é possível tanto para QR Code estático quanto para QR Code dinâmico.
-                No arranjo do Pix esta é a mesma sequência gerada e/ou lida pela funcionalidade Pix Copia e Cola.
-                Este campo deverá ser no formato UTF-8.
-                [Restrição] Preenchimento obrigatório para pagamentos por QR Code, observado o tamanho máximo de 512 bytes.
+                Secuencia de caracteres que representa el QR Code proporcionado al pagador.  
+                Corresponde exactamente al contenido leído por un lector de QR Code.  
+                Se utiliza tanto para QR dinámico como estático.  
+                En el Pix, corresponde al código utilizado por **Pix Copia y Pega**.  
+                Debe estar en formato UTF-8.  
+                [Restricción] Es obligatorio para pagos vía QR Code y debe respetar el límite de 512 bytes.
             proxy:
               type: string
               maxLength: 77
@@ -1951,21 +1947,16 @@ components:
               example:
                 - "12345678901"
               description: |
-                Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória.
-                No caso de telefone celular deve ser informado no padrão E.1641.
-                Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres.
-                No caso de CPF deverá ser informado com 11 números, sem pontos ou traços.
-                Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços.
-                No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na RFC41223.
-                Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT, QRDN ou QRES e validar o campo creditorAccount.
-                Esta validação é opcional caso o localInstrument for igual a INIC.
-                [Restrição]
-                Se localInstrument for igual a MANU, o campo proxy não deve ser preenchido.
-                Se localInstrument for igual INIC, DICT, QRDN ou QRES, o campo proxy deve ser sempre preenchido com a chave Pix.
+                Clave Pix registrada en el DICT perteneciente al receptor.  
+                Puede ser teléfono (E.164), e-mail, CPF/CNPJ o clave aleatoria.  
+                La institución debe validar el proxy según el tipo de localInstrument.  
+                [Restricciones]  
+                - Si localInstrument = MANU → **no** debe enviarse proxy.  
+                - Si localInstrument ∈ {INIC, DICT, QRDN, QRES} → proxy **debe** ser informado.
             creditorAccount:
               type: object
               description: |
-                Objeto que contém a identificação da conta de destino do beneficiário/recebedor.
+                Objeto que identifica la cuenta del beneficiario.
               required:
                 - ispb
                 - number
@@ -1979,7 +1970,7 @@ components:
                   example:
                     - "12345678"
                   description: |
-                    Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
+                    ISPB (Identificador del Sistema de Pagos Brasileños) del participante del SPI.
                 issuer:
                   type: string
                   maxLength: 4
@@ -1987,10 +1978,8 @@ components:
                   example:
                     - "1774"
                   description: |
-                    Código da Agência emissora da conta sem dígito.
-                    (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito,
-                    no exercício de atividades da instituição, não podendo ser móvel ou transitória).
-                    [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA), SVGS (CONTA_POUPANCA) e SLRY (CONTA_SALARIO).
+                    Código de la agencia emisora de la cuenta, sin dígito.
+                    [Restricción] Obligatorio para cuentas CACC, SVGS y SLRY.
                 number:
                   type: string
                   minLength: 3
@@ -1999,8 +1988,8 @@ components:
                   example:
                     - "1234567890"
                   description: |
-                    Deve ser preenchido com o número da conta do usuário recebedor, com dígito verificador (se este existir),
-                    se houver valor alfanumérico, este deve ser convertido para 0.
+                    Número de la cuenta del receptor, incluyendo dígito verificante si existe.  
+                    Valores alfanuméricos deben convertirse en 0.
                 accountType:
                   type: string
                   maxLength: 4
@@ -2012,20 +2001,19 @@ components:
                   example:
                     - CACC
                   description: |
-                    Tipos de contas usadas para pagamento via Pix.
-                    Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,
-                    conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
-                    Segue descrição de cada valor do ENUM para o escopo do Pix.
-                    CACC - Current - Conta Corrente.
-                    SLRY - Salary - Conta-Salário.
-                    SVGS - Savings - Conta de Poupança.
-                    TRAN - TransactingAccount - Conta de Pagamento pré-paga.
+                    Tipos de cuentas permitidas para recibir pagos vía Pix.  
+                    No incluye cuentas vinculadas, de residentes en el exterior o en moneda extranjera.  
+                    ENUM:  
+                    - **CACC** — Corriente  
+                    - **SLRY** — Salario  
+                    - **SVGS** — Ahorro  
+                    - **TRAN** — Prepago
               additionalProperties: false
           additionalProperties: false
       additionalProperties: false
     ContractDebtor:
       type: object
-      description: Informações sobre o cliente devedor do contrato.
+      description: Información sobre el cliente deudor del contrato.
       required:
         - name
         - document
@@ -2035,7 +2023,7 @@ components:
           pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
           maxLength: 120
           example: Policarpo Quaresma
-          description: Em caso de pessoa natural deve ser informado o nome completo do titular devedor do contrato.
+          description: En el caso de persona natural, debe informarse el nombre completo del titular deudor del contrato.
         document:
           type: object
           required:
@@ -2045,23 +2033,23 @@ components:
             identification:
               type: string
               maxLength: 14
-              description: Número do documento de identificação oficial do cliente devedor do contrato.
+              description: Número del documento oficial de identificación del cliente deudor del contrato.
               example: "11111111111111"
               pattern: ^\d{14}$
             rel:
               type: string
               maxLength: 4
-              description: Tipo do documento de identificação oficial do cliente devedor do contrato.
+              description: Tipo de documento oficial de identificación del cliente deudor del contrato.
               example: CNPJ
               pattern: ^[A-Z]{4}$
     FirstPayment:
       type: object
       description: |
-        Definições para o primeiro pagamento. É considerado como o pagamento da adesão ao serviço pelo usuário pagador.
+        Definiciones para el primer pago. Se considera como el pago de adhesión al servicio por parte del pagador.
 
-        - A conta de crédito informada deve pertencer ao mesmo CNPJ informado no campo “/data/creditors/cpfCnpj”
-        - A conta de crédito informada no momento do primeiro pagamento deve ser a mesma informada dentro deste objeto. 
-        Caso não respeitado, o detentor deve rejeitar o pagamento com o motivo DETALHE_PAGAMENTO_INVALIDO, sincronamente (HTTP 422) ou assincronamente (HTTP 200)
+        - La cuenta de crédito informada debe pertenecer al mismo CNPJ proporcionado en “/data/creditors/cpfCnpj”.  
+        - La cuenta informada en el primer pago debe ser la misma informada dentro de este objeto.  
+        En caso contrario, la institución debe rechazar el pago utilizando el motivo DETALHE_PAGAMENTO_INVALIDO, ya sea de forma síncrona (HTTP 422) o asíncrona (HTTP 200).
       required:
         - type
         - date
@@ -2078,16 +2066,16 @@ components:
           pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
           example: 2021-01-01
           description: |
-            Define a data alvo da liquidação do pagamento.
-            O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
+            Define la fecha objetivo de liquidación del pago.  
+            Debe considerarse el huso horario de Brasilia para interpretación y validación.
         currency:
           type: string
           maxLength: 3
           pattern: ^([A-Z]{3})$
           example: BRL
           description: |
-            Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.
-            Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
+            Código de moneda nacional según ISO-4217 (por ejemplo, “BRL”).  
+            Todos los valores monetarios están expresados en la moneda vigente en Brasil.
         amount:
           type: string
           minLength: 4
@@ -2095,20 +2083,20 @@ components:
           pattern: ^((\d{1,16}\.\d{2}))$
           example: "100000.12"
           description: |
-            Valor da transação com 2 casas decimais.
+            Valor de la transacción con dos decimales.
         remittanceInformation:
           type: string
           maxLength: 140
           pattern: "[\\w\\W\\s]*"
           example: Pagamento da nota RSTO035-002
           description: |
-            Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
+            Información adicional ingresada por el pagador que será enviada al beneficiario.
         creditorAccount:
           $ref: "#/components/schemas/PostCreditorAccount"
     PostCreditorAccount:
       type: object
       description: |
-        Recebe os dados de conta do usuário recebedor. 
+        Recibe los datos de la cuenta del usuario beneficiario.
       required:
         - ispb
         - number
@@ -2121,7 +2109,7 @@ components:
           pattern: ^[0-9]{8}$
           example: "12345678"
           description: |
-            Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
+            ISPB (Identificador del Sistema de Pagos Brasileños) del participante del SPI, solo números.
         issuer:
           type: string
           minLength: 1
@@ -2129,11 +2117,8 @@ components:
           pattern: ^[0-9]{1,4}$
           example: "1774"
           description: |
-            Código da Agência emissora da conta sem dígito. 
-            (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, 
-            no exercício de atividades da instituição, não podendo ser móvel ou transitória).
-
-            [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
+            Código de la agencia emisora de la cuenta, sin dígito.  
+            [Restricción] Obligatorio para CACC (cuenta corriente) y SVGS (cuenta de ahorro).
         number:
           type: string
           minLength: 1
@@ -2141,8 +2126,8 @@ components:
           pattern: ^[0-9]{1,20}$
           example: "1234567890"
           description: |
-            Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir), 
-            se houver valor alfanumérico, este deve ser convertido para 0.
+            Número de cuenta transaccional del beneficiario.  
+            Valores alfanuméricos deben convertirse a 0.
         accountType:
           $ref: "#/components/schemas/EnumAccountTypeConsents"
     EnumAccountTypeConsents:
@@ -2153,29 +2138,27 @@ components:
         - TRAN
       example: CACC
       description: |
-        Tipos de contas usadas para pagamento. 
-        Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, 
-        conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.  
-        Segue descrição de cada valor do ENUM.
+        Tipos de cuentas utilizadas para pagos:  
+        No contempla cuentas vinculadas, de no residentes, cuentas en moneda extranjera u otras no permitidas.  
+        - **CACC** — Cuenta Corriente  
+        - **SVGS** — Cuenta de Ahorros  
+        - **TRAN** — Cuenta Prepaga
 
-        - CACC - Current - Conta Corrente.
-        - SVGS - Savings - Conta de Poupança.
-        - TRAN - TransactingAccount - Conta de Pagamento pré-paga.
     EnumPaymentType:
       type: string
       enum:
         - PIX
       example: PIX
       description: |
-        Este campo define o tipo de pagamento que será iniciado após a autorização do consentimento.
-  parameters:
-    CommandId:
-      name: id
-      in: path
-      description: |
-        ID do comando que está sendo referenciado. Pode ter sido obtido diretamente
-        via deeplink ou através de algum PUT de resposta de um comando anterior.
-      required: true
-      schema:
-        type: string
-        maxLength: 40
+        Define el tipo de pago que será iniciado después de la autorización del consentimiento.
+
+    parameters:
+      CommandId:
+        name: id
+        in: path
+        description: |
+          ID del comando referenciado. Puede haberse obtenido mediante deeplink o como resultado de un PUT de respuesta a un comando previo.
+        required: true
+        schema:
+          type: string
+          maxLength: 40

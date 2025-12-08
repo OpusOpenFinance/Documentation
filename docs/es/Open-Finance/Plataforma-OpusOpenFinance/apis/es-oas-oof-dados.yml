@@ -1,24 +1,24 @@
 openapi: 3.0.3
 info:
-  title: Serviços de Consentimento do modulo de BackOffice
+  title: Servicios de Consentimiento del módulo de BackOffice
   version: 1.0.0
 security:
   - jwt: []
 tags:
   - name: General
-    description: Serviços da plataforma Opus Open Finance
+    description: Servicios de la plataforma Opus Open Finance
   - name: Consents
-    description: Serviços de consentimento
+    description: Servicios de consentimiento
   - name: Payments
-    description: Serviços de pagamentos
+    description: Servicios de pagos
   - name: Enrollments
-    description: Serviços de vínculo (de dispositivo - para Jornada Sem Redirecionamento)
+    description: Servicios de vinculación (de dispositivo - para Jornada Sin Redirección)
 paths:
   /open-banking/oob-consents/v1/consents:
     get:
       tags:
         - General
-      description: Recupera a lista de consentimentos
+      description: Recupera la lista de consentimientos
       parameters:
         - name: consentOwner
           in: query
@@ -48,19 +48,19 @@ paths:
             type: string
             example: 2022-01-30T17:31:28Z
         - name: consentTermPeriod
-          description: Prazo total do consentimento em meses (inteiro).Se indeterminado, usar -1. Não pode ser utilizado em conjunto com os filtros createdOnBegin e/ou createdOnEnd
+          description: Plazo total del consentimiento en meses (entero). Si es indeterminado, usar -1. No puede ser utilizado junto con los filtros createdOnBegin y/o createdOnEnd.
           in: query
           schema:
             format: integer
             type: string
             example: -1
         - name: modalityType
-          description: Modalidade do pagamento. Uso exclusivo para type = PAYMENT
+          description: Modalidad del pago. Uso exclusivo para type = PAYMENT
           in: query
           schema:
             $ref: "#/components/schemas/ModalityPaymentEnum"
         - name: modalityTypeList
-          description: Lista de modalidades de consentimento de pagamento separados por virgula. Não pode ser utilizado em conjunto com o filtro modalityType.
+          description: Lista de modalidades de consentimiento de pago separadas por coma. No puede ser utilizado junto con el filtro modalityType.
           in: query
           schema:
             type: string
@@ -77,18 +77,18 @@ paths:
           schema:
             $ref: "#/components/schemas/ConsentAuthorizationStatusEnum"
         - name: statusList
-          description: Lista de status de consentimento separados por virgula. Não pode ser utilizado em conjunto com o filtro status.
+          description: Lista de estados de consentimiento separados por coma. No puede ser utilizado junto con el filtro status.
           in: query
           schema:
             type: string
             example: AUTHORISED,AWAITING_AUTHORISATION,REJECTED,REVOKED,EXPIRED,CONSUMED,TIMEOUT_AUTHORISATION,TIMEOUT_PAYMENT,AWAITING_RISK_SIGNALS,AWAITING_ACCOUNT_HOLDER_VALIDATION,AWAITING_ENROLLMENT,PARTIALLY_ACCEPTED
         - name: type
-          description: Retorna apenas os consentimentos do tipo informado
+          description: Retorna solo los consentimientos del tipo informado
           in: query
           schema:
             $ref: "#/components/schemas/ConsentTypesEnum"
         - name: typeList
-          description: Lista de tipos de consentimento separados por virgula. Não pode ser utilizado em conjunto com o filtro type.
+          description: Lista de tipos de consentimiento separados por coma. No puede ser utilizado junto con el filtro type.
           in: query
           schema:
             type: string
@@ -98,7 +98,7 @@ paths:
           schema:
             $ref: "#/components/schemas/PaymentTypeEnum"
         - name: orgName
-          description: Busca por nome da organização. Informar no mínimo 3 caracteres.
+          description: Búsqueda por nombre de la organización. Ingresar al menos 3 caracteres.
           in: query
           schema:
             type: string
@@ -117,7 +117,7 @@ paths:
             type: integer
       responses:
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
@@ -129,71 +129,71 @@ paths:
               schema:
                 $ref: "#/components/schemas/ResponseConsentSummaryPaginationSchema"
   /open-banking/oob-consents/v1/consents/{consentId}:
-    get:
-      tags:
-        - General
-      description: Recupera dados do consentimento
-      parameters:
-        - name: consentId
-          in: path
-          required: true
-          schema:
-            $ref: "#/components/schemas/UUID"
-        - name: X-Correlation-ID
-          in: header
-          schema:
-            type: string
-      responses:
-        default:
-          description: Default error response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ResponseConsentDetailSchema"
-    patch:
-      deprecated: true
-      tags:
-        - Consents
-      description: Revoga consentimento de pagamento
-      parameters:
-        - name: consentId
-          in: path
-          required: true
-          schema:
-            $ref: "#/components/schemas/UUID"
-        - name: X-Correlation-ID
-          in: header
-          schema:
-            type: string
-      requestBody:
+  get:
+    tags:
+      - General
+    description: Recupera datos del consentimiento
+    parameters:
+      - name: consentId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/UUID"
+      - name: X-Correlation-ID
+        in: header
+        schema:
+          type: string
+    responses:
+      default:
+        description: Respuesta de error predeterminada
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RequestRevokeOobPaymentConsent"
-      responses:
-        default:
-          description: Default error response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ResponseConsentDetailSchema"
+              $ref: "#/components/schemas/ErrorResponse"
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResponseConsentDetailSchema"
+  patch:
+    deprecated: true
+    tags:
+      - Consents
+    description: Revoca consentimiento de pago
+    parameters:
+      - name: consentId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/UUID"
+      - name: X-Correlation-ID
+        in: header
+        schema:
+          type: string
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RequestRevokeOobPaymentConsent"
+    responses:
+      default:
+        description: Respuesta de error predeterminada
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResponseConsentDetailSchema"
   /open-banking/oob-consents/consents/v1/consents/{consentId}:
     patch:
       tags:
         - Consents
-      description: Revoga consentimento de compartilhamento de dados
+      description: Revoca consentimiento de compartición de datos
       parameters:
         - name: consentId
           in: path
@@ -215,7 +215,7 @@ paths:
               $ref: "#/components/schemas/RevokeDataSharingConsentData"
       responses:
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
@@ -230,7 +230,7 @@ paths:
     get:
       tags:
         - Payments
-      description: Obtém pagamentos do legado dentro de um período
+      description: Obtiene pagos del sistema legado dentro de un período
       parameters:
         - name: endDate
           in: query
@@ -244,7 +244,7 @@ paths:
             example: 2022-01-30
       responses:
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
@@ -259,7 +259,7 @@ paths:
     post:
       tags:
         - Payments
-      description: Posta informação sobre mudança de status de pagamento
+      description: Envía información sobre el cambio de estado de un pago
       requestBody:
         content:
           application/json:
@@ -267,18 +267,18 @@ paths:
               $ref: "#/components/schemas/RequestPaymentStatusChangeNotification"
       responses:
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "204":
-          description: Notification received successfully
+          description: Notificación recibida con éxito
   /open-banking/oob-consents/v1/payments/consents/{consentId}/authorisation:
     post:
       tags:
         - Payments
-      description: Posta autorização de pagamento
+      description: Envía autorización de pago
       parameters:
         - name: consentId
           in: path
@@ -301,18 +301,18 @@ paths:
               $ref: "#/components/schemas/RequestPaymentConsentAuthorisation"
       responses:
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "204":
-          description: Notification received successfully
+          description: Notificación recibida con éxito
   /open-banking/oob-consents/v1/consents/{consentId}/extends:
     get:
       tags:
         - Consents
-      description: Recupera lista extendida de consentimentos
+      description: Recupera lista extendida de consentimientos
       parameters:
         - name: consentId
           in: path
@@ -337,7 +337,7 @@ paths:
             type: integer
       responses:
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
@@ -348,11 +348,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseConsentExtendsSchema"
-  /open-banking/oob-consents/consents/v1/consents/{consentId}/search-key/{searchKey}:
+    /open-banking/oob-consents/consents/v1/consents/{consentId}/search-key/{searchKey}:
     post:
       tags:
         - Consents
-      description: Posta chave de busca no consentimento
+      description: Envía clave de búsqueda al consentimiento
       parameters:
         - name: consentId
           in: path
@@ -375,9 +375,9 @@ paths:
             type: string
       responses:
         "204":
-          description: Search key added successfully
+          description: Clave de búsqueda agregada con éxito
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
@@ -385,7 +385,7 @@ paths:
     delete:
       tags:
         - Consents
-      description: Remove chave de busca de consentimento
+      description: Elimina clave de búsqueda del consentimiento
       parameters:
         - name: consentId
           in: path
@@ -408,9 +408,9 @@ paths:
             type: string
       responses:
         "204":
-          description: Search key deleted successfully
+          description: Clave de búsqueda eliminada con éxito
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
@@ -419,7 +419,7 @@ paths:
     put:
       tags:
         - Consents
-      description: Insere informações de meta-dados no consentimento
+      description: Inserta información de metadatos en el consentimiento
       parameters:
         - name: consentId
           in: path
@@ -442,9 +442,9 @@ paths:
               $ref: "#/components/schemas/MetadataData"
       responses:
         "204":
-          description: Meta-data added successfully
+          description: Metadatos agregados con éxito
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
@@ -452,7 +452,7 @@ paths:
     patch:
       tags:
         - Consents
-      description: Atualiza informações de meta-dados no consentimento
+      description: Actualiza información de metadatos en el consentimiento
       parameters:
         - name: consentId
           in: path
@@ -475,9 +475,9 @@ paths:
               $ref: "#/components/schemas/MetadataData"
       responses:
         "204":
-          description: Meta-data updated successfully
+          description: Metadatos actualizados con éxito
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
@@ -485,7 +485,7 @@ paths:
     delete:
       tags:
         - Consents
-      description: Remove informações de meta-dados do consentimento
+      description: Elimina información de metadatos del consentimiento
       parameters:
         - name: consentId
           in: path
@@ -503,9 +503,9 @@ paths:
             type: string
       responses:
         "204":
-          description: Meta-data deleted successfully
+          description: Metadatos eliminados con éxito
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
@@ -513,7 +513,7 @@ paths:
     get:
       tags:
         - Consents
-      description: Obtém informações de mta-dados do consentimento
+      description: Obtiene información de metadatos del consentimiento
       parameters:
         - name: consentId
           in: path
@@ -531,13 +531,13 @@ paths:
             type: string
       responses:
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "200":
-          description: Get meta-data information from consent successfully
+          description: Información de metadatos obtenida con éxito
           content:
             application/json:
               schema:
@@ -545,43 +545,43 @@ paths:
   /open-banking/oob-consents/automatic-payments/v1/recurring-consents/{recurringConsentId}:
     patch:
       tags:
-      - Consents Opus Open Banking
-      description: Revoga consentimento de pagamento automático
+        - Consents Opus Open Banking
+      description: Revoca consentimiento de pago automático
       parameters:
-      - name: recurringConsentId
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/UUID'
-      - name: X-Brand-ID
-        in: header
-        required: true
-        schema:
-          type: string
-          nullable: false
-      - name: X-Correlation-ID
-        in: header
-        schema:
-          type: string
+        - name: recurringConsentId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: X-Brand-ID
+          in: header
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - name: X-Correlation-ID
+          in: header
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AutomaticPaymentConsentEdition'
+              $ref: "#/components/schemas/AutomaticPaymentConsentEdition"
       responses:
         default:
-          description: Default error response
+          description: Respuesta de error predeterminada
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseConsentDetailSchema'              
-components:
+                $ref: "#/components/schemas/ResponseConsentDetailSchema"
+  components:
   schemas:
     AccountPaymentTypeEnum:
       enum:
@@ -697,9 +697,9 @@ components:
           type: string
           example: "Guia Seguros S.A."
         additionalInformation:
-          description: Informação adicional inserida pelo usuário pagador nos consentimentos de Pagamento Automático
+          description: Información adicional ingresada por el usuario pagador en los consentimientos de Pago Automático
           type: string
-          example: "Minha recorrência"
+          example: "Mi recurrencia"
           pattern: '[\w\W\s]*'
           maxLength: 140
         tppName:
@@ -858,7 +858,7 @@ components:
       minItems: 1
       items:
         type: object
-        description: Objeto contendo os dados do recebedor (creditor).
+        description: Objeto que contiene los datos del receptor (creditor).
         required:
           - personType
           - cpfCnpj
@@ -873,18 +873,19 @@ components:
             pattern: '^\d{11}$|^\d{14}$'
             example: "58764789000137"
             description: |
-              Identificação da pessoa envolvida na transação.  
-              Preencher com o CPF ou CNPJ, de acordo com o valor escolhido no campo type.  
-              O CPF será utilizado com 11 números e deverá ser informado sem pontos ou traços.  
-              O CNPJ será utilizado com 14 números e deverá ser informado sem pontos ou traços.
+              Identificación de la persona involucrada en la transacción.  
+              Llenar con el CPF o CNPJ, de acuerdo con el valor elegido en el campo type.  
+              El CPF debe ser informado con 11 dígitos, sin puntos ni guiones.  
+              El CNPJ debe ser informado con 14 dígitos, sin puntos ni guiones.
           name:
             type: string
             pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
             maxLength: 120
             example: Marco Antonio de Brito
             description: |
-              Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
-              Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
+              En el caso de persona natural, debe informarse el nombre completo del titular de la cuenta del receptor.  
+              En el caso de persona jurídica, debe informarse la razón social o el nombre comercial del receptor.
+
     EnumPaymentPersonType:
       type: string
       enum:
@@ -892,7 +893,8 @@ components:
         - PESSOA_JURIDICA
       example: PESSOA_NATURAL
       description: |
-        Titular, pessoa natural ou juridica a quem se referem os dados de recebedor (creditor).
+        Titular, persona natural o jurídica a quien se refieren los datos del receptor (creditor).
+
     ErrorResponse:
       type: object
       properties:
@@ -979,7 +981,7 @@ components:
         - SWEEPING
       type: string
     OrderTypeEnum:
-      description: Enum de ordenação da lista de consentimentos. ASC->  ordem crescente de data de criação,  DESC->  ordem decrescente de data de criação, OPF->  ordenação open finance (ativos, pendentes, vencidos e encerrados)
+      description: Enum de ordenación de la lista de consentimientos. ASC → orden creciente por fecha de creación; DESC → orden decreciente por fecha de creación; OPF → ordenación open finance (activos, pendientes, vencidos y cerrados)
       enum:
         - ASC
         - DESC
@@ -989,7 +991,7 @@ components:
       type: object
       properties:
         data:
-          description: Service execution response
+          description: Respuesta de ejecución del servicio
           type: array
           items:
             allOf:
@@ -997,11 +999,12 @@ components:
         links:
           allOf:
             - $ref: "#/components/schemas/Links"
-            - description: Service links
+            - description: Enlaces del servicio
         meta:
           allOf:
             - $ref: "#/components/schemas/Meta"
-            - description: Meta records information
+            - description: Información de los registros
+
     ResponseRecurringPaymentsDataRead:
       type: object
       properties:
@@ -1016,25 +1019,26 @@ components:
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
           example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
           description: |
-            Código ou identificador único informado pela instituição detentora da conta para representar a iniciação de pagamento. O `recurringPaymentId` deve ser diferente do `endToEndId`. 
-            Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.
+            Código o identificador único informado por la institución detentora de la cuenta para representar la iniciación de pago.  
+            El `recurringPaymentId` debe ser diferente del `endToEndId`.  
+            Este es el identificador que deberá utilizarse para la consulta del estado de la iniciación de pago realizada.
         consentId:
           type: string
           maxLength: 256
           pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
           example: "urn:bancoex:C1DD33123"
           description: |
-            Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
-            Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
-            Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
-            seja um identificador de recurso persistente e independente da localização.
-            Considerando a string urn:bancoex:C1DD33123 como exemplo para `recurringConsentId` temos:
-            - o namespace(urn)
-            - o identificador associado ao namespace da instituição transmissora (bancoex)
-            - o identificador específico dentro do namespace (C1DD33123).
-            Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+            Identificador único del consentimiento creado para la iniciación de pago solicitada.  
+            Debe ser un URN — Uniform Resource Name.
 
-            [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
+            Un URN, conforme definido en la [RFC8141], es un identificador de recurso persistente e independiente de localización.
+
+            Considerando la cadena `urn:bancoex:C1DD33123` como ejemplo de `recurringConsentId`, tenemos:
+            - el namespace (urn)  
+            - el identificador asociado al namespace de la institución transmisora (bancoex)  
+            - el identificador específico dentro del namespace (C1DD33123)
+
+            [Restricción] Campo obligatorio cuando `authorisationFlow = FIDO_FLOW`.
         endToEndId:
           $ref: "#/components/schemas/EndToEndId"
         date:
@@ -1042,7 +1046,7 @@ components:
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: "2023-10-10"
-          description: Data em que o pagamento será realizado.
+          description: Fecha en que se realizará el pago.
         creationDateTime:
           type: string
           format: date-time
@@ -1050,9 +1054,8 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: "2020-07-21T08:30:00Z"
           description: |
-            Data e hora em que o pagamento foi criado. 
-            Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
-            sempre com a utilização de timezone UTC(UTC time format).
+            Fecha y hora en que el pago fue creado.  
+            Debe seguir el estándar RFC-3339 utilizando siempre el huso horario UTC.
         statusUpdateDateTime:
           type: string
           format: date-time
@@ -1060,9 +1063,8 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: "2020-07-21T08:30:00Z"
           description: |
-            Data e hora em que o pagamento teve o status atualizado. 
-            Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
-            sempre com a utilização de timezone UTC(UTC time format).
+            Fecha y hora en que el pago tuvo su estado actualizado.  
+            También sigue la RFC-3339, con timezone UTC.
         ibgeTownCode:
           type: string
           minLength: 7
@@ -1070,9 +1072,9 @@ components:
           pattern: '^\d{7}$'
           example: "5300108"
           description: |
-            O campo ibgeTownCode no arranjo Pix tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix.
+            El campo ibgeTownCode en el arreglo Pix tiene el mismo comportamiento que el campo `codMun` descrito en el manual del Pix.
 
-            1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+            1. Si no se envía la información referente al municipio, se asume que no existen feriados municipales o estatales en el período en cuestión.
         status:
           $ref: "#/components/schemas/EnumPaymentStatusType"
         localInstrument:
@@ -1086,7 +1088,7 @@ components:
           pattern: '^\d{14}$'
           maxLength: 14
           example: "50685362000135"
-          description: CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.
+          description: CNPJ del Iniciador de Pago habilitado para la Iniciación en Pix.
         payment:
           $ref: "#/components/schemas/PaymentPix"
         remittanceInformation:
@@ -1095,7 +1097,7 @@ components:
           pattern: '[\w\W\s]*'
           example: Pagamento da nota RSTO035-002.
           description: |
-            Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
+            Texto ingresado por el pagador como información adicional para el receptor.
         creditorAccount:
           $ref: "#/components/schemas/CreditorAccount"
         debtorAccount:
@@ -1110,21 +1112,21 @@ components:
             - FIDO_FLOW
           example: HYBRID_FLOW
           description: |
-            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+            Campo condicional que identifica el flujo de autorización utilizado.
 
-            [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+            [Restricción] Si es CIBA o FIDO, el campo se vuelve obligatorio.  
+            Si no está presente, se asume HYBRID_FLOW.
         transactionIdentification:
           type: string
           pattern: ^[a-zA-Z0-9]{1,35}$
           maxLength: 35
           example: "E00038166201907261559y6j6"
           description: |
-            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
-            Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
-            Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
+            Identificador de la transacción que debe ser retransmitido intacto por el PSP del pagador.  
+            Permite correlacionar la transferencia recibida con la instrucción enviada al usuario.
         document:
           type: object
-          description: Informações do documento identificador.
+          description: Información del documento identificador.
           required:
             - identification
             - rel
@@ -1135,14 +1137,14 @@ components:
               minLength: 11
               maxLength: 14
               example: "11111111111111"
-              description: Número do documento de identificação oficial do titular pessoa natural ou jurídica.
+              description: Número del documento del titular, persona natural o jurídica.
             rel:
               type: string
               enum:
                 - CPF
                 - CNPJ
               example: "CNPJ"
-              description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
+              description: Tipo del documento del titular.
     EndToEndId:
       type: string
       minLength: 32
@@ -1150,12 +1152,12 @@ components:
       pattern: "^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$"
       example: E9040088820210128000800123873170
       description: |
-        Trata-se de um identificador único, gerado na instituição iniciadora de pagamento e recebido na instituição detentora de conta, permeando toda a jornada do pagamento Pix.
+        Se trata de un identificador único generado por la institución iniciadora de pagos y recibido por la institución detentora de la cuenta, recorriendo toda la jornada del pago Pix.
 
-        [Restrição] A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
+        [Restricción] La detentora debe obligatoriamente devolver el campo con el mismo valor recibido de la iniciadora.
     PaymentPix:
       type: object
-      description: Objeto contendo as informações do pagamento.
+      description: Objeto que contiene la información del pago.
       required:
         - amount
         - currency
@@ -1167,14 +1169,14 @@ components:
           pattern: '^((\d{1,16}\.\d{2}))$'
           example: "100000.12"
           description: |
-            Valor da transação com 2 casas decimais.
+            Valor de la transacción con 2 decimales.
         currency:
           type: string
           maxLength: 3
           pattern: "^([A-Z]{3})$"
           example: BRL
           description: |
-            Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'. Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
+            Código de la moneda nacional según el modelo ISO-4217, es decir, 'BRL'. Todos los valores monetarios informados están representados con la moneda vigente de Brasil.
     EnumPaymentStatusType:
       type: string
       enum:
@@ -1188,23 +1190,23 @@ components:
         - SCHD
       example: PDNG
       description: |
-        Estado atual do pagamento. O estado evolui na seguinte ordem:
-        - RCVD (Received) - Indica que a requisição de pagamento foi recebida com sucesso pela detentora, mas ainda há validações a serem feitas antes de ser submetida para liquidação.
-        - CANC (Cancelled) - Indica que a transação Pix pendente foi cancelada com sucesso pelo usuário antes que fosse confirmada (ACCP) ou rejeitada (RJCT) pela detentora.
-        - ACCP( Accepted Customer Profile) - Indica que todas as verificações necessárias já foram realizadas pela detentora e que a transação está pronta para ser enviada para liquidação (no SPI se for Pix para outra instituição ou internamente se for para outra conta na mesma instituição).
-        - ACPD (Accepted Clearing Processed) - Indica que a detentora já submeteu a transação para liquidação, mas ainda não tem a confirmação se foi liquidada ou rejeitada.
-        - RJCT (Rejected) Indica que a transação foi rejeitada pela detentora ou pelo SPI.
-        - ACSC (Accepted Settlement Completed Debitor Account) - Indica que a transação foi efetivada pela detentora ou pelo SPI.
-        - PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise.
-        - SCHD (Scheduled) - Indica que a transação Pix foi agendada com sucesso na detentora.  
-        Em caso insucesso:
-        - RJCT (REJECTED) - Instrução de pagamento rejeitada.
+        Estado actual del pago. El estado evoluciona en el siguiente orden:
+        - RCVD (Received) - Indica que la solicitud de pago fue recibida con éxito por la detentora, pero aún existen validaciones pendientes antes de ser enviada a liquidación.
+        - CANC (Cancelled) - Indica que la transacción Pix pendiente fue cancelada con éxito por el usuario antes de ser confirmada (ACCP) o rechazada (RJCT) por la detentora.
+        - ACCP (Accepted Customer Profile) - Indica que todas las verificaciones necesarias ya fueron realizadas por la detentora y que la transacción está lista para ser enviada a liquidación (al SPI si es Pix para otra institución o internamente si es para otra cuenta en la misma institución).
+        - ACPD (Accepted Clearing Processed) - Indica que la detentora ya sometió la transacción para liquidación, pero aún no tiene la confirmación de si fue liquidada o rechazada.
+        - RJCT (Rejected) - Indica que la transacción fue rechazada por la detentora o por el SPI.
+        - ACSC (Accepted Settlement Completed Debitor Account) - Indica que la transacción fue efectivada por la detentora o por el SPI.
+        - PDNG (Pending) - Indica que la detentora retuvo temporalmente la transacción Pix para análisis.
+        - SCHD (Scheduled) - Indica que la transacción Pix fue programada con éxito en la detentora.  
+        En caso de fallo:
+        - RJCT (REJECTED) - Instrucción de pago rechazada.
     PixPaymentCancellation:
       type: object
       description: |
-        Objeto que contém os dados referentes ao usuário pagador que solicitou o cancelamento, o canal utilizado por ele e o motivo.  
+        Objeto que contiene los datos referentes al usuario pagador que solicitó la cancelación, el canal utilizado y el motivo.
 
-        [Restrição] O objeto cancellation será obrigatório apenas quando o valor do campo status for igual a CANC.
+        [Restricción] El objeto cancellation será obligatorio únicamente cuando el valor del campo status sea igual a CANC.
       required:
         - cancelledAt
         - cancelledBy
@@ -1217,20 +1219,20 @@ components:
           $ref: "#/components/schemas/EnumPaymentCancellationFromType"
         cancelledAt:
           type: string
-          description: "Data e hora que foi realizado o cancelamento, conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), formato UTC."
+          description: "Fecha y hora en que se realizó la cancelación, conforme a la especificación [RFC-3339], formato UTC."
           format: date-time
           maxLength: 20
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: "2021-05-21T08:30:00Z"
         cancelledBy:
           type: object
-          description: Informação relacionada ao usuário pagador que solicitou o cancelamento do pagamento.
+          description: Información relacionada al usuario pagador que solicitó la cancelación del pago.
           required:
             - document
           properties:
             document:
               type: object
-              description: Objeto que consolida os dados do documento do usuário que solicitou o cancelamento.
+              description: Objeto que consolida los datos del documento del usuario que solicitó la cancelación.
               required:
                 - identification
                 - rel
@@ -1238,13 +1240,13 @@ components:
                 identification:
                   type: string
                   maxLength: 11
-                  description: Número do documento do usuário pagador responsável pelo cancelamento do pagamento.
+                  description: Número del documento del usuario pagador responsable por la cancelación del pago.
                   example: "11111111111"
                   pattern: '^\d{11}$'
                 rel:
                   type: string
                   maxLength: 3
-                  description: Tipo do documento do usuário pagador responsável pelo cancelamento do pagamento.
+                  description: Tipo del documento del usuario pagador responsable por la cancelación del pago.
                   example: CPF
                   pattern: "^[A-Z]{3}$"
     EnumPaymentCancellationFromType:
@@ -1254,13 +1256,13 @@ components:
         - DETENTORA
       example: INICIADORA
       description: |
-        Campo utilizado para informar o meio pelo qual foi realizado o cancelamento.
+        Campo utilizado para informar el medio por el cual se realizó la cancelación.
 
-        Valores possíveis:
+        Valores posibles:
 
-        INICIADORA - Pagamento cancelado pelo usuário pagador nos canais da iniciadora
+        INICIADORA - Pago cancelado por el usuario pagador en los canales de la iniciadora.
 
-        DETENTORA - Pagamento cancelado pelo usuário pagador nos canais da detentora
+        DETENTORA - Pago cancelado por el usuario pagador en los canales de la detentora.
     EnumPaymentCancellationReasonType:
       type: string
       enum:
@@ -1269,15 +1271,15 @@ components:
         - CANCELADO_MULTIPLAS_ALCADAS
       example: CANCELADO_PENDENCIA
       description: |
-        O preenchimento desse campo para retorno, deve ocorrer pela detentora de contas a partir do status em que o pagamento estiver no momento da solicitação do cancelamento (ex. Status de pagamento = PDNG, campo deve ser preenchido com enum CANCELADO_PENDENCIA)
+        El llenado de este campo para retorno debe realizarse por la detentora de cuentas a partir del estado del pago en el momento de la solicitud de cancelación. (p. ej., Estado del pago = PDNG → debe ser llenado con CANCELADO_PENDENCIA)
 
-        Valores possíveis:
+        Valores posibles:
 
-        CANCELADO_PENDENCIA - Pagamento cancelado enquanto estava na situação PDNG
+        CANCELADO_PENDENCIA - Pago cancelado mientras estaba en estado PDNG.
 
-        CANCELADO_AGENDAMENTO - Pagamento cancelado enquanto estava na situação SCHD
+        CANCELADO_AGENDAMENTO - Pago cancelado mientras estaba en estado SCHD.
 
-        CANCELADO_MULTIPLAS_ALCADAS - Pagamento cancelado enquanto estava na situação PATC
+        CANCELADO_MULTIPLAS_ALCADAS - Pago cancelado mientras estaba en estado PATC.
     PaymentConsent:
       required:
         - type
@@ -1363,42 +1365,42 @@ components:
         - screenDimensions
         - accountTenure
       description: |
-        Sinais de risco para iniciação de pagamentos automáticos
+        Señales de riesgo para la iniciación de pagos automáticos.
 
-        [Restrição] Deve ser enviado quando o consentimento for para o produto Pix Automático (O objeto "/data/recurringConfiguration/automatic" usado no oneOf). Só estará presente após a primeira edição do consentimento de longa duração.
+        [Restricción] Debe enviarse cuando el consentimiento sea para el producto Pix Automático (el objeto "/data/recurringConfiguration/automatic" usado en el oneOf). Solo estará presente después de la primera edición del consentimiento de larga duración.
       properties:
         deviceId:
           type: string
-          description: ID único do dispositivo gerado pela plataforma.
+          description: ID único del dispositivo generado por la plataforma.
           example: 00000000-54b3-e7c7-0000-000046bffd97
         isRootedDevice:
           type: boolean
-          description: Indica se o dispositivo atualmente está com permissão de “root”.
+          description: Indica si el dispositivo actualmente tiene permiso de “root”.
           example: false
         screenBrightness:
           type: number
           format: double
           description: |
-            Indica o nível de brilho da tela do dispositivo.  
-            Em dispositivos Android o valor é um inteiro, entre 0 e 255, inclusive;  
-            Em dispositivos iOS o valor é um ponto flutuante entre 0.0 e 1.0.
+            Indica el nivel de brillo de la pantalla del dispositivo.  
+            En dispositivos Android el valor es un entero entre 0 y 255;  
+            En dispositivos iOS el valor es un flotante entre 0.0 y 1.0.
         elapsedTimeSinceBoot:
           type: integer
           format: int64
-          description: Indica por quanto tempo (em milissegundos) o dispositivo está ligado.
+          description: Indica por cuánto tiempo (en milisegundos) el dispositivo ha estado encendido.
         osVersion:
           type: string
-          description: Versão do sistema operacional.
+          description: Versión del sistema operativo.
         userTimeZoneOffset:
           type: string
           description: |
-            Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]
+            Indica la configuración de zona horaria del dispositivo del usuario en formato UTC offset: ±hh[:mm]
         language:
           type: string
-          description: Indica o idioma do dispositivo no formato ISO 639-1.
+          description: Indica el idioma del dispositivo en formato ISO 639-1.
         screenDimensions:
           type: object
-          description: Dimensões da tela do dispositivo
+          description: Dimensiones de la pantalla del dispositivo.
           required:
             - height
             - width
@@ -1406,32 +1408,32 @@ components:
             height:
               type: integer
               format: int64
-              description: Altura da tela, em pixels.
+              description: Altura de la pantalla en píxeles.
             width:
               type: integer
               format: int64
-              description: Largura da tela, em pixels.
+              description: Anchura de la pantalla en píxeles.
         accountTenure:
           type: string
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          description: Data de cadastro do cliente na iniciadora.
+          description: Fecha de registro del cliente en la iniciadora.
         geolocation:
           type: object
-          description: Dados de geolocalização do cliente enquanto logado na iniciadora
+          description: Datos de geolocalización del cliente mientras está conectado a la iniciadora.
           properties:
             latitude:
               type: number
               format: double
-              description: Coordenada latitudial do cliente enquanto logado na iniciadora
+              description: Coordenada de latitud del cliente.
             longitude:
               type: number
               format: double
-              description: Coordenada longitudinal do cliente enquanto logado na iniciadora
+              description: Coordenada de longitud del cliente.
             type:
               type: string
               description: |
-                Tipo de mecanismo utilizado na geração da geolocalização
+                Tipo de mecanismo utilizado para generar la geolocalización.
               enum:
                 - COARSE
                 - FINE
@@ -1439,46 +1441,46 @@ components:
         isCallInProgress:
           type: boolean
           description: |
-            Indica chamada ativa no momento do vínculo.
+            Indica si hay una llamada activa en el momento del vínculo.
 
-            [Restrição] Caso o sinal de risco esteja disponível (cliente permitiu que fosse coletado), o mesmo deverá ser enviado
+            [Restricción] Si la señal de riesgo está disponible (el cliente permitió su recolección), debe ser enviada.
         isDevModeEnabled:
           type: boolean
-          description: Indica se o dispositivo está em modo de desenvolvedor.
+          description: Indica si el dispositivo está en modo desarrollador.
         isMockGPS:
           type: boolean
-          description: Indica se o dispositivo está usando um GPS falso.
+          description: Indica si el dispositivo está usando GPS simulado.
         isEmulated:
           type: boolean
-          description: Indica se o dispositivo é emulado ou real.
+          description: Indica si el dispositivo es emulado o real.
         isMonkeyRunner:
           type: boolean
-          description: Indica o uso do MonkeyRunner.
+          description: Indica el uso de MonkeyRunner.
         isCharging:
           type: boolean
-          description: Indica se a bateria do dispositivo está sendo carregada.
+          description: Indica si la batería del dispositivo está siendo cargada.
         antennaInformation:
           type: string
-          description: Indica em qual antena o dispositivo está conectado.
+          description: Indica a qué antena está conectado el dispositivo.
         isUsbConnected:
           type: boolean
-          description: Indica se o dispositivo está conectado a outro dispositivo via USB.
+          description: Indica si el dispositivo está conectado vía USB.
         integrity:
           type: object
           description: |
-            Informa a integridade do dispositivo e app.  
-            No Android, conforme documentação Play API Integrity - [Android](https://developer.android.com/google/play/integrity/overview?hl=pt-br).  
-            No iOS, conforme documentação App Attest [iOS](https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity)
+            Informa sobre la integridad del dispositivo y de la aplicación.  
+            En Android: conforme documentación Play API Integrity.  
+            En iOS: conforme documentación App Attest.
           properties:
             appRecognitionVerdict:
               type: string
-              description: Informa a integridade do app
+              description: Informa la integridad de la aplicación.
             deviceRecognitionVerdict:
               type: string
-              description: Informa a integridade do dispositivo
+              description: Informa la integridad del dispositivo.
     RecurringConfiguration:
       type: object
-      description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
+      description: Campo destinado a la configuración de los diferentes productos de pagos recurrentes.
       oneOf:
         - $ref: "#/components/schemas/Sweeping"
     Sweeping:
@@ -1488,7 +1490,7 @@ components:
       properties:
         sweeping:
           type: object
-          description: Definição da configuração de recorrência para transferências automáticas de fundos.
+          description: Definición de la configuración de recurrencia para transferencias automáticas de fondos.
           properties:
             totalAllowedAmount:
               type: string
@@ -1496,19 +1498,19 @@ components:
               maxLength: 19
               pattern: '^((\d{1,16}\.\d{2}))$'
               example: "100000.12"
-              description: Valor máximo a ser atingido pelo somatório de todas as transações que utilizam o consentimento autorizado pelo cliente. Caso o valor seja superado, a detentora de conta deve negar a transação solicitada pela iniciadora.
+              description: Valor máximo a ser alcanzado por la suma de todas las transacciones que utilizan el consentimiento autorizado por el cliente. Si el valor es superado, la detentora debe negar la transacción solicitada por la iniciadora.
             transactionLimit:
               type: string
               pattern: '^((\d{1,16}\.\d{2}))$'
               minLength: 4
               maxLength: 19
               example: "1000000.12"
-              description: Valor máximo para cada transação de pagamento associada a esse consentimento. Caso valor do pagamento seja maior que esse limite, a detentora de contas deve rejeitar a transação de pagamento.
+              description: Valor máximo para cada transacción de pago asociada a este consentimiento. Si el valor del pago es mayor que este límite, la detentora debe rechazar la transacción.
             periodicLimits:
               $ref: "#/components/schemas/PeriodicLimits"
     PeriodicLimits:
       type: object
-      description: Limites transacionais por período determinado pelo usuário pagador.
+      description: Límites transaccionales por período determinados por el usuario pagador.
       properties:
         day:
           $ref: "#/components/schemas/Day"
@@ -1521,75 +1523,75 @@ components:
     Day:
       type: object
       description: |
-        Configurar limite transacional diário determinado pelo usuário pagador.
+        Configura un límite transaccional diario determinado por el usuario pagador.
 
-        [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos.
+        [Restricción] Si se envía el objeto, al menos uno de los campos (`quantityLimit` o `transactionLimit`) debe ser completado.
       properties:
         quantityLimit:
           type: integer
           example: 2
-          description: Quantidade limite de transações permitidas para ocorrer durante um dia.
+          description: Cantidad máxima de transacciones permitidas durante un día.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
           minLength: 4
           maxLength: 19
           example: "100000.12"
-          description: Valor máximo a ser transacionado diariamente.
+          description: Valor máximo a ser transaccionado diariamente.
     Week:
       type: object
       description: |
-        Configurar limite transacional semanal determinado pelo usuário pagador.
+        Configura un límite transaccional semanal determinado por el usuario pagador.
 
-        [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
+        [Restricción] Si se envía el objeto, al menos uno de los campos (`quantityLimit` o `transactionLimit`) debe ser completado.
       properties:
         quantityLimit:
           type: integer
           example: 10
-          description: Quantidade limite de transações permitidas para ocorrer durante uma semana.
+          description: Cantidad máxima de transacciones permitidas durante una semana.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
           minLength: 4
           maxLength: 19
           example: "100000.12"
-          description: Valor máximo a ser transacionado semanalmente.
+          description: Valor máximo a ser transaccionado semanalmente.
     Month:
       type: object
       description: |
-        Configurar limite transacional mensal determinado pelo usuário pagador.
+        Configura un límite transaccional mensual determinado por el usuario pagador.
 
-        [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
+        [Restricción] Si se envía el objeto, al menos uno de los campos (`quantityLimit` o `transactionLimit`) debe ser completado.
       properties:
         quantityLimit:
           type: integer
           example: 30
-          description: Quantidade limite de transações permitidas para ocorrer durante um mês.
+          description: Cantidad máxima de transacciones permitidas durante un mes.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
           minLength: 4
           maxLength: 19
           example: "100000.12"
-          description: Valor máximo a ser transacionado mensalmente.
+          description: Valor máximo a ser transaccionado mensualmente.
     Year:
       type: object
       description: |
-        Configurar limite transacional anual determinado pelo usuário pagador.
+        Configura un límite transaccional anual determinado por el usuario pagador.
 
-        [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
+        [Restricción] Si se envía el objeto, al menos uno de los campos (`quantityLimit` o `transactionLimit`) debe ser completado.
       properties:
         quantityLimit:
           type: integer
           example: 100
-          description: Quantidade limite de transações permitidas para ocorrer durante um ano.
+          description: Cantidad máxima de transacciones permitidas durante un año.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
           minLength: 4
           maxLength: 19
           example: "100000.12"
-          description: Valor máximo a ser transacionado por um ano, a partir da data definida no campo `/data/startDateTime`.
+          description: Valor máximo a ser transaccionado en un año, a partir de la fecha definida en `/data/startDateTime`.
     PaymentPersonTypeEnum:
       enum:
         - PESSOA_NATURAL
@@ -1604,13 +1606,13 @@ components:
       properties:
         name:
           type: string
-          example: Nome da permissão
+          example: Nombre del permiso
         title:
           type: string
-          example: Nome inteligível para a permissão
+          example: Nombre inteligible del permiso
         description:
           type: string
-          example: Descrição do que essa permissão permite
+          example: Descripción de lo que permite este permiso
     RequestRevokeOobConsent:
       required:
         - data
@@ -1621,7 +1623,7 @@ components:
             - $ref: "#/components/schemas/RevokeConsentData"
             - nullable: false
         applicationName:
-          description: Nome da aplicação cliente
+          description: Nombre de la aplicación cliente.
           type: string
     RequestRevokeOobPaymentConsent:
       required:
@@ -1633,7 +1635,7 @@ components:
             - $ref: "#/components/schemas/RevokePaymentConsentData"
             - nullable: false
         applicationName:
-          description: Nome da aplicação cliente
+          description: Nombre de la aplicación cliente.
           type: string
     RequestRevokeOobPaymentPayment:
       required:
@@ -1644,7 +1646,7 @@ components:
           allOf:
             - $ref: "#/components/schemas/RevokePaymentPaymentData"
         applicationName:
-          description: Nome da aplicação cliente
+          description: Nombre de la aplicación cliente
           type: string
     RequestPaymentConsentAuthorisation:
       required:
@@ -1662,13 +1664,13 @@ components:
         data:
           allOf:
             - $ref: "#/components/schemas/PaymentStatusChangeData"
-            - description: Dados de notificação de mudança de status de pagamento
+            - description: Datos de notificación de cambio de estado del pago
               nullable: false
     PaymentIdLegacy:
       required:
         - key
       type: object
-      description: Par chave/valor para o id do pagamento encontrado no sistema de retaguarda
+      description: Par clave/valor para el ID del pago encontrado en el sistema de backoffice
       properties:
         key:
           type: string
@@ -1715,7 +1717,7 @@ components:
       type: string
     ResponseConsentDetailSchema:
       type: object
-      description: Service execution response
+      description: Respuesta de la ejecución del servicio
       properties:
         data:
           $ref: "#/components/schemas/ConsentDetail"
@@ -1723,34 +1725,34 @@ components:
       type: object
       properties:
         data:
-          description: Service execution response
+          description: Respuesta de la ejecución del servicio
           type: array
           items:
             $ref: "#/components/schemas/ConsentExtends"
         links:
           allOf:
             - $ref: "#/components/schemas/Links"
-            - description: Service links
+            - description: Enlaces del servicio
         meta:
           allOf:
             - $ref: "#/components/schemas/Meta"
-            - description: Meta records information
+            - description: Información de metadatos
     ResponseConsentSummaryPaginationSchema:
       type: object
       properties:
         data:
-          description: Service execution response
+          description: Respuesta de la ejecución del servicio
           type: array
           items:
             $ref: "#/components/schemas/ConsentSummary"
         links:
           allOf:
             - $ref: "#/components/schemas/Links"
-            - description: Service links
+            - description: Enlaces del servicio
         meta:
           allOf:
             - $ref: "#/components/schemas/Meta"
-            - description: Meta records information
+            - description: Información de metadatos
     ConsentRevocation:
       oneOf:
         - $ref: "#/components/schemas/Revocation"
@@ -1762,7 +1764,7 @@ components:
         - $ref: "#/components/schemas/RejectionPaymentOob"
         - $ref: "#/components/schemas/RejectionEnrollment"
     Revocation:
-      description: Informações sobre a revogação de consentimento de compartilhamento de dados
+      description: Información sobre la revocación del consentimiento de compartición de datos
       required:
         - revokedBy
         - reason
@@ -1780,7 +1782,7 @@ components:
             - $ref: "#/components/schemas/RevocationReason"
             - nullable: false
     Rejection:
-      description: Informação sobre rejeição de consentimento de compartilhamento de dados
+      description: Información sobre la rejección del consentimiento de compartición de datos
       required:
         - reason
         - rejectedBy
@@ -1805,7 +1807,7 @@ components:
         additionalInformation:
           maxLength: 140
           type: string
-          example: Risco de fraude identificado
+          example: Riesgo de fraude identificado
         code:
           allOf:
             - $ref: "#/components/schemas/RevocationReasonCodeEnum"
@@ -1823,14 +1825,14 @@ components:
           type: object
           required:
             - code
-          description: Motivo da revogação do vínculo de conta.
+          description: Motivo de la revocación del vínculo de cuenta.
           properties:
             code:
               $ref: "#/components/schemas/EnrollmentRevocationReasonCodeEnum"
         additionalInformation:
           type: string
           pattern: '[\w\W\s]*'
-          example: Contrato entre iniciadora e detentora interrompido
+          example: Contrato entre iniciadora y detentora interrumpido
           maxLength: 2048
         cancelledFrom:
           $ref: "#/components/schemas/EnumEnrollmentCancelledFrom"
@@ -1848,14 +1850,14 @@ components:
           type: object
           required:
             - code
-          description: Motivo da revogação do vínculo de conta.
+          description: Motivo de la rejección del vínculo de cuenta.
           properties:
             code:
               $ref: "#/components/schemas/EnrollmentRejectedReasonCodeEnum"
         additionalInformation:
           type: string
           pattern: '[\w\W\s]*'
-          example: Contrato entre iniciadora e detentora interrompido
+          example: Contrato entre iniciadora y detentora interrumpido
           maxLength: 2048
         cancelledFrom:
           $ref: "#/components/schemas/EnumEnrollmentCancelledFrom"
@@ -1869,7 +1871,7 @@ components:
         additionalInformation:
           maxLength: 140
           type: string
-          example: Risco de fraude identificado
+          example: Riesgo de fraude identificado
         code:
           allOf:
             - $ref: "#/components/schemas/RejectedReasonCodeEnum"
@@ -2001,7 +2003,7 @@ components:
         additionalInformation:
           maxLength: 140
           type: string
-          example: Reason when code REJEITADO_OUTRO
+          example: Razón cuando el código es REJEITADO_OUTRO
         code:
           allOf:
             - $ref: "#/components/schemas/EnrollmentRejectedReasonCodeEnum"
@@ -2052,9 +2054,9 @@ components:
         ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
       example: "2020-07-21T08:30:00Z"
       description: >
-        Data e hora da última atualização da iniciação de pagamento.
-        Uma string com data e hora conforme especificação
-        RFC-3339,sempre com a utilização de timezone UTC(UTC time format).
+        Fecha y hora de la última actualización de la iniciación del pago.
+        Una cadena con fecha y hora conforme a la especificación
+        RFC-3339, siempre utilizando zona horaria UTC (formato UTC).
     RevokeConsentData:
       required:
         - status
@@ -2078,7 +2080,7 @@ components:
       type: object
       properties:
         legacyId:
-          description: Id de pagamento do sistema de retaguarda
+          description: ID de pago del sistema de backoffice
           type: array
           items:
             $ref: "#/components/schemas/PaymentIdLegacy"
@@ -2102,12 +2104,12 @@ components:
           type: string
     PaymentRejection:
       type: object
-      description: "Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status. Deverá ser enviado quando o campo /data/paymentStatus for igual a RJCT (REJECTED)."
+      description: "Motivo del rechazo del pago. Información complementaria sobre el motivo del estado. Debe enviarse cuando el campo /data/paymentStatus sea igual a RJCT (REJECTED)."
       properties:
         code:
           $ref: "#/components/schemas/PaymentRejectionReasonEnum"
         detail:
-          example: "A conta selecionada não possui saldo suficiente para realizar o pagamento."
+          example: "La cuenta seleccionada no posee saldo suficiente para realizar el pago."
           type: string
     PaymentRejectionReasonEnum:
       type: string
@@ -2134,14 +2136,14 @@ components:
       type: object
       properties:
         data:
-          description: Service execution response
+          description: Respuesta de ejecución del servicio
           type: array
           items:
             $ref: "#/components/schemas/ActiveConsent"
         links:
           allOf:
             - $ref: "#/components/schemas/Links"
-            - description: Service links
+            - description: Enlaces del servicio
         meta:
           allOf:
             - $ref: "#/components/schemas/Meta"
@@ -2149,7 +2151,7 @@ components:
       type: object
       properties:
         externalId:
-          description: O consentId é o identificador único do consentimento e deve ser um URN - Uniform Resource Name
+          description: El consentId es el identificador único del consentimiento y debe ser un URN - Uniform Resource Name
           type: string
           example: urn:amazingbank:899dd8b2-34d1-4c75-b8de-f0ffa51ca720
         personDocumentType:
@@ -2188,7 +2190,7 @@ components:
                 - $ref: "#/components/schemas/Rejection"
                 - nullable: false
         applicationName:
-          description: Nome da aplicação do cliente
+          description: Nombre de la aplicación cliente
           type: string
     RevokedByEnum:
       enum:
@@ -2219,7 +2221,7 @@ components:
       properties:
         single:
           type: object
-          description: Define a política de agendamento único.
+          description: Define la política de programación única.
           required:
             - date
           properties:
@@ -2230,12 +2232,10 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               example: "2023-08-23"
               description: |
-                Define a data alvo da liquidação do pagamento.
-                O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
+                Define la fecha objetivo de la liquidación del pago.
+                Se debe utilizar la zona horaria de Brasilia para la creación y razonamiento sobre los datos de este campo.
 
-                [Restrição] Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em 
-                relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+730 corridos a 
-                partir da data do consentimento, também considerando o fuso horário de Brasília.
+                [Restricción] Este campo debe ser siempre como mínimo D+1 día corrido respecto a la fecha del consentimiento considerando la zona horaria de Brasilia, y como máximo D+730 días corridos desde la fecha del consentimiento, también considerando la zona horaria de Brasilia.
     ScheduleDaily:
       type: object
       required:
@@ -2248,14 +2248,14 @@ components:
             - quantity
           properties:
             startDate:
-              description: Define o início da vigência da recorrência.
+              description: Define el inicio de vigencia de la recurrencia.
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               maxLength: 10
               example: "2023-08-23"
             quantity:
-              description: Define a quantidade de pagamentos que serão enviados para liquidação.
+              description: Define la cantidad de pagos que serán enviados para liquidación.
               type: integer
               format: int32
               minimum: 2
@@ -2274,7 +2274,7 @@ components:
             - quantity
           properties:
             dayOfWeek:
-              description: Define o dia da semana planejado para a ocorrência das liquidações.
+              description: Define el día de la semana planificado para la ocurrencia de las liquidaciones.
               type: string
               enum:
                 - SEGUNDA_FEIRA
@@ -2286,14 +2286,14 @@ components:
                 - DOMINGO
               example: QUINTA_FEIRA
             startDate:
-              description: Define o início da vigência da recorrência.
+              description: Define el inicio de vigencia de la recurrencia.
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               maxLength: 10
               example: "2023-08-23"
             quantity:
-              description: Define a quantidade de pagamentos que serão enviados para liquidação.
+              description: Define la cantidad de pagos que serán enviados para liquidación.
               type: integer
               format: int32
               minimum: 2
@@ -2312,20 +2312,20 @@ components:
             - quantity
           properties:
             dayOfMonth:
-              description: Define o dia do mês planejado para a ocorrência das liquidações.
+              description: Define el día del mes planificado para la ocurrencia de las liquidaciones.
               type: integer
               minimum: 1
               maximum: 31
               example: 10
             startDate:
-              description: Define o início da vigência da recorrência.
+              description: Define el inicio de vigencia de la recurrencia.
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               maxLength: 10
               example: "2023-08-23"
             quantity:
-              description: Define a quantidade de pagamentos que serão enviados para liquidação.
+              description: Define la cantidad de pagos que serán enviados para liquidación.
               type: integer
               format: int32
               minimum: 2
@@ -2339,14 +2339,14 @@ components:
         custom:
           type: object
           description: |
-            [Restrição] As datas enviadas na lista de datas (array “dates”) não podem ser repetidas. 
-            Caso datas repetidas sejam enviadas, o detentor deve rejeitar a criação do consentimento, informando o erro PARAMETRO_INVALIDO.
+            [Restricción] Las fechas enviadas en la lista (array “dates”) no pueden repetirse.
+            Si se envían fechas repetidas, la detentora debe rechazar la creación del consentimiento informando el error PARAMETRO_INVALIDO.
           required:
             - dates
             - additionalInformation
           properties:
             dates:
-              description: Define os dias em que estão planejadas as ocorrências das liquidações.
+              description: Define los días en los que están planificadas las ocurrencias de liquidación.
               type: array
               maxItems: 60
               minItems: 2
@@ -2360,11 +2360,11 @@ components:
             additionalInformation:
               type: string
               description: |
-                Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. 
-                O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.
+                Texto libre para que la iniciadora complete de forma comprensible para el usuario aprobador/pagador.
+                El texto puede ser utilizado por la detentora para mostrar el resumen de la transacción durante la aprobación del usuario.
               pattern: '[\w\W\s]*'
               maxLength: 255
-              example: Todas quintas e domingos por 6 meses
+              example: Todas las quintas y domingos por 6 meses
     StatusEnum:
       enum:
         - AUTHORISED
@@ -2389,7 +2389,7 @@ components:
         data:
           allOf:
             - $ref: "#/components/schemas/PaymentLegacyIdsByItp"
-            - description: Service execution response
+            - description: Respuesta de ejecución del servicio
     PaymentLegacyIdsByItp:
       type: object
       properties:
@@ -2417,8 +2417,8 @@ components:
             $ref: "#/components/schemas/PaymentManualRiskSignal"
         enrollmentName:
           type: string
-          description: Nome do dispositivo autorizado pelo cliente para o vínculo de dispositivo da JSR.
-          example: "Meu Celular"
+          description: Nombre del dispositivo autorizado por el cliente para el vínculo de dispositivo de la JSR.
+          example: "Mi Teléfono"
         dailyLimit:
           format: double
           type: number
@@ -2432,58 +2432,58 @@ components:
       properties:
         deviceId:
           type: string
-          description: Identificador único do dispositivo.
+          description: Identificador único del dispositivo.
         isRootedDevice:
           type: boolean
-          description: Indica se o dispositivo está com root.
+          description: Indica si el dispositivo tiene root.
         screenBrightness:
           type: number
           format: double
-          description: Nível de brilho da tela do dispositivo.
+          description: Nivel de brillo de la pantalla del dispositivo.
         elapsedTimeSinceBoot:
           type: integer
           format: int64
-          description: Tempo decorrido desde a última inicialização do dispositivo.
+          description: Tiempo transcurrido desde el último arranque del dispositivo.
         osVersion:
           type: string
-          description: Versão do sistema operacional do dispositivo.
+          description: Versión del sistema operativo del dispositivo.
         userTimeZoneOffset:
           type: string
-          description: Deslocamento do fuso horário do usuário.
+          description: Desplazamiento de la zona horaria del usuario.
         language:
           type: string
-          description: Idioma usado pelo dispositivo.
+          description: Idioma utilizado por el dispositivo.
         screenDimensions:
           $ref: "#/components/schemas/ScreenDimensions"
         accountTenure:
           type: string
-          description: Tempo em que a conta está ativa.
+          description: Tiempo que la cuenta ha estado activa.
         geolocation:
           $ref: "#/components/schemas/Geolocation"
         isCallingProgress:
           type: boolean
-          description: Indica se uma chamada está em andamento.
+          description: Indica si hay una llamada en progreso.
         isDevModeEnabled:
           type: boolean
-          description: Indica se o modo de desenvolvedor está ativado no dispositivo.
+          description: Indica si el modo desarrollador está activado.
         isMockGPS:
           type: boolean
-          description: Indica se o dispositivo está usando uma localização GPS simulada.
+          description: Indica si el dispositivo está usando una ubicación GPS simulada.
         isEmulated:
           type: boolean
-          description: Indica se o dispositivo está emulado.
+          description: Indica si el dispositivo es emulado.
         isMonkeyRunner:
           type: boolean
-          description: Indica se o dispositivo está usando a ferramenta MonkeyRunner.
+          description: Indica el uso de la herramienta MonkeyRunner.
         isCharging:
           type: boolean
-          description: Indica se o dispositivo está atualmente carregando.
+          description: Indica si el dispositivo está cargándose.
         antennaInformation:
           type: string
-          description: Informações sobre a antena do dispositivo.
+          description: Información sobre la antena del dispositivo.
         isUsbConnected:
           type: boolean
-          description: Indica se o dispositivo está conectado a uma porta USB.
+          description: Indica si el dispositivo está conectado vía USB.
         integrity:
           $ref: "#/components/schemas/Integrity"
     ScreenDimensions:
@@ -2492,34 +2492,34 @@ components:
         height:
           type: integer
           format: int64
-          description: Altura da tela do dispositivo em pixels.
+          description: Altura de la pantalla del dispositivo en píxeles.
         width:
           type: integer
           format: int64
-          description: Largura da tela do dispositivo em pixels.
+          description: Anchura de la pantalla del dispositivo en píxeles.
     Geolocation:
       type: object
       properties:
         latitude:
           type: number
           format: double
-          description: Coordenada de latitude da localização do dispositivo.
+          description: Coordenada de latitud de la ubicación del dispositivo.
         longitude:
           type: number
           format: double
-          description: Coordenada de longitude da localização do dispositivo.
+          description: Coordenada de longitud de la ubicación del dispositivo.
         type:
           type: string
-          description: Tipo de dados de geolocalização.
+          description: Tipo de dato de geolocalización.
     Integrity:
       type: object
       properties:
         appRecognitionVerdict:
           type: string
-          description: Veredito do processo de reconhecimento do aplicativo.
+          description: Veredicto del proceso de reconocimiento de la aplicación.
         deviceRecognitionVerdict:
           type: string
-          description: Veredito do processo de reconhecimento do dispositivo.
+          description: Veredicto del proceso de reconocimiento del dispositivo.
     RequestRevokeOobEnrollmentConsent:
       required:
         - data
@@ -2530,7 +2530,7 @@ components:
             - $ref: "#/components/schemas/EnrollmentDataPatch"
             - nullable: false
         applicationName:
-          description: Nome da aplicação cliente
+          description: Nombre de la aplicación cliente
           type: string
     EnrollmentDataPatch:
       required:
@@ -2587,30 +2587,29 @@ components:
         - INICIADORA
         - DETENTORA
       description: |
-        Campo utilizado para informar o meio pelo qual foi realizado o cancelamento do vínculo de conta. Valores possíveis:
+        Campo utilizado para informar el medio por el cual se realizó la cancelación del vínculo de cuenta. Valores posibles:
 
-          INICIADORA - Vínculo de conta nos canais da iniciadora.
+          INICIADORA - Vínculo de cuenta en los canales de la iniciadora.
 
-          DETENTORA - Vínculo de conta nos canais da detentora.
+          DETENTORA - Vínculo de cuenta en los canales de la detentora.
     EnrollmentRejectedAt:
       type: string
       format: date-time
       example: "2023-07-12T08:30:00Z"
       pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
       maxLength: 20
-      description: Instante de rejeição do vínculo de conta no ambiente da detentora.
+      description: Instante de rechazo del vínculo de cuenta en el entorno de la detentora.
     AutomaticPaymentConsentEdition:
       type: object
       properties:
         maximumVariableAmount:
-          description: Definição da configuração de recorrência para pagamentos automáticos.
+          description: Definición de la configuración de recurrencia para pagos automáticos.
           maxLength: 19
           minLength: 4
           type: string
           example: "1000000.12"
         useOverdraftLimit:
-          description: Indica se o consentimento permite a utilização do limite de
-            cheque especial.
+          description: Indica si el consentimiento permite el uso del límite del cheque especial.
           type: boolean
           example: true
   securitySchemes:
