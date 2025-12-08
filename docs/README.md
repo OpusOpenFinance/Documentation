@@ -4,4 +4,4 @@ A documentação está estruturada para ser gerada diretamente a partir dos arqu
 
 ## Estrutura de diretórios
 
-Todos os arquivos de texto estão abaixo do diretório "docs", de acordo com o padrão do *Just the Docs*, e estão separados por idiomas (**pt-br** e **en**).
+Todos os arquivos de texto estão abaixo do diretório "docs", de acordo com o padrão do *Just the Docs*, e estão separados por idiomas (**pt-br**, **en** e **es**).
