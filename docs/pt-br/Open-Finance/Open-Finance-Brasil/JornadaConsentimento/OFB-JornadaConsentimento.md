@@ -8,7 +8,7 @@ alternate_lang:
     - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento/"
       lang: "en"
     - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento/"
-    lang: "es"
+      lang: "es"
 ---
 
 ## Jornada de Consentimento

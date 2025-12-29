@@ -42,5 +42,5 @@ A documentação das APIs a serem construídas na *camada de integração* pode 
 {: .destaque}
 Alguns navegadores de internet, como *Chrome*, ocasionalmente sinalizam como *não segura* a operação de *download* de arquivos YAML, exigindo o desbloqueio manual pelo usuário. Esses arquivos, entretanto, têm conteúdo do tipo texto e não apresentam risco por si.
 
-[API-Contas]: ../../../../swagger-ui/index.html?api=Contas
-[API-Common]: ../../../../swagger-ui/index.html?api=Opus-Commons
+[API-Contas]: ../../../../swagger-ui/index.html?api=contas
+[API-Common]: ../../../../swagger-ui/index.html?api=opus-commons
