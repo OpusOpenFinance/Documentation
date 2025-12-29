@@ -45,10 +45,10 @@ O termo **TPP** (Third-Party Provider) é utilizado para representar ambas as pa
 
 Os perfis de atuação podem ser entendidos conforme a tabela abaixo:
 
-| **Ecossistema** | **Client (TPP - parte ativa)** | **Server (parte passiva)** |
-|------------------|--------------------------------|-----------------------------|
-| **Dados**        | Receptor de Dados             | Transmissor de Dados        |
-| **Pagamentos**   | ITP                           | Detentor de Conta           |
+| **Ecossistema** | **Client (TPP - parte ativa)** | **Server (parte passiva)**  |
+|-----------------|--------------------------------|-----------------------------|
+| **Dados**       | Receptor de Dados              | Transmissor de Dados        |
+| **Pagamentos**  | ITP                            | Detentor de Conta           |
 
 ---
 

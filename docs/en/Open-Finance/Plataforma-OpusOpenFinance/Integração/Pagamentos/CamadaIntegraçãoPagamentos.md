@@ -266,7 +266,7 @@ The date of each schedule must follow the rules described in [how to identify th
 
 [App-e-Web]: ./App-e-Web.html
 [Imagem-Camada-Integração]: ../images/CamadaIntegração.png
-[API-pagamento]: ../../../../swagger-ui/index.html?api=en-payment-integration
+[API-pagamento]: /Documentation/swagger-ui/index.html?api=en-payment-integration
 [Cenarios-Pagamentos]: ./integracao-plugin/cenarios-pagamentos/Cenarios-Pagamentos.html
 [Validacoes-Pagamentos]: ./integracao-plugin/validacoes-pagamentos/Validacoes-Pagamentos.html
 [Discovery-Recursos]: ./integracao-plugin/consent/Discovery-Recursos.html
