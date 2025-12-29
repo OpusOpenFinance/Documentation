@@ -75,8 +75,9 @@ São apresentadas abaixo as APIs regulatórias referentes a Dados Abertos e exem
 >Voltamos a ressaltar que é necessário disponibilizar arquivos JSON apenas para os produtos financeiros efetivamente oferecidos pela instituição.
 
 <!-- markdownlint-disable MD059 -->
+
 |API                               |Link Open API          |Link Exemplo JSON           |
-|----------------------------------|:---------------------:|:--------------------------:|
+|:--------------------------------:|:---------------------:|:--------------------------:|
 |Canais de atendimento             |[Link][Channels]       |[JSON][Channels-JSON]       |
 |Contas                            |[Link][Accounts]       |[JSON][Accounts-JSON]       |
 |Empréstimos                       |[Link][Loans]          |[JSON][Loans-JSON]          |

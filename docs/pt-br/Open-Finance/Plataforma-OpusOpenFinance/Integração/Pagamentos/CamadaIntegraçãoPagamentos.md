@@ -46,9 +46,9 @@ _Etapa de liquidação do pagamento:_
 
 ### API de integração
 
-A descrição da API que deve ser implementada pela _camada de integração de pagamento_, que é a API _Payment Initiation_, pode ser encontrada [**aqui**.][API-pagamento].
+A descrição da API que deve ser implementada pela _camada de integração de pagamento_, que é a API _Payment Initiation_, pode ser encontrada [**aqui**][API-pagamento].
 
-Para fazer o download do arquivo YAML/OAS que contém a especificação da API clique [**aqui**](../apis/payment-integration-0-1-0.yml){:download="../apis/payment-integration-0-1-0.yml"}.
+Para fazer o download do arquivo YAML/OAS que contém a especificação da API clique [**aqui**](../apis/payment-integration-0.1.0.yml){:download="../apis/payment-integration-0-1-0.yml"}.
 
 ### Cenários de Pagamentos a Serem Cobertos pela Integração
 
@@ -267,7 +267,7 @@ A data de cada agendamento deve ser determinada conforme descrito em [como ident
 
 [App-e-Web]: ./App-e-Web.html
 [Imagem-Camada-Integração]: ../images/Integração-Pagamento.png
-[API-pagamento]: ../../../../swagger-ui/index.html?api=payment-integration
+[API-pagamento]: /Documentation/swagger-ui/index.html?api=payment-integration
 [Cenarios-Pagamentos]: ./integracao-plugin/cenarios-pagamentos/Cenarios-Pagamentos.html
 [Validacoes-Pagamentos]: ./integracao-plugin/validacoes-pagamentos/Validacoes-Pagamentos.html
 [Discovery-Recursos]: ./integracao-plugin/consent/Discovery-Recursos.html
