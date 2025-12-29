@@ -36,4 +36,4 @@ Para fazer o download do arquivo YAML/OAS que contém a especificação da API c
 {: .destaque}
 Alguns navegadores de internet, como *Chrome*, ocasionalmente sinalizam como *não segura* a operação de *download* de arquivos YAML, exigindo o desbloqueio manual pelo usuário. Esses arquivos, entretanto, têm conteúdo do tipo texto e não apresentam risco por si.
 
-[API-Financiamento]: ../../../../swagger-ui/index.html?api=Financiamento
+[API-Financiamento]: ../../../../swagger-ui/index.html?api=financiamentos

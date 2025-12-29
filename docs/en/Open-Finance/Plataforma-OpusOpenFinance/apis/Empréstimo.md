@@ -30,11 +30,11 @@ There are *endpoints* for:
 
 ### *Open API Specification* of the API
 
-The documentation for the Loans API to be built in the *integration layer* can be found [**here**][API-Empréstimo].
+The documentation for the Loans API to be built in the *integration layer* can be found [**here**][API-Emprestimo].
 
 To download the YAML/OAS file containing the API specification, click [**here**](en-loans-2-4-0.yml){:download="en-loans-2-4-0.yml"}.
 
 {: .highlight}
 Some internet browsers, such as *Chrome*, may occasionally flag the download operation of YAML files as *not secure*, requiring manual unlocking by the user. However, these files are text-based and do not pose any risk.
 
-[API-Empréstimo]: ../../../../swagger-ui/index.html?api=en-Empréstimo
+[API-Emprestimo]: ../../../../swagger-ui/index.html?api=en-emprestimos

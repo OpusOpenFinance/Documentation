@@ -55,4 +55,4 @@ The following sequence diagram illustrates the interaction between the instituti
 
 ![Sequence Diagram](images/sequencia-web2as.svg)
 
-[API-Mobile]: ../../../../../../../swagger-ui/index.html?api=en-Mobile
+[API-Mobile]: ../../../../../../../swagger-ui/index.html?api=en-mobile
