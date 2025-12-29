@@ -56,4 +56,4 @@ telas customizadas.
 
 ![Diagrama de sequência](images/sequencia-web2as.svg)
 
-[API-Mobile]: ../../../../../../../swagger-ui/index.html?api=Mobile
+[API-Mobile]: ../../../../../../../swagger-ui/index.html?api=mobile

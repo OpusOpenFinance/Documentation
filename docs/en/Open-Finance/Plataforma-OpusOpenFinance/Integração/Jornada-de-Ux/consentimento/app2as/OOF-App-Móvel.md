@@ -46,7 +46,7 @@ The following sequence diagram summarizes the interaction between the institutio
 
 ## Open API Specification
 
-The definitions of the REST API provided by the Authorization Server for the mobile app can be found [here][API-Mobile]
+The definitions of the REST API provided by the Authorization Server for the mobile app can be found [here][API-Mobile].
 
 ## Mock for Integration
 
@@ -69,4 +69,4 @@ Several scenarios are mocked and triggered through the respective initial URLs:
 
 To run the mock, simply import the JSON into the *Mockoon* tool and start the "Opus Open Finance Authorization Server Apps API" environment server.
 
-[API-Mobile]: ../../../../../../../swagger-ui/index.html?api=en-Mobile
+[API-Mobile]: ../../../../../../../swagger-ui/index.html?api=en-mobile

@@ -32,4 +32,4 @@ To download the YAML/OAS file containing the API specification, click [**here**]
 {: .highlight}
 Some internet browsers, such as *Chrome*, may occasionally flag the download operation of YAML files as *not secure*, requiring manual unlocking by the user. However, these files are text-based and do not pose any risk.
 
-[API-Financiamento]: ../../../../swagger-ui/index.html?api=en-Financiamento
+[API-Financiamento]: ../../../../swagger-ui/index.html?api=en-financiamentos
