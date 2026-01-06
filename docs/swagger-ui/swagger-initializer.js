@@ -51,6 +51,20 @@ window.onload = () => {
     "data-credit-fixed-incomes": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-credit-fixed-incomes.yml`,
     "data-treasury-bonds": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-treasury-bonds.yml`,
     "data-variable-incomes": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-variable-incomes.yml`,
+    // ODR
+    "ODR-accounts": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/accounts_oas.yml`,
+    "ODR-creditcard": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/creditcard_oas.yml`,
+    "ODR-customer": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/customer_oas.yml`,
+    "ODR-credit_financing": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/credit_financing_oas.yml`,
+    "ODR-credit_loans": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/credit_loans_oas.yml`,
+    "ODR-credit_invoice_financing": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/credit_invoice_financing_oas.yml`,
+    "ODR-credit_unarranged_accounts": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/credit_unarranged_accounts_overdraft_oas.yml`,
+    "ODR-investments_bank_fixed_income": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/investments_bank_fixed_income_oas.yml`,
+    "ODR-investments_credit_fixed_income": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/investments_credit_fixed_incomes_oas.yml`,
+    "ODR-investments_variable_incomes": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/investments_variable_incomes_oas.yml`,
+    "ODR-investments_treasure_titles": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/investments_treasure_titles_oas.yml`,
+    "ODR-investments_funds": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/investments_funds_oas.yml`,
+    "ODR-exchanges": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/yml/exchanges_oas.yml`,    
 
     // =====================================================
     // EN
