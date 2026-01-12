@@ -3,7 +3,7 @@ info:
   title: API Credit Portability - Integration Layer - OPUS Open Finance Brasil
   description: |
     A API de Portabilidade de Crédito permite que usuários transfiram suas operações de crédito e arrendamento mercantil entre instituições financeiras em busca de melhores condições para o Open Finance Brasil.
-  version: 4.0.0-rc.4-base1.0.0
+  version: 4.0.0-rc.5-base1.0.0
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
@@ -34,11 +34,7 @@ paths:
         '202':
           $ref: '#/components/responses/POSTResponseCreditPortability'
         default:
-          description: Erro inesperado.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError'
+          $ref: '#/components/responses/ResponseDefaultError'
   /cancel-portability:
     post:
       tags:
@@ -56,11 +52,7 @@ paths:
         '200':
           $ref: '#/components/responses/PatchResponseCreditPortabilityCancel'
         default:
-          description: Erro inesperado.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError'
+          $ref: '#/components/responses/ResponseDefaultError'
   /portability-eligibility:
     post:
       tags:
@@ -78,11 +70,7 @@ paths:
         '200':
           $ref: '#/components/responses/OKResponsePortabilityEligibility'
         default:
-          description: Erro inesperado.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError'
+          $ref: '#/components/responses/ResponseDefaultError'
   /find-portability-account-data:
     post:
       tags:
@@ -100,11 +88,7 @@ paths:
         '200':
           $ref: '#/components/responses/OKResponseAccountData'
         default:
-          description: Erro inesperado.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError'
+          $ref: '#/components/responses/ResponseDefaultError'
   /create-portability-payment:
     post:
       tags:
@@ -122,11 +106,7 @@ paths:
         '202':
           $ref: '#/components/responses/POSTResponseCreditPortabilityPayment'
         default:
-          description: Erro inesperado.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseError'
+          $ref: '#/components/responses/ResponseDefaultError'
 components:
   schemas:
     BrandId:
@@ -1353,14 +1333,13 @@ components:
               description: Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito
               enum:
                 - RECEIVED
-                - TECHNICAL_VALIDATION_IN_PROCESS
                 - PENDING
-                - ACCEPTED_SETTLEMENT_IN_PROCESS
+                - ACCEPTED_SETTLEMENT_IN_PROGRESS
                 - ACCEPTED_SETTLEMENT_COMPLETED
                 - PORTABILITY_COMPLETED
                 - REJECTED
-                - ACCEPTED_WITH_CHANGE
                 - CANCELLED
+                - PAYMENT_ISSUE
     ResponsePostPortabilitiesPortabilityIdPayment:
       type: object
       required:
@@ -1495,8 +1474,8 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponsePostPortabilitiesPortabilityIdPayment'
-    ResponseError:
-      description: Erro na requisição.
+    ResponseDefaultError:
+      description: Erro inesperado.
       content:
         application/json; charset=utf-8:
           schema:
