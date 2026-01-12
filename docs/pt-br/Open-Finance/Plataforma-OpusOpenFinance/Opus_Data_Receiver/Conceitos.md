@@ -6,8 +6,14 @@ nav_order: 5
 lang: "pt-br"
 ---
 
-### Produtos e Subprodutos
-No Opus Data Receiver (ODR), os recursos obtidos do Open Finance podem ser entendidos como uma estrutura em forma de árvore. Nessa estrutura, alguns dados dependem de identificadores específicos, como accountId, contractId ou investmentsId, para que suas informações possam ser acessadas. As raízes dessas árvores são chamadas de Produtos, enquanto seus desdobramentos diretos, que representam detalhes ou conjuntos de informações relacionadas, são chamados de Subprodutos.
+# Estrutura de Produtos e Subprodutos
+
+O Opus Data Receiver (ODR) organiza os dados do Open Finance Brasil em uma estrutura semelhante a uma árvore. Nessa árvore:
+
+- Os elementos principais, que representam categorias amplas de informação, são chamados de **Produtos**;
+- Os elementos derivados, que detalham ou complementam um Produto, são chamados de **Subprodutos**.
+
+Um Produto é sempre a raiz da árvore e um Subproduto só existe se o Produto correspondente também existir.
 
 Atualmente, o ODR trabalha com 18 Produtos principais:
 
@@ -32,9 +38,29 @@ Atualmente, o ODR trabalha com 18 Produtos principais:
 | Títulos do Tesouro Direto | InvestmentsTreasureTitles |
 | Operações de Renda Variável | InvestmentsVariableIncome |
 
-Cada Produto representa uma categoria principal de dados do Open Finance Brasil, e cada Subproduto contém informações complementares relacionadas exclusivamente à raiz da qual faz parte. Assim, a atualização de Subprodutos depende diretamente da existência e validade do Produto a que estão vinculados.
+Cada Produto possui seus Subprodutos específicos. Por exemplo, o Produto Conta Corrente possui Subprodutos como Saldos, Transações, Limites e Detalhes.
 
-Periodicamente, o ODR valida todos os Produtos de cada cadastro junto às instituições transmissoras dos dados. Esse processo verifica se cada recurso ainda está ativo e autorizado. Caso um Produto deixe de ser válido, o ODR mantém seus dados previamente armazenados, mas interrompe qualquer atualização automática ou consulta sob demanda relacionada a ele ou aos seus Subprodutos.
+# Relação entre Produtos e Subprodutos
 
-Por exemplo, considere um indivíduo com uma conta de cartão de crédito 1234 no Banco B. Se essa conta for cancelada e o ODR identificar essa condição, somente os Subprodutos vinculados ao Produto “Cartão de Crédito – conta 1234” deixam de ser atualizados. Isso significa que detalhes da conta, limites, transações e extratos referentes à conta 1234 do Banco B não serão mais coletados automaticamente nem retornados nas consultas realizadas via API REST.
+A atualização de um Subproduto depende sempre da existência e validade de seu Produto.
 
+O ODR valida periodicamente a situação de cada Produto diretamente na instituição transmissora dos dados. Essa validação determina se o recurso ainda existe e se o consentimento autoriza sua coleta. Caso um Produto deixe de ser válido, o ODR:
+
+- Mantém os dados já coletados;
+- Interrompe novas atualizações do Produto e de todos os seus Subprodutos;
+- Retorna somente as informações já armazenadas, quando solicitado pelo cliente.
+
+Exemplo:
+
+Se um cartão de crédito de número 1234 do Banco B for cancelado e a transmissora de dados informar ao ODR que o recurso não existe mais, somente os Subprodutos ligados ao Produto “Cartão de Crédito – conta 1234” deixam de ser atualizados. Detalhes, limites, transações e extratos deixam de ser coletados e passam a existir apenas na forma dos dados previamente armazenados (consulta a frio).
+
+# Identificadores no Open Finance
+
+Para acessar Subprodutos, normalmente é necessário informar identificadores como, por exemplo:
+
+- accountId;
+- creditCardAccountId;
+- contractId;
+- investmentsId.
+
+Eles são sempre obtidos a partir da consulta ao Produto, garantindo segurança, rastreabilidade e coerência entre os dados.

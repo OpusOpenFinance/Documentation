@@ -8,13 +8,62 @@ lang: "pt-br"
 
 ## Opus Data Receiver
 
-O Opus Data Receiver (ODR) é um produto projetado para manter, de forma contínua e confiável, os dados de consentimentos e demais informações financeiras provenientes do ecossistema Open Finance Brasil. Seu objetivo principal é assegurar que aplicações dependentes desses dados tenham sempre acesso a informações atualizadas e precisas, respeitando os limites operacionais estabelecidos pelo Open Finance.
+O Opus Data Receiver (ODR) é uma plataforma especializada em receber, organizar e manter atualizados os dados financeiros compartilhados através do Open Finance Brasil. Ele foi criado para resolver um desafio central de quem opera com informações reguladas: como garantir acesso contínuo, confiável e dentro das regras a dados que mudam o tempo todo e dependem de múltiplas instituições financeiras?
 
-Para isso, o ODR opera com dois mecanismos complementares: 
-- Pesquisas periódicas nas instituições (Transmissoras de Dados e Detentoras de Conta);
-- Consultas "a quente", executadas sob demanda no momento da solicitação. 
+### O problema que o ODR resolve
 
-Essa combinação permite que o produto ofereça uma visão detalhada e atualizada da vida financeira de seus clientes, abrangendo contas bancárias, extratos de cartões de crédito, investimentos, empréstimos e outros dados relevantes.
+O ecossistema do Opus Open Finance oferece acesso a uma ampla variedade de dados, mas impõe desafios técnicos importantes:
+
+- Limites rigorosos de chamadas por instituição, produto e cliente final;
+- Dificuldade em controlar quando e como atualizar dados sem ultrapassar esses limites;
+- Latência e indisponibilidade pontual das instituições transmissoras;
+- Complexidade para saber quais recursos ainda são válidos, foram alterados ou deixaram de existir;
+- Custos elevados para manter infraestrutura própria de sincronização e armazenamento;
+
+O resultado: Sem um intermediário especializado, costuma ser instabilidade, gasto desordenado de fichas regulatórias, dados desatualizados e fricção na experiência do usuário final.
+
+O ODR foi criado para eliminar esse problema.
+
+### O que o ODR faz
+
+O ODR funciona como uma camada inteligente entre seu sistema e o Open Finance. Ele:
+
+- Mantém uma cópia organizada e atualizada dos dados autorizados via consentimento;
+- Controla automaticamente limites operacionais, evitando bloqueios por excesso de chamadas;
+- Realiza atualizações periódicas configuráveis por subproduto, respeitando regras regulatórias;
+- Responde rapidamente com dados armazenados, mesmo quando a transmissora está indisponível;
+- Permite consultas sob demanda ("a quente") quando uma atualização imediata é necessária;
+- Lida com toda a complexidade de gestão de consentimentos, validação de recursos e fluxo operacional;
+- Expõe uma API unificada e estável, independentemente da instituição transmissora;
+- Com isso, seus sistemas passam a consumir dados do Open Finance de maneira simples, previsível e confiável.
+
+### O que o ODR não faz
+
+Para evitar expectativas incorretas, é importante entender o que o ODR não se propõe a fazer:
+
+- **Não** cria experiências de usuário final para coleta de consentimentos;
+- **Não** substitui a instituição transmissora — e sim depende das informações fornecidas por ela;
+- **Não** ignora limites operacionais regulatórios e não força atualizações além do permitido;
+- **Não** altera, interpreta ou transforma dados financeiros — e sim os replica e os mantém atualizados;
+- **Não** executa recomendações financeiras, análises de risco ou decisões de crédito;
+- **Não** dispara buscas automáticas infinitas; segue estritamente o calendário configurado pelo cliente.
+
+O foco do ODR é governança, atualização e disponibilidade de dados — não a aplicação de lógica de negócio sobre eles.
+
+### A proposta central
+
+Em essência, o ODR transforma o Open Finance em uma fonte estável, contínua e previsível de dados.
+
+Ele permite que seu sistema dependa dessas informações sem precisar lidar com:
+
+- Limites regulatórios;
+- Sincronização;
+- Tratamentos de erro das transmissoras;
+- Quedas e instabilidades;
+- Lógica de atualização;
+- Organização de produtos e subprodutos.
+
+O ODR cuida de tudo isso para que você cuide da estratégia do seu produto e faça as melhores análises sobre os dados obtidos.
 
 [Conceitos](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/Conceitos.html)
 [Configuração](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Opus_Data_Receiver/Configuracao.html)

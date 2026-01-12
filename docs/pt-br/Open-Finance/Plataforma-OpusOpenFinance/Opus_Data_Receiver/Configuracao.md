@@ -6,13 +6,30 @@ nav_order: 5
 lang: "pt-br"
 ---
 
-### Busca Periódica Automática
+# Introdução à Busca Periódica Automática
 
-O Opus Data Receiver permite que cada cliente defina quais dados deseja manter atualizados e em quais intervalos essas atualizações devem ocorrer. Esse processo é chamado de busca periódica automática.
+A busca periódica automática é o mecanismo que permite ao cliente definir quais dados serão atualizados e com que frequência cada Subproduto será coletado.
 
-Nele, o cliente configura, para cada subproduto do Open Finance, o intervalo em horas que deve disparar uma nova tentativa de atualização. Essa configuração é cadastrada no ODR durante o Setup do cliente, e o produto garante que cada recurso só será atualizado novamente após o intervalo mínimo definido. Isso evita sobrecarga nas instituições transmissoras e ajuda a cumprir limites regulatórios (desde que o intervalo de atualização não ultrapasse os valores pré-definidos).
+Cada Subproduto recebe um intervalo de atualização, em horas. Esse intervalo determina quanto tempo deve passar entre duas tentativas consecutivas de atualização. A lógica garante:
 
-A seguir, estão os subprodutos suportados, acompanhados de seus nomes naturais e dos intervalos de atualização pré-configurados, que refletem a quantidade máxima de atualização respeitando os limites operacionais impostos pela regulação:
+- Cumprimento dos limites regulatórios do Open Finance;
+- Controle de carga sobre transmissoras;
+- Previsibilidade no ciclo de sincronização;
+- Uso eficiente das fichas de consulta.
+
+Essa configuração é feita pelo cliente durante o processo de Setup e permanece ativa enquanto o consentimento estiver disponível para colsultas.
+
+O ODR garante que nenhum Subproduto será atualizado antes do intervalo mínimo definido.
+
+**Exemplo:** O Subproduto Exchanges possui intervalo de 24 horas. Isso significa que, após uma coleta bem-sucedida, o ODR só fará nova tentativa depois de 24 horas.
+
+O intervalo de cada Subproduto já é pré-configurado de acordo com suas limitações operacionais no Open Finance Brasil.
+
+# Referência de Intervalos por Subproduto
+
+A seguir estão os Subprodutos organizados por categoria e seus intervalos padrão.
+
+Esses valores refletem o máximo permitido pelas regras operacionais do Open Finance.
 
 #### Dados de conta:
 
@@ -135,4 +152,12 @@ Por exemplo, o recurso **Contas** (Account) só pode ser consultado até 8 vezes
 - 8 vezes suas contas do Banco B a partir do Banco C.
 - ...
 
-Sempre que o ODR recebe da transmissora um erro indicando que o limite operacional foi atingido, ele suspende automaticamente novas atualizações daquele recurso até o período se renovar. Nesse intervalo, o ODR continua respondendo com os dados mais recentes já armazenados em sua base, garantindo estabilidade para os sistemas que dependem dessas informações sem violar as regras regulatórias.
+Se o limite for atingido, a transmissora retorna um erro operacional.
+
+Quando isso acontece:
+
+- O ODR suspende automaticamente novas atualizações do recurso;
+- Continua retornando dados salvos anteriormente (consulta à frio);
+- Aguarda a renovação do período para retomar as coletas.
+
+Isso garante estabilidade mesmo quando os limites do Open Finance são alcançados.
