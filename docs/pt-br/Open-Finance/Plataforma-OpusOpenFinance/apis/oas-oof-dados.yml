@@ -1,24 +1,26 @@
 openapi: 3.0.3
 info:
-  title: Serviços de Consentimento do modulo de BackOffice
+  title: Consent BackOffice Services
   version: 1.0.0
 security:
   - jwt: []
 tags:
   - name: General
-    description: Serviços da plataforma Opus Open Finance
+    description: opus open banking services
   - name: Consents
-    description: Serviços de consentimento
+    description: Consents opus open banking services
   - name: Payments
-    description: Serviços de pagamentos
+    description: Consents opus open banking services
   - name: Enrollments
-    description: Serviços de vínculo (de dispositivo - para Jornada Sem Redirecionamento)
+    description: Enrollments opus open banking services
+  - name: Portabilities
+    description: Portabilities opus open banking services
 paths:
   /open-banking/oob-consents/v1/consents:
     get:
       tags:
         - General
-      description: Recupera a lista de consentimentos
+      description: Retrieve list of consents
       parameters:
         - name: consentOwner
           in: query
@@ -70,8 +72,14 @@ paths:
           schema:
             $ref: "#/components/schemas/OrderTypeEnum"
         - name: searchKey
-          type: string
+          schema:
+            type: string
           in: query
+        - name: searchKeys
+          schema:
+            type: string
+          in: query
+          description: Lista de chaves de busca separadas por vírgula.
         - name: status
           in: query
           schema:
@@ -132,7 +140,7 @@ paths:
     get:
       tags:
         - General
-      description: Recupera dados do consentimento
+      description: Retrieve consent data
       parameters:
         - name: consentId
           in: path
@@ -160,7 +168,195 @@ paths:
       deprecated: true
       tags:
         - Consents
-      description: Revoga consentimento de pagamento
+      description: Revoke consent deprecated
+      parameters:
+        - name: consentId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: X-Correlation-ID
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestRevokeOobConsent"
+      responses:
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseConsentDetailSchema"
+  /open-banking/oob-consents/consents/v1/consents/{consentId}/payments:
+    get:
+      tags:
+        - Payments
+      description: Retrieve payments of a consent, ordered by payment date desc
+      parameters:
+        - name: consentId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: page
+          in: query
+          schema:
+            format: int32
+            default: 1
+            type: integer
+        - name: page-size
+          in: query
+          schema:
+            format: int32
+            default: 25
+            type: integer
+        - name: X-Correlation-ID
+          in: header
+          schema:
+            type: string
+      responses:
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsePaymentsDetailSchema"
+  /open-banking/oob-consents/consents/v2/active:
+    get:
+      tags:
+        - General
+      description: Get active consents for a given time frame
+      parameters:
+        - name: startDate
+          in: query
+          schema:
+            format: date-time
+            type: string
+            example: 2022-01-30T17:31:28Z
+        - name: endDate
+          in: query
+          schema:
+            format: date-time
+            type: string
+            example: 2022-01-30T18:31:28Z
+        - name: page
+          in: query
+          schema:
+            format: int32
+            default: 1
+            type: integer
+        - name: page-size
+          in: query
+          schema:
+            format: int32
+            default: 25
+            type: integer
+      responses:
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseConsentListSchema"
+  /open-banking/oob-consents/enrollments/v1/enrollments/{enrollmentId}:
+    patch:
+      tags:
+        - Enrollments
+      description: Revogar consentimento de vínculo
+      parameters:
+        - name: enrollmentId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: X-Correlation-ID
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestRevokeOobEnrollmentConsent"
+      responses:
+        default:
+          description: Resposta padrão de erro
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseConsentDetailSchema"
+  /open-banking/oob-consents/enrollments/v1/enrollments/{enrollmentId}/edit:
+    patch:
+      tags:
+      - Consents Opus Open Banking
+      description: Edição de vínculo de consentimento
+      parameters:
+      - name: enrollmentId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UUID'
+      - name: X-Brand-ID
+        in: header
+        required: true
+        schema:
+          type: string
+          nullable: false
+      - name: X-Correlation-ID
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestEditOobEnrollmentConsent'
+      responses:
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseConsentDetailSchema'
+  /open-banking/oob-consents/payments/v1/consents/{consentId}:
+    patch:
+      tags:
+        - Payments
+      description: Revoke payment consent
       parameters:
         - name: consentId
           in: path
@@ -193,7 +389,7 @@ paths:
     patch:
       tags:
         - Consents
-      description: Revoga consentimento de compartilhamento de dados
+      description: Revoke data sharing consent
       parameters:
         - name: consentId
           in: path
@@ -230,7 +426,7 @@ paths:
     get:
       tags:
         - Payments
-      description: Obtém pagamentos do legado dentro de um período
+      description: Get legacy payments generated in a period
       parameters:
         - name: endDate
           in: query
@@ -259,7 +455,7 @@ paths:
     post:
       tags:
         - Payments
-      description: Posta informação sobre mudança de status de pagamento
+      description: Post information about payments status change
       requestBody:
         content:
           application/json:
@@ -274,11 +470,30 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "204":
           description: Notification received successfully
+  /open-banking/oob-consents/v1/resources-notification:
+    post:
+      tags:
+        - Consents
+      description: Informa alteração de recursos não-selecionáveis para um CPF, CNPJ ou SEARCH KEY
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestResourceUpdateNotification"
+      responses:
+        default:
+          description: Erro padrão
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "204":
+          description: Notificação recebida com sucesso
   /open-banking/oob-consents/v1/payments/consents/{consentId}/authorisation:
     post:
       tags:
         - Payments
-      description: Posta autorização de pagamento
+      description: Post payment authorisation
       parameters:
         - name: consentId
           in: path
@@ -312,7 +527,7 @@ paths:
     get:
       tags:
         - Consents
-      description: Recupera lista extendida de consentimentos
+      description: Retrieve extended consent list
       parameters:
         - name: consentId
           in: path
@@ -348,11 +563,131 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseConsentExtendsSchema"
+  /open-banking/oob-consents/consents/v1/consents/{consentId}/search-keys:
+    post:
+      tags:
+        - Consents
+      description: Post multiple search keys to a consent
+      parameters:
+        - name: consentId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: X-Correlation-ID
+          in: header
+          schema:
+            type: string
+        - name: X-Brand-ID
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        "204":
+          description: Search key added successfully
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - Consents
+      description: Check the existence of multiple search keys in a consent
+      parameters:
+        - name: consentId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: X-Correlation-ID
+          in: header
+          schema:
+            type: string
+        - name: X-Brand-ID
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: searchKeys
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          required: true
+      responses:
+        "200":
+          description: Search key deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        searchKey:
+                          type: string
+                        exists:
+                          type: boolean
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - Consents
+      description: Delete multiple search keys in a consent
+      parameters:
+        - name: consentId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: X-Correlation-ID
+          in: header
+          schema:
+            type: string
+        - name: X-Brand-ID
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: searchKeys
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          required: true
+      responses:
+        "204":
+          description: Search key deleted successfully
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /open-banking/oob-consents/consents/v1/consents/{consentId}/search-key/{searchKey}:
     post:
       tags:
         - Consents
-      description: Posta chave de busca no consentimento
+      description: Post search key to consent
       parameters:
         - name: consentId
           in: path
@@ -382,10 +717,55 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - Consents
+      description: Check the existence of a search key in a consent
+      parameters:
+        - name: consentId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: searchKey
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-Correlation-ID
+          in: header
+          schema:
+            type: string
+        - name: X-Brand-ID
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Search key deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      searchKey:
+                        type: string
+                      exists:
+                        type: boolean
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
     delete:
       tags:
         - Consents
-      description: Remove chave de busca de consentimento
+      description: Delete search key to consent
       parameters:
         - name: consentId
           in: path
@@ -419,7 +799,7 @@ paths:
     put:
       tags:
         - Consents
-      description: Insere informações de meta-dados no consentimento
+      description: Put meta-data information to consent
       parameters:
         - name: consentId
           in: path
@@ -452,7 +832,7 @@ paths:
     patch:
       tags:
         - Consents
-      description: Atualiza informações de meta-dados no consentimento
+      description: Patch meta-data information to consent
       parameters:
         - name: consentId
           in: path
@@ -485,7 +865,7 @@ paths:
     delete:
       tags:
         - Consents
-      description: Remove informações de meta-dados do consentimento
+      description: Delete meta-data information to consent
       parameters:
         - name: consentId
           in: path
@@ -513,7 +893,7 @@ paths:
     get:
       tags:
         - Consents
-      description: Obtém informações de mta-dados do consentimento
+      description: Get meta-data information from consent
       parameters:
         - name: consentId
           in: path
@@ -545,24 +925,24 @@ paths:
   /open-banking/oob-consents/automatic-payments/v1/recurring-consents/{recurringConsentId}:
     patch:
       tags:
-      - Consents Opus Open Banking
-      description: Revoga consentimento de pagamento automático
+        - Consents Opus Open Banking
+      description: Revoke automatic payment consent
       parameters:
-      - name: recurringConsentId
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/UUID'
-      - name: X-Brand-ID
-        in: header
-        required: true
-        schema:
-          type: string
-          nullable: false
-      - name: X-Correlation-ID
-        in: header
-        schema:
-          type: string
+        - name: recurringConsentId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UUID'
+        - name: X-Brand-ID
+          in: header
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - name: X-Correlation-ID
+          in: header
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -580,7 +960,108 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseConsentDetailSchema'              
+                $ref: '#/components/schemas/ResponseConsentDetailSchema'
+  /open-banking/oob-consents/v1/portabilities/{portabilityId}/status:
+    patch:
+      tags:
+        - Portabilities
+      summary: Update portability status
+      description: >
+        Updates the status of a portability process
+      parameters:
+        - name: portabilityId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestPortabilityStatusUpdate'
+      responses:
+        '200':
+          description: Portability status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePortabilityStatusUpdate'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /open-banking/oob-consents/v1/webhook/status/{consentId}:
+    get:
+      description: Obter status de envio do webhook para o consentimento
+      tags:
+      - Consents Opus Open Banking
+      parameters:
+      - name: consentId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-Brand-ID
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: X-Correlation-ID
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseToggleWebhook'
+        'default':
+          description: Resposta de erro padrão
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /open-banking/oob-consents/v1/webhook/toggle/{consentId}:
+    patch:
+      description: Ativar/Desativar envio opcional de webhook
+      tags:
+      - Consents Opus Open Banking
+      parameters:
+      - name: consentId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-Brand-ID
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: X-Correlation-ID
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestToggleWebhook'
+            x-zia-agent-param-type: dynamic
+      responses:
+        '204':
+          description: 'No Content'
+        'default':
+          description: Resposta de erro padrão
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
     AccountPaymentTypeEnum:
@@ -602,6 +1083,7 @@ components:
         typeError:
           type: string
     Authorization:
+      deprecated: true
       type: object
       properties:
         personDocumentNumber:
@@ -664,6 +1146,7 @@ components:
           items:
             $ref: "#/components/schemas/Resource"
         authorizations:
+          deprecated: true
           type: array
           items:
             $ref: "#/components/schemas/Authorization"
@@ -707,14 +1190,20 @@ components:
           example: "Guia Seguros"
         enrollmentData:
           $ref: "#/components/schemas/EnrollmentData"
+        linkedConsents:
+          type: array
+          items:
+            $ref: "#/components/schemas/LinkedConsents"
     ConsentHistoryStatus:
       type: object
       properties:
         consentStatus:
           $ref: "#/components/schemas/ConsentAuthorizationStatusEnum"
         authorizationStatus:
+          deprecated: true
           $ref: "#/components/schemas/ConsentAuthorizationStatusEnum"
         authorizerName:
+          deprecated: true
           type: string
         operatorUsername:
           type: string
@@ -764,6 +1253,17 @@ components:
         tppLogo:
           type: string
           example: "http://www.exemplo.com/logo.png"
+        journey:
+          type: object
+          properties:
+            isLinked:
+              type: boolean
+              example: true
+            linkId:
+              type: string
+              example: "urn:amazingbank:9e470cb4-7d3f-4c49-9e20-018e042ae455"
+            status:
+              $ref: "#/components/schemas/ConsentAuthorizationStatusEnum"
     ConsentExtends:
       type: object
       properties:
@@ -1480,7 +1980,292 @@ components:
       type: object
       description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
       oneOf:
+        - $ref: "#/components/schemas/Automatic"
         - $ref: "#/components/schemas/Sweeping"
+    Automatic:
+      type: object
+      required:
+        - automatic
+      properties:
+        automatic:
+          type: object
+          description: Definição da configuração de recorrência para pagamentos automáticos
+          required:
+            - contractId
+            - interval
+            - contractDebtor
+            - isRetryAccepted
+            - useOverdraftLimit
+            - referenceStartDate
+          properties:
+            contractId:
+              type: string
+              pattern: '^[a-zA-Z0-9]{1,35}$'
+              minLength: 1
+              maxLength: 35
+              example: XE00038166201907261559y6j6
+              description: Identificador do contrato de transação
+            fixedAmount:
+              type: string
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              minLength: 4
+              maxLength: 19
+              example: '100000.12'
+              description: |
+                Valor fixo de cobrança, caso preenchido, representa um consentimento para pagamentos de valores fixos, ou não sujeitos a alteração durante a vigência do consentimento. 
+                
+                [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/maximumVariableAmount”
+            maximumVariableAmount:
+              type: string
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              minLength: 4
+              maxLength: 19
+              example: '1000000.12'
+              description: |
+                Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis. 
+                
+                [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
+            interval:
+              type: string
+              enum:
+                - SEMANAL
+                - MENSAL
+                - ANUAL
+                - SEMESTRAL
+                - TRIMESTRAL
+              example: SEMANAL
+              description: |
+                Define a periodicidade permitida para realização de transações
+                - SEMANAL
+                - MENSAL
+                - ANUAL
+                - SEMESTRAL
+                - TRIMESTRAL
+            contractDebtor:
+              $ref: "#/components/schemas/ContractDebtor"
+            firstPayment:
+              $ref: "#/components/schemas/FirstPayment"
+            minimumVariableAmount:
+              type: string
+              pattern: ^((\d{1,16}\.\d{2}))$
+              minLength: 4
+              maxLength: 19
+              example: '100000.12'
+              description: |
+                Valor definido pelo usuário recebedor. 
+                Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização, ele não poderá ser inferior ao valor mínimo (piso) definido pelo usuário recebedor. 
+                Não pode ser preenchido nas autorizações de valor fixo.
+            isRetryAccepted:
+              type: boolean
+              description: Indica se é permitido pelo cliente recebedor fazer tentativas de pagamento (extradia), conforme as regras estabelecidas no arranjo Pix.
+              example: false
+            useOverdraftLimit:
+              type: boolean
+              default: true
+              example: true
+              description: Indica se o usuário pagador autorizou a utilização de limite pré-aprovado (cheque especial) na sua conta para realização de pagamentos, caso o cliente possua o produto.
+            referenceStartDate:
+              type: string
+              format: date
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              description: |
+                Representa a data prevista para a primeira ocorrência de um pagamento associado a recorrência. 
+                Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+              example: '2023-05-21'
+    ContractDebtor:
+      type: object
+      description: Informações sobre o cliente devedor do contrato.
+      required: 
+        - name
+        - document
+      properties:
+        name:
+          type: string
+          pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
+          maxLength: 120
+          example: Policarpo Quaresma
+          description: Em caso de pessoa natural deve ser informado o nome completo do titular devedor do contrato.
+        document:
+          type: object
+          required:
+            - identification
+            - rel
+          properties:
+            identification:
+              type: string
+              maxLength: 14
+              description: Número do documento de identificação oficial do cliente devedor do contrato.
+              example: '11111111111111'
+              pattern: '^(?:\d{11}|\d{14})$'
+            rel:
+              type: string
+              description: Tipo do documento de identificação oficial do cliente devedor do contrato.
+              enum:
+                - CPF
+                - CNPJ
+    FirstPayment:
+      type: object
+      description: |
+        Definições para o primeiro pagamento. É considerado como o pagamento da adesão ao serviço pelo usuário pagador. Para casos em que conta recebedora e conta pagadora pertencem ao mesmo detentor, este deve garantir que a conta de crédito informada pertence ao titular do CNPJ enviado no campo “/data/creditors/cpfCnpj”. A conta de crédito informada no momento do primeiro pagamento deve ser a mesma informada dentro deste objeto. Caso não respeitado, o detentor deve rejeitar o pagamento com o motivo DETALHE_PAGAMENTO_INVALIDO, sincronamente (HTTP 422) ou assincronamente (HTTP 200). 
+      required:
+        - type
+        - date
+        - currency
+        - amount
+        - creditorAccount
+      properties:
+        type:
+          $ref: "#/components/schemas/EnumPaymentType"
+        date:
+          type: string
+          format: date
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-01-01'
+          description: |  
+            Define a data alvo da liquidação do pagamento.
+            O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
+        currency:
+          type: string
+          maxLength: 3
+          pattern: '^([A-Z]{3})$'
+          example: BRL
+          description: |
+            Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.
+            Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
+        amount:
+          type: string
+          minLength: 4
+          maxLength: 19
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          example: '100000.12'
+          description: |
+            Valor da transação com 2 casas decimais.
+        remittanceInformation:
+          type: string
+          maxLength: 140
+          pattern: '[\w\W\s]*'
+          example: 'Pagamento da nota RSTO035-002'
+          description: |
+            Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
+        creditorAccount:
+          $ref: "#/components/schemas/CreditorAccountConsent"
+    CreditorAccountConsent:
+      type: object
+      description: |
+        Recebe os dados de conta do usuário recebedor. 
+      required:
+        - ispb
+        - number
+        - accountType
+      properties:
+        ispb:
+          type: string
+          minLength: 8
+          maxLength: 8
+          pattern: '^[0-9]{8}$'
+          example: '12345678'
+          description: |
+            Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
+        issuer:
+          type: string
+          minLength: 1
+          maxLength: 4
+          pattern: '^[0-9]{1,4}$'
+          example: '1774'
+          description: |
+            Código da Agência emissora da conta sem dígito. 
+            (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, 
+            no exercício de atividades da instituição, não podendo ser móvel ou transitória).
+            
+            [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
+        number:
+          type: string
+          minLength: 1
+          maxLength: 20
+          pattern: '^[0-9]{1,20}$'
+          example: '1234567890'
+          description: |
+            Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir), 
+            se houver valor alfanumérico, este deve ser convertido para 0.
+        accountType:
+          $ref: "#/components/schemas/EnumAccountTypeConsents"
+    EnumAccountTypeConsents:
+      type: string
+      enum:
+        - CACC
+        - SVGS
+        - TRAN
+      example: CACC
+      description: |
+        Tipos de contas usadas para pagamento. 
+        Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, 
+        conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.  
+        Segue descrição de cada valor do ENUM.
+
+        - CACC - Current - Conta Corrente.
+        - SVGS - Savings - Conta de Poupança.
+        - TRAN - TransactingAccount - Conta de Pagamento pré-paga.
+    EnumPaymentType:
+      type: string
+      enum:
+        - PIX
+      example: PIX
+      description: |
+        Este campo define o tipo de pagamento que será iniciado após a autorização do consentimento.
+    EnumRejectionReasonCodeGet:
+      type: string
+      enum:
+        - SALDO_INSUFICIENTE
+        - VALOR_ACIMA_LIMITE
+        - VALOR_INVALIDO
+        - NAO_INFORMADO
+        - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
+        - PAGAMENTO_RECUSADO_DETENTORA
+        - PAGAMENTO_RECUSADO_SPI
+        - CONSENTIMENTO_INVALIDO
+        - FALHA_INFRAESTRUTURA_SPI
+        - FALHA_INFRAESTRUTURA_ICP
+        - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
+        - FALHA_INFRAESTRUTURA_DETENTORA
+        - LIMITE_PERIODO_VALOR_EXCEDIDO
+        - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
+        - TITULARIDADE_INCONSISTENTE
+        - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
+        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
+        - CONSENTIMENTO_REVOGADO
+        - LIMITE_TENTATIVAS_EXCEDIDO
+        - FORA_PRAZO_PERMITIDO
+        - DETALHE_TENTATIVA_INVALIDO
+        - DETALHE_PAGAMENTO_INVALIDO
+      example: SALDO_INSUFICIENTE
+      description: |
+        Código identificador do motivo de rejeição.
+        Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status.
+        - SALDO_INSUFICIENTE
+        - VALOR_ACIMA_LIMITE
+        - VALOR_INVALIDO
+        - NAO_INFORMADO
+        - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
+        - PAGAMENTO_RECUSADO_DETENTORA
+        - PAGAMENTO_RECUSADO_SPI
+        - CONSENTIMENTO_INVALIDO
+        - FALHA_INFRAESTRUTURA_SPI
+        - FALHA_INFRAESTRUTURA_ICP
+        - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
+        - FALHA_INFRAESTRUTURA_DETENTORA
+        - LIMITE_PERIODO_VALOR_EXCEDIDO
+        - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
+        - TITULARIDADE_INCONSISTENTE
+        - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
+        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação
+        - CONSENTIMENTO_REVOGADO
+        - LIMITE_TENTATIVAS_EXCEDIDO
+        - FORA_PRAZO_PERMITIDO
+        - DETALHE_TENTATIVA_INVALIDO
+        - DETALHE_PAGAMENTO_INVALIDO
+
+        [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     Sweeping:
       type: object
       required:
@@ -1604,13 +2389,13 @@ components:
       properties:
         name:
           type: string
-          example: Nome da permissão
+          example: Permission's name
         title:
           type: string
-          example: Nome inteligível para a permissão
+          example: Intelligible name for the permission
         description:
           type: string
-          example: Descrição do que essa permissão permite
+          example: Description for what this permission allows
     RequestRevokeOobConsent:
       required:
         - data
@@ -1621,7 +2406,7 @@ components:
             - $ref: "#/components/schemas/RevokeConsentData"
             - nullable: false
         applicationName:
-          description: Nome da aplicação cliente
+          description: Client application name
           type: string
     RequestRevokeOobPaymentConsent:
       required:
@@ -1633,7 +2418,7 @@ components:
             - $ref: "#/components/schemas/RevokePaymentConsentData"
             - nullable: false
         applicationName:
-          description: Nome da aplicação cliente
+          description: Client application name
           type: string
     RequestRevokeOobPaymentPayment:
       required:
@@ -1644,7 +2429,7 @@ components:
           allOf:
             - $ref: "#/components/schemas/RevokePaymentPaymentData"
         applicationName:
-          description: Nome da aplicação cliente
+          description: Client application name
           type: string
     RequestPaymentConsentAuthorisation:
       required:
@@ -1662,13 +2447,50 @@ components:
         data:
           allOf:
             - $ref: "#/components/schemas/PaymentStatusChangeData"
-            - description: Dados de notificação de mudança de status de pagamento
+            - description: Payment status change notification data
               nullable: false
+    RequestResourceUpdateNotification:
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          allOf:
+            - $ref: "#/components/schemas/ResourceUpdateData"
+            - description: Dados do recurso não-selecionável atualizado
+              nullable: false
+    ResourceUpdateData:
+        required:
+          - key
+          - type
+        type: object
+        properties:
+          key:
+            type: string
+            example: 11111678912329
+            nullable: false
+            description: Identificador do dono do recurso atualizado. Pode ser um CPF, CNPJ ou um SEARCH KEY
+          type:
+            $ref: "#/components/schemas/UnselectableResourceTypeEnum"
+            description: Tipo do recurso não-selecionável que foi alterado
+    UnselectableResourceTypeEnum:
+      enum:
+        - LOAN
+        - FINANCING
+        - UNARRANGED_ACCOUNT_OVERDRAFT
+        - INVOICE_FINANCING
+        - BANK_FIXED_INCOME
+        - CREDIT_FIXED_INCOME
+        - VARIABLE_INCOME
+        - TREASURE_TITLE
+        - FUND
+        - EXCHANGE
+      type: string
     PaymentIdLegacy:
       required:
         - key
       type: object
-      description: Par chave/valor para o id do pagamento encontrado no sistema de retaguarda
+      description: Key/Value pair for the payment id found on the legacy system
       properties:
         key:
           type: string
@@ -1712,6 +2534,12 @@ components:
         - UNARRANGED_ACCOUNT_OVERDRAFT
         - INVOICE_FINANCING
         - PAYMENT
+        - BANK_FIXED_INCOME
+        - CREDIT_FIXED_INCOME
+        - VARIABLE_INCOME
+        - TREASURE_TITLE
+        - FUND
+        - EXCHANGE
       type: string
     ResponseConsentDetailSchema:
       type: object
@@ -1762,7 +2590,7 @@ components:
         - $ref: "#/components/schemas/RejectionPaymentOob"
         - $ref: "#/components/schemas/RejectionEnrollment"
     Revocation:
-      description: Informações sobre a revogação de consentimento de compartilhamento de dados
+      description: Data Sharing consent revocation information
       required:
         - revokedBy
         - reason
@@ -1780,7 +2608,7 @@ components:
             - $ref: "#/components/schemas/RevocationReason"
             - nullable: false
     Rejection:
-      description: Informação sobre rejeição de consentimento de compartilhamento de dados
+      description: Data Sharing consent rejection information
       required:
         - reason
         - rejectedBy
@@ -2052,7 +2880,8 @@ components:
         ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
       example: "2020-07-21T08:30:00Z"
       description: >
-        Data e hora da última atualização da iniciação de pagamento.
+        Data e hora da última atualização da iniciação de
+        pagamento.
         Uma string com data e hora conforme especificação
         RFC-3339,sempre com a utilização de timezone UTC(UTC time format).
     RevokeConsentData:
@@ -2078,7 +2907,7 @@ components:
       type: object
       properties:
         legacyId:
-          description: Id de pagamento do sistema de retaguarda
+          description: Payment legacy id
           type: array
           items:
             $ref: "#/components/schemas/PaymentIdLegacy"
@@ -2149,7 +2978,9 @@ components:
       type: object
       properties:
         externalId:
-          description: O consentId é o identificador único do consentimento e deve ser um URN - Uniform Resource Name
+          description:
+            The consentId is the consent's unique identifier and must be
+            a URN - Uniform Resource Name
           type: string
           example: urn:amazingbank:899dd8b2-34d1-4c75-b8de-f0ffa51ca720
         personDocumentType:
@@ -2188,7 +3019,7 @@ components:
                 - $ref: "#/components/schemas/Rejection"
                 - nullable: false
         applicationName:
-          description: Nome da aplicação do cliente
+          description: Client application name
           type: string
     RevokedByEnum:
       enum:
@@ -2261,6 +3092,14 @@ components:
               minimum: 2
               maximum: 60
               example: 3
+            scheduleDates:
+              type: array
+              items:
+                type: string
+                format: date
+                pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+                maxLength: 10
+                example: "2023-08-23"
     ScheduleWeekly:
       type: object
       required:
@@ -2299,6 +3138,14 @@ components:
               minimum: 2
               maximum: 60
               example: 10
+            scheduleDates:
+              type: array
+              items:
+                type: string
+                format: date
+                pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+                maxLength: 10
+                example: "2023-08-23"
     ScheduleMonthly:
       type: object
       required:
@@ -2331,6 +3178,14 @@ components:
               minimum: 2
               maximum: 24
               example: 24
+            scheduleDates:
+              type: array
+              items:
+                type: string
+                format: date
+                pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+                maxLength: 10
+                example: "2023-08-23"
     ScheduleCustom:
       type: object
       required:
@@ -2365,6 +3220,14 @@ components:
               pattern: '[\w\W\s]*'
               maxLength: 255
               example: Todas quintas e domingos por 6 meses
+            scheduleDates:
+              type: array
+              items:
+                type: string
+                format: date
+                pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+                maxLength: 10
+                example: "2023-08-23"
     StatusEnum:
       enum:
         - AUTHORISED
@@ -2427,6 +3290,41 @@ components:
           format: double
           type: number
           example: 100.00
+    LinkedConsents:
+      type: object
+      properties:
+        externalId:
+          type: string
+          example: urn:oob-bank:2f710909-4ccd-4998-8679-3d8de00e5ccf
+        creationDateTime:
+          format: date-time
+          type: string
+          example: 2023-08-15T10:30:00Z
+        status:
+          $ref: "#/components/schemas/StatusEnum"
+        statusUpdateDateTime:
+          format: date-time
+          type: string
+          example: 2023-08-15T10:30:00Z
+        permissions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Permission"
+        expirationDateTime:
+          format: date-time
+          type: string
+          example: 2024-08-15T10:30:00Z
+        rejection:
+          $ref: "#/components/schemas/Rejection"
+        journey:
+          type: object
+          properties:
+            isLinked: 
+              type: boolean
+              example: true
+            linkId:
+              type: string
+              example: urn:amazingbank:9e470cb4-7d3f-4c49-9e20-018e042ae455
     PaymentManualRiskSignal:
       type: object
       properties:
@@ -2603,9 +3501,11 @@ components:
       type: object
       properties:
         maximumVariableAmount:
-          description: Definição da configuração de recorrência para pagamentos automáticos.
+          description: Definição da configuração de recorrência para pagamentos automáticos, se não enviado
+            será considerado como indefinido (sem limite).
           maxLength: 19
           minLength: 4
+          nullable: true
           type: string
           example: "1000000.12"
         useOverdraftLimit:
@@ -2613,6 +3513,283 @@ components:
             cheque especial.
           type: boolean
           example: true
+    RequestPortabilityStatusUpdate:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+            - status
+          properties:
+            status:
+              $ref: "#/components/schemas/PortabilityStatus"
+            statusReason:
+              type: object
+              required:
+                - reasonType
+              properties:
+                reasonType:
+                    description: |
+                      Motivo de recusa do pedido de portabilidade, onde:
+                      
+                      `CANCELADO_PELO_CLIENTE` - Cliente desiste do pedido da portabilidade 
+                      
+                      `SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE` - Saldo devedor atualizado divergente (superior a 15%) do informado inicialmente 
+                      
+                      `POLITICA_DE_CREDITO` - Proponente desiste da oferta ao cliente por políticas internas 
+                      
+                      `RETENCAO_DO_CLIENTE` - Cliente aceitou contraproposta da instituição credora (dentro do prazo)
+                      
+                      `CONTRATO_JA_LIQUIDADO` - Contrato liquidado pelo cliente. 
+                      
+                      `DIVERGENCIA_DE_PAGAMENTO_EFETUADO` - Proponente realizou a liquidação com valor divergente 
+
+                      `DECURSO_DO_PRAZO_PARA_PAGAMENTO` - Proponente realizou a liquidação fora do prazo 
+                      
+                      `PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO` - Proponente não realizou a liquidação do contrato 
+                      
+                      `PORTABILIDADE_EM_ANDAMENTO` - Posteriormente à efetivação do pedido de portabilidade, a IF credora identificou que o cliente já possui outro pedido de portabilidade em andamento para o mesmo contrato. 
+                      
+                      `CLIENTE_COM_ACAO_JUDICIAL` - Possui ação judicial 
+
+                      `MODALIDADE_DA_OPERACAO_INCOMPATIVEL` - Modalidade divergente da indicada pela instituição proponente
+
+                      `OUTROS` - Motivo da rejeição não se encaixa nas opções disponíveis
+                    type: string
+                    enum:
+                      - CANCELADO_PELO_CLIENTE
+                      - SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE
+                      - POLITICA_DE_CREDITO
+                      - RETENCAO_DO_CLIENTE
+                      - CONTRATO_JA_LIQUIDADO
+                      - DIVERGENCIA_DE_PAGAMENTO_EFETUADO
+                      - DECURSO_DO_PRAZO_PARA_PAGAMENTO
+                      - PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO
+                      - PORTABILIDADE_EM_ANDAMENTO
+                      - CLIENTE_COM_ACAO_JUDICIAL
+                      - MODALIDADE_DA_OPERACAO_INCOMPATIVEL
+                      - OUTROS
+                reasonTypeAdditionalInfo: 
+                  description: |
+                    Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito.
+                    Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance 
+                    para discussão e mapeamento em futuras versões.
+
+                    [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `reasonType` for igual `OUTROS`
+                digitalSignatureProof:
+                    type: object
+                    required:
+                      - documentId
+                      - signatureDateTime
+                    description: |
+                      Comprovante de assinatura da contraproposta
+                      
+                      [RESTRIÇÃO] Objeto de preenchimento obrigatório quando campo `reasonType` for igual a `RETENCAO_DO_CLIENTE`
+                    properties:
+                      documentId:
+                        type: string
+                        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+                        maxLength: 100
+                        minLength: 1
+                        example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
+                        description: "Código identificador do Documento assinado na instituição proponente."
+                      signatureDateTime:
+                        type: string
+                        maxLength: 20
+                        pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+                        example: "2020-07-21T08:30:00Z"
+                        description: |
+                          Data e hora em que o contrato foi assinado pelo cliente  no canal digital da Instituição Proponente
+                paymentIssueDetail:
+                    type: string
+                    description: |
+                      Detalhes da inconsistência encontrada pela Instituição Credora na etapa de validação da liquidação do pedido de portabilidade de crédito. Devem ser mensagens claras, detalhadas, para compreensão entre Proponente e Credora, principalmente em casos que demandam ação por uma das partes.
+                      
+                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `status` for igual `PAYMENT_ISSUE`
+            rejection:
+                type: object
+                description: |
+                  Objeto contendo detalhes do cancelamento do pedido de portabilidade de crédito junto a Instituição Credora.
+
+                  [RESTRIÇÃO] Campo de preenchimento obrigatório quando `status` for igual a `REJECTED` ou `CANCELLED`
+                required:
+                  - rejectedBy
+                  - reason
+                properties:
+                  rejectedBy:
+                    type: string
+                    description: |
+                      Informar usuário responsável pela rejeição da proposta, onde:
+                      PROPONENTE - Indica que o pedido de portabilidade de crédito foi rejeitado pela proponente, seja porque a
+                      proponente rejeitou a liquidação que excedeu em 15% o valor do contrato original, entre outras possibilidades.
+                      USUARIO - Indica que o cliente cancelou o pedido de portabilidade de crédito.
+                      CREDORA- Indica que a Instituição Credora cancelou o contrato por retenção do cliente ou outros motivos
+                      conforme motivo de recusa.
+                    example: PROPONENTE
+                    enum:
+                      - PROPONENTE
+                      - USUARIO
+                      - CREDORA
+                  reason:
+                    type: object
+                    description: Motivo de recusa do pedido de portabilidade de crédito.
+                    required:
+                      - type
+                    properties:
+                      type:
+                        type: string
+                        description: |
+                          Motivo de recusa do pedido de portabilidade, onde:
+                          CANCELADO_PELO_CLIENTE - Cliente desiste do pedido da portabilidade;   
+                          SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE - Saldo devedor atualizado divergente (superior a 15%) do informado inicialmente;   
+                          POLITICA_DE_CREDITO - Proponente desiste da oferta ao cliente por políticas internas;   
+                          RETENCAO_DO_CLIENTE - Cliente aceitou contraproposta da instituição credora (dentro do prazo);   
+                          CONTRATO_JA_LIQUIDADO - Contrato liquidado pelo cliente;   
+                          DIVERGENCIA_DE_PAGAMENTO_EFETUADO - Proponente realizou a liquidação com valor divergente;   
+                          DECURSO_DO_PRAZO_PARA_PAGAMENTO - Proponente realizou a liquidação fora do prazo;   
+                          PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO - Proponente não realizou a liquidação da Portabilidade;   
+                          PORTABILIDADE_EM_ANDAMENTO - Posteriormente à efetivação do pedido de portabilidade, a IF credora identificou que o cliente já possui outro pedido de portabilidade em andamento para o mesmo contrato;   
+                          CLIENTE_COM_ACAO_JUDICIAL - Possui ação judicial;   
+                          MODALIDADE_DA_OPERACAO_INCOMPATIVEL - Modalidade divergente da indicada pela instituição proponente;  
+                          OUTROS - Motivo da rejeição não se encaixa nas opções disponíveis.  
+                        enum:
+                        - CANCELADO_PELO_CLIENTE
+                        - SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE
+                        - POLITICA_DE_CREDITO
+                        - RETENCAO_DO_CLIENTE
+                        - CONTRATO_JA_LIQUIDADO
+                        - DIVERGENCIA_DE_PAGAMENTO_EFETUADO
+                        - DECURSO_DO_PRAZO_PARA_PAGAMENTO 
+                        - PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO
+                        - PORTABILIDADE_EM_ANDAMENTO
+                        - CLIENTE_COM_ACAO_JUDICIAL
+                        - MODALIDADE_DA_OPERACAO_INCOMPATIVEL
+                        - OUTROS
+                        example: CANCELADO_PELO_CLIENTE
+                      typeAdditionalInfo:
+                        type: string
+                        description: |
+                          Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito. 
+                          Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance para discussão e mapeamento em futuras versões.
+                          
+                          [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo type for igual a OUTROS.
+                        maxLength: 144
+                        pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                        example: Informações Adicionais
+            receipt:
+                type: object
+                description: |
+                  Objeto contendo o recibo de quitação do contrato original de empréstimo após finalizado o
+                  pedido de portabilidade de crédito com sucesso junto a Instituição Credora.
+
+                  [RESTRIÇÃO] Campo de preenchimento obrigatório quando `status` for igual a `PORTABILITY_COMPLETED`
+                required:
+                  - settlementDateTime
+                  - settlementAmount
+                  - transactionId
+                properties:
+                  settlementDateTime:
+                    type: string
+                    description: Data e hora em que a instituição credora realizou a quitação do contrato de empréstimo.
+                    maxLength: 20
+                    minLength: 20
+                    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+                    example: '2020-07-21T08:30:00Z'
+                  settlementAmount:
+                    type: object
+                    minItems: 1
+                    description: Objeto para representar o valor pago para liquidação do contrato de empréstimo.
+                    required:
+                      - amount
+                      - currency
+                    properties:
+                      amount:
+                        type: string
+                        format: double
+                        maxLength: 20
+                        minLength: 4
+                        pattern: '^\d{1,15}\.\d{2,4}$'
+                        example: '1000.0400'
+                        description: Valor pago para liquidação do contrato de empréstimo.
+                      currency:
+                        type: string
+                        maxLength: 3
+                        minLength: 3
+                        pattern: '^(\w{3}){1}$'
+                        example: 'BRL'
+                        description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+                  transactionId:
+                    type: string
+                    description: Identificador da transação utilizado para liquidar o contrato de empréstimo. No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Número de Controle da STR).
+                    maxLength: 20
+                    minLength: 1
+                    pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,20}$'
+                    example: 'STR20181108000000013'
+    ResponsePortabilityStatusUpdate:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+            - status
+            - portabilityId
+          properties:
+            portabilityId:
+              type: string
+              description: Identificador do pedido de portabilidade
+              format: uuid
+              example: 54d5348c-1a3f-4ff4-a8a8-d0724fb806c6
+            status:
+              $ref: "#/components/schemas/PortabilityStatus"
+    PortabilityStatus:
+      type: string
+      description: |
+        Informação sobre o status de um pedido de portabilidade de crédito, onde:
+        
+        - `RECEIVED`: Estado inicial. Indica que o pedido de portabilidade foi solicitado junto a instituição credora. O pedido deve permanecer neste estado até que o próximo dia útil (D+1) aonde começará a contar o prazo de 3 dias úteis para a etapa de contraproposta e o pedido de portabilidade deverá ser movido para PENDING
+        - `PENDING`: Indica que o pedido de portabilidade de crédito está na fase de contraproposta, onde a instituição credora poderá enviar uma contraproposta ou não para o cliente por qualquer canal (email, telefone, etc.) porém o aceite só deverá ser valido se o cliente aprovar no canal digital da instituição credora
+        - `ACCEPTED_SETTLEMENT_IN_PROCESS`: Indica que a contraproposta não foi aceita pelo cliente e a instituição proponente terá que quitar o valor do contrato no mesmo dia em que o estado foi ativado
+        - `ACCEPTED_SETTLEMENT_COMPLETED`: Indica que a instituição proponente já liquidou o contrato e comunicou a respeito a credora que está validando os dados do contratos bem como valores recebidos para a quitação do mesmo (nesta etapa a instituição credora tem 2 dias úteis para fornecer a confirmação e o recibo de quitação do contrato de empréstimo)
+        - `PORTABILITY_COMPLETED`: Indica que o pedido de portabilidade foi concluído com sucesso
+        - `REJECTED`: Indica que o pedido de portabilidade de crédito foi rejeitado, seja porque o cliente aceitou a contraproposta, ou porque a proponente rejeitou a liquidação que excedeu em 15% o valor do contrato original, entre outras possibilidades
+        - `CANCELLED`: Indica que o cliente cancelou o pedido de portabilidade de crédito
+        - `PAYMENT_ISSUE`: Indica que a Instituição Credora encontrou alguma inconsistência na liquidação efetuada e que a Instituição Proponente deverá realizar ajustes conforme sugerido pela Instituição Credora para solucionar a pendencia antes do cancelamento do pedido de portabilidade de crédito
+      enum:
+        - RECEIVED
+        - PENDING
+        - ACCEPTED_SETTLEMENT_IN_PROCESS
+        - ACCEPTED_SETTLEMENT_COMPLETED
+        - PORTABILITY_COMPLETED
+        - REJECTED
+        - CANCELLED
+        - PAYMENT_ISSUE
+    RequestToggleWebhook:
+      type: object
+      properties:
+        active:
+          type: boolean
+      required:
+      - active
+    ResponseToggleWebhook:
+      type: object
+      properties:
+        active:
+          type: boolean
+    RequestEditOobEnrollmentConsent:
+      type: object
+      properties:
+        expirationDateTime:
+          format: date-time
+          type: string
+          example: 2023-05-07T11:50:02Z
+        dailyLimit:
+          description: Limite diário para o consentimento
+          type: string
+          example: "1000.00"
+        transactionLimit:
+          description: Limite por transação para o consentimento
+          type: string
+          example: "1000.00"
   securitySchemes:
     jwt:
       type: http
