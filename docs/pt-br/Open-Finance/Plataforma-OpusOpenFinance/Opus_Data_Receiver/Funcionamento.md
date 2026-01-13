@@ -86,7 +86,7 @@ O ODR opera dois tipos de busca: **A Frio** e **A Quente**.
 
 ## Busca a Frio
 
-Busca a Frio significa buscar somente nos dados já armazenados no ODR. Ela existe para cenários em que o cliente só deseja recuperar os dados mais recentes já salvos, sem precisar atualizar nada.
+Busca a Frio significa buscar somente nos dados já armazenados no ODR. Ela existe para cenários em que o cliente só deseja recuperar os dados mais recentes já salvos, sem precisar atualizar nada. É o modelo de buscas padrão do produto.
 
 Vantagens:
 
@@ -129,7 +129,7 @@ Por isso, é importante calibrar bem os intervalos das buscas periódicas autom�
 
 O ODR recomenda:
 
-- Reduzir os intervalos de atualização automática quando não houver necessidade de sincronização contínua;
+- Aumentar os intervalos de atualização automática quando não houver necessidade de sincronização contínua;
 - Reservar fichas mensais para buscas a quente, especialmente em recursos críticos para o negócio;
 - Usar buscas a frio sempre que dados atualizados recentemente já estiverem na base;
 - Configurar intervalos distintos por subproduto, priorizando apenas os dados realmente sensíveis ao tempo.

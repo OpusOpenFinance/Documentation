@@ -12,24 +12,20 @@ A busca periódica automática é o mecanismo que permite ao cliente definir qua
 
 Cada Subproduto recebe um intervalo de atualização, em horas. Esse intervalo determina quanto tempo deve passar entre duas tentativas consecutivas de atualização. A lógica garante:
 
-- Cumprimento dos limites regulatórios do Open Finance;
+- Cumprimento dos limites regulatórios do Open Finance (uma vez mantidos os intervalos pré-configurados);
 - Controle de carga sobre transmissoras;
 - Previsibilidade no ciclo de sincronização;
 - Uso eficiente das fichas de consulta.
 
-Essa configuração é feita pelo cliente durante o processo de Setup e permanece ativa enquanto o consentimento estiver disponível para colsultas.
+O intervalo de cada Subproduto é pré-configurado de acordo com suas limitações operacionais no Open Finance Brasil. O cliente pode alterar esses valores de acordo com sua necessidade, porém o produto não valida o cumprimento dos limites operacionais, responsabilidade que fica a cargo de quem altera essa configuração.
 
-O ODR garante que nenhum Subproduto será atualizado antes do intervalo mínimo definido.
-
-**Exemplo:** O Subproduto Exchanges possui intervalo de 24 horas. Isso significa que, após uma coleta bem-sucedida, o ODR só fará nova tentativa depois de 24 horas.
-
-O intervalo de cada Subproduto já é pré-configurado de acordo com suas limitações operacionais no Open Finance Brasil.
+O ODR garante que nenhum Subproduto será atualizado antes do intervalo mínimo definido. **Exemplo:** O Subproduto Exchanges possui intervalo de 24 horas. Isso significa que, após uma coleta bem-sucedida, o ODR só fará nova tentativa depois de 24 horas.
 
 # Referência de Intervalos por Subproduto
 
 A seguir estão os Subprodutos organizados por categoria e seus intervalos padrão.
 
-Esses valores refletem o máximo permitido pelas regras operacionais do Open Finance.
+Esses valores refletem o máximo permitido pelas regras operacionais do [Open Finance](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17957025/Refer+ncia) em 01/12/2025.
 
 #### Dados de conta:
 

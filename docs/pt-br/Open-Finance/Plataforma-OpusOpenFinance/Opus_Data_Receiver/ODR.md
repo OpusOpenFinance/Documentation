@@ -30,7 +30,7 @@ O ODR funciona como uma camada inteligente entre seu sistema e o Open Finance. E
 
 - Mantém uma cópia organizada e atualizada dos dados autorizados via consentimento;
 - Controla automaticamente limites operacionais, evitando bloqueios por excesso de chamadas;
-- Realiza atualizações periódicas configuráveis por subproduto, respeitando regras regulatórias;
+- Realiza atualizações periódicas configuráveis por subproduto, respeitando regras regulatórias (uma vez mantidos os intervalos pré-configurada);
 - Responde rapidamente com dados armazenados, mesmo quando a transmissora está indisponível;
 - Permite consultas sob demanda ("a quente") quando uma atualização imediata é necessária;
 - Lida com toda a complexidade de gestão de consentimentos, validação de recursos e fluxo operacional;

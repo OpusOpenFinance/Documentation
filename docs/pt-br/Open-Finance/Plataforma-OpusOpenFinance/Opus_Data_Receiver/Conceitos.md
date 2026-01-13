@@ -56,7 +56,7 @@ Se um cartão de crédito de número 1234 do Banco B for cancelado e a transmiss
 
 # Identificadores no Open Finance
 
-Para acessar Subprodutos, normalmente é necessário informar identificadores como, por exemplo:
+Para acessar Subprodutos, é necessário informar identificadores como, por exemplo:
 
 - accountId;
 - creditCardAccountId;
@@ -64,3 +64,15 @@ Para acessar Subprodutos, normalmente é necessário informar identificadores co
 - investmentsId.
 
 Eles são sempre obtidos a partir da consulta ao Produto, garantindo segurança, rastreabilidade e coerência entre os dados.
+
+# Core e Scheduler
+
+O ODR é estruturado em dois componentes que trabalham de forma integrada para garantir a coleta, atualização e disponibilização dos dados do Open Finance: o Core e o Scheduler. Cada um possui responsabilidades distintas e complementares, assegurando desempenho, consistência e conformidade em todas as etapas do processo.
+
+## Core
+
+Componente central do ODR responsável por executar o processamento de dados e operar como o motor do sistema. É o Core que realiza as buscas nas transmissoras, orquestra o fluxo de coleta, aplica regras internas de consistência e disponibiliza os dados para consulta via API. Ele também gerencia o acesso à base interna do ODR, garantindo desempenho, integridade e rastreabilidade das informações compartilhadas.
+
+## Scheduler
+
+Módulo que administra as políticas de atualização e coordena quando cada Produto e Subproduto será coletado. O Scheduler interpreta permissões, intervalos e estados dos recursos, atuando na janela configurada para execução das rotinas de atualização. Ele assegura que as coletas ocorram de forma eficiente, respeitando regras de consentimento e configurações específicas de cada Setup.
