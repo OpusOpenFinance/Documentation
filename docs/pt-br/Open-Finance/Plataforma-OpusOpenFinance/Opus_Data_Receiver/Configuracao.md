@@ -8,18 +8,18 @@ lang: "pt-br"
 
 # Introdução à Busca Periódica Automática
 
-A busca periódica automática é o mecanismo que permite ao cliente definir quais dados serão atualizados e com que frequência cada Subproduto será coletado.
+A busca periódica automática é o mecanismo que permite ao cliente definir quais dados serão atualizados e com que frequência cada Entidade (Produto e/ou Subproduto) será coletado.
 
-Cada Subproduto recebe um intervalo de atualização, em horas. Esse intervalo determina quanto tempo deve passar entre duas tentativas consecutivas de atualização. A lógica garante:
+Cada Entidade recebe um intervalo de atualização, em horas. Esse intervalo determina quanto tempo deve passar entre duas tentativas consecutivas de atualização. A lógica garante:
 
-- Cumprimento dos limites regulatórios do Open Finance (uma vez mantidos os intervalos pré-configurados);
-- Controle de carga sobre transmissoras;
+- Cumprimento dos limites regulatórios do Open Finance (uma vez mantidos os intervalos configurados por padrão);
+- Controle de carga sobre Transmissoras;
 - Previsibilidade no ciclo de sincronização;
 - Uso eficiente das fichas de consulta.
 
-O intervalo de cada Subproduto é pré-configurado de acordo com suas limitações operacionais no Open Finance Brasil. O cliente pode alterar esses valores de acordo com sua necessidade, porém o produto não valida o cumprimento dos limites operacionais, responsabilidade que fica a cargo de quem altera essa configuração.
+O intervalo de cada Entidade é configurado inicialmente pelo ODR de acordo com as limitações operacionais no Open Finance Brasil. O cliente pode alterar esses valores de acordo com sua necessidade, porém o produto não valida o cumprimento dos limites operacionais, **responsabilidade que fica a cargo de quem altera essa configuração**.
 
-O ODR garante que nenhum Subproduto será atualizado antes do intervalo mínimo definido. **Exemplo:** O Subproduto Exchanges possui intervalo de 24 horas. Isso significa que, após uma coleta bem-sucedida, o ODR só fará nova tentativa depois de 24 horas.
+O ODR garante que nenhuma Entidade será atualizada antes do intervalo mínimo definido. **Exemplo:** A Entidade Exchanges possui intervalo de 24 horas. Isso significa que, após uma coleta bem-sucedida, o ODR só fará nova tentativa depois de 24 horas.
 
 # Referência de Intervalos por Subproduto
 
@@ -135,25 +135,25 @@ Esses valores refletem o máximo permitido pelas regras operacionais do [Open Fi
 | Detalhes de Câmbio | ExchangesDetails                                        | 90                                  |
 | Eventos de Câmbio | ExchangesEvents                                          | 24                                  |
 
-Considerando os valores das tabelas e tomando o recurso de Câmbio como exemplo: Seu intervalo de atualização é de 24 horas. Após a execução de uma chamada à entidade Exchanges, o ODR somente tentará nova atualização após 24 horas.
+Considerando os valores das tabelas e tomando o recurso de Câmbio como exemplo: Seu intervalo de atualização é de 24 horas. Após a execução de uma chamada à Entidade Exchanges, o ODR somente tentará nova atualização após 24 horas.
 
 ### Limites Operacionais
 
-Cada entidade do Open Finance possui limites regulatórios de quantidade de chamadas permitidas em um período específico. Esses limites são regulados com base tupla **instituição transmissora x produto x cliente final**. 
+Cada Entidade do Open Finance possui limites regulatórios de quantidade de chamadas permitidas em um período específico. Esses limites são regulados com base na tupla **Instituição Transmissora x Produto x Cliente final**. 
 
-Por exemplo, o recurso **Contas** (Account) só pode ser consultado até 8 vezes por mês para um mesmo cliente, entre uma mesma receptora e transmissora. Assim, um indivíduo com contas nos bancos A, B e C pode consultar:
+Por exemplo, o recurso **Contas** (Account) só pode ser consultado até 8 vezes por mês para um mesmo cliente, entre uma mesma Receptora e Transmissora. Assim, um indivíduo com contas nos bancos A, B e C pode consultar:
 
 - 8 vezes suas contas do Banco A a partir do Banco B;
 - 8 vezes suas contas do Banco A a partir do Banco C;
 - 8 vezes suas contas do Banco B a partir do Banco C.
 - ...
 
-Se o limite for atingido, a transmissora retorna um erro operacional.
+Se o limite for atingido, a Transmissora retorna um erro operacional.
 
 Quando isso acontece:
 
 - O ODR suspende automaticamente novas atualizações do recurso;
-- Continua retornando dados salvos anteriormente (consulta à frio);
+- Continua retornando dados salvos anteriormente (*consulta a frio*);
 - Aguarda a renovação do período para retomar as coletas.
 
 Isso garante estabilidade mesmo quando os limites do Open Finance são alcançados.

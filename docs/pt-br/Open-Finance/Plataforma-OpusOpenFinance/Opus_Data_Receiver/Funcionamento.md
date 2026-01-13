@@ -11,7 +11,7 @@ lang: "pt-br"
 O Opus Data Receiver funciona por meio de um ciclo contendo três componentes principais:
 
 1. Cadastro e criação do consentimento;
-2. Coleta e atualização dos Produtos e Subprodutos;
+2. Coleta e atualização das Entidades (Produtos e Subprodutos);
 3. Disponibilização dos dados por meio de buscas e consultas.
 
 # Fluxo de Cadastro
@@ -21,13 +21,13 @@ Para que o ODR possa acessar os dados de um indivíduo ou empresa no Open Financ
 O fluxo funciona da seguinte forma:
 
 1. **O cliente inicia o cadastro:** O cliente informa ao ODR quem é o titular dos dados (pessoa física ou jurídica) e quais informações deseja acessar (permissões). Esse processo segue o padrão do Open Finance Brasil;
-2. **O ODR cria o consentimento:** Após receber a solicitação, o ODR envia o pedido de consentimento à instituição financeira onde os dados estão armazenados;
+2. **O ODR cria o consentimento:** Após receber a solicitação, o ODR envia o pedido de consentimento à Intituição Transmissora onde os dados estão armazenados;
 3. **O consentimento entra em estado *Aguardando Autorização*:** Neste momento, o cadastro ainda não está ativo. O status indica apenas que o pedido foi criado com sucesso, mas ainda depende da ação do usuário final;
-4. **O usuário autoriza o consentimento diretamente na instituição financeira:** O titular dos dados (pessoa física ou jurídica) acessa o ambiente do banco transmissor e autoriza o compartilhamento;
+4. **O usuário autoriza o consentimento diretamente na instituição financeira:** O titular dos dados (pessoa física ou jurídica) acessa o ambiente da Intituição Transmissora de Dados e autoriza o compartilhamento;
 5. **O ODR detecta automaticamente a autorização:** Assim que o consentimento é aprovado, o ODR atualiza o status para *Autorizado*;
 6. **Primeira atualização automática dos dados:** Com o consentimento autorizado, o ODR realiza a primeira busca completa de dados para todos os produtos permitidos.
 
-Cada produto passa então a seguir o calendário de atualizações definido na configuração de buscas periódicas automáticas.
+Cada Entidade passa então a seguir o calendário de atualizações definido na configuração de buscas periódicas automáticas.
 
 ## SetupID
 
@@ -37,28 +37,28 @@ O SetupID deve ser enviado em todas as chamadas posteriores, pois identifica:
 
 - O cliente;
 - O consentimento;
-- A instituição transmissora de dados;
+- A Instituição Transmissora de dados;
 - O conjunto de permissões autorizadas.
 
 # Fluxo de Obtenção de Produtos
 
-Com o consentimento autorizado, o cliente pode consultar os produtos disponíveis (Contas, Câmbio, Investimentos, Operações de Crédito etc.).
+Com o consentimento autorizado, o cliente pode consultar os Produtos disponíveis (Contas, Câmbio, Investimentos, Operações de Crédito etc.).
 
 Para isso, basta informar o SetupID, não sendo necessário repetir informações do titular nem autorizações adicionais.
 
-Se o consentimento não incluir alguma permissão necessária, a instituição transmissora informará que o acesso não está permitido. Nesse caso, os dados não podem ser obtidos até que um novo consentimento seja criado com as permissões adequadas.
+Se o consentimento não incluir alguma permissão necessária, a Instituição Transmissora informará que o acesso não está permitido. Nesse caso, os dados não podem ser obtidos até que um novo consentimento seja criado com as permissões adequadas.
 
 A resposta do ODR inclui:
 
-- A lista de produtos disponíveis;
-- Os identificadores de cada produto;
+- A lista de Produtos disponíveis;
+- Os identificadores de cada Produto;
 - Informações gerais como paginação e data de atualização.
 
 Esses identificadores são importantes para as próximas etapas.
 
 # Fluxo de Obtenção de Subprodutos
 
-Alguns recursos do Open Finance exigem que o cliente primeiro consulte o produto correspondente para descobrir os IDs necessários.
+Alguns recursos do Open Finance exigem que o cliente primeiro consulte o Produto correspondente para descobrir os IDs necessários.
 
 Por exemplo:
 
@@ -67,7 +67,7 @@ Por exemplo:
 
 O processo segue esta lógica:
 
-1. O cliente consulta o produto (como Contas);
+1. O cliente consulta o Produto (como Contas);
 2. O ODR retorna um conjunto de registros, cada um com um identificador próprio;
 3. O cliente escolhe qual registro deseja detalhar;
 4. O cliente faz a consulta específica (como Saldo da Conta), informando o ID do item selecionado e o SetupID.
@@ -93,13 +93,13 @@ Vantagens:
 - Não consome fichas regulatórias;
 - Não aciona as Instituições Transmissoras de Dados;
 - Não aciona limites operacionais;
-- É usada quando não há necessidade de dados novos (além dos que já estão contidos na base de dados);
+- É usada quando **não** há necessidade de dados novos (além dos que já estão contidos na base de dados);
 - É extremamente rápida e segura, uma vez que consome somente os dados locais e não está sugeita ao tempo de resposta de outras instituições.
 
 A Busca a Frio é ideal quando:
 
 - Os dados foram atualizados recentemente;
-- A transmissora atingiu os limites operacionais;
+- A Transmissora atingiu os limites operacionais;
 - O recurso se tornou inválido (ex.: conta encerrada);
 - O cliente quer reduzir tráfego e custos.
 
@@ -113,7 +113,7 @@ A busca a quente é poderosa porque garante que os dados retornados são os mais
 
 ### Riscos da Busca a Quente
 
-Cada consulta feita a quente consome fichas, que são limitadas por recurso, transmissora, cliente final e receptora.
+Cada consulta feita a quente consome fichas, que são limitadas por Recurso, Transmissora, Cliente final e Receptora.
 
 Excesso de buscas a quente pode resultar em:
 
@@ -132,7 +132,7 @@ O ODR recomenda:
 - Aumentar os intervalos de atualização automática quando não houver necessidade de sincronização contínua;
 - Reservar fichas mensais para buscas a quente, especialmente em recursos críticos para o negócio;
 - Usar buscas a frio sempre que dados atualizados recentemente já estiverem na base;
-- Configurar intervalos distintos por subproduto, priorizando apenas os dados realmente sensíveis ao tempo.
+- Configurar intervalos distintos por Entidade, priorizando apenas os dados realmente sensíveis ao tempo.
 
 Com esse equilíbrio o cliente garante atualização regular, capacidade para chamadas emergenciais e pleno cumprimento das regras operacionais do Open Finance.
 
@@ -145,7 +145,7 @@ O header utilizado para indicar o tipo de busca é *x-update-data*, onde:
 - *True*: Dispara uma **Busca a quente**;
 - *False*: Dispara uma **Busca a frio**.
 
-Comportamento Padrão: Caso o header não seja enviado, a busca é tratada como a frio por padrão, garantindo segurança e evitando consumo acidental de fichas na transmissora.
+Comportamento Padrão: Caso o header não seja enviado, a busca é tratada como a frio por padrão, garantindo segurança e evitando consumo acidental de fichas na Transmissora.
 
 As seguintes APIs permitem buscas para os grupos de recursos:
 
@@ -168,7 +168,7 @@ As seguintes APIs permitem buscas para os grupos de recursos:
 # Visão Geral do Fluxo Operacional Completo
 
 1. O cliente cria um consentimento através do ODR;
-2. O usuário final autoriza o compartilhamento na instituição transmissora;
+2. O usuário final autoriza o compartilhamento na Instituição Transmissora;
 3. O ODR identifica a autorização e coleta os primeiros dados;
 4. O cliente consulta Produtos e Subprodutos usando o SetupID;
 5. O ODR atualiza os dados automaticamente conforme a configuração de intervalos;
