@@ -93,6 +93,8 @@ window.onload = () => {
     "en-data-credit-fixed-incomes": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/en-oas-credit-fixed-incomes.yml`,
     "en-data-treasury-bonds": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/en-oas-treasury-bonds.yml`,
     "en-data-variable-incomes": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/en-oas-variable-incomes.yml`,
+    //Portabilidade de Crédito
+    "en-portability": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/en-portability.yml`,
 
     // =====================================================
     // ES
@@ -132,7 +134,9 @@ window.onload = () => {
     "es-data-bank-fixed-incomes": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-bank-fixed-incomes.yml`,
     "es-data-credit-fixed-incomes": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-credit-fixed-incomes.yml`,
     "es-data-treasury-bonds": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-treasury-bonds.yml`,
-    "es-data-variable-incomes": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-variable-incomes.yml`
+    "es-data-variable-incomes": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-variable-incomes.yml`,
+    //Portabilidade de Crédito
+    "es-portability": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/es-portability.yml`,
   };
 
   const apiUrl =
