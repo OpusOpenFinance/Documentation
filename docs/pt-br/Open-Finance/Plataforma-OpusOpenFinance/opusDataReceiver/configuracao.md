@@ -2,11 +2,16 @@
 layout: default
 title: Configuração
 parent: "Opus Data Receiver"
-nav_order: 5
+nav_order: 2
 lang: "pt-br"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/configuracao/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/configuracao/"
+      lang: "es"
 ---
 
-# Introdução à Busca Periódica Automática
+## Introdução à Busca Periódica Automática
 
 A busca periódica automática é o mecanismo que permite ao cliente definir quais dados serão atualizados e com que frequência cada Entidade (Produto e/ou Subproduto) será coletado.
 
@@ -21,24 +26,24 @@ O intervalo de cada Entidade é configurado inicialmente pelo ODR de acordo com 
 
 O ODR garante que nenhuma Entidade será atualizada antes do intervalo mínimo definido. **Exemplo:** A Entidade Exchanges possui intervalo de 24 horas. Isso significa que, após uma coleta bem-sucedida, o ODR só fará nova tentativa depois de 24 horas.
 
-# Referência de Intervalos por Subproduto
+## Referência de Intervalos por Subproduto
 
 A seguir estão os Subprodutos organizados por categoria e seus intervalos padrão.
 
 Esses valores refletem o máximo permitido pelas regras operacionais do [Open Finance](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17957025/Refer+ncia) em 01/12/2025.
 
-#### Dados de conta:
+### Dados de conta
 
 | Nome natural | Entidade Open Finance                                         | Intervalo de atualização (em horas) |
 | ------------ |---------------------------------------------------------------|-------------------------------------|
-| Contas | Account                                                             | 90                                  |
+| Contas       | Account                                                       | 90                                  |
 | Detalhes da Conta | AccountDetails                                           | 90                                  |
 | Saldos da Conta | AccountBalance                                             | 2                                   |
 | Transações | AccountTransactions                                             | 90                                  |
 | Transações Recentes | AccountTransactionsCurrent                             | 3                                   |
 | Limites de Cheque Especial | AccountOverdraftLimits                          | 2                                   |
 
-#### Cartão de crédito:
+### Cartão de crédito
 
 | Nome natural | Entidade Open Finance                                         | Intervalo de atualização (em horas) |
 | ------------ |---------------------------------------------------------------|-------------------------------------|
@@ -50,7 +55,7 @@ Esses valores refletem o máximo permitido pelas regras operacionais do [Open Fi
 | Transações | CreditcardTransactions                                          | 180                                 |
 | Transações Recentes | CreditcardTransactionsCurrent                          | 3                                   |
 
-#### Dados pessoais:
+### Dados pessoais
 
 | Nome natural | Entidade Open Finance                                         | Intervalo de atualização (em horas) |
 | ------------ |---------------------------------------------------------------|-------------------------------------|
@@ -61,7 +66,7 @@ Esses valores refletem o máximo permitido pelas regras operacionais do [Open Fi
 | Pessoa jurídica - Qualificação | CustomerBusinessQualifications              | 90                                  |
 | Pessoa jurídica - Relacionamento | CustomerBusinessFinancialRelations        | 90                                  |
 
-#### Empréstimos:
+### Empréstimos
 
 | Nome natural | Entidade Open Finance                                         | Intervalo de atualização (em horas) |
 | ------------ |---------------------------------------------------------------|-------------------------------------|
@@ -71,7 +76,7 @@ Esses valores refletem o máximo permitido pelas regras operacionais do [Open Fi
 | Garantias do Empréstimo | CreditLoansContractWarranties                      | 90                                  |
 | Pagamentos do Empréstimo | CreditLoansContractPayments                       | 6                                   |
 
-#### Financiamentos:
+### Financiamentos
 
 | Nome natural | Entidade Open Finance                                         | Intervalo de atualização (em horas) |
 | ------------ |---------------------------------------------------------------|-------------------------------------|
@@ -81,7 +86,7 @@ Esses valores refletem o máximo permitido pelas regras operacionais do [Open Fi
 | Parcelas do Financiamento | CreditFinancingContractScheduledInstalments      | 24                                  |
 | Pagamentos do Financiamento | CreditFinancingContractPayments                | 24                                  |
 
-#### Cheque especial:
+### Cheque especial
 
 | Nome natural | Entidade Open Finance                                                         | Intervalo de atualização (em horas) |
 | ------------ |-------------------------------------------------------------------------------|-------------------------------------|
@@ -96,7 +101,7 @@ Esses valores refletem o máximo permitido pelas regras operacionais do [Open Fi
 | Parcelas da Antecipação | CreditInvoiceFinancingContractScheduledInstalments                 | 24                                  |
 | Pagamentos de Antecipação | CreditInvoiceFinancingContractPayments                           | 24                                  |
 
-#### Investimentos:
+### Investimentos
 
 | Nome natural | Entidade Open Finance                                         | Intervalo de atualização (em horas) |
 | ------------ |---------------------------------------------------------------|-------------------------------------|
@@ -127,7 +132,7 @@ Esses valores refletem o máximo permitido pelas regras operacionais do [Open Fi
 | Transações de Fundos de Investimento | InvestmentsFundsTransactions          | 90                                  |
 | Transações Recentes | InvestmentsFundsTransactionsCurrent                    | 6                                   |
 
-#### Câmbio:
+### Câmbio
 
 | Nome natural | Entidade Open Finance                                         | Intervalo de atualização (em horas) |
 | ------------ |---------------------------------------------------------------|-------------------------------------|
@@ -137,9 +142,9 @@ Esses valores refletem o máximo permitido pelas regras operacionais do [Open Fi
 
 Considerando os valores das tabelas e tomando o recurso de Câmbio como exemplo: Seu intervalo de atualização é de 24 horas. Após a execução de uma chamada à Entidade Exchanges, o ODR somente tentará nova atualização após 24 horas.
 
-### Limites Operacionais
+## Limites Operacionais
 
-Cada Entidade do Open Finance possui limites regulatórios de quantidade de chamadas permitidas em um período específico. Esses limites são regulados com base na tupla **Instituição Transmissora x Produto x Cliente final**. 
+Cada Entidade do Open Finance possui limites regulatórios de quantidade de chamadas permitidas em um período específico. Esses limites são regulados com base na tupla **Instituição Transmissora x Produto x Cliente final**.
 
 Por exemplo, o recurso **Contas** (Account) só pode ser consultado até 8 vezes por mês para um mesmo cliente, entre uma mesma Receptora e Transmissora. Assim, um indivíduo com contas nos bancos A, B e C pode consultar:
 

@@ -2,11 +2,16 @@
 layout: default
 title: Funcionamento
 parent: "Opus Data Receiver"
-nav_order: 5
+nav_order: 3
 lang: "pt-br"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/funcionamento/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/funcionamento/"
+      lang: "es"
 ---
 
-# Visão Geral
+## Visão Geral
 
 O Opus Data Receiver funciona por meio de um ciclo contendo três componentes principais:
 
@@ -14,7 +19,7 @@ O Opus Data Receiver funciona por meio de um ciclo contendo três componentes pr
 2. Coleta e atualização das Entidades (Produtos e Subprodutos);
 3. Disponibilização dos dados por meio de buscas e consultas.
 
-# Fluxo de Cadastro
+## Fluxo de Cadastro
 
 Para que o ODR possa acessar os dados de um indivíduo ou empresa no Open Finance, é necessário que exista um consentimento válido. O fluxo de cadastro é justamente o processo de iniciar esse consentimento e registrar todas as informações necessárias para que o ODR possa operar.
 
@@ -29,7 +34,7 @@ O fluxo funciona da seguinte forma:
 
 Cada Entidade passa então a seguir o calendário de atualizações definido na configuração de buscas periódicas automáticas.
 
-## SetupID
+### SetupID
 
 Quando o cadastro é concluído, o ODR gera um identificador chamado SetupID, que representa todas as informações necessárias para acesso aos dados daquele consentimento.
 
@@ -40,7 +45,7 @@ O SetupID deve ser enviado em todas as chamadas posteriores, pois identifica:
 - A Instituição Transmissora de dados;
 - O conjunto de permissões autorizadas.
 
-# Fluxo de Obtenção de Produtos
+## Fluxo de Obtenção de Produtos
 
 Com o consentimento autorizado, o cliente pode consultar os Produtos disponíveis (Contas, Câmbio, Investimentos, Operações de Crédito etc.).
 
@@ -56,7 +61,7 @@ A resposta do ODR inclui:
 
 Esses identificadores são importantes para as próximas etapas.
 
-# Fluxo de Obtenção de Subprodutos
+## Fluxo de Obtenção de Subprodutos
 
 Alguns recursos do Open Finance exigem que o cliente primeiro consulte o Produto correspondente para descobrir os IDs necessários.
 
@@ -74,7 +79,7 @@ O processo segue esta lógica:
 
 Esse mecanismo garante segurança e organização, além de evitar consultas desnecessárias.
 
-# Buscas
+## Buscas
 
 Sempre que o ODR precisa coletar ou retornar dados, ele realiza uma busca. As buscas servem a três propósitos:
 
@@ -84,7 +89,7 @@ Sempre que o ODR precisa coletar ou retornar dados, ele realiza uma busca. As bu
 
 O ODR opera dois tipos de busca: **A Frio** e **A Quente**.
 
-## Busca a Frio
+### Busca a Frio
 
 Busca a Frio significa buscar somente nos dados já armazenados no ODR. Ela existe para cenários em que o cliente só deseja recuperar os dados mais recentes já salvos, sem precisar atualizar nada. É o modelo de buscas padrão do produto.
 
@@ -105,13 +110,13 @@ A Busca a Frio é ideal quando:
 
 Apesar de simples, a busca a frio é fundamental para manter o ODR eficiente, reduzir custos operacionais e preservar limites mensais.
 
-## Busca a Quente
+### Busca a Quente
 
 A Busca a Quente consulta as Instituições Transmissoras de Dados em tempo real. Essa busca é síncrona, ou seja, o ODR consulta a Transmissora no momento da solicitação, processa os resultados e então devolve a resposta.
 
 A busca a quente é poderosa porque garante que os dados retornados são os mais atualizados possíveis. Porém, ela possui riscos importantes.
 
-### Riscos da Busca a Quente
+#### Riscos da Busca a Quente
 
 Cada consulta feita a quente consome fichas, que são limitadas por Recurso, Transmissora, Cliente final e Receptora.
 
@@ -125,7 +130,7 @@ Excesso de buscas a quente pode resultar em:
 
 Por isso, é importante calibrar bem os intervalos das buscas periódicas automáticas e reservar fichas para operações críticas, deixando uma margem para chamadas a quente disparadas pelos sistemas clientes.
 
-## Como Evitar Consumo Excessivo de Fichas
+### Como Evitar Consumo Excessivo de Fichas
 
 O ODR recomenda:
 
@@ -136,7 +141,7 @@ O ODR recomenda:
 
 Com esse equilíbrio o cliente garante atualização regular, capacidade para chamadas emergenciais e pleno cumprimento das regras operacionais do Open Finance.
 
-## APIs de busca
+### APIs de busca
 
 As duas modalidades de busca (a quente e a frio) são realizadas através de chamadas REST ao ODR. A diferenciação entre elas ocorre exclusivamente via um header enviado pelo cliente na requisição.
 
@@ -149,6 +154,7 @@ Comportamento Padrão: Caso o header não seja enviado, a busca é tratada como 
 
 As seguintes APIs permitem buscas para os grupos de recursos:
 
+- [Setup][API-Setup]
 - [Conta Corrente][API-Conta-Corrente]
 - [Conta Cartão][API-Cartao-Credito]
 - [Dados Cadastrais e Transacionais][API-Dados-Cadastrais]
@@ -165,7 +171,7 @@ As seguintes APIs permitem buscas para os grupos de recursos:
   - [Fundos de Investimento][API-Fundos-Investimento]
   - [Câmbio][API-Cambio]
 
-# Visão Geral do Fluxo Operacional Completo
+## Visão Geral do Fluxo Operacional Completo
 
 1. O cliente cria um consentimento através do ODR;
 2. O usuário final autoriza o compartilhamento na Instituição Transmissora;
@@ -174,17 +180,17 @@ As seguintes APIs permitem buscas para os grupos de recursos:
 5. O ODR atualiza os dados automaticamente conforme a configuração de intervalos;
 6. Buscas a frio e a quente operam conforme necessidade, respeitando limites regulatórios.
 
-
-[API-Conta-Corrente]:/Documentation/swagger-ui/index.html?api=ODR-accounts
-[API-Cartao-Credito]:/Documentation/swagger-ui/index.html?api=ODR-creditcard
-[API-Dados-Cadastrais]:/Documentation/swagger-ui/index.html?api=ODR-customer
-[API-Financiamentos]:/Documentation/swagger-ui/index.html?api=ODR-credit_financing
-[API-Empréstimos]:/Documentation/swagger-ui/index.html?api=ODR-credit_loans
-[API-Adiantamento]:/Documentation/swagger-ui/index.html?api=ODR-credit_invoice_financing
-[API-Direitos-Creditorios]:/Documentation/swagger-ui/index.html?api=ODR-credit_unarranged_accounts
-[API-Renda-Fixa-Bancaria]:/Documentation/swagger-ui/index.html?api=ODR-investments_bank_fixed_income
-[API-Renda-Fixa-Credito]:/Documentation/swagger-ui/index.html?api=ODR-investments_credit_fixed_income
-[API-Renda-Variavel]:/Documentation/swagger-ui/index.html?api=ODR-investments_variable_incomes
-[API-Tesouro-Direto]:/Documentation/swagger-ui/index.html?api=ODR-investments_treasure_titles
-[API-Fundos-Investimento]:/Documentation/swagger-ui/index.html?api=ODR-investments_funds
-[API-Cambio]:/Documentation/swagger-ui/index.html?api=ODR-exchanges
+[API-Setup]: ../../../../swagger-ui/index.html?api=odr-setup
+[API-Conta-Corrente]: ../../../../swagger-ui/index.html?api=odr-accounts
+[API-Cartao-Credito]: ../../../../swagger-ui/index.html?api=odr-creditcard
+[API-Dados-Cadastrais]: ../../../../swagger-ui/index.html?api=odr-customer
+[API-Financiamentos]: ../../../../swagger-ui/index.html?api=odr-credit_financing
+[API-Empréstimos]: ../../../../swagger-ui/index.html?api=odr-credit_loans
+[API-Adiantamento]: ../../../../swagger-ui/index.html?api=odr-credit-invoice-financing
+[API-Direitos-Creditorios]: ../../../../swagger-ui/index.html?api=odr-credit-unarranged-accounts
+[API-Renda-Fixa-Bancaria]: ../../../../swagger-ui/index.html?api=odr-investments_bank_fixed_income
+[API-Renda-Fixa-Credito]: ../../../../swagger-ui/index.html?api=odr-investments_credit_fixed_income
+[API-Renda-Variavel]: ../../../../swagger-ui/index.html?api=odr-investments_variable_incomes
+[API-Tesouro-Direto]: ../../../../swagger-ui/index.html?api=odr-investments_treasure_titles
+[API-Fundos-Investimento]: ../../../../swagger-ui/index.html?api=odr-investments_funds
+[API-Cambio]: ../../../../swagger-ui/index.html?api=odr-exchanges

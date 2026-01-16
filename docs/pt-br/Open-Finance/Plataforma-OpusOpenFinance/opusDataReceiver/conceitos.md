@@ -2,11 +2,16 @@
 layout: default
 title: Conceitos
 parent: "Opus Data Receiver"
-nav_order: 5
+nav_order: 1
 lang: "pt-br"
+alternate_lang:
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/conceitos/"
+      lang: "en"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/conceitos/"
+      lang: "es"
 ---
 
-# Estrutura de Produtos e Subprodutos
+## Estrutura de Produtos e Subprodutos
 
 O Opus Data Receiver (ODR) organiza os dados do Open Finance Brasil em uma estrutura semelhante a uma árvore. Nessa árvore:
 
@@ -40,7 +45,7 @@ Atualmente, o ODR trabalha com 18 Produtos principais:
 
 Um Produto pode possuir Subprodutos específicos (Conta Corrente, por exemplo, possui Subprodutos como Saldos, Transações, Limites e Detalhes) enquanto outros Produtos não possuem Subprodutos, como é o caso dos Dados de Pessoa Física e Jurídica.
 
-# Relação entre Produtos e Subprodutos
+## Relação entre Produtos e Subprodutos
 
 A atualização de um Subproduto depende sempre da existência e validade de seu Produto.
 
@@ -54,7 +59,7 @@ Exemplo:
 
 Se um cartão de crédito de número 1234 do Banco B for cancelado e a Transmissora de dados informar ao ODR que o recurso não existe mais, somente os Subprodutos ligados ao Produto “Cartão de Crédito – conta 1234” deixam de ser atualizados. Detalhes, limites, transações e extratos deixam de ser coletados e passam a existir apenas na forma dos dados previamente armazenados (consulta a frio).
 
-# Identificadores no Open Finance
+## Identificadores no Open Finance
 
 Para acessar Subprodutos, é necessário informar identificadores como, por exemplo:
 
@@ -65,7 +70,7 @@ Para acessar Subprodutos, é necessário informar identificadores como, por exem
 
 Eles são sempre obtidos a partir da consulta ao Produto, garantindo segurança, rastreabilidade e coerência entre os dados.
 
-# Broker Notes (brokerNoteId)
+## Broker Notes (brokerNoteId)
 
 No contexto dos Produtos de Investimentos, especificamente para operações de renda variável, existe uma relação especial associada às notas de negociação da bolsa, identificadas pelo *brokerNoteId*. Esse é o único caso dentro do ODR em que um Subproduto depende de um dado que pode ou não estar presente na resposta da Transmissora.
 
@@ -73,14 +78,14 @@ Quando o cliente consulta as transações de renda variável, cada movimento de 
 
 O brokerNoteId deve ser um identificador exclusivo e imutável por parte da Transmissora, correspondendo a cada número natural de nota de negociação, conforme [especificação do Open Finance Brasil](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1394901381/Informa+es+T+cnicas+-+DC+Renda+Vari+vel+-+v1.3.0). Apenas quando esse identificador é fornecido na transação é possível consultar os dados detalhados da nota de negociação relacionada àquela operação.
 
-# Core e Scheduler
+## Core e Scheduler
 
 O ODR é estruturado em dois componentes que trabalham de forma integrada para garantir a coleta, atualização e disponibilização dos dados do Open Finance: o Core e o Scheduler. Cada um possui responsabilidades distintas e complementares, assegurando desempenho, consistência e conformidade em todas as etapas do processo.
 
-## Core
+### Core
 
 Componente central do ODR, responsável por executar o processamento de dados e operar como o motor do sistema. É o Core que realiza as buscas nas Transmissoras, orquestra o fluxo de coleta, aplica regras internas de consistência e disponibiliza os dados para consulta via API. Ele também gerencia o acesso à base interna do ODR, garantindo desempenho, integridade e rastreabilidade das informações compartilhadas.
 
-## Scheduler
+### Scheduler
 
 Módulo que administra as políticas e permissões de atualização e coordena quando cada Produto e Subproduto será coletado. O Scheduler interpreta permissões, intervalos e estados dos consentimentos, atuando na janela configurada para execução das rotinas de atualização. Ele assegura que as coletas ocorram de forma eficiente, respeitando regras de cada Instituição.
