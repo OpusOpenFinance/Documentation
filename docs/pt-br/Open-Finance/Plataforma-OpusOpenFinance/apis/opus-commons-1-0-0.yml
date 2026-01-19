@@ -4,7 +4,7 @@ info:
   description: |
     API de rotas que são gerais para o funcionamento dos conectores de todos os produtos.
     API com a rota que verifica se dado cliente possui uma conta na instituição financeira necessária para as rotas.
-  version: 4.0.0-rc1
+  version: 4.0.0-rc.3
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -80,28 +80,33 @@ components:
       type: object
       description: Payload utilizado para verificação de correntista
       required:
-        - data
+        - requestBody
         - requestMeta
       properties:
-        data:
+        requestBody:
           type: object
           required:
-            - loggedUserDocument
+            - data
           properties:
-            loggedUserDocument:
-              type: string
-              maxLength: 11
-              description: Número do CPF do usuário.
-              example:
-                '11111111111'
-              pattern: ^\d{11}$
-            businessEntityDocument:
-              type: string
-              maxLength: 14
-              description: Número do CNPJ da empresa.
-              example:
-                '11111111111111'
-              pattern: ^\d{14}$
+            data:
+              type: object
+              required:
+                - loggedUserDocument
+              properties:
+                loggedUserDocument:
+                  type: string
+                  maxLength: 11
+                  description: Número do CPF do usuário.
+                  example:
+                    '11111111111'
+                  pattern: ^\d{11}$
+                businessEntityDocument:
+                  type: string
+                  maxLength: 14
+                  description: Número do CNPJ da empresa.
+                  example:
+                    '11111111111111'
+                  pattern: ^\d{14}$
         requestMeta:
           $ref: '#/components/schemas/RequestMeta'
     CheckAccountHolderResponse:
