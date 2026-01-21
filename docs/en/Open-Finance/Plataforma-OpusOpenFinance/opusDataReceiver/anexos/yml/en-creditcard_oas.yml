@@ -2,32 +2,32 @@ openapi: 3.0.0
 info:
   title: API Credit-cards-accounts - Opus Data Receiver
   description: |
-    API de contas de pagamento pós-pagas salvas no ODR. Usa como padrão a mesma definição de contas de pagamentos pós-pagas do Open Finance Brasil – Fase 2.
-    API que retorna informações de contas de pagamento pós-paga mantidas nas instituições transmissoras por seus clientes, incluindo dados como denominação, produto, bandeira, limites de crédito, informações sobre transações de pagamento efetuadas e faturas.
+    API for post-paid payment accounts information stored in ODR. Uses as standard the same definition of post-paid payment accounts from Open Finance Brazil – Phase 2.
+    API that returns information about post-paid payment accounts maintained by transmitting institutions for their clients, including data such as denomination, product, brand, credit limits, information about payment transactions made and bills.
 
-    Não possui segregação entre pessoa natural e pessoa jurídica.\
-    Requer cadastro do cliente no ODR do cliente para todos os `endpoints`.
+    No segregation between natural person and legal entity.
+    Requires client registration in ODR for all `endpoints`.
 
-    # Orientações
-    No contexto do Open Finance, a `Role`  do diretório de participantes relacionada à presente API é a `DADOS`.\
-    Os dados serão devolvidos na consulta desde que o `setupId` relacionado corresponda a um cadastro do cliente no ODR válido e com o status `AUTHORISED`.\
-    É também necessário que o recurso em questão (conta, contrato, etc) esteja disponível na instituição transmissora (ou seja, sem bloqueios de qualquer natureza e com todas as autorizações/consentimentos já autorizados).\
-    Além disso as `permissions` necessárias deverão ter sido solicitadas quando da criação do cadastro do cliente no ODR relacionado (`setupId`).\
-    Relacionamos a seguir as `permissions` necessárias para a consulta de dados em cada `endpoint` da presente API.\
+    # Guidelines
+    In the context of Open Finance, the `Role` in the participant directory related to this API is `DATA`.
+    Data will be returned in the query as long as the related `setupId` corresponds to a valid client registration in ODR with status `AUTHORISED`.
+    It is also necessary that the resource in question (account, contract, etc.) is available at the transmitting institution (i.e., without any type of blockages and with all authorizations/consents already authorized).
+    Additionally, the necessary `permissions` must have been requested when creating the related client registration in ODR (`setupId`).
+    Below we list the necessary `permissions` for data query in each `endpoint` of this API.
     ### `/setup/creditcards/accounts/{creditCardAccountId}/bills`
       - description:
-        - Só deve ser informada uma fatura já fechada.
-        - Qualquer pagamento deve ser contado para a última fatura fechada.
+        - Only a closed bill should be informed.
+        - Any payment should be counted for the last closed bill.
     ### `/setup/creditcards/accounts/{creditCardAccountId}/bills/{billId}/transactions`
       - description:
-        - A lista a retornar se refere a transações após conciliado
+        - The list to return refers to transactions after reconciliation
     ### `/setup/creditcards/accounts/{creditCardAccountId}/transactions`
       - description:
-        - A lista a retornar se refere a transações após conciliado
+        - The list to return refers to transactions after reconciliation
 
-    ## Permissions necessárias para a API Credit-cards-accounts
+    ## Required permissions for the Credit-cards-accounts API
 
-    Para cada um dos paths desta API, além dos escopos (`scopes`) indicados existem `permissions` que deverão ser observadas:
+    For each of the paths in this API, besides the indicated scopes (`scopes`) there are `permissions` that should be observed:
 
     ### `/setup/creditcards/accounts`
       - permissions:
@@ -51,23 +51,23 @@ info:
       - permissions:
         - GET: **CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ**
 
-    ## Data de imutabilidade por tipo de transação
-    O identificador de transações de cartão de crédito é de envio obrigatório no Open Finance Brasil. De acordo com o tipo da transação deve haver o envio de um identificador único, estável e imutável, conforme tabela abaixo.
+    ## Data immutability by transaction type
+    The credit card transaction identifier is mandatory for sending in Open Finance Brazil. According to the transaction type, there must be sending of a unique, stable and immutable identifier, according to the table below.
     ```
       |-------------------|-------------------------|-----------------------|
-      | Tipo de Transação | Data da Obrigatoriedade | Data da Imutabilidade |
+      | Transaction Type  | Obligation Date        | Immutability Date     |
       |-------------------|-------------------------|-----------------------|
-      | PAGAMENTO         | DO                      | Fatura fechada        |
+      | PAYMENT           | DO                      | Closed bill           |
       |-------------------|-------------------------|-----------------------|
-      | TARIFA            | DO                      | Fatura fechada        |
+      | FEE               | DO                      | Closed bill           |
       |-------------------|-------------------------|-----------------------|
-      | OPERACOES_CRED    | DO                      | Fatura fechada        |
+      | CREDIT_OPERATIONS | DO                      | Closed bill           |
       |-------------------|-------------------------|-----------------------|
-      | ESTORNO           | DO                      | Fatura fechada        |
+      | REVERSAL          | DO                      | Closed bill           |
       |-------------------|-------------------------|-----------------------|
-      | CASHBACK          | DO                      | Fatura fechada        |
+      | CASHBACK          | DO                      | Closed bill           |
       |-------------------|-------------------------|-----------------------|
-      | OUTROS            | DO                      | Fatura fechada        |
+      | OTHERS            | DO                      | Closed bill           |
       |-------------------|-------------------------|-----------------------|
       ```
   version: 2.3.1
@@ -76,15 +76,15 @@ info:
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
 tags:
   - name: Credit Card
-    description: Operações para listagem das informações de Cartão de Crédito
+    description: Operations for listing Credit Card information
 paths:
   /setup/creditcards/accounts:
     get:
       tags:
         - Credit Card
-      summary: Conjunto de informações das Contas de pagamento pós paga
+      summary: Set of information of Post-paid payment Accounts
       operationId: creditCardsGetAccounts
-      description: Método para obter a lista de contas de pagamento pós-paga mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
+      description: Method to obtain the list of post-paid payment accounts maintained by the client at the transmitting institution and for which they have provided consent
       parameters:
         - $ref: '#/components/parameters/SetupID'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -122,9 +122,9 @@ paths:
     get:
       tags:
         - Credit Card
-      summary: Obtém os dados de identificação da conta identificada por creditCardAccountId.
+      summary: Gets the identification data of the account identified by creditCardAccountId.
       operationId: creditCardsGetAccountsCreditCardAccountId
-      description: Método para obter os dados de identificação da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora.
+      description: Method to obtain the identification data of the post-paid payment account identified by creditCardAccountId maintained by the client at the transmitting institution.
       parameters:
         - $ref: '#/components/parameters/SetupID'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -160,11 +160,11 @@ paths:
     get:
       tags:
         - Credit Card
-      summary: Obtém a lista de faturas da conta identificada por creditCardAccountId.
+      summary: Gets the list of bills of the account identified by creditCardAccountId.
       description: |
-        Método para obter a lista de faturas da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora.\
-        Só deve ser informada uma fatura já fechada.\
-        Qualquer pagamento deve ser contado para a última fatura fechada.
+        Method to obtain the list of bills of the post-paid payment account identified by creditCardAccountId maintained by the client at the transmitting institution.
+        Only a closed bill should be informed.
+        Any payment should be counted for the last closed bill.
       operationId: creditCardsGetAccountsCreditCardAccountIdBills
       parameters:
         - $ref: '#/components/parameters/SetupID'
@@ -206,11 +206,11 @@ paths:
     get:
       tags:
         - Credit Card
-      summary: Obtém a lista de transações da conta identificada por creditCardAccountId e billId.
+      summary: Gets the list of transactions of the account identified by creditCardAccountId and billId.
       operationId: creditCardsGetAccountsCreditCardAccountIdBillsBillIdTransactions
       description: |
-        Método para obter a lista de transações da conta de pagamento pós-paga identificada por creditCardAccountId e billId mantida pelo cliente na instituição transmissora. 
-        A lista a retornar se refere a transações após conciliado.
+        Method to obtain the list of transactions of the post-paid payment account identified by creditCardAccountId and billId maintained by the client at the transmitting institution.
+        The list to return refers to transactions after reconciliation.
       parameters:
         - $ref: '#/components/parameters/SetupID'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -254,9 +254,9 @@ paths:
     get:
       tags:
         - Credit Card
-      summary: Obtém os limites da conta identificada por creditCardAccountId.
+      summary: Gets the limits of the account identified by creditCardAccountId.
       operationId: creditCardsGetAccountsCreditCardAccountIdLimits
-      description: Método para obter os limites da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora.
+      description: Method to obtain the limits of the post-paid payment account identified by creditCardAccountId maintained by the client at the transmitting institution.
       parameters:
         - $ref: '#/components/parameters/SetupID'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -292,11 +292,11 @@ paths:
     get:
       tags:
         - Credit Card
-      summary: Obtém a lista de transações da conta identificada por creditCardAccountId.
+      summary: Gets the list of transactions of the account identified by creditCardAccountId.
       operationId: creditCardsGetAccountsCreditCardAccountIdTransactions
       description: |
-        Método para obter a lista de transações histórica (últimos 12 meses, ou recorte desse período) da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora. 
-        A lista a retornar se refere a transações após conciliado.
+        Method to obtain the historical transaction list (last 12 months, or cut of that period) of the post-paid payment account identified by creditCardAccountId maintained by the client at the transmitting institution.
+        The list to return refers to transactions after reconciliation.
       parameters:
         - $ref: '#/components/parameters/SetupID'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -339,11 +339,11 @@ paths:
     get:
       tags:
         - Credit Card
-      summary: Obtém a lista de transações recentes (últimos 7 dias) da conta identificada por creditCardAccountId.
+      summary: Gets the list of recent transactions (last 7 days) of the account identified by creditCardAccountId.
       operationId: creditCardsGetAccountsCreditCardAccountIdTransactionsCurrent
       description: |
-        Método para obter a lista de transações recentes (últimos 7 dias) da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora. 
-        A lista a retornar se refere a transações após conciliado.
+        Method to obtain the list of recent transactions (last 7 days) of the post-paid payment account identified by creditCardAccountId maintained by the client at the transmitting institution.
+        The list to return refers to transactions after reconciliation.
       parameters:
         - $ref: '#/components/parameters/SetupID'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -387,7 +387,7 @@ components:
     CreditCardAccountsTransactionAmount:
       type: object
       description: |
-        Valor original da transação. Expresso em valor monetário com no mínimo 2 casas decimais e no máximo 4 casas decimais. Deve ser sempre preenchido com o valor original da transação independente da nacionalidade, sem convertê-lo.
+        Original transaction value. Expressed in monetary value with minimum 2 decimal places and maximum 4 decimal places. Should always be filled with the original transaction value regardless of nationality, without converting it.
       required:
         - amount
         - currency
@@ -399,17 +399,17 @@ components:
           maxLength: 20
           minLength: 4
           example: '1000.0400'
-          description: Valor relacionado ao objeto.
+          description: Value related to the object.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency referring to the monetary value, following the ISO-4217 model.'
           example: BRL
     CreditCardAccountsTransactionBrazilianAmount:
       type: object
       description: |
-        Valor da transação expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais, em moeda corrente do Brasil. Deve ser o valor de amount convertido para BRL (em caso de compra internacional) ou o mesmo valor de amount (em caso de compra nacional).
+        Transaction value expressed in monetary value with minimum 2 and maximum 4 decimal places, in Brazilian currency. Should be the amount value converted to BRL (in case of international purchase) or the same amount value (in case of domestic purchase).
       required:
         - amount
         - currency
@@ -421,16 +421,16 @@ components:
           maxLength: 20
           minLength: 4
           example: '1000.0400'
-          description: Valor relacionado ao objeto.
+          description: Value related to the object.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency referring to the monetary value, following the ISO-4217 model.'
           example: BRL
     CreditCardsAccountsIdentificationData:
       type: object
-      description: Conjunto de informações referentes à identificação da conta de pagamento pós-paga.
+      description: Set of information regarding the identification of the post-paid payment account.
       required:
         - name
         - productType
@@ -441,35 +441,35 @@ components:
           type: string
           pattern: '[\w\W\s]*'
           description: |
-            Denominação/Identificação do nome da conta de pagamento pós-paga (cartão). Conforme CIRCULAR Nº 3.680,BCB, 2013: 'conta de pagamento pós-paga: destinada à execução de transações de pagamento que independem do aporte prévio de recursos'.
+            Denomination/Identification of the name of the post-paid payment account (card). According to CIRCULAR Nº 3.680, BCB, 2013: 'post-paid payment account: intended for the execution of payment transactions that are independent of prior resource contribution'.
           maxLength: 50
-          example: Cartão Universitário
+          example: University Card
         productType:
           $ref: '#/components/schemas/EnumCreditCardAccountsProductType'
         productAdditionalInfo:
           type: string
           pattern: '[\w\W\s]*'
-          description: Informações complementares se tipo de Cartão 'OUTROS'
+          description: Additional information if card type is 'OTHERS'
           maxLength: 50
-          example: OURO_INTERNACIONAL
+          example: GOLD_INTERNATIONAL
         creditCardNetwork:
           $ref: '#/components/schemas/EnumCreditCardAccountNetwork'
         networkAdditionalInfo:
           type: string
           pattern: '[\w\W\s]*'
-          description: Texto livre para especificar categoria de bandeira marcada como 'OUTRAS'.
+          description: Free text to specify category of brand marked as 'OTHERS'.
           maxLength: 50
           example: AURA CARD
         paymentMethod:
           type: array
           description: |
-            Listagem dos cartões (ex.: virtual/adicional/titular) associados a conta cartão consentida, conforme disponíveis ao usuário nos canais proprietários.
+            Listing of cards (e.g., virtual/additional/primary) associated with the consented card account, as available to the user in proprietary channels.
           items:
             $ref: '#/components/schemas/CreditCardsAccountPaymentMethod'
           minItems: 1
     CreditCardAccountsBillsData:
       type: object
-      description: Conjunto das informações referentes a lista de faturas associadas à conta de pagamento pós-paga
+      description: Set of information regarding the list of bills associated with the post-paid payment account
       required:
         - billId
         - dueDate
@@ -479,14 +479,14 @@ components:
         - payments
       properties:
         billId:
-          description: Informação que identifica a fatura
+          description: Information that identifies the bill
           type: string
           maxLength: 100
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: 3459087XXZTR
         dueDate:
-          description: 'Data de vencimento da Fatura, que aparece para pagamento pelo cliente'
+          description: 'Bill due date, which appears for payment by the client'
           type: string
           format: date
           maxLength: 10
@@ -498,20 +498,20 @@ components:
           $ref: '#/components/schemas/CreditCardAccountsBillMinimumAmount'
         isInstalment:
           type: boolean
-          description: Indica se a fatura permite parcelamento (true) ou não (false).
+          description: Indicates if the bill allows installment (true) or not (false).
           example: false
         financeCharges:
           type: array
           items:
             $ref: '#/components/schemas/CreditCardAccountsBillsFinanceCharge'
           minItems: 1
-          description: Lista dos encargos cobrados na fatura
+          description: List of charges billed on the bill
         payments:
           type: array
           items:
             $ref: '#/components/schemas/CreditCardAccountsBillsPayment'
           minItems: 0
-          description: Lista que traz os valores relativos aos pagamentos da Fatura da conta de pagamento pós-paga
+          description: List that brings the values relative to the payments of the Post-paid payment account Bill
     CreditCardAccountsBillsFinanceCharge:
       type: object
       required:
@@ -525,8 +525,8 @@ components:
           type: string
           maxLength: 140
           pattern: '[\w\W\s]*'
-          example: Informações Adicionais
-          description: 'Campo livre, de preenchimento obrigatório se selecionado tipo de encargo ''OUTROS'''
+          example: Additional Information
+          description: 'Free field, mandatory filling if charge type ''OTHERS'' is selected'
         amount:
           type: string
           format: double
@@ -534,15 +534,15 @@ components:
           minLength: 4
           pattern: '^\d{1,15}\.\d{2,4}$'
           example: '100000.0400'
-          description: Valor cobrado pelo encargo. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+          description: Value charged by the charge. Expressed in monetary value with minimum 2 and maximum 4 decimal places.
         currency:
           type: string
           maxLength: 3
           pattern: '^(\w{3}){1}$'
           example: BRL
           description: |
-            Moeda referente ao valor cobrado pelo encargo, segundo modelo ISO-4217. p.ex. 'BRL' 
-            Todos os saldos informados estão representados com a moeda vigente do Brasil.
+            Currency referring to the value charged by the charge, according to ISO-4217 model. e.g. 'BRL'
+            All balances informed are represented with the current currency of Brazil.
     CreditCardAccountsBillsPayment:
       type: object
       required:
@@ -555,7 +555,7 @@ components:
         valueType:
           $ref: '#/components/schemas/EnumCreditCardAccountsBillingValueType'
         paymentDate:
-          description: Data efetiva de quando o Pagamento da fatura foi realizado
+          description: Effective date when the Bill Payment was made
           type: string
           format: date
           maxLength: 10
@@ -571,19 +571,19 @@ components:
           minLength: 4
           example: '1000.0400'
           description: |
-            Valor pagamento segundo o valueType.  
-            Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.   
-            O campo não pode assumir valor negativo por se tratar de um pagamento.
+            Payment value according to valueType.
+            Expressed in monetary value with minimum 2 and maximum 4 decimal places.
+            The field cannot assume negative value as it is a payment.
         currency:
           type: string
           pattern: '^(\w{3}){1}$'
           maxLength: 3
           description: |
-            Moeda referente ao valor de pagamento da fatura, segundo modelo ISO-4217. p.ex. 'BRL' Todos os valores informados estão representados com a moeda vigente do Brasil
+            Currency referring to the bill payment value, according to ISO-4217 model. e.g. 'BRL' All values informed are represented with the current currency of Brazil
           example: BRL
     CreditCardAccountsData:
       type: object
-      description: Conjunto de informações das Contas de pagamento pós paga
+      description: Set of information of Post-paid payment Accounts
       required:
         - brandName
         - companyCnpj
@@ -594,47 +594,47 @@ components:
       properties:
         creditCardAccountId:
           type: string
-          description: 'Identifica de forma única a conta pagamento pós-paga do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora.'
+          description: 'Uniquely identifies the clients post-paid payment account, maintaining the rules of immutability within the transmitting institution.'
           maxLength: 100
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: XXZTR3459087
         brandName:
           type: string
-          description: 'Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).'
+          description: 'Name of the Brand reported by the participant in Open Finance. It is recommended to use, whenever possible, the same brand name attributed in the Customer Friendly Server Name (Authorisation Server) field of the directory.'
           pattern: '[\w\W\s]*'
           maxLength: 80
-          example: Organização A
+          example: Organization A
         companyCnpj:
           type: string
-          description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara'
+          description: 'Complete CNPJ number of the institution responsible for the Registration - the CNPJ corresponds to the registration number in the Legal Entity Registry. Only the CNPJ numbers should be provided, without mask'
           pattern: '^\d{14}$'
           maxLength: 14
           example: '21128159000166'
         name:
           type: string
-          description: 'Denominação/Identificação do nome da conta de pagamento pós-paga (cartão). Conforme CIRCULAR Nº 3.680,BCB, 2013: ''conta de pagamento pós-paga: destinada à execução de transações de pagamento que independem do aporte prévio de recursos'
+          description: 'Denomination/Identification of the name of the post-paid payment account (card). According to CIRCULAR Nº 3.680, BCB, 2013: ''post-paid payment account: intended for the execution of payment transactions that are independent of prior resource contribution'
           pattern: '[\w\W\s]*'
           maxLength: 50
-          example: Cartão Universitário
+          example: University Card
         productType:
           $ref: '#/components/schemas/EnumCreditCardAccountsProductType'
         productAdditionalInfo:
           type: string
-          description: Informações complementares se tipo de Cartão 'OUTROS'
+          description: Additional information if card type is 'OTHERS'
           pattern: '[\w\W\s]*'
           maxLength: 50
         creditCardNetwork:
           $ref: '#/components/schemas/EnumCreditCardAccountNetwork'
         networkAdditionalInfo:
           type: string
-          description: Texto livre para especificar categoria de bandeira marcada como 'OUTRAS'
+          description: Free text to specify category of brand marked as 'OTHERS'
           pattern: '[\w\W\s]*'
           maxLength: 50
           example: AURA CARD
     CreditCardAccountsLimitsData:
       type: object
-      description: Conjunto de informações referentes aos limites da conta de pagamento pós-paga.
+      description: Set of information regarding the limits of the post-paid payment account.
       required:
         - creditLineLimitType
         - consolidationType
@@ -649,7 +649,7 @@ components:
         identificationNumber:
           type: string
           description: |
-            Número de identificação do cartão: corresponde aos 4 últimos dígitos do cartão para PF, ou então, preencher com um identificador para PJ, com as caracteristicas definidas para os IDs no Open Finance.
+            Card identification number: corresponds to the last 4 digits of the card for individuals, or fill with an identifier for legal entities, with the characteristics defined for IDs in Open Finance.
           maxLength: 100
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
@@ -657,22 +657,22 @@ components:
         lineName:
           type: string
           enum:
-            - CREDITO_A_VISTA
-            - CREDITO_PARCELADO
-            - SAQUE_CREDITO_BRASIL
-            - SAQUE_CREDITO_EXTERIOR
-            - EMPRESTIMO_CARTAO_CONSIGNADO
-            - OUTROS
-          example: CREDITO_A_VISTA
+            - CREDIT_A_VISTA
+            - CREDIT_PARCELADO
+            - WITHDRAWAL_CREDIT_BRAZIL
+            - WITHDRAWAL_CREDIT_ABROAD
+            - PAYROLL_CARD_LOAN
+            - OTHERS
+          example: CREDIT_A_VISTA
         lineNameAdditionalInfo:
           type: string
           maxLength: 50
           pattern: '[\w\W\s]*'
-          example: Informações adicionais e complementares.
-          description: Campo de preenchimento obrigatório se selecionada a opção 'OUTRAS' em lineName.
+          example: Additional and complementary information.
+          description: Mandatory filling field if option 'OTHERS' is selected in lineName.
         isLimitFlexible:
           type: boolean
-          description: True= Indica que a conta cartão possui limite total flexível ou “sem limite”. False = Indica que a conta cartão possui limite predeterminado exibido no canal para o cliente.
+          description: True = Indicates that the card account has flexible total limit or "no limit". False = Indicates that the card account has predetermined limit displayed in the channel for the client.
           example: true
         limitAmount:
           $ref: '#/components/schemas/CreditCardsLimitAmount'
@@ -683,7 +683,7 @@ components:
         customizedLimitAmount:
           type: object
           description: |
-            Valor total do limite customizado pelo cliente nos canais eletrônicos da instituição. Esse objeto é de envio obrigatório nos casos em que a instituição permita ao cliente alterar o seu limite.
+            Total value of the limit customized by the client in the institution's electronic channels. This object is mandatory for sending in cases where the institution allows the client to change their limit.
           required:
             - amount
             - currency
@@ -696,17 +696,17 @@ components:
               minLength: 4
               example: '1000.0400'
               description: |
-                Valor total do limite informado expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+                Total value of the informed limit expressed in monetary value with minimum 2 and maximum 4 decimal places.
             currency:
               type: string
               pattern: '^[A-Z]{3}$'
               maxLength: 3
               description: |
-                Moeda referente ao limite informado, segundo modelo ISO-4217. p.ex. 'BRL.' Todos os limite informados estão representados com a moeda vigente do Brasil.
+                Currency referring to the informed limit, according to ISO-4217 model. e.g. 'BRL.' All limits informed are represented with the current currency of Brazil.
               example: BRL
     CreditCardsAccountPaymentMethod:
       type: object
-      description: Conjunto de informações relativas aos Meios de Pagamento da Conta de pagamento pós-paga
+      description: Set of information regarding the Payment Methods of the Post-paid payment account
       required:
         - identificationNumber
         - isMultipleCreditCard
@@ -714,7 +714,7 @@ components:
         identificationNumber:
           type: string
           description: |
-            Número de identificação do cartão: corresponde aos 4 últimos dígitos do cartão para pessoa natural, ou então, preencher com um identificador para pessoa jurídica, com as características definidas para os IDs no Open Finance.
+            Card identification number: corresponds to the last 4 digits of the card for individuals, or fill with an identifier for legal entities, with the characteristics defined for IDs in Open Finance.
           maxLength: 100
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
@@ -722,12 +722,12 @@ components:
         isMultipleCreditCard:
           type: boolean
           description: |
-            Indica se o Cartão de crédito associado à conta pagamento pós-paga é múltiplo ou não. Cartões denominados múltiplos possuem tanto a função crédito quanto a função débito, devendo o proprietário do cartão, no momento de sua utilização, informar se o pagamento é na função crédito (que leva a um pagamento futuro, por meio de uma fatura do cartão de crédito) ou na função débito.
+            Indicates if the Credit card associated with the post-paid payment account is multiple or not. Cards called multiple have both credit function and debit function, requiring the card owner, at the time of its use, to inform if the payment is in credit function (which leads to a future payment, through a credit card bill) or in debit function.
           example: true
     CreditCardsLimitAmount:
       type: object
       description: |
-        Valor total do limite concedido.
+        Total value of the granted limit.
       required:
         - amount
         - currency
@@ -740,31 +740,31 @@ components:
           minLength: 4
           example: '1000.0400'
           description: |
-            Valor total do limite informado expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+            Total value of the informed limit expressed in monetary value with minimum 2 and maximum 4 decimal places.
 
-            [Restrição] O campo é obrigatório caso isLimitFlexible for igual a false.
+            [Restriction] The field is mandatory if isLimitFlexible is equal to false.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: |
-            Moeda referente ao limite informado, segundo modelo ISO-4217. p.ex. 'BRL.'
-            Todos os limite informados estão representados com a moeda vigente do Brasil.
+            Currency referring to the informed limit, according to ISO-4217 model. e.g. 'BRL.'
+            All limits informed are represented with the current currency of Brazil.
 
-            [Restrição] O campo é obrigatório caso isLimitFlexible for igual a false.
+            [Restriction] The field is mandatory if isLimitFlexible is equal to false.
           example: BRL
         limitAmountReason:
           type: string
           pattern: '[\w\W\s]*'
           maxLength: 200
           description: |
-            Razão pela qual o valor total do limite informado está igual a zero.
+            Reason why the total value of the informed limit is equal to zero.
 
-            [Restrição] Campo de preenchimento obrigatório quando limitAmount for igual a 0.00.
-          example: O perfil do cliente passou por uma análise e o limite precisou ser zerado
+            [Restriction] Mandatory filling field when limitAmount is equal to 0.00.
+          example: The client's profile went through an analysis and the limit needed to be zeroed
     CreditCardsUsedAmount:
       type: object
-      description: Valor utilizado do limite informado
+      description: Used value of the informed limit
       required:
         - amount
         - currency
@@ -776,19 +776,19 @@ components:
           maxLength: 21
           minLength: 4
           example: '1000.0400'
-          description: Valor utilizado do limite informado expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+          description: Used value of the informed limit expressed in monetary value with minimum 2 and maximum 4 decimal places.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: |
-            Moeda referente ao limite informado, segundo modelo ISO-4217. p.ex. 'BRL.'
-            Todos os saldos informados estão representados com a moeda vigente do Brasil. 
+            Currency referring to the informed limit, according to ISO-4217 model. e.g. 'BRL.'
+            All balances informed are represented with the current currency of Brazil.
           example: BRL
     CreditCardsAvailableAmount:
       type: object
       description: |
-        Valor disponível do limite informado   
+        Available value of the informed limit
       properties:
         amount:
           type: string
@@ -798,18 +798,18 @@ components:
           minLength: 4
           example: '1000.0400'
           description: |
-            Valor disponível do limite informado expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+            Available value of the informed limit expressed in monetary value with minimum 2 and maximum 4 decimal places.
 
-            [Restrição] O campo é obrigatório caso isLimitFlexible for igual a false.
+            [Restriction] The field is mandatory if isLimitFlexible is equal to false.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: |
-            Moeda referente ao limite informado, segundo modelo ISO-4217. p.ex. 'BRL.'
-            Todos os saldos informados estão representados com a moeda vigente do Brasil.  
+            Currency referring to the informed limit, according to ISO-4217 model. e.g. 'BRL.'
+            All balances informed are represented with the current currency of Brazil.
 
-            [Restrição] O campo é obrigatório caso isLimitFlexible for igual a false.
+            [Restriction] The field is mandatory if isLimitFlexible is equal to false.
           example: BRL
     CreditCardsBillTotalAmount:
       type: object
@@ -817,8 +817,8 @@ components:
         - amount
         - currency
       description: |
-        Valor total da faturas.
-        O campo deve assumir valor positivo para saldo devedor e negativo para saldo credor.
+        Total value of bills.
+        The field should assume positive value for debit balance and negative for credit balance.
       properties:
         amount:
           type: string
@@ -827,12 +827,12 @@ components:
           maxLength: 21
           minLength: 4
           example: '1000.0400'
-          description: Valor total da faturas. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+          description: Total value of bills. Expressed in monetary value with minimum 2 and maximum 4 decimal places.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency referring to the monetary value, following the ISO-4217 model.'
           example: BRL
     CreditCardAccountsBillMinimumAmount:
       type: object
@@ -840,7 +840,7 @@ components:
         - amount
         - currency
       description: |
-        Valor do pagamento minimo da fatura
+        Minimum payment value of the bill
       properties:
         amount:
           type: string
@@ -849,16 +849,16 @@ components:
           maxLength: 20
           minLength: 4
           example: '1000.0400'
-          description: Valor do pagamento minimo da fatura
+          description: Minimum payment value of the bill
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency referring to the monetary value, following the ISO-4217 model.'
           example: BRL
     CreditCardAccountsBillsTransactions:
       type: object
-      description: Lista que traz os valores relativos aos saldos do Limite de crédito total da conta de pagamento pós-paga
+      description: List that brings the values relative to the balances of the Total credit limit of the post-paid payment account
       required:
         - transactionId
         - identificationNumber
@@ -877,8 +877,8 @@ components:
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
           description: |
-            Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual. 
-            É esperado que o `transactionId` seja único, imutável e estável.
+            Code or unique identifier provided by the institution that maintains the account to represent the individual transaction.
+            It is expected that `transactionId` be unique, immutable and stable.
         identificationNumber:
           type: string
           maxLength: 100
@@ -886,20 +886,20 @@ components:
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: '4453'
           description: |
-            Número de identificação do cartão: corresponde aos 4 últimos dígitos do cartão para PF, ou então, preencher com um identificador para PJ, com as caracteristicas definidas para os IDs no Open Finance.
+            Card identification number: corresponds to the last 4 digits of the card for individuals, or fill with an identifier for legal entities, with the characteristics defined for IDs in Open Finance.
         transactionName:
           type: string
           maxLength: 200
           pattern: '[\w\W\s]*'
-          example: PGTO
-          description: Literal usada na instituição financeira para identificar a transação. A informação apresentada precisa ser a mesma utilizada nos canais eletrônicos da instituição (extrato e fatura).
+          example: PAYMENT
+          description: Literal used in the financial institution to identify the transaction. The information presented must be the same used in the institution's electronic channels (statement and bill).
         billId:
           type: string
           maxLength: 100
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: MTU0OTU1NjI2NTk4OTRmc2ZhZDRmc2Q1NmZkM
-          description: Informação que identifica a fatura onde consta a transação informada.
+          description: Information that identifies the bill where the informed transaction appears.
         creditDebitType:
           $ref: '#/components/schemas/EnumCreditDebitIndicator'
         transactionType:
@@ -908,7 +908,7 @@ components:
           type: string
           maxLength: 140
           pattern: '^\S[\s\S]*$'
-          description: 'Campo livre, de preenchimento obrigatório quando selecionado tipo de transação "OUTROS"'
+          description: 'Free field, mandatory filling when transaction type "OTHERS" is selected'
         paymentType:
           $ref: '#/components/schemas/EnumCreditCardAccountsPaymentType'
         feeType:
@@ -917,7 +917,7 @@ components:
           type: string
           pattern: '^\S[\s\S]*$'
           maxLength: 140
-          description: 'Campo livre, de preenchimento obrigatório quando selecionada tipo de tarifa "OUTRA"'
+          description: 'Free field, mandatory filling when fee type "OTHER" is selected'
         otherCreditsType:
           $ref: '#/components/schemas/EnumCreditCardAccountsOtherCreditType'
         otherCreditsAdditionalInfo:
@@ -925,16 +925,16 @@ components:
           maxLength: 50
           pattern: '^\S[\s\S]*$'
           description: |
-            Campo livre para preenchimento de dados adicionais de outros tipos de crédito contratados no cartão.
+            Free field for filling additional data of other credit types contracted on the card.
 
-            [Restrição] Preenchimento obrigatório quando selecionado no campo outros tipos de crédito "OUTROS".
+            [Restriction] Mandatory filling when "OTHERS" is selected in the other credit types field.
         chargeIdentificator:
           type: number
           format: integer
           description: |
-            Número da parcela que está sendo informada.
+            Number of the installment being informed.
 
-            [Restrição] Preenchimento obrigatório se Tipo de Pagamento (paymentType) selecionada for 'A_PRAZO'.
+            [Restriction] Mandatory filling if Payment Type (paymentType) selected is 'INSTALLMENT'.
           minimum: 1
           maximum: 999
           example: 12
@@ -944,8 +944,8 @@ components:
           maximum: 999
           example: 12
           description: |
-            Quantidade de parcelas.   
-            [Restrição] O campo deve ser preenchido quando houverem parcelas relacionadas a transação.
+            Quantity of installments.
+            [Restriction] The field must be filled when there are installments related to the transaction.
         brazilianAmount:
           $ref: '#/components/schemas/CreditCardAccountsTransactionBrazilianAmount'
         amount:
@@ -957,24 +957,24 @@ components:
           pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)'
           example: '2016-01-29T12:29:03.374Z'
           description: |
-            Data e hora da transação disponível para os clientes nos canais digitais da instituição. Neste momento, é obrigatório preencher com dados reais com precisão de data, hora e minuto, mesmo que a instituição não exiba para o cliente nesse nível de granularidade, em algumas situações. Dessa forma, os segundos e milissegundos podem ser preenchidos com zero (0), por exemplo: 2024-01-29T11:15:00.000Z.
+            Date and time of the transaction available to clients in the institution's digital channels. At this moment, it is mandatory to fill with real data with date, hour and minute precision, even if the institution does not display to the client at this level of granularity, in some situations. Thus, seconds and milliseconds can be filled with zero (0), for example: 2024-01-29T11:15:00.000Z.
         billPostDate:
           type: string
           format: date
           maxLength: 20
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
-          description: Data em que a transação foi inserida na fatura
+          description: Date when the transaction was inserted in the bill
         payeeMCC:
           type: number
           format: integer
           maximum: 2147483647
           example: 5137
           description: |
-            O MCC ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades. O MCC é usado para classificar o negócio pelo tipo fornecido de bens ou serviços. Os MCCs são atribuídos por tipo de comerciante (por exemplo, um para hotéis, um para lojas de materiais de escritório, etc.) ou por nome de comerciante (por exemplo, 3000 para a United Airlines).
+            The MCC or the merchant category code. MCCs are grouped according to their similarities. The MCC is used to classify the business by the provided type of goods or services. MCCs are assigned by merchant type (e.g., one for hotels, one for office supply stores, etc.) or by merchant name (e.g., 3000 for United Airlines).
     CreditCardAccountsTransaction:
       type: object
-      description: Lista que traz os valores relativos aos saldos do Limite de crédito total da conta de pagamento pós-paga
+      description: List that brings the values relative to the balances of the Total credit limit of the post-paid payment account
       required:
         - transactionId
         - identificationNumber
@@ -993,11 +993,11 @@ components:
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
           description: |
-            Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual. 
-            O ideal é que o `transactionId` seja imutável. 
-            No entanto, para casos em que a transação ainda está em processamento, é esperado que o `transactionId` intermediário seja estável, mudando apenas quando a transação sofrer uma mudança em seu estado. 
-            Para transações processadas, é esperado que o `transactionld` e demais dados da transação sejam imutáveis. 
-            O `transactionId` deve obedecer, no mínimo, as regras de imutabilidade propostas conforme a tabela “Data de imutabilidade por tipo de transação” presente nas orientações desta API
+            Code or unique identifier provided by the institution that maintains the account to represent the individual transaction.
+            Ideally, `transactionId` should be immutable.
+            However, for cases where the transaction is still being processed, it is expected that the intermediate `transactionId` be stable, changing only when the transaction undergoes a change in its state.
+            For processed transactions, it is expected that `transactionId` and other transaction data be immutable.
+            `transactionId` must obey, at minimum, the immutability rules proposed according to the table "Data immutability by transaction type" present in the guidelines of this API
         identificationNumber:
           type: string
           maxLength: 100
@@ -1005,20 +1005,20 @@ components:
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: '4453'
           description: |
-            Número de identificação do cartão: corresponde aos 4 últimos dígitos do cartão para PF, ou então, preencher com um identificador para PJ, com as caracteristicas definidas para os IDs no Open Finance.
+            Card identification number: corresponds to the last 4 digits of the card for individuals, or fill with an identifier for legal entities, with the characteristics defined for IDs in Open Finance.
         transactionName:
           type: string
           maxLength: 200
           pattern: '[\w\W\s]*'
-          example: PGTO
-          description: Literal usada na instituição financeira para identificar a transação. A informação apresentada precisa ser a mesma utilizada nos canais eletrônicos da instituição (extrato e fatura).
+          example: PAYMENT
+          description: Literal used in the financial institution to identify the transaction. The information presented must be the same used in the institution's electronic channels (statement and bill).
         billId:
           type: string
           maxLength: 100
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: MTU0OTU1NjI2NTk4OTRmc2ZhZDRmc2Q1NmZkM
-          description: Informação que identifica a fatura onde consta a transação informada. Preencher apenas para casos de transação em fatura fechada, ou seja, este campo não é esperado em casos de transação em fatura aberta.
+          description: Information that identifies the bill where the informed transaction appears. Fill only for cases of transaction in closed bill, that is, this field is not expected in cases of transaction in open bill.
         creditDebitType:
           $ref: '#/components/schemas/EnumCreditDebitIndicator'
         transactionType:
@@ -1027,7 +1027,7 @@ components:
           type: string
           maxLength: 140
           pattern: '^\S[\s\S]*$'
-          description: 'Campo livre, de preenchimento obrigatório quando selecionado tipo de transação "OUTROS"'
+          description: 'Free field, mandatory filling when transaction type "OTHERS" is selected'
         paymentType:
           $ref: '#/components/schemas/EnumCreditCardAccountsPaymentType'
         feeType:
@@ -1036,7 +1036,7 @@ components:
           type: string
           pattern: '^\S[\s\S]*$'
           maxLength: 140
-          description: 'Campo livre, de preenchimento obrigatório quando selecionada tipo de tarifa "OUTRA"'
+          description: 'Free field, mandatory filling when fee type "OTHER" is selected'
         otherCreditsType:
           $ref: '#/components/schemas/EnumCreditCardAccountsOtherCreditType'
         otherCreditsAdditionalInfo:
@@ -1044,16 +1044,16 @@ components:
           maxLength: 50
           pattern: '^\S[\s\S]*$'
           description: |
-            Campo livre para preenchimento de dados adicionais de outros tipos de crédito contratados no cartão.
+            Free field for filling additional data of other credit types contracted on the card.
 
-            [Restrição] Preenchimento obrigatório quando selecionado no campo outros tipos de crédito "OUTROS".
+            [Restriction] Mandatory filling when "OTHERS" is selected in the other credit types field.
         chargeIdentificator:
           type: number
           format: integer
           description: |
-            Número da parcela que está sendo informada.
+            Number of the installment being informed.
 
-            [Restrição] Preenchimento obrigatório se Tipo de Pagamento (paymentType) selecionada for 'A_PRAZO'.
+            [Restriction] Mandatory filling if Payment Type (paymentType) selected is 'INSTALLMENT'.
           minimum: 1
           maximum: 999
           example: 12
@@ -1063,8 +1063,8 @@ components:
           maximum: 999
           example: 12
           description: |
-            Quantidade de parcelas.   
-            [Restrição] O campo deve ser preenchido quando houverem parcelas relacionadas a transação.
+            Quantity of installments.
+            [Restriction] The field must be filled when there are installments related to the transaction.
         brazilianAmount:
           $ref: '#/components/schemas/CreditCardAccountsTransactionBrazilianAmount'
         amount:
@@ -1076,7 +1076,7 @@ components:
           pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)'
           example: '2016-01-29T12:29:03.374Z'
           description: |
-            Data e hora da transação disponível para os clientes nos canais digitais da instituição. Neste momento, é obrigatório preencher com dados reais com precisão de data, hora e minuto, mesmo que a instituição não exiba para o cliente nesse nível de granularidade, em algumas situações. Dessa forma, os segundos e milissegundos podem ser preenchidos com zero (0), por exemplo: 2024-01-29T11:15:00.000Z.
+            Date and time of the transaction available to clients in the institution's digital channels. At this moment, it is mandatory to fill with real data with date, hour and minute precision, even if the institution does not display to the client at this level of granularity, in some situations. Thus, seconds and milliseconds can be filled with zero (0), for example: 2024-01-29T11:15:00.000Z.
         billPostDate:
           type: string
           format: date
@@ -1084,193 +1084,193 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
           description: |
-            Data em que a transação foi inserida na fatura. Preencher o campo com a data dummy: 0001-01-01, apenas para os casos nos quais ainda não houver a data de inserção na fatura.
+            Date when the transaction was inserted in the bill. Fill the field with dummy date: 0001-01-01, only for cases where there is not yet the insertion date in the bill.
         payeeMCC:
           type: number
           format: integer
           maximum: 2147483647
           example: 5137
           description: |
-            O MCC ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades. O MCC é usado para classificar o negócio pelo tipo fornecido de bens ou serviços. Os MCCs são atribuídos por tipo de comerciante (por exemplo, um para hotéis, um para lojas de materiais de escritório, etc.) ou por nome de comerciante (por exemplo, 3000 para a United Airlines).
+            The MCC or the merchant category code. MCCs are grouped according to their similarities. The MCC is used to classify the business by the provided type of goods or services. MCCs are assigned by merchant type (e.g., one for hotels, one for office supply stores, etc.) or by merchant name (e.g., 3000 for United Airlines).
     EnumCreditCardAccountFee:
       type: string
       description: |
-        Traz os tipos de Tarifas: (Vide Enum) Anuidade, Saque com cartão no Brasil, Saque com cartão no exterior, Avaliação emergencial de crédito, Emissão segunda via, Tarifa pagamento de contas, SMS, OUTRA.
+        Brings the types of Fees: (See Enum) Annual fee, Card withdrawal in Brazil, Card withdrawal abroad, Emergency credit evaluation, Second copy issuance, Bill payment fee, SMS, OTHER.
 
-        [Restrição] Preenchimento obrigatório se Tipo de Transação selecionada for 'TARIFA'.
+        [Restriction] Mandatory filling if Transaction Type selected is 'FEE'.
       enum:
-        - ANUIDADE
-        - SAQUE_CARTAO_BRASIL
-        - SAQUE_CARTAO_EXTERIOR
-        - AVALIACAO_EMERGENCIAL_CREDITO
-        - EMISSAO_SEGUNDA_VIA
-        - TARIFA_PAGAMENTO_CONTAS
+        - ANNUAL_FEE
+        - CARD_WITHDRAWAL_BRAZIL
+        - CARD_WITHDRAWAL_ABROAD
+        - EMERGENCY_CREDIT_EVALUATION
+        - SECOND_COPY_ISSUANCE
+        - BILL_PAYMENT_FEE
         - SMS
-        - OUTRA
-      example: ANUIDADE
+        - OTHER
+      example: ANNUAL_FEE
     EnumCreditCardAccountsBillingValueType:
       type: string
       description: |
-        Traz os tipos dos valores relativos aos pagamentos da fatura da conta de pagamento pós-paga: (Vide Enum)
-         - Valor de pagamento da fatura com parcelamento
-         - Valor pagamento da fatura realizado
-         - Outro Valor pago na fatura
+        Brings the types of values relative to bill payments of the post-paid payment account: (See Enum)
+         - Bill payment value with installment
+         - Bill payment value made
+         - Other value paid on the bill
 
-         VALOR_PAGAMENTO_FATURA_PARCELADO: Quando o pagamento corresponde ao fato gerador para abertura do plano de parcelamento da fatura
+         BILL_PAYMENT_VALUE_INSTALLMENT: When the payment corresponds to the triggering event for opening the bill installment plan
 
-         VALOR_PAGAMENTO_FATURA_REALIZADO: Quando o pagamento corresponde ao valor total da fatura
+         BILL_PAYMENT_VALUE_MADE: When the payment corresponds to the total bill value
 
-         OUTRO_VALOR_PAGO_FATURA: Demais casos
+         OTHER_VALUE_PAID_BILL: Other cases
       enum:
-        - VALOR_PAGAMENTO_FATURA_PARCELADO
-        - VALOR_PAGAMENTO_FATURA_REALIZADO
-        - OUTRO_VALOR_PAGO_FATURA
+        - BILL_PAYMENT_VALUE_INSTALLMENT
+        - BILL_PAYMENT_VALUE_MADE
+        - OTHER_VALUE_PAID_BILL
     EnumCreditCardAccountsConsolidationType:
       type: string
       description: |
-        Indicador que permite informar se o valor do limite é consolidado ou individual.
+        Indicator that allows informing if the limit value is consolidated or individual.
 
-        CONSOLIDADO: utilizado quando o limite da conta cartão é compartilhado entre todos os métodos de pagamento (paymentMethod) atrelados a conta.
+        CONSOLIDATED: used when the card account limit is shared among all payment methods (paymentMethod) linked to the account.
 
-        INDIVIDUAL: Utilizado quando cada método de pagamento (paymentMethod) possui seu limite segregado.
+        INDIVIDUAL: Used when each payment method (paymentMethod) has its segregated limit.
       enum:
-        - CONSOLIDADO
+        - CONSOLIDATED
         - INDIVIDUAL
-      example: CONSOLIDADO
+      example: CONSOLIDATED
     EnumCreditCardAccountsFinanceChargeType:
       type: string
       description: |
-        Traz a denominação dos Encargos que
-        incidem na fatura da conta de pagamento pós-paga. (Vide Enum)
-        - Juros remuneratórios por atraso no pagamento da fatura
-        - Multa por atraso no pagamento da fatura
-        - Juros de mora por atraso no pagamento da fatura
+        Brings the denomination of Charges that
+        apply to the bill of the post-paid payment account. (See Enum)
+        - Remuneratory interest for delay in bill payment
+        - Fine for delay in bill payment
+        - Default interest for delay in bill payment
         - IOF
-        - Outros
+        - Others
       enum:
-        - JUROS_REMUNERATORIOS_ATRASO_PAGAMENTO_FATURA
-        - MULTA_ATRASO_PAGAMENTO_FATURA
-        - JUROS_MORA_ATRASO_PAGAMENTO_FATURA
+        - REMUNERATORY_INTEREST_DELAY_BILL_PAYMENT
+        - FINE_DELAY_BILL_PAYMENT
+        - DEFAULT_INTEREST_DELAY_BILL_PAYMENT
         - IOF
-        - OUTROS
+        - OTHERS
     EnumCreditCardAccountsLineLimitType:
       type: string
       description: |
-        Indicador do tipo de limite
+        Type of limit indicator
 
-        LIMITE_CREDITO_TOTAL: Limite de crédito total aplicado a conta cartão.
+        TOTAL_CREDIT_LIMIT: Total credit limit applied to the card account.
 
-        LIMITE_CREDITO_MODALIDADE_OPERACAO: Limite de crédito por modalidade desse conta cartão (observar lineName e listar os aplicáveis da instituição).
+        OPERATION_MODALITY_CREDIT_LIMIT: Credit limit by modality of this card account (observe lineName and list applicable ones from the institution).
       enum:
-        - LIMITE_CREDITO_TOTAL
-        - LIMITE_CREDITO_MODALIDADE_OPERACAO
-      example: LIMITE_CREDITO_TOTAL
+        - TOTAL_CREDIT_LIMIT
+        - OPERATION_MODALITY_CREDIT_LIMIT
+      example: TOTAL_CREDIT_LIMIT
     EnumCreditCardAccountNetwork:
       type: string
       description: |
-        Categoria de Bandeiras de Cartões de Crédito (Instituidor do arranjo de pagamento).
-        Bandeira é a detentora de todos os direitos e deveres da utilização da marca estampada no cartão, inclusive as bandeiras pertencentes aos emissores.
+        Category of Credit Card Brands (Payment arrangement initiator).
+        Brand is the holder of all rights and duties of using the brand stamped on the card, including brands belonging to issuers.
       enum:
         - VISA
         - MASTERCARD
         - AMERICAN_EXPRESS
         - DINERS_CLUB
         - HIPERCARD
-        - BANDEIRA_PROPRIA
-        - CHEQUE_ELETRONICO
+        - OWN_BRAND
+        - ELECTRONIC_CHECK
         - ELO
-        - OUTRAS
+        - OTHERS
       example: VISA
     EnumCreditCardAccountsOtherCreditType:
       type: string
       description: |
-        Traz outros tipos de crédito contratados no cartão.
+        Brings other types of credit contracted on the card.
 
-        [Restrição] Preenchimento obrigatório se o tipo transação selecionado for 'OPERACOES_CREDITO_CONTRATADAS_CARTAO'.
+        [Restriction] Mandatory filling if transaction type selected is 'CREDIT_OPERATIONS_CONTRACTED_CARD'.
       enum:
-        - CREDITO_ROTATIVO
-        - PARCELAMENTO_FATURA
-        - EMPRESTIMO
-        - OUTROS
-      example: CREDITO_ROTATIVO
+        - REVOLVING_CREDIT
+        - BILL_INSTALLMENT
+        - LOAN
+        - OTHERS
+      example: REVOLVING_CREDIT
     EnumCreditCardAccountsPaymentMode:
       type: string
       description: |
-        Traz as formas de efetivação do pagamento realizado: (Vide Enum)
-        - Débito em conta corrente
-        - Boleto bancário
-        - Averbação em folha
+        Brings the forms of payment execution made: (See Enum)
+        - Debit in checking account
+        - Bank slip
+        - Payroll deduction
         - PIX
       enum:
-        - DEBITO_CONTA_CORRENTE
-        - BOLETO_BANCARIO
-        - AVERBACAO_FOLHA
+        - DEBIT_CHECKING_ACCOUNT
+        - BANK_SLIP
+        - PAYROLL_DEDUCTION
         - PIX
     EnumCreditCardAccountsPaymentType:
       type: string
       description: |
-        Traz os tipos de pagamento.
+        Brings the payment types.
 
-        [Restrição] Preenchimento obrigatório se Tipo de Transação selecionada for 'PAGAMENTO'.
+        [Restriction] Mandatory filling if Transaction Type selected is 'PAYMENT'.
       enum:
-        - A_VISTA
-        - A_PRAZO
-      example: A_VISTA
+        - CASH
+        - INSTALLMENT
+      example: CASH
     EnumCreditCardAccountsProductType:
       type: string
-      description: 'Categoria atribuída a um cartão de pagamento, sob uma certa denominação, que lhe agrega um conjunto de vantagens, diferenciando-o de acordo com o perfil do portador.'
+      description: 'Category assigned to a payment card, under a certain denomination, that aggregates a set of advantages, differentiating it according to the holders profile.'
       enum:
-        - CLASSIC_NACIONAL
-        - CLASSIC_INTERNACIONAL
+        - CLASSIC_NATIONAL
+        - CLASSIC_INTERNATIONAL
         - GOLD
         - PLATINUM
         - INFINITE
         - ELECTRON
-        - STANDARD_NACIONAL
-        - STANDARD_INTERNACIONAL
-        - ELETRONIC
+        - STANDARD_NATIONAL
+        - STANDARD_INTERNATIONAL
+        - ELECTRONIC
         - BLACK
         - REDESHOP
         - MAESTRO_MASTERCARD_MAESTRO
         - GREEN
         - BLUE
         - BLUEBOX
-        - PROFISSIONAL_LIBERAL
-        - CHEQUE_ELETRONICO
-        - CORPORATIVO
-        - EMPRESARIAL
-        - COMPRAS
-        - BASICO_NACIONAL
-        - BASICO_INTERNACIONAL
+        - PROFESSIONAL
+        - ELECTRONIC_CHECK
+        - CORPORATE
+        - BUSINESS
+        - SHOPPING
+        - BASIC_NATIONAL
+        - BASIC_INTERNATIONAL
         - NANQUIM
-        - GRAFITE
+        - GRAPHITE
         - MAIS
-        - OUTROS
-      example: OUTROS
+        - OTHERS
+      example: OTHERS
     EnumCreditCardTransactionType:
       type: string
-      description: Traz os tipos de Transação
+      description: Brings the Transaction types
       enum:
-        - PAGAMENTO
-        - TARIFA
-        - OPERACOES_CREDITO_CONTRATADAS_CARTAO
-        - ESTORNO
+        - PAYMENT
+        - FEE
+        - CREDIT_OPERATIONS_CONTRACTED_CARD
+        - REVERSAL
         - CASHBACK
-        - OUTROS
+        - OTHERS
       example: CASHBACK
     EnumCreditDebitIndicator:
       type: string
       description: |
-        Indicador do tipo de lançamento: 
-        Débito (no extrato) Em um extrato bancário, os débitos, marcados com a letra “D” ao lado do valor registrado, informam as saídas de dinheiro na conta-corrente.
-        Crédito (no extrato) Em um extrato bancário, os créditos, marcados com a letra “C” ao lado do valor registrado, informam as entradas de dinheiro na conta-corrente.
+        Type of entry indicator:
+        Debit (in statement) In a bank statement, debits, marked with the letter "D" next to the recorded value, inform the money outflows in the checking account.
+        Credit (in statement) In a bank statement, credits, marked with the letter "C" next to the recorded value, inform the money inflows in the checking account.
       enum:
-        - CREDITO
-        - DEBITO
-      example: DEBITO
+        - CREDIT
+        - DEBIT
+      example: DEBIT
     Links:
       type: object
-      description: Referências para outros recusos da API requisitada.
+      description: References to other resources of the requested API.
       required:
         - self
       properties:
@@ -1278,40 +1278,40 @@ components:
           type: string
           format: uri
           maxLength: 2000
-          description: URI completo que gerou a resposta atual.
-          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
+          description: Complete URI that generated the current response.
+          example: 'https://api.bank.com.br/open-banking/api/v2/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
           type: string
           format: uri
           maxLength: 2000
-          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
+          example: 'https://api.bank.com.br/open-banking/api/v2/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         prev:
           type: string
           format: uri
           maxLength: 2000
-          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
-          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
+          description: "URI of the previous page of this result list. Restriction - Mandatory when not the first page of the response"
+          example: 'https://api.bank.com.br/open-banking/api/v2/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
           format: uri
           maxLength: 2000
-          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.bank.com.br/open-banking/api/v2/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         last:
           type: string
           format: uri
           maxLength: 2000
-          description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
+          description: URI of the last page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.bank.com.br/open-banking/api/v2/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
     Meta:
       type: object
-      description: Meta informações referente à API requisitada.
+      description: Meta information regarding the requested API.
       required:
         - totalRecords
         - totalPages
@@ -1320,27 +1320,27 @@ components:
         totalRecords:
           type: integer
           format: int32
-          description: Número total de registros no resultado
+          description: Total number of records in the result
           example: 1
         totalPages:
           type: integer
           format: int32
-          description: Número total de páginas no resultado
+          description: Total number of pages in the result
           example: 1
         requestDateTime:
-          description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+          description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
           type: string
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
     MetaOnlyRequestDateTime:
       type: object
-      description: Meta informações referente à API requisitada.
+      description: Meta information regarding the requested API.
       required:
         - requestDateTime
       properties:
         requestDateTime:
-          description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+          description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
           type: string
           maxLength: 20
           format: date-time
@@ -1354,7 +1354,7 @@ components:
       properties:
         data:
           type: array
-          description: Conjunto de informações de conta de pagamento pós-paga
+          description: Set of information of post-paid payment account
           items:
             $ref: '#/components/schemas/CreditCardAccountsData'
           minItems: 0
@@ -1401,11 +1401,11 @@ components:
         data:
           type: array
           description: |
-            [Restrição] A lista vazia deve ser interpretada como a ausência da informação.
+            [Restriction] The empty list should be interpreted as the absence of the information.
 
-            Cenário de limite com valor zerado, deve ter um registro explícito informando o valor como zero.
+            Scenario of limit with zeroed value, should have an explicit record informing the value as zero.
 
-            Cenário de "cartão sem limite", isto é, cartões em que o uso do limite é ilimitado, deve ser informado em um registro explícito com isLimitFlexible como true.
+            Scenario of "card without limit", that is, cards where limit usage is unlimited, should be informed in an explicit record with isLimitFlexible as true.
           minItems: 0
           items:
             $ref: '#/components/schemas/CreditCardAccountsLimitsData'
@@ -1446,17 +1446,17 @@ components:
               - detail
             properties:
               code:
-                description: Código de erro específico do endpoint
+                description: Specific error code of the endpoint
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               title:
-                description: Título legível por humanos deste erro específico
+                description: Human-readable title of this specific error
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               detail:
-                description: Descrição legível por humanos deste erro específico
+                description: Human-readable description of this specific error
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 2048
@@ -1479,17 +1479,17 @@ components:
               - detail
             properties:
               code:
-                description: Código de erro específico do endpoint
+                description: Specific error code of the endpoint
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               title:
-                description: Título legível por humanos deste erro específico
+                description: Human-readable title of this specific error
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               detail:
-                description: Descrição legível por humanos deste erro específico
+                description: Human-readable description of this specific error
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 2048
@@ -1497,7 +1497,7 @@ components:
           $ref: '#/components/schemas/Meta'
     TransactionsLinks:
       type: object
-      description: Referências para outros recusos da API requisitada.
+      description: References to other resources of the requested API.
       required:
         - self
       properties:
@@ -1505,29 +1505,29 @@ components:
           type: string
           format: uri
           maxLength: 2000
-          description: URI completo que gerou a resposta atual.
-          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
+          description: Complete URI that generated the current response.
+          example: 'https://api.bank.com.br/open-banking/api/v2/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
           type: string
           format: uri
           maxLength: 2000
-          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
+          example: 'https://api.bank.com.br/open-banking/api/v2/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         prev:
           type: string
           format: uri
           maxLength: 2000
-          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
-          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
+          description: "URI of the previous page of this result list. Restriction - Mandatory when not the first page of the response"
+          example: 'https://api.bank.com.br/open-banking/api/v2/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
           format: uri
           maxLength: 2000
-          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.bank.com.br/open-banking/api/v2/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
     XFapiInteractionId:
       type: string
@@ -1535,23 +1535,23 @@ components:
       maxLength: 36
       pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
-      description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+      description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.'
   parameters:
     SetupID:
       name: setupId
       in: header
       description: |
-          O SetupUUID é o identificador único no ODR (GUID).  
-          Deverá ser usado para realizar todas as outras chamadas no ODR, como busca de contas, transações, etc.
+          The SetupUUID is the unique identifier in ODR (GUID).
+          Should be used to make all other calls in ODR, such as account search, transactions, etc.
       required: true
       schema:
         type: string
         format: uuid
-        example: '550e8400-e29b-41d4-a716-446655440000'  
+        example: '550e8400-e29b-41d4-a716-446655440000'
     billId:
       name: billId
       in: path
-      description: Identificador da fatura.
+      description: Bill identifier.
       required: true
       schema:
         type: string
@@ -1560,7 +1560,7 @@ components:
     creditCardAccountId:
       name: creditCardAccountId
       in: path
-      description: 'Identifica de forma única a conta pagamento pós-paga do cliente, mantendo as regras de imutabilidade detro da instituição transmissora'
+      description: 'Uniquely identifies the clients post-paid payment account, maintaining the rules of immutability within the transmitting institution'
       required: true
       schema:
         type: string
@@ -1568,7 +1568,7 @@ components:
         maxLength: 100
     creditCardPayeeMCC:
       name: payeeMCC
-      description: 'MCC é o Merchant Category Code, ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades'
+      description: 'MCC is the Merchant Category Code, or the merchant category code. MCCs are grouped according to their similarities'
       required: false
       in: query
       schema:
@@ -1578,14 +1578,14 @@ components:
         format: int32
     creditCardTransactionType:
       name: transactionType
-      description: Traz os tipos de Transação
+      description: Brings the Transaction types
       required: false
       in: query
       schema:
         $ref: '#/components/schemas/EnumCreditCardTransactionType'
     fromDueDate:
       name: fromDueDate
-      description: Data inicial de filtragem.
+      description: Initial filtering date.
       required: false
       in: query
       schema:
@@ -1596,9 +1596,9 @@ components:
     fromTransactionDate:
       name: fromTransactionDate
       description: |
-        Data inicial de filtragem.
+        Initial filtering date.
 
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo toTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        [Restriction] Must be sent if the toTransactionDate field is informed. If not informed, the current day must be assumed.
       required: false
       in: query
       schema:
@@ -1609,9 +1609,9 @@ components:
     fromTransactionDateMaxLimited:
       name: fromTransactionDate
       description: |
-        Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).
+        Initial filtering date. The maximum period used in the filter is 7 days inclusive (D-6).
 
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo toTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        [Restriction] Must be sent if the toTransactionDate field is informed. If not informed, the current day must be assumed.
       required: false
       in: query
       schema:
@@ -1622,7 +1622,7 @@ components:
     page:
       name: page
       in: query
-      description: Número da página que está sendo requisitada (o valor da primeira página é 1).
+      description: Number of the page being requested (value of the first page is 1).
       schema:
         type: integer
         default: 1
@@ -1632,7 +1632,7 @@ components:
     pageSize:
       name: page-size
       in: query
-      description: Quantidade total de registros por páginas.
+      description: Total quantity of records per pages.
       schema:
         type: integer
         default: 25
@@ -1642,14 +1642,14 @@ components:
     pagination-key:
       name: pagination-key
       in: query
-      description: 'Identificador de rechamada, utilizado para evitar a contagem de chamadas ao endpoint durante a paginação.'
+      description: 'Recall identifier, used to avoid endpoint call counting during pagination.'
       schema:
         type: string
         maxLength: 2048
         pattern: '[\w\W\s]*'
     toDueDate:
       name: toDueDate
-      description: Data final de filtragem.
+      description: Final filtering date.
       required: false
       in: query
       schema:
@@ -1660,9 +1660,9 @@ components:
     toTransactionDate:
       name: toTransactionDate
       description: |
-        Data final de filtragem.
+        Final filtering date.
 
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        [Restriction] Must be sent if the fromTransactionDate field is informed. If not informed, the current day must be assumed.
       required: false
       in: query
       schema:
@@ -1673,9 +1673,9 @@ components:
     toTransactionDateMaxLimited:
       name: toTransactionDate
       description: |
-        Data final de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).
+        Final filtering date. The maximum period used in the filter is 7 days inclusive (D-6).
 
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        [Restriction] Must be sent if the fromTransactionDate field is informed. If not informed, the current day must be assumed.
       required: false
       in: query
       schema:
@@ -1686,7 +1686,7 @@ components:
     xCustomerUserAgent:
       name: x-customer-user-agent
       in: header
-      description: Indica o user-agent que o usuário utiliza.
+      description: Indicates the user-agent that the user uses.
       required: false
       schema:
         type: string
@@ -1696,7 +1696,7 @@ components:
     xFapiAuthDate:
       name: x-fapi-auth-date
       in: header
-      description: 'Data em que o usuário logou pela última vez com o receptor. Representada de acordo com a [RFC7231](https://tools.ietf.org/html/rfc7231).Exemplo: Sun, 10 Sep 2017 19:43:31 UTC'
+      description: 'Date when the user last logged in with the receiver. Represented according to [RFC7231](https://tools.ietf.org/html/rfc7231).Example: Sun, 10 Sep 2017 19:43:31 UTC'
       required: false
       schema:
         type: string
@@ -1706,7 +1706,7 @@ components:
     xFapiCustomerIpAddress:
       name: x-fapi-customer-ip-address
       in: header
-      description: O endereço IP do usuário se estiver atualmente logado com o receptor.
+      description: The IP address of the user if currently logged in with the receiver.
       required: false
       schema:
         type: string
@@ -1716,7 +1716,7 @@ components:
     xFapiInteractionId:
       name: x-fapi-interaction-id
       in: header
-      description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+      description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.'
       required: false
       schema:
         type: string
@@ -1727,11 +1727,11 @@ components:
         example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
   responses:
     OKResponseCreditCardAccountsList:
-      description: Conjunto de informações das Contas de pagamento pós paga
+      description: Set of information of Post-paid payment Accounts
       headers:
         x-fapi-interaction-id:
           required: true
-          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.'
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -1739,11 +1739,11 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseCreditCardAccountsList'
     OKResponseCreditCardAccountsIdentification:
-      description: Dados de identificação da conta identificada por creditCardAccountId obtidos com sucesso.
+      description: Identification data of the account identified by creditCardAccountId obtained successfully.
       headers:
         x-fapi-interaction-id:
           required: true
-          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.'
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -1751,11 +1751,11 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseCreditCardAccountsIdentification'
     OKResponseCreditCardAccountsBills:
-      description: Dados referentes à lista de faturas da conta identificada por creditCardAccountId obtidos com sucesso.
+      description: Data regarding the list of bills of the account identified by creditCardAccountId obtained successfully.
       headers:
         x-fapi-interaction-id:
           required: true
-          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.'
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -1763,11 +1763,11 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseCreditCardAccountsBills'
     OKResponseCreditCardAccountsLimits:
-      description: Dados dos limites da conta identificada por creditCardAccountId obtidos com sucesso.
+      description: Limit data of the account identified by creditCardAccountId obtained successfully.
       headers:
         x-fapi-interaction-id:
           required: true
-          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.'
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -1775,11 +1775,11 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseCreditCardAccountsLimits'
     OKResponseCreditCardAccountsTransactions:
-      description: Dados das lista de transações da conta identificada obtidos com sucesso.
+      description: Transaction list data of the identified account obtained successfully.
       headers:
         x-fapi-interaction-id:
           required: true
-          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.'
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -1787,11 +1787,11 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseCreditCardAccountsTransactions'
     OKResponseCreditCardAccountsBillsTransactions:
-      description: Dados das lista de transações da conta identificada obtidos com sucesso.
+      description: Transaction list data of the identified account obtained successfully.
       headers:
         x-fapi-interaction-id:
           required: true
-          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.'
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -1813,19 +1813,19 @@ components:
               meta:
                 $ref: '#/components/schemas/Meta'
     BadRequest:
-      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
+      description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     Forbidden:
-      description: O token tem escopo incorreto ou uma política de segurança foi violada
+      description: The token has incorrect scope or a security policy was violated
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     InternalServerError:
-      description: Ocorreu um erro no gateway da API ou no microsserviço
+      description: An error occurred in the API gateway or microservice
       content:
         application/json; charset=utf-8:
           schema:
@@ -1837,50 +1837,50 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     MethodNotAllowed:
-      description: O consumidor tentou acessar o recurso com um método não suportado
+      description: The consumer tried to access the resource with an unsupported method
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     NotAcceptable:
-      description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
+      description: The request contained an Accept header different from the allowed media types or a character set different from UTF-8
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     NotFound:
-      description: O recurso solicitado não existe ou não foi implementado
+      description: The requested resource does not exist or was not implemented
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     TooManyRequests:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
+      description: 'The operation was refused because too many requests were made within a given period or the global concurrent request limit was reached'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     UnprocessableEntity:
-      description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
+      description: 'The request syntax is correct, but it was not possible to process the present instructions.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     Unauthorized:
-      description: Cabeçalho de autenticação ausente/inválido ou token inválido
+      description: Missing/invalid authentication header or invalid token
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     
     BadRequestWithAdditionalProperties:
-      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
+      description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     ForbiddenWithAdditionalProperties:
-      description: O token tem escopo incorreto ou uma política de segurança foi violada
+      description: The token has incorrect scope or a security policy was violated
       content:
         application/json; charset=utf-8:
           schema:
@@ -1892,39 +1892,38 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseError'
     MethodNotAllowedWithAdditionalProperties:
-      description: O consumidor tentou acessar o recurso com um método não suportado
+      description: The consumer tried to access the resource with an unsupported method
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     NotAcceptableWithAdditionalProperties:
-      description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
+      description: The request contained an Accept header different from the allowed media types or a character set different from UTF-8
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     NotFoundWithAdditionalProperties:
-      description: O recurso solicitado não existe ou não foi implementado
+      description: The requested resource does not exist or was not implemented
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     TooManyRequestsWithAdditionalProperties:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
+      description: 'The operation was refused because too many requests were made within a given period or the global concurrent request limit was reached'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     UnauthorizedWithAdditionalProperties:
-      description: Cabeçalho de autenticação ausente/inválido ou token inválido
+      description: Missing/invalid authentication header or invalid token
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     UnprocessableEntityWithAdditionalProperties:
-      description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
+      description: 'The request syntax is correct, but it was not possible to process the present instructions.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
-    

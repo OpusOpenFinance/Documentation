@@ -2,22 +2,22 @@ openapi: 3.0.0
 info:
   title: API Accounts - Opus Data Receiver
   description: |
-    API de contas de depósito à vista, contas de poupança e contas pré-pagas salvas no ODR. Usa como padrão a mesma definição do Open Finance Brasil – Fase 2.
-    API que retorna informações de contas de depósito à vista, contas de poupança e contas de pagamento pré-pagas mantidas nas instituições transmissoras por seus clientes,
-    incluindo dados de identificação da conta, saldos, limites e transações.\
-    Não possui segregação entre pessoa natural e pessoa jurídica.\
-    Requer cadastro do cliente no ODR do cliente para todos os `endpoints`.
+    API for demand deposit accounts, savings accounts and prepaid accounts stored in ODR. Uses the same definition as Open Finance Brazil – Phase 2.
+    API that returns information on demand deposit accounts, savings accounts and prepaid payment accounts held by customers at transmitting institutions,
+    including account identification data, balances, limits and transactions.\
+    There is no segregation between individuals and legal entities.\
+    Requires customer registration in the ODR for all `endpoints`.
 
-    # Orientações
-    No contexto do Open Finance, a `Role`  do diretório de participantes relacionada à presente API é a `DADOS`.\
-    Os dados serão devolvidos na consulta desde que o `setupId` relacionado corresponda a um cadastro do cliente no ODR válido e com o status `AUTHORISED`.\
-    É também necessário que o recurso em questão (conta, contrato, etc) esteja disponível na instituição transmissora (ou seja, sem boqueios de qualquer natureza e com todas as autorizações/consentimentos já autorizados).\
-    Além disso as `permissions` necessárias deverão ter sido solicitadas quando da criação do cadastro do cliente no ODR relacionado (`setupId`).\
-    Relacionamos a seguir as `permissions` necessárias para a consulta de dados em cada `endpoint` da presente API.
+    # Guidelines
+    In the context of Open Finance, the `Role` in the participant directory related to this API is `DADOS`.\
+    Data will be returned in the query as long as the related `setupId` corresponds to a valid customer registration in the ODR with status `AUTHORISED`.\
+    It is also necessary that the resource in question (account, contract, etc.) is available at the transmitting institution (i.e., without any blockages and with all authorizations/consents already approved).\
+    Additionally, the required `permissions` must have been requested when creating the related customer registration in the ODR (`setupId`).\
+    Below we list the `permissions` required for data query in each `endpoint` of this API.
 
-    ## Permissions necessárias para a API Accounts
+    ## Permissions required for the Accounts API
 
-    Para cada um dos paths desta API, além dos escopos (`scopes`) indicados existem `permissions` que deverão ser observadas:
+    For each of the paths in this API, in addition to the indicated scopes (`scopes`), there are `permissions` that must be observed:
 
     ### `/setup/accounts`
       - permissions:
@@ -38,66 +38,66 @@ info:
       - permissions:
         - GET: **ACCOUNTS_OVERDRAFT_LIMITS_READ**
 
-    ## Data de imutabilidade por tipo de transação​
-    O identificador de transações de contas é de envio obrigatório no Open Finance Brasil. De acordo com o tipo da transação deve haver o envio de um identificador único, estável e imutável em D0 ou D+1, conforme tabela abaixo
+    ## Immutability date by transaction type​
+    The account transaction identifier is mandatory in Open Finance Brazil. According to the transaction type, a unique, stable and immutable identifier must be sent on D0 or D+1, as per the table below
     ```
     |---------------------------------------|-------------------------|-----------------------|
-    | Tipo de Transação                     | Data da Obrigatoriedade | Data da Imutabilidade |
+    | Transaction Type                      | Mandatory Date          | Immutability Date     |
     |---------------------------------------|-------------------------|-----------------------|
-    | TED                                   | DO                      | DO                    |
+    | TED                                   | D0                      | D0                    |
     |---------------------------------------|-------------------------|-----------------------|
-    | PIX                                   | DO                      | DO                    |
+    | PIX                                   | D0                      | D0                    |
     |---------------------------------------|-------------------------|-----------------------|
-    | TRANSFERENCIA MESMA INSTITUIÇÃO (TEF) | DO                      | DO                    |
+    | TRANSFERENCIA MESMA INSTITUIÇÃO (TEF) | D0                      | D0                    |
     |---------------------------------------|-------------------------|-----------------------|
-    | TARIFA SERVIÇOS AVULSOS               | DO                      | DO                    |
+    | TARIFA SERVIÇOS AVULSOS               | D0                      | D0                    |
     |---------------------------------------|-------------------------|-----------------------|
-    | FOLHA DE PAGAMENTO                    | DO                      | DO                    |
+    | FOLHA DE PAGAMENTO                    | D0                      | D0                    |
     |---------------------------------------|-------------------------|-----------------------|
-    | DOC                                   | DO                      | D+1                   |
+    | DOC                                   | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | BOLETO                                | DO                      | D+1                   |
+    | BOLETO                                | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | CONVÊNIO ARRECADAÇÃO                  | DO                      | D+1                   |
+    | CONVÊNIO ARRECADAÇÃO                  | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | PACOTE TARIFA SERVIÇOS                | DO                      | D+1                   |
+    | PACOTE TARIFA SERVIÇOS                | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | DEPÓSITO                              | DO                      | D+1                   |
+    | DEPÓSITO                              | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | SAQUE                                 | DO                      | D+1                   |
+    | SAQUE                                 | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | CARTÃO                                | DO                      | D+1                   |
+    | CARTÃO                                | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | ENCARGOS JUROS CHEQUE ESPECIAL        | DO                      | D+1                   |
+    | ENCARGOS JUROS CHEQUE ESPECIAL        | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | RENDIMENTO APLICAÇÃO FINANCEIRA       | DO                      | D+1                   |
+    | RENDIMENTO APLICAÇÃO FINANCEIRA       | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | PORTABILIDADE SALÁRIO                 | DO                      | D+1                   |
+    | PORTABILIDADE SALÁRIO                 | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | RESGATE APLICAÇÃO FINANCEIRA          | DO                      | D+1                   |
+    | RESGATE APLICAÇÃO FINANCEIRA          | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | OPERAÇÃO DE CRÉDITO                   | DO                      | D+1                   |
+    | OPERAÇÃO DE CRÉDITO                   | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | OUTROS                                | DO                      | D+1                   |
+    | OUTROS                                | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
     ```
 
-    Para consultar as regras aplicáveis ao comportamento do transacionID de acordo com o status da transação, consultar a página [Orientações - Contas](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/193658890)
+    To check the rules applicable to the transactionID behavior according to the transaction status, visit the page [Guidelines - Accounts](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/193658890)
   version: 2.4.2
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
 tags:
   - name: Accounts
-    description: Operações para listagem das informações da Conta do Cliente
+    description: Operations for listing Customer Account information
 paths:
   /setup/accounts:
     get:
       tags:
         - Accounts
-      summary: Obtém a lista de contas consentidas pelo cliente.
+      summary: Gets the list of accounts consented by the customer.
       operationId: accountsGetAccounts
-      description: 'Método para obter a lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.'
+      description: 'Method to get the list of demand deposit, savings and prepaid payment accounts held by the customer at the transmitting institution and for which they have provided consent.'
       parameters:
         - $ref: '#/components/parameters/SetupID'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -136,8 +136,8 @@ paths:
     get:
       tags:
         - Accounts
-      summary: Obtém os dados de identificação da conta identificada por accountId.
-      description: 'Método para obter os dados de identificação da conta de depósito à vista, poupança ou pagamento pré-paga identificada por accountId mantida pelo cliente na instituição transmissora.'
+      summary: Gets the identification data of the account identified by accountId.
+      description: 'Method to get the identification data of the demand deposit, savings or prepaid payment account identified by accountId held by the customer at the transmitting institution.'
       operationId: accountsGetAccountsAccountId
       parameters:
         - $ref: '#/components/parameters/SetupID'
@@ -175,9 +175,9 @@ paths:
     get:
       tags:
         - Accounts
-      summary: Obtém os saldos da conta identificada por accountId.
+      summary: Gets the balances of the account identified by accountId.
       operationId: accountsGetAccountsAccountIdBalances
-      description: 'Método para obter os saldos da conta de depósito à vista, poupança ou pagamento pré-paga identificada por accountId mantida pelo cliente na instituição transmissora.'
+      description: 'Method to get the balances of the demand deposit, savings or prepaid payment account identified by accountId held by the customer at the transmitting institution.'
       parameters:
         - $ref: '#/components/parameters/SetupID'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -214,9 +214,9 @@ paths:
     get:
       tags:
         - Accounts
-      summary: Obtém a lista de transações da conta identificada por accountId.
+      summary: Gets the list of transactions for the account identified by accountId.
       operationId: accountsGetAccountsAccountIdTransactions
-      description: Método para obter a lista de transações da conta de depósito à vista, poupança ou pagamento pré-paga identificada por accountId mantida pelo cliente na instituição transmissora. É permitida uma consulta máxima que se estenda em 12 meses no passado mais 12 meses no futuro.
+      description: Method to get the list of transactions for the demand deposit, savings or prepaid payment account identified by accountId held by the customer at the transmitting institution. A maximum query extending 12 months into the past plus 12 months into the future is allowed.
       parameters:
         - $ref: '#/components/parameters/SetupID'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -259,9 +259,9 @@ paths:
     get:
       tags:
         - Accounts
-      summary: Obtém a lista de transações recentes (últimos 7 dias) da conta identificada por accountId.
+      summary: Gets the list of recent transactions (last 7 days) for the account identified by accountId.
       operationId: accountsGetAccountsAccountIdTransactionsCurrent
-      description: Método para obter a lista de transações da conta de depósito à vista, poupança ou pagamento pré-paga identificada por accountId mantida pelo cliente na instituição transmissora. É permitida uma consulta máxima que se estenda em 7 dias no passado mais 12 meses no futuro.
+      description: Method to get the list of transactions for the demand deposit, savings or prepaid payment account identified by accountId held by the customer at the transmitting institution. A maximum query extending 7 days into the past plus 12 months into the future is allowed.
       parameters:
         - $ref: '#/components/parameters/SetupID'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -303,9 +303,9 @@ paths:
     get:
       tags:
         - Accounts
-      summary: Obtém os limites da conta identificada por accountId.
+      summary: Gets the limits of the account identified by accountId.
       operationId: accountsGetAccountsAccountIdOverdraftLimits
-      description: Método para obter os limites da conta de depósito à vista, poupança ou pagamento pré-paga identificada por accountId mantida pelo cliente na instituição transmissora. Para as instituições financeiras transmissoras que possuam contas sem limites associados devem retornar HTTP Status 200 com o objeto “data” vazio, sem nenhum atributo interno.
+      description: Method to get the limits of the demand deposit, savings or prepaid payment account identified by accountId held by the customer at the transmitting institution. Transmitting financial institutions that have accounts without associated limits must return HTTP Status 200 with an empty "data" object, without any internal attributes.
       parameters:
         - $ref: '#/components/parameters/SetupID'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -341,7 +341,7 @@ components:
   schemas:
     AccountBalancesDataAutomaticallyInvestedAmount:
       type: object
-      description: Saldo disponível com aplicação automática - corresponde a soma do saldo disponível acrescido do valor obtido a partir da aplicação automática. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+      description: Available balance with automatic application - corresponds to the sum of the available balance plus the value obtained from automatic application. Expressed in monetary value with at least 2 and at most 4 decimal places.
       required:
         - amount
         - currency
@@ -353,16 +353,16 @@ components:
           maxLength: 21
           minLength: 4
           example: '1000.0400'
-          description: Valor relacionado ao objeto.
+          description: Value related to the object.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency referring to the monetary value, following the ISO-4217 model.'
           example: BRL
     AccountOverdraftLimitsDataOverdraftContractedLimit:
       type: object
-      description: Valor do limite contratado do cheque especial.
+      description: Value of the contracted overdraft limit.
       required:
         - amount
         - currency
@@ -374,16 +374,16 @@ components:
           maxLength: 20
           minLength: 4
           example: '1000.0400'
-          description: Valor relacionado ao objeto.
+          description: Value related to the object.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency referring to the monetary value, following the ISO-4217 model.'
           example: BRL
     AccountOverdraftLimitsDataOverdraftUsedLimit:
       type: object
-      description: Valor utilizado total do limite do cheque especial e o adiantamento a depositante.
+      description: Total used value of the overdraft limit and advance to depositor.
       required:
         - amount
         - currency
@@ -395,16 +395,16 @@ components:
           maxLength: 20
           minLength: 4
           example: '1000.0400'
-          description: Valor relacionado ao objeto.
+          description: Value related to the object.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency referring to the monetary value, following the ISO-4217 model.'
           example: BRL
     AccountOverdraftLimitsDataUnarrangedOverdraftAmount:
       type: object
-      description: Valor de operação contratada em caráter emergencial para cobertura de saldo devedor em conta de depósitos à vista e de excesso sobre o limite pactuado de cheque especial.
+      description: Value of emergency contracted operation to cover debit balance in demand deposit accounts and excess over the agreed overdraft limit.
       required:
         - amount
         - currency
@@ -416,16 +416,16 @@ components:
           maxLength: 20
           minLength: 4
           example: '1000.0400'
-          description: Valor relacionado ao objeto.
+          description: Value related to the object.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency referring to the monetary value, following the ISO-4217 model.'
           example: BRL
     AccountBalancesDataBlockedAmount:
       type: object
-      description: 'Saldo bloqueado, não disponível para utilização imediata, por motivo de bloqueio apresentado para o cliente nos canais eletrônicos. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.'
+      description: 'Blocked balance, not available for immediate use, due to blocking presented to the customer in electronic channels. Expressed in monetary value with at least 2 and at most 4 decimal places.'
       required:
         - amount
         - currency
@@ -437,16 +437,16 @@ components:
           maxLength: 20
           minLength: 4
           example: '1000.0400'
-          description: Valor relacionado ao objeto.
+          description: Value related to the object.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency referring to the monetary value, following the ISO-4217 model.'
           example: BRL
     AccountBalancesDataAvailableAmount:
       type: object
-      description: 'Saldo disponível para utilização imediata. No caso de conta de depósito a vista, sem considerar cheque especial e investimentos atrelados a conta. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.'
+      description: 'Balance available for immediate use. In the case of a demand deposit account, excluding overdraft and linked investments. Expressed in monetary value with at least 2 and at most 4 decimal places.'
       required:
         - amount
         - currency
@@ -458,17 +458,17 @@ components:
           maxLength: 21
           minLength: 4
           example: '1000.0400'
-          description: Valor relacionado ao objeto.
+          description: Value related to the object.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency referring to the monetary value, following the ISO-4217 model.'
           example: BRL
     AccountBalancesData:
       type: object
       description: |
-        Conjunto de informações das Contas de: depósito à vista, poupança e de pagamento pré-paga
+        Set of information for Accounts: demand deposit, savings and prepaid payment accounts
       required:
         - availableAmount
         - blockedAmount
@@ -488,12 +488,12 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2021-05-21T08:30:00Z'
           description: |
-            Data e hora da última atualização do saldo. É esperado que a instituição informe a última vez que capturou o saldo para compartilhamento no Open Finance. Dessa forma, é possível que:
-            - Caso a instituição capture dados de forma síncrona essa informação seja de poucos momentos;
-            - Caso a instituição capture dados de forma assíncrona essa informação seja de horas ou dias no passado;
-            - Quando não existente uma data vinculada especificamente ao bloco, se assume a data e hora de atualização do cadastro como um todo.
+            Date and time of the last balance update. It is expected that the institution informs the last time it captured the balance for sharing in Open Finance. Thus, it is possible that:
+            - If the institution captures data synchronously, this information is from a few moments ago;
+            - If the institution captures data asynchronously, this information is from hours or days in the past;
+            - When there is no date specifically linked to the block, the date and time of the overall registration update is assumed.
 
-            De toda forma, é preciso continuar respeitando o prazo máximo de tempestividade da API de Contas.
+            In any case, the maximum timeliness period of the Accounts API must continue to be respected.
     AccountData:
       type: object
       required:
@@ -507,48 +507,48 @@ components:
       properties:
         brandName:
           type: string
-          description: 'Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).'
+          description: 'Brand name reported by the participant in Open Finance. It is recommended to use, whenever possible, the same brand name assigned in the Customer Friendly Server Name (Authorisation Server) field of the directory.'
           maxLength: 80
           pattern: '[\w\W\s]*'
-          example: Organização A
+          example: Organization A
         companyCnpj:
           type: string
           maxLength: 14
           pattern: '^\d{14}$'
-          description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara'
+          description: 'Complete CNPJ number of the institution responsible for the Registration - CNPJ corresponds to the registration number in the Legal Entity Register. Should have only the CNPJ numbers, without mask'
           example: '21128159000166'
         type:
           $ref: '#/components/schemas/EnumAccountType'
         compeCode:
           type: string
-          description: 'Código identificador atribuído pelo Banco Central do Brasil às instituições participantes do STR (Sistema de Transferência de reservas).O Compe (Sistema de Compensação de Cheques e Outros Papéis) é um sistema que identifica e processa as compensações bancárias. Ele é representado por um código de três dígitos que serve como identificador de bancos, sendo assim, cada instituição bancária possui um número exclusivo'
+          description: 'Identifier code assigned by the Central Bank of Brazil to institutions participating in the STR (Reserve Transfer System). The Compe (Check and Other Papers Compensation System) is a system that identifies and processes bank compensations. It is represented by a three-digit code that serves as a bank identifier, so each banking institution has a unique number'
           pattern: '^\d{3}$'
           maxLength: 3
           example: '001'
         branchCode:
           type: string
           description: |
-            Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)
+            Code of the Agency holding the account. (Agency is a branch intended for serving customers, the general public and credit union members, in the exercise of institution activities, and cannot be mobile or temporary)
 
-            [Restrição] Obrigatoriamente deve ser preenchido quando o campo "type" for diferente de CONTA_PAGAMENTO_PRE_PAGA.
+            [Restriction] Must be mandatorily filled when the "type" field is different from CONTA_PAGAMENTO_PRE_PAGA.
           pattern: '^\d{4}$'
           maxLength: 4
           example: '6272'
         number:
           type: string
-          description: Número da conta
+          description: Account number
           pattern: '^\d{8,20}$'
           maxLength: 20
           example: '94088392'
         checkDigit:
           type: string
-          description: Dígito da conta
+          description: Account check digit
           pattern: '[\w\W\s]*'
           maxLength: 1
           example: '4'
         accountId:
           type: string
-          description: 'Identifica de forma única  a conta do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora.'
+          description: 'Uniquely identifies the customer account, maintaining the immutability rules within the transmitting institution.'
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           maxLength: 100
           minLength: 1
@@ -556,7 +556,7 @@ components:
     AccountIdentificationData:
       type: object
       description: |
-        Conjunto dos atributos que caracterizam as Contas de: depósito à vista, poupança e de pagamento pré-paga
+        Set of attributes that characterize Accounts: demand deposit, savings and prepaid payment accounts
       required:
         - compeCode
         - number
@@ -569,30 +569,30 @@ components:
           type: string
           maxLength: 3
           pattern: '^\d{3}$'
-          description: 'Código identificador atribuído pelo Banco Central do Brasil às instituições participantes do STR (Sistema de Transferência de reservas). O número-código substituiu o antigo código COMPE. Todos os participantes do STR, exceto as Infraestruturas do Mercado Financeiro (IMF) e a Secretaria do Tesouro Nacional, possuem um número-código independentemente de participarem da Centralizadora da Compensação de Cheques (Compe).'
+          description: 'Identifier code assigned by the Central Bank of Brazil to institutions participating in the STR (Reserve Transfer System). The number-code replaced the old COMPE code. All STR participants, except Financial Market Infrastructures (IMF) and the National Treasury Secretariat, have a number-code regardless of whether they participate in the Check Compensation Centralizer (Compe).'
           example: '001'
         branchCode:
           type: string
           maxLength: 4
           pattern: '^\d{4}$'
           description: |
-            Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)
+            Code of the Agency holding the account. (Agency is a branch intended for serving customers, the general public and credit union members, in the exercise of institution activities, and cannot be mobile or temporary)
 
-            [Restrição] Obrigatoriamente deve ser preenchido quando o campo "type" for diferente de conta pré-paga.
+            [Restriction] Must be mandatorily filled when the "type" field is different from prepaid account.
           example: '6272'
         number:
           type: string
           maxLength: 20
           pattern: '^\d{8,20}$'
           description: |
-            Número da conta
+            Account number
           example: '24550245'
         checkDigit:
           type: string
           maxLength: 1
           pattern: '[\w\W\s]*'
           description: |
-            Dígito da conta
+            Account check digit
           example: '4'
         type:
           $ref: '#/components/schemas/EnumAccountType'
@@ -603,13 +603,13 @@ components:
           pattern: '^(\w{3}){1}$'
           maxLength: 3
           description: |
-            Moeda referente ao valor da transação, segundo modelo ISO-4217. p.ex. 'BRL' 
-            Todos os saldos informados estão representados com a moeda vigente do Brasil
+            Currency referring to the transaction value, according to the ISO-4217 model. e.g. 'BRL' 
+            All balances informed are represented with the current currency of Brazil
           example: BRL
     AccountOverdraftLimitsData:
       type: object
       description: |
-        Conjunto de informações da Conta de: depósito à vista
+        Set of information for Account: demand deposit
       properties:
         overdraftContractedLimit:
           $ref: '#/components/schemas/AccountOverdraftLimitsDataOverdraftContractedLimit'
@@ -631,9 +631,9 @@ components:
         transactionId:
           type: string
           description: |
-            Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual. 
-            O ideal é que o `transactionId` seja imutável. 
-            No entanto, o `transactionId` deve obedecer, no mínimo, as regras de imutabilidade propostas conforme tabela “Data de imutabilidade por tipo de transação” presente nas orientações desta API.
+            Unique code or identifier provided by the institution that holds the account to represent the individual transaction. 
+            Ideally, the `transactionId` should be immutable. 
+            However, the `transactionId` must obey, at minimum, the immutability rules proposed according to the "Immutability date by transaction type" table present in the guidelines of this API.
           maxLength: 100
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
@@ -647,11 +647,11 @@ components:
           maxLength: 200
           pattern: '[\w\W\s]*'
           description: |
-            Literal usada na instituição financeira para identificar a transação. 
-            A informação apresentada precisa ser a mesma utilizada nos canais digitais da instituição (assim como o histórico de transações apresentado na tela do aplicativo ou do navegador). 
-            Caso a instituição possua mais de um canal digital, a informação compartilhada deve ser a do canal que apresenta a descrição mais completa possível da transação. 
-            Em casos onde a descrição da transação é apresentada com múltiplas linhas, todas as linhas devem ser enviadas (concatenadas) neste atributo, não sendo obrigatória a concatenação das informações já enviadas em outros atributos (ex: valor, data) do mesmo endpoint. 
-            Adicionalmente, o Banco Central pode determinar o formato de compartilhamento a ser adotado por uma instituição participante específica.
+            Literal used at the financial institution to identify the transaction. 
+            The information presented must be the same as used in the institution's digital channels (such as the transaction history presented on the app or browser screen). 
+            If the institution has more than one digital channel, the information shared must be from the channel that presents the most complete possible description of the transaction. 
+            In cases where the transaction description is presented with multiple lines, all lines must be sent (concatenated) in this attribute, and concatenation of information already sent in other attributes (e.g., value, date) of the same endpoint is not mandatory. 
+            Additionally, the Central Bank may determine the sharing format to be adopted by a specific participating institution.
           example: Transferencia Enviada Lima Santos
         type:
           $ref: '#/components/schemas/EnumTransactionTypes'
@@ -662,16 +662,16 @@ components:
           maxLength: 24
           pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)'
           description: |
-            Data e hora original da transação.
+            Original date and time of the transaction.
           example: '2016-01-29T12:29:03.374Z'
         partieCnpjCpf:
           type: string
           maxLength: 14
           pattern: '^\d{11}$|^\d{14}$'
           description: |
-            Identificação da pessoa envolvida na transação: pagador ou recebedor (Preencher com o CPF ou CNPJ, sem formatação). Com a IN BCB nº 371, a partir de 02/05/23, o envio das informações de identificação de contraparte tornou-se obrigatória para transações de pagamento. Para maiores detalhes, favor consultar a página `Orientações - Contas`.
+            Identification of the person involved in the transaction: payer or payee (Fill with CPF or CNPJ, without formatting). With BCB Ordinance No. 371, as of 02/05/23, sending counterpart identification information became mandatory for payment transactions. For more details, please consult the page `Guidelines - Accounts`.
 
-            [Restrição] Quando o "type“ for preenchido com valor FOLHA_PAGAMENTO e a transmissora for a responsável pelo pagamento de salário (banco-folha), o partieCnpjCpf informado deve ser do empregador relacionado.
+            [Restriction] When "type" is filled with value FOLHA_PAGAMENTO and the transmitter is responsible for salary payment (payroll bank), the partieCnpjCpf informed must be from the related employer.
           example: '43908445778'
         partiePersonType:
           $ref: '#/components/schemas/EnumPartiePersonType'
@@ -679,29 +679,29 @@ components:
           type: string
           maxLength: 3
           pattern: '^\d{3}$'
-          description: 'Código identificador atribuído pelo Banco Central do Brasil às instituições participantes do STR (Sistema de Transferência de reservas) referente à pessoa envolvida na transação. O número-código substituiu o antigo código COMPE. Todos os participantes do STR, exceto as Infraestruturas do Mercado Financeiro (IMF) e a Secretaria do Tesouro Nacional, possuem um número-código independentemente de participarem da Centralizadora da Compensação de Cheques (Compe).'
+          description: 'Identifier code assigned by the Central Bank of Brazil to institutions participating in the STR (Reserve Transfer System) regarding the person involved in the transaction. The number-code replaced the old COMPE code. All STR participants, except Financial Market Infrastructures (IMF) and the National Treasury Secretariat, have a number-code regardless of whether they participate in the Check Compensation Centralizer (Compe).'
           example: '001'
         partieBranchCode:
           type: string
           maxLength: 4
           pattern: '^\d{4}$'
-          description: 'Código da Agência detentora da conta da pessoa envolvida na transação. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)'
+          description: 'Code of the Agency holding the account of the person involved in the transaction. (Agency is a branch intended for serving customers, the general public and credit union members, in the exercise of institution activities, and cannot be mobile or temporary)'
           example: '6272'
         partieNumber:
           type: string
           maxLength: 20
           pattern: '^\d{8,20}$'
-          description: Número da conta da pessoa envolvida na transação
+          description: Account number of the person involved in the transaction
           example: '67890854360'
         partieCheckDigit:
           type: string
           maxLength: 1
           pattern: '[\w\W\s]*'
-          description: Dígito da conta da pessoa envolvida na transação
+          description: Check digit of the account of the person involved in the transaction
           example: '4'
     AccountTransactionsDataAmount:
       type: object
-      description: Valor da transação. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+      description: Transaction value. Expressed in monetary value with at least 2 and at most 4 decimal places.
       required:
         - amount
         - currency
@@ -713,12 +713,12 @@ components:
           maxLength: 20
           minLength: 4
           example: '1000.0400'
-          description: Valor relacionado ao objeto.
+          description: Value related to the object.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency referring to the monetary value, following the ISO-4217 model.'
           example: BRL
     EnumAccountSubType:
       type: string
@@ -727,10 +727,10 @@ components:
         - CONJUNTA_SIMPLES
         - CONJUNTA_SOLIDARIA
       description: |
-        Subtipo de conta (vide Enum): 
-        Conta individual - possui um único titular
-        Conta conjunta simples - onde as movimentações financeiras só podem serem realizadas mediante autorização de TODOS os correntistas da conta.
-        Conta conjunta solidária - é a modalidade cujos titulares podem realizar movimentações de forma isolada, isto é, sem que seja necessária a autorização dos demais titulares
+        Account subtype (see Enum): 
+        Individual account - has a single holder
+        Simple joint account - where financial transactions can only be carried out with authorization from ALL account holders.
+        Solidary joint account - is the modality whose holders can carry out transactions in isolation, that is, without the need for authorization from the other holders
       example: INDIVIDUAL
     EnumAccountType:
       type: string
@@ -739,18 +739,18 @@ components:
         - CONTA_POUPANCA
         - CONTA_PAGAMENTO_PRE_PAGA
       description: |
-        Tipos de contas. Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica. Vide Enum
-        Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante
-        Conta poupança - foi criada para estimular as pessoas a pouparem. O dinheiro que ficar na conta por trinta dias passa a gerar rendimentos, com isenção de imposto de renda para quem declara. Ou seja, o dinheiro “cresce” (rende) enquanto ficar guardado na conta. Cada depósito terá rendimentos de mês em mês, sempre no dia do mês em que o dinheiro tiver sido depositado
-        Conta de pagamento pré-paga: segundo CIRCULAR Nº 3.680, BCB de  2013, é a 'destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'
+        Types of accounts. Traditional modalities provided for by Resolution 4.753, not including linked accounts, accounts of residents abroad, foreign currency accounts and electronic money correspondent account. See Enum
+        Demand deposit account or Current account - is the most common type. In it, the money is at your disposal to be withdrawn at any time. This account does not generate earnings for the depositor
+        Savings account - was created to encourage people to save. Money that remains in the account for thirty days starts generating earnings, with income tax exemption for declarants. That is, the money "grows" (earns) while kept in the account. Each deposit will have earnings month by month, always on the day of the month when the money was deposited
+        Prepaid payment account: according to CIRCULAR Nº 3.680, BCB of 2013, it is the 'intended for executing payment transactions in electronic currency carried out based on previously deposited funds denominated in reais'
       example: CONTA_DEPOSITO_A_VISTA
     EnumCompletedAuthorisedPaymentIndicator:
       type: string
       description: |
-        Indicador da transação: 
-          - Transação efetivada: a transação atinge esse status quando o `transactionId` torna-se imutável;
-          - Lançamento futuro: a transação será efetivada em momento futuro, ou seja, o `transactionId` pode mudar;
-          - Transação processando: a transação está em processamento, ou seja, o `transactionId` pode mudar.
+        Transaction indicator: 
+          - Completed transaction: the transaction reaches this status when the `transactionId` becomes immutable;
+          - Future posting: the transaction will be completed at a future time, meaning the `transactionId` may change;
+          - Transaction processing: the transaction is being processed, meaning the `transactionId` may change.
       enum:
         - TRANSACAO_EFETIVADA
         - LANCAMENTO_FUTURO
@@ -759,9 +759,9 @@ components:
     EnumCreditDebitIndicator:
       type: string
       description: |
-        Indicador do tipo de lançamento: 
-        Débito (no extrato) Em um extrato bancário, os débitos, marcados com a letra “D” ao lado do valor registrado, informam as saídas de dinheiro na conta-corrente.
-        Crédito (no extrato) Em um extrato bancário, os créditos, marcados com a letra “C” ao lado do valor registrado, informam as entradas de dinheiro na conta-corrente.
+        Type of posting indicator: 
+        Debit (in statement) In a bank statement, debits, marked with the letter "D" next to the recorded value, inform money outflows in the current account.
+        Credit (in statement) In a bank statement, credits, marked with the letter "C" next to the recorded value, inform money inflows in the current account.
       enum:
         - CREDITO
         - DEBITO
@@ -773,16 +773,16 @@ components:
         - PESSOA_JURIDICA
       example: PESSOA_NATURAL
       description: |
-        Identificação do Tipo de Pessoa da pessoa envolvida na transação.   
-        Pessoa Natural - Informar CPF no campo “partieCnpjCpf”.   
-        Pessoa Jurídica - Informar CNPJ no campo “partieCnpjCpf”.
+        Identification of the Type of Person of the person involved in the transaction.   
+        Natural Person - Enter CPF in the "partieCnpjCpf" field.   
+        Legal Person - Enter CNPJ in the "partieCnpjCpf" field.
     EnumTransactionTypes:
       type: string
       description: |
-        O campo deve classificar a transação em um dos tipos descritos. 
-        O transmissor deve classificar as transações disponíveis associando-a a um dos itens do Enum listado neste campo. 
-        A opção OUTROS só deve ser utilizada para os casos em que de fato a transação compartilhada não possa ser classificada como um dos itens deste Enum. 
-        Por exemplo no caso de recebimento de pensão alimentícia.
+        The field must classify the transaction into one of the described types. 
+        The transmitter must classify the available transactions associating it with one of the items in the Enum listed in this field. 
+        The OUTROS option should only be used for cases where the shared transaction cannot actually be classified as one of the items in this Enum. 
+        For example in the case of receiving alimony.
       enum:
         - TED
         - DOC
@@ -805,7 +805,7 @@ components:
       example: PIX
     Links:
       type: object
-      description: Referências para outros recusos da API requisitada.
+      description: References to other resources of the requested API.
       required:
         - self
       properties:
@@ -813,35 +813,35 @@ components:
           type: string
           format: url
           maxLength: 2000
-          description: URI completo que gerou a resposta atual.
+          description: Complete URI that generated the current response.
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         first:
           type: string
           format: url
           maxLength: 2000
-          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         prev:
           type: string
           format: url
           maxLength: 2000
-          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
+          description: "URI of the previous page of this result list. Restriction - \tMandatory when not the first page of the response"
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         next:
           type: string
           format: url
           maxLength: 2000
-          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         last:
           type: string
           format: url
           maxLength: 2000
-          description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          description: URI of the last page of this result list. Restriction - Mandatory when not the last page of the response
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
     LinksAccountId:
       type: object
-      description: Referências para outros recusos da API requisitada.
+      description: References to other resources of the requested API.
       required:
         - self
       properties:
@@ -849,35 +849,35 @@ components:
           type: string
           format: url
           maxLength: 2000
-          description: URI completo que gerou a resposta atual.
+          description: Complete URI that generated the current response.
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         first:
           type: string
           format: url
           maxLength: 2000
-          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         prev:
           type: string
           format: url
           maxLength: 2000
-          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
+          description: "URI of the previous page of this result list. Restriction - \tMandatory when not the first page of the response"
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         next:
           type: string
           format: url
           maxLength: 2000
-          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         last:
           type: string
           format: url
           maxLength: 2000
-          description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          description: URI of the last page of this result list. Restriction - Mandatory when not the last page of the response
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
     TransactionsLinks:
       type: object
-      description: Referências para outros recusos da API requisitada.
+      description: References to other resources of the requested API.
       required:
         - self
       properties:
@@ -885,29 +885,29 @@ components:
           type: string
           format: url
           maxLength: 2000
-          description: URI completo que gerou a resposta atual.
+          description: Complete URI that generated the current response.
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         first:
           type: string
           format: url
           maxLength: 2000
-          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         prev:
           type: string
           format: url
           maxLength: 2000
-          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
+          description: "URI of the previous page of this result list. Restriction - \tMandatory when not the first page of the response"
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         next:
           type: string
           format: url
           maxLength: 2000
-          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
     Meta:
       type: object
-      description: Meta informações referente à API requisitada.
+      description: Meta information regarding the requested API.
       required:
         - totalRecords
         - totalPages
@@ -916,27 +916,27 @@ components:
         totalRecords:
           type: integer
           format: int32
-          description: Número total de registros no resultado
+          description: Total number of records in the result
           example: 1
         totalPages:
           type: integer
           format: int32
-          description: Número total de páginas no resultado
+          description: Total number of pages in the result
           example: 1
         requestDateTime:
-          description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+          description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
           type: string
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
     MetaOnlyRequestDateTime:
       type: object
-      description: Meta informações referente à API requisitada.
+      description: Meta information regarding the requested API.
       required:
         - requestDateTime
       properties:
         requestDateTime:
-          description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+          description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
           type: string
           maxLength: 20
           format: date-time
@@ -950,7 +950,7 @@ components:
       properties:
         data:
           type: array
-          description: 'Lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento'
+          description: 'List of demand deposit, savings and prepaid payment accounts held by the customer at the transmitting institution and for which they have provided consent'
           minItems: 0
           items:
             $ref: '#/components/schemas/AccountData'
@@ -1007,7 +1007,7 @@ components:
         data:
           type: array
           description: |
-            Lista dos lançamentos referentes às transações realizadas e de lançamentos futuros para as contas de: depósito à vista, poupança e de pagamento pré-paga
+            List of postings related to transactions carried out and future postings for accounts: demand deposit, savings and prepaid payment accounts
           minItems: 0
           items:
             $ref: '#/components/schemas/AccountTransactionsData'
@@ -1032,17 +1032,17 @@ components:
               - detail
             properties:
               code:
-                description: Código de erro específico do endpoint
+                description: Specific error code of the endpoint
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               title:
-                description: Título legível por humanos deste erro específico
+                description: Human-readable title of this specific error
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               detail:
-                description: Descrição legível por humanos deste erro específico
+                description: Human-readable description of this specific error
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 2048
@@ -1065,17 +1065,17 @@ components:
               - detail
             properties:
               code:
-                description: Código de erro específico do endpoint
+                description: Specific error code of the endpoint
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               title:
-                description: Título legível por humanos deste erro específico
+                description: Human-readable title of this specific error
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               detail:
-                description: Descrição legível por humanos deste erro específico
+                description: Human-readable description of this specific error
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 2048
@@ -1087,12 +1087,12 @@ components:
       maxLength: 36
       pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
-      description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+      description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. Field mandatory for generation and sending by the recipient (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The recipient must accept the value received from the transmitter.'
   parameters:
     accountId:
       name: accountId
       in: path
-      description: 'Identificador da conta de depósito à vista, de poupança ou de pagamento pré-paga.'
+      description: 'Identifier of the demand deposit, savings or prepaid payment account.'
       required: true
       schema:
         type: string
@@ -1100,7 +1100,7 @@ components:
         maxLength: 100
     accountType:
       name: accountType
-      description: 'Tipos de contas. Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica. Vide Enum.'
+      description: 'Types of accounts. Traditional modalities provided for by Resolution 4.753, not including linked accounts, accounts of residents abroad, foreign currency accounts and electronic money correspondent account. See Enum.'
       required: false
       in: query
       schema:
@@ -1109,8 +1109,8 @@ components:
       name: setupId
       in: header
       description: |
-          O SetupUUID é o identificador único no ODR (GUID).  
-          Deverá ser usado para realizar todas as outras chamadas no ODR, como busca de contas, transações, etc.
+          The SetupUUID is the unique identifier in the ODR (GUID).  
+          Should be used to perform all other calls in the ODR, such as searching for accounts, transactions, etc.
       required: true
       schema:
         type: string
@@ -1118,14 +1118,14 @@ components:
         example: '550e8400-e29b-41d4-a716-446655440000'   
     creditDebitIndicator:
       name: creditDebitIndicator
-      description: Indicador do tipo de lançamento
+      description: Type of posting indicator
       required: false
       in: query
       schema:
         $ref: '#/components/schemas/EnumCreditDebitIndicator'
     fromBookingDate:
       name: fromBookingDate
-      description: 'Data inicial de filtragem. [Restrição] Deve obrigatoriamente ser enviado caso o campo toBookingDate seja informado. Caso não seja informado, deve ser assumido o dia atual.'
+      description: 'Initial filtering date. [Restriction] Must be mandatorily sent if the toBookingDate field is informed. If not informed, the current day must be assumed.'
       required: false
       in: query
       schema:
@@ -1137,9 +1137,9 @@ components:
       in: query
       name: fromBookingDate
       description: |
-        Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).   
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo toBookingDate seja informado. 
-        Caso não seja informado, deve ser assumido o dia atual.
+        Initial filtering date. The maximum period used in the filter is 7 days inclusive (D-6).   
+        [Restriction] Must be mandatorily sent if the toBookingDate field is informed. 
+        If not informed, the current day must be assumed.
       required: false
       schema:
         type: string
@@ -1150,9 +1150,9 @@ components:
       in: query
       name: toBookingDate
       description: |
-        Data final de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).   
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromBookingDate seja informado. 
-        Caso não seja informado, deve ser assumido o dia atual.
+        Final filtering date. The maximum period used in the filter is 7 days inclusive (D-6).   
+        [Restriction] Must be mandatorily sent if the fromBookingDate field is informed. 
+        If not informed, the current day must be assumed.
       required: false
       schema:
         type: string
@@ -1162,7 +1162,7 @@ components:
     pagination-key:
       name: pagination-key
       in: query
-      description: 'Identificador de rechamada, utilizado para evitar a contagem de chamadas ao endpoint durante a paginação.'
+      description: 'Recall identifier, used to avoid counting calls to the endpoint during pagination.'
       schema:
         type: string
         maxLength: 2048
@@ -1170,7 +1170,7 @@ components:
     page:
       name: page
       in: query
-      description: Número da página que está sendo requisitada (o valor da primeira página é 1).
+      description: Number of the page being requested (the first page value is 1).
       schema:
         type: integer
         default: 1
@@ -1180,7 +1180,7 @@ components:
     pageSize:
       name: page-size
       in: query
-      description: Quantidade total de registros por páginas.
+      description: Total number of records per page.
       schema:
         type: integer
         default: 25
@@ -1189,7 +1189,7 @@ components:
         maximum: 1000
     toBookingDate:
       name: toBookingDate
-      description: 'Data final de filtragem. [Restrição] Deve obrigatoriamente ser enviado caso o campo fromBookingDate seja informado. Caso não seja informado, deve ser assumido o dia atual.'
+      description: 'Final filtering date. [Restriction] Must be mandatorily sent if the fromBookingDate field is informed. If not informed, the current day must be assumed.'
       required: false
       in: query
       schema:
@@ -1200,7 +1200,7 @@ components:
     xCustomerUserAgent:
       name: x-customer-user-agent
       in: header
-      description: Indica o user-agent que o usuário utiliza.
+      description: Indicates the user-agent that the user uses.
       required: false
       schema:
         type: string
@@ -1210,7 +1210,7 @@ components:
     xFapiAuthDate:
       name: x-fapi-auth-date
       in: header
-      description: 'Data em que o usuário logou pela última vez com o receptor. Representada de acordo com a [RFC7231](https://tools.ietf.org/html/rfc7231).Exemplo: Sun, 10 Sep 2017 19:43:31 UTC'
+      description: 'Date when the user last logged in with the recipient. Represented according to [RFC7231](https://tools.ietf.org/html/rfc7231).Example: Sun, 10 Sep 2017 19:43:31 UTC'
       required: false
       schema:
         type: string
@@ -1220,7 +1220,7 @@ components:
     xFapiCustomerIpAddress:
       name: x-fapi-customer-ip-address
       in: header
-      description: O endereço IP do usuário se estiver atualmente logado com o receptor.
+      description: The user's IP address if they are currently logged in with the recipient.
       required: false
       schema:
         type: string
@@ -1230,7 +1230,7 @@ components:
     xFapiInteractionId:
       name: x-fapi-interaction-id
       in: header
-      description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+      description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. Field mandatory for generation and sending by the recipient (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The recipient must accept the value received from the transmitter.'
       required: false
       schema:
         type: string
@@ -1241,11 +1241,11 @@ components:
         example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
   responses:
     OKResponseAccountList:
-      description: Dados de identificação das contas obtidos com sucesso.
+      description: Account identification data obtained successfully.
       headers:
         x-fapi-interaction-id:
           required: true
-          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. Field mandatory for generation and sending by the recipient (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The recipient must accept the value received from the transmitter.'
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -1253,11 +1253,11 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseAccountList'
     OKResponseAccountIdentification:
-      description: Dados de identificação da conta identificada por accountId obtidos com sucesso.
+      description: Identification data of the account identified by accountId obtained successfully.
       headers:
         x-fapi-interaction-id:
           required: true
-          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. Field mandatory for generation and sending by the recipient (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The recipient must accept the value received from the transmitter.'
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -1265,11 +1265,11 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseAccountIdentification'
     OKResponseAccountBalances:
-      description: Dados relativos aos saldos da conta identificada por accountId obtidos com sucesso.
+      description: Balance data of the account identified by accountId obtained successfully.
       headers:
         x-fapi-interaction-id:
           required: true
-          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. Field mandatory for generation and sending by the recipient (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The recipient must accept the value received from the transmitter.'
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -1277,11 +1277,11 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseAccountBalances'
     OKResponseAccountTransactions:
-      description: Dados da lista de transações da conta identificada por accountId obtidos com sucesso.
+      description: Transaction list data of the account identified by accountId obtained successfully.
       headers:
         x-fapi-interaction-id:
           required: true
-          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. Field mandatory for generation and sending by the recipient (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The recipient must accept the value received from the transmitter.'
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -1289,11 +1289,11 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseAccountTransactions'
     OKResponseAccountOverdraftLimits:
-      description: Dados de limites da conta identificada por accountId obtidos com sucesso.
+      description: Limit data of the account identified by accountId obtained successfully.
       headers:
         x-fapi-interaction-id:
           required: true
-          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          description: 'A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. Field mandatory for generation and sending by the recipient (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The recipient must accept the value received from the transmitter.'
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -1301,19 +1301,19 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseAccountOverdraftLimits'
     BadRequest:
-      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
+      description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     Forbidden:
-      description: O token tem escopo incorreto ou uma política de segurança foi violada
+      description: The token has incorrect scope or a security policy was violated
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     InternalServerError:
-      description: Ocorreu um erro no gateway da API ou no microsserviço
+      description: An error occurred in the API gateway or microservice
       content:
         application/json; charset=utf-8:
           schema:
@@ -1325,49 +1325,49 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     MethodNotAllowed:
-      description: O consumidor tentou acessar o recurso com um método não suportado
+      description: The consumer tried to access the resource with an unsupported method
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     NotAcceptable:
-      description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
+      description: The request contained an Accept header different from the allowed media types or a character set different from UTF-8
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     NotFound:
-      description: O recurso solicitado não existe ou não foi implementado
+      description: The requested resource does not exist or has not been implemented
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     TooManyRequests:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
+      description: 'The operation was refused because too many requests were made within a given period or the global concurrent request limit was reached'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     Unauthorized:
-      description: Cabeçalho de autenticação ausente/inválido ou token inválido
+      description: Missing/invalid authentication header or invalid token
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     UnprocessableEntity:
-      description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
+      description: 'The request syntax is correct, but it was not possible to process the instructions present.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     BadRequestWithAdditionalProperties:
-      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
+      description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     ForbiddenWithAdditionalProperties:
-      description: O token tem escopo incorreto ou uma política de segurança foi violada
+      description: The token has incorrect scope or a security policy was violated
       content:
         application/json; charset=utf-8:
           schema:
@@ -1379,37 +1379,37 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseError'
     MethodNotAllowedWithAdditionalProperties:
-      description: O consumidor tentou acessar o recurso com um método não suportado
+      description: The consumer tried to access the resource with an unsupported method
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     NotAcceptableWithAdditionalProperties:
-      description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
+      description: The request contained an Accept header different from the allowed media types or a character set different from UTF-8
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     NotFoundWithAdditionalProperties:
-      description: O recurso solicitado não existe ou não foi implementado
+      description: The requested resource does not exist or has not been implemented
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     TooManyRequestsWithAdditionalProperties:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
+      description: 'The operation was refused because too many requests were made within a given period or the global concurrent request limit was reached'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     UnauthorizedWithAdditionalProperties:
-      description: Cabeçalho de autenticação ausente/inválido ou token inválido
+      description: Missing/invalid authentication header or invalid token
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     UnprocessableEntityWithAdditionalProperties:
-      description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
+      description: 'The request syntax is correct, but it was not possible to process the instructions present.'
       content:
         application/json; charset=utf-8:
           schema:
