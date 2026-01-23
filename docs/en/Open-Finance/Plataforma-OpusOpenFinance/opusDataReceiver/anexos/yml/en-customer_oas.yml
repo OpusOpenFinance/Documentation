@@ -2,21 +2,21 @@ openapi: 3.0.0
 info:
   title: API Customers - Opus Data Receiver
   description: |
-    API de dados cadastrais de clientes salvos no ODR. Usa como padrão a mesma definição do dados cadastrais do Open Finance Brasil – Fase 2.
-    API que retorna os dados cadastrais de clientes e de seus representantes, incluindo dados de identificação, de qualificação financeira, informações sobre representantes cadastrados e sobre o relacionamento financeiro do cliente com a instituição transmissora dos dados.\
-    Possui segregação entre pessoa natural e pessoa jurídica.\
-    Requer cadastro do cliente no ODR do cliente para todos os `endpoints`.
+    API for customer registration data stored in ODR. Uses the same standard definition as the Open Finance Brazil - Phase 2 registration data.
+    API that returns customer registration data and their representatives, including identification data, financial qualification information, registered representative information, and information about the customer's financial relationship with the data transmitting institution.\
+    Has segregation between natural persons and legal entities.\
+    Requires customer registration in ODR for all `endpoints`.
 
-    # Orientações
-    No contexto do Open Finance, a `Role`  do diretório de participantes relacionada à presente API é a `DADOS`.\
-    Os dados serão devolvidos na consulta desde que o `setupId` relacionado corresponda a um cadastro do cliente no ODR válido e com o status `AUTHORISED`.\
-    É também necessário que o recurso em questão (conta, contrato, etc) esteja disponível na instituição transmissora (ou seja, sem boqueios de qualquer natureza e com todas as autorizações/consentimentos já autorizados).\
-    Além disso as `permissions` necessárias deverão ter sido solicitadas quando da criação do cadastro do cliente no ODR relacionado (`setupId`).\
-    Relacionamos a seguir as `permissions` necessárias para a consulta de dados em cada `endpoint` da presente API.
+    # Guidelines
+    In the context of Open Finance, the directory `Role` related to this API is `DATA`.\
+    Data will be returned in the query as long as the related `setupId` corresponds to a valid customer registration in ODR with status `AUTHORISED`.\
+    It is also necessary that the resource in question (account, contract, etc.) is available at the transmitting institution (i.e., without any type of block and with all authorizations/consents already authorized).\
+    Additionally, the required `permissions` must have been requested when creating the related customer registration in ODR (`setupId`).\
+    We list below the `permissions` required for data query in each `endpoint` of this API.
 
-    ## Permissions necessárias para a API Customers
+    ## Required permissions for the Customers API
 
-    Para cada um dos paths desta API, além dos escopos (`scopes`) indicados existem `permissions` que deverão ser observadas:
+    For each of the paths in this API, in addition to the indicated scopes (`scopes`), there are `permissions` that must be observed:
 
     ### `/setup/personal/identifications`
       - permissions:
@@ -41,14 +41,14 @@ info:
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
 tags:
   - name: Customers
-    description: Operações para listagem das informações Cadastrais do Cliente
+    description: Operations for listing Customer Registration Information
 paths:
   /setup/personal/identifications:
     get:
       tags:
         - Customers
-      summary: Obtém os registros de identificação da pessoa natural.
-      description: Método para obter os registros de identificação da pessoa natural mantidos na instituição transmissora.
+      summary: Gets the natural person identification records.
+      description: Method to obtain the natural person identification records maintained at the transmitting institution.
       operationId: customersGetPersonalIdentifications
       parameters:
         - $ref: '#/components/parameters/SetupID'
@@ -86,8 +86,8 @@ paths:
     get:
       tags:
         - Customers
-      summary: Obtém os registros de qualificação da pessoa natural.
-      description: Método para obter os registros de qualificação da pessoa natural mantidos na instituição transmissora.
+      summary: Gets the natural person qualification records.
+      description: Method to obtain the natural person qualification records maintained at the transmitting institution.
       operationId: customersGetPersonalQualifications
       parameters:
         - $ref: '#/components/parameters/SetupID'
@@ -120,8 +120,8 @@ paths:
     get:
       tags:
         - Customers
-      summary: Obtém os registros de relacionamentos com a instituição financeira e de representantes da pessoa natural.
-      description: Método para obter registros de relacionamentos com a instituição financeira e de representantes da pessoa natural mantidos na instituição transmissora.
+      summary: Gets the records of relationships with the financial institution and representatives of the natural person.
+      description: Method to obtain records of relationships with the financial institution and representatives of the natural person maintained at the transmitting institution.
       operationId: customersGetPersonalFinancialRelations
       parameters:
         - $ref: '#/components/parameters/SetupID'
@@ -154,8 +154,8 @@ paths:
     get:
       tags:
         - Customers
-      summary: Obtém os registros de identificação da pessoa jurídica.
-      description: Método para obter os registros de identificação da pessoa jurídica mantidos na instituição transmissora
+      summary: Gets the legal entity identification records.
+      description: Method to obtain the legal entity identification records maintained at the transmitting institution.
       operationId: customersGetBusinessIdentifications
       parameters:
         - $ref: '#/components/parameters/SetupID'
@@ -193,12 +193,11 @@ paths:
     get:
       tags:
         - Customers
-      summary: Obtém os registros de qualificação da pessoa jurídica.
-      description: Método para obter os registros de qualificação da pessoa jurídica mantidos na instituição transmissora.
+      summary: Gets the legal entity qualification records.
+      description: Method to obtain the legal entity qualification records maintained at the transmitting institution.
       operationId: customersGetBusinessQualifications
       parameters:
         - $ref: '#/components/parameters/SetupID'
-        
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
@@ -228,8 +227,8 @@ paths:
     get:
       tags:
         - Customers
-      summary: Obtém os registros de relacionamentos com a instituição financeira e de representantes da pessoa jurídica.
-      description: Método para obter registros de relacionamentos com a instituição financeira e de representantes da pessoa jurídica mantidos na instituição transmissora.
+      summary: Gets the records of relationships with the financial institution and representatives of the legal entity.
+      description: Method to obtain records of relationships with the financial institution and representatives of the legal entity maintained at the transmitting institution.
       operationId: customersGetBusinessFinancialRelations
       parameters:
         - $ref: '#/components/parameters/SetupID'
@@ -262,7 +261,7 @@ components:
   schemas:
     BusinessFinancialRelationData:
       type: object
-      description: 'Objeto que reúne as informações relativas ao relacionamento do cliente junto à Instituição. Considera-se relacionamento as informações que permitam conhecer desde quando a pessoa consultada é cliente da instituição, bem como um indicador dos produtos e serviços que ela consome atualmente e seus representantes'
+      description: 'Object that gathers information related to the customer relationship with the Institution. Relationship is considered as information that allows knowing since when the consulted person is a client of the institution, as well as an indicator of the products and services they currently consume and their representatives'
       required:
         - updateDateTime
         - startDate
@@ -277,14 +276,14 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2020-07-21T08:30:00Z'
           description: |
-            Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
+            Date and time of the update of the fields \<_endpoint_\>, according to RFC-3339 specification, UTC format. When there is no date specifically linked to the block, assume the date and time of the registration update as a whole.
         startDate:
           type: string
           format: date-time
           maxLength: 20
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2020-07-21T08:30:00Z'
-          description: Data de início de relacionamento com a Instituição Financeira. Deve trazer o menor valor entre a informação reportada ao BACEN pelo DOC 3040 e CCS.
+          description: Start date of relationship with the Financial Institution. Should bring the lowest value between the information reported to BACEN by DOC 3040 and CCS.
         productsServicesType:
           type: array
           minItems: 1
@@ -296,17 +295,17 @@ components:
           items:
             $ref: '#/components/schemas/BusinessProcurator'
           minItems: 0
-          description: Lista dos representantes. De preenchimento obrigatório se houver representante.
+          description: List of representatives. Mandatory filling if there is a representative.
         accounts:
           type: array
           items:
             $ref: '#/components/schemas/BusinessAccount'
           minItems: 0
           description: |
-            Lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora.    
+            List of checking accounts, savings accounts, and prepaid payment accounts maintained by the customer at the transmitting institution.
     BusinessIdentificationData:
       type: object
-      description: Conjunto de informações relativas a Identificação ou seja a ação e o efeito de identificar de forma única a pessoa jurídica através de seus dados cadastrais
+      description: Set of information related to Identification, i.e., the action and effect of uniquely identifying the legal entity through its registration data
       required:
         - businessId
         - updateDateTime
@@ -324,45 +323,45 @@ components:
           format: date-time
           example: '2021-05-21T08:30:00Z'
           description: |
-            Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
+            Date and time of the update of the fields \<_endpoint_\>, according to RFC-3339 specification, UTC format. When there is no date specifically linked to the block, assume the date and time of the registration update as a whole.
         businessId:
           type: string
           maxLength: 100
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: 578-psd-71md6971kjh-2d414
-          description: Um identificador único e imutável usado para identificar o recurso cliente pessoa jurídica.
+          description: A unique and immutable identifier used to identify the legal entity customer resource.
         brandName:
           type: string
           maxLength: 80
           pattern: '[\w\W\s]*'
-          example: Organização A
+          example: Organization A
           description: |
-            Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).
+            Brand name reported by the participant in Open Finance. It is recommended to use, whenever possible, the same brand name assigned in the Customer Friendly Server Name field of the directory (Authorisation Server).
         companyName:
           type: string
           maxLength: 70
           pattern: '[\w\W\s]*'
-          example: Luiza e Benjamin Assessoria Jurídica Ltda
-          description: Razão social da empresa consultada é o termo registrado sob o qual uma pessoa jurídica (PJ) se individualiza e exerce suas atividades. Também pode ser chamada por denominação social ou firma empresarial
+          example: Luiza e Benjamin Legal Advisory Ltda
+          description: Corporate name of the consulted company is the term registered under which a legal entity (LE) individualizes and exercises its activities. Also called corporate denomination or business firm
         tradeName:
           type: string
           maxLength: 70
           pattern: '[\w\W\s]*'
-          example: Mundo da Eletronica
-          description: 'Nome fantasia da pessoa jurídica, se houver. (É o nome popular da empresa, utilizado para divulgação da empresa e melhor fixação com o público). De preenchimento obrigatório se houver'
+          example: Electronics World
+          description: 'Trade name of the legal entity, if any. (It is the popular name of the company, used for company promotion and better fixation with the public). Mandatory filling if it exists'
         incorporationDate:
           type: string
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
-          description: 'Data de constituição da empresa, conforme especificação RFC-3339.'
+          description: 'Company incorporation date, according to RFC-3339 specification.'
         cnpjNumber:
           type: string
           maxLength: 14
           pattern: '^\d{14}$'
           example: '50685362006773'
-          description: 'Número completo do CNPJ da Empresa consultada  - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara'
+          description: 'Complete CNPJ number of the consulted Company - CNPJ corresponds to the registration number in the Legal Entity Registry. Should have only CNPJ numbers, without mask'
         companiesCnpj:
           minItems: 1
           type: array
@@ -370,8 +369,8 @@ components:
             - '50685362000135'
             - '50685362006555'
           description: |
-            Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. 
-            Deve-se ter apenas os números do CNPJ, sem máscara
+            Complete CNPJ number of the institution responsible for the Registration - CNPJ corresponds to the registration number in the Legal Entity Registry. 
+            Should have only CNPJ numbers, without mask
           items:
             type: string
             maxLength: 14
@@ -382,14 +381,14 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/BusinessOtherDocument'
-          description: Relação dos demais documentos
+          description: List of other documents
         parties:
           type: array
           items:
             $ref: '#/components/schemas/PartiesParticipation'
           minItems: 0
           description: |
-            Lista relativa às informações das partes envolvidas, como: sócio e/ou administrador. Objeto de envio obrigatório para todos os CNPJs que possuam sócios e/ou administradores no cadastro do QSA (Quadro de Sócios e Administradores)
+            List relative to information of involved parties, such as: partner and/or administrator. Mandatory sending object for all CNPJs that have partners and/or administrators in the QSA registry (Shareholders and Administrators Board)
         contacts:
           $ref: '#/components/schemas/BusinessContacts'
     BusinessProcurator:
@@ -405,33 +404,33 @@ components:
             - REPRESENTANTE_LEGAL
             - PROCURADOR
           description: |
-            Tipo de representante.
-            Representante legal - Nome Civil completo da Pessoa Natural que represente uma entidade ou uma empresa e é nomeado em seu ato constitutivo, ou seja, no contrato social ou estatuto social.
-            Procurador - é qualquer pessoa que represente a Pessoa Natural em algum negócio, mediante autorização escrita do mesmo.
+            Type of representative.
+            Legal representative - Full Civil Name of the Natural Person who represents an entity or company and is appointed in its constitutive act, i.e., in the articles of association or bylaws.
+            Attorney - is any person who represents the Natural Person in some business, through written authorization from them.
           example: PROCURADOR
         cnpjCpfNumber:
           type: string
           maxLength: 14
           pattern: '^\d{11}$|^\d{14}$'
           example: '73677831148'
-          description: Identificação do Representante Legal ou Procurador. Número do cadastro nas Receita Federal  (Preencher com CPF ou CNPJ sem formatação)
+          description: Identification of the Legal Representative or Attorney. Registration number with the Federal Revenue (Fill with CPF or CNPJ without formatting)
         civilName:
           type: string
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: Elza Milena Stefany Teixeira
-          description: Nome civil completo ou Razão Social
+          description: Full civil name or Corporate Name
         socialName:
           type: string
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: Stefany Teixeirass
           description: |
-            Nome social da pessoa natural, se houver. Aquele pelo qual travestis e transexuais se reconhecem, 
-            bem como são identificados por sua comunidade e em seu meio social, conforme Decreto Local.
+            Social name of the natural person, if any. The one by which transvestites and transsexuals recognize themselves, 
+            as well as are identified by their community and in their social environment, according to Local Decree.
     BusinessQualificationData:
       type: object
-      description: 'Objeto que reúne as informações relativas ao processo de qualificação. Considera-se qualificação as informações que permitam as instituições apreciar, avaliar, caracterizar e classificar o cliente com a finalidade de conhecer o seu perfil de risco e sua capacidade econômico-financeira'
+      description: 'Object that gathers information related to the qualification process. Qualification is considered as information that allows institutions to appreciate, evaluate, characterize, and classify the customer with the purpose of knowing their risk profile and economic-financial capacity'
       required:
         - updateDateTime
       properties:
@@ -441,13 +440,13 @@ components:
           format: date-time
           example: '2021-05-21T08:30:00Z'
           description: |
-            Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
+            Date and time of the update of the fields \<_endpoint_\>, according to RFC-3339 specification, UTC format. When there is no date specifically linked to the block, assume the date and time of the registration update as a whole.
         economicActivities:
           type: array
           items:
             $ref: '#/components/schemas/EconomicActivity'
           minItems: 0
-          description: 'Lista dos demais códigos relativos às demais atividades econômicas da empresa, segundo padrão CNAE (Classificação Nacional de Atividades Econômicas). De preenchimento obrigatório, se houver'
+          description: 'List of other codes related to other economic activities of the company, according to CNAE standard (National Classification of Economic Activities). Mandatory filling, if any'
         informedRevenue:
           $ref: '#/components/schemas/InformedRevenue'
         informedPatrimony:
@@ -464,29 +463,29 @@ components:
           maxLength: 20
           pattern: '[\w\W\s]*'
           example: EIN
-          description: 'Número do Tipo de documento informado. De preenchimento obrigatório, para a Pessoa jurídica com domicílio ou sede no exterior, desobrigada de inscrição no CNPJ'
+          description: 'Type of document number informed. Mandatory filling, for Legal entity with domicile or headquarters abroad, exempt from CNPJ registration'
         number:
           type: string
           maxLength: 20
           pattern: '[\w\W\s]*'
           example: '128328453'
-          description: 'Número do outro documento. De preenchimento obrigatório, para a Pessoa jurídica com domicílio ou sede no exterior, desobrigada de inscrição no CNPJ'
+          description: 'Number of other document. Mandatory filling, for Legal entity with domicile or headquarters abroad, exempt from CNPJ registration'
         country:
           type: string
           maxLength: 3
           pattern: '^(\w{3}){1}$'
           example: CAN
-          description: Pais de emissão do tipo de documento informado. Código do pais de acordo com o código alpha3 do ISO-3166
+          description: Country of issuance of the informed document type. Country code according to ISO-3166 alpha3 code
         expirationDate:
           type: string
           format: date
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
-          description: 'Data vigência do tipo de  documento informado, conforme especificação RFC-3339.'
+          description: 'Validity date of the informed document type, according to RFC-3339 specification.'
     BusinessContacts:
       type: object
-      description: Conjunto de informações referentes às formas para contatar o cliente.
+      description: Set of information referring to ways to contact the customer.
       required:
         - postalAddresses
         - phones
@@ -497,22 +496,22 @@ components:
           items:
             $ref: '#/components/schemas/BusinessPostalAddress'
           minItems: 0
-          description: Lista de endereços da pessoa jurídica
+          description: List of addresses of the legal entity
         phones:
           type: array
           items:
             $ref: '#/components/schemas/CustomerPhone'
           minItems: 0
-          description: Lista com telefones de contato da pessoa jurídica
+          description: List with contact phones of the legal entity
         emails:
           type: array
           items:
             $ref: '#/components/schemas/CustomerEmail'
           minItems: 0
-          description: Lista e-mails de contato
+          description: Contact email list
     PersonalContacts:
       type: object
-      description: Conjunto de informações referentes às formas para contatar o cliente.
+      description: Set of information referring to ways to contact the customer.
       required:
         - postalAddresses
         - phones
@@ -523,19 +522,19 @@ components:
           items:
             $ref: '#/components/schemas/PersonalPostalAddress'
           minItems: 0
-          description: Lista de endereços da pessoa natural
+          description: List of addresses of the natural person
         phones:
           type: array
           items:
             $ref: '#/components/schemas/CustomerPhone'
           minItems: 0
-          description: Lista com telefones de contato da pessoa natural
+          description: List with contact phones of the natural person
         emails:
           type: array
           items:
             $ref: '#/components/schemas/CustomerEmail'
           minItems: 0
-          description: Lista e-mails de contato
+          description: Contact email list
     BusinessInformedPatrimony:
       type: object
       required:
@@ -550,7 +549,7 @@ components:
           maxLength: 20
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
-          description: 'Data de referência do Patrimônio, conforme especificação RFC-3339.'
+          description: 'Reference date of the Patrimony, according to RFC-3339 specification.'
     PersonalInformedPatrimony:
       type: object
       required:
@@ -563,7 +562,7 @@ components:
           type: number
           maximum: 9999
           example: 2010
-          description: 'Ano de referência da Renda, conforme especificação RFC-3339.'
+          description: 'Reference year of the Income, according to RFC-3339 specification.'
     CustomerEmail:
       type: object
       required:
@@ -572,12 +571,12 @@ components:
       properties:
         isMain:
           type: boolean
-          description: Indica se o email informado é o principal
+          description: Indicates if the informed email is the main one
           example: true
         email:
           type: string
           format: email
-          description: Endereço de email
+          description: Email address
           maxLength: 320
           example: karinafernandes-81@br.inter.net
     CustomerPhone:
@@ -590,25 +589,25 @@ components:
       properties:
         isMain:
           type: boolean
-          description: Indica se o telefone informado é o principal
+          description: Indicates if the informed phone is the main one
           example: true
         type:
           $ref: '#/components/schemas/EnumCustomerPhoneType'
         additionalInfo:
           type: string
-          description: 'Informação complementar relativa ao tipo de telefone selecionado. [Restrição] De preenchimento obrigatório quando selecionado o tipo ''OUTRO''.'
+          description: 'Complementary information related to the selected phone type. [Restriction] Mandatory filling when selected type is ''OTHER''.'
           pattern: '[\w\W\s]*'
           maxLength: 70
-          example: Informações adicionais.
+          example: Additional information.
         countryCallingCode:
           type: string
           maxLength: 4
           pattern: '^\d{1,4}$'
           example: '55'
           description: |
-            Número de DDI (Discagem Direta Internacional) para telefone de acesso ao Cliente - se houver
+            IDD (International Direct Dialing) number for customer access phone - if any
 
-            [Restrição] O preenchimento é obrigatório quando for diferente de 55. 
+            [Restriction] Filling is mandatory when different from 55. 
         areaCode:
           $ref: '#/components/schemas/AreaCode'
         number:
@@ -616,12 +615,12 @@ components:
           maxLength: 13
           pattern: '^([0-9]{6,13})$'
           example: '29875132'
-          description: Número de telefone do cliente
+          description: Customer phone number
         phoneExtension:
           type: string
           maxLength: 5
           pattern: '^\d{1,5}$'
-          description: Número do ramal. De preenchimento obrigatório se fizer parte da identificação do número do telefone informado
+          description: Extension number. Mandatory filling if part of the identification of the informed phone number
           example: '932'
     BusinessPostalAddress:
       type: object
@@ -634,7 +633,7 @@ components:
         isMain:
           type: boolean
           example: true
-          description: Indica se o endereço informado é o principal
+          description: Indicates if the informed address is the main one
         address:
           type: string
           maxLength: 150
@@ -642,20 +641,20 @@ components:
           pattern: '^[\w\W\s]*$'
           example: 'Av Naburo Ykesaki, 1270'
           description: |
-            Corresponde ao endereço comercial do cliente.
+            Corresponds to the customer's commercial address.
         additionalInfo:
           type: string
           maxLength: 30
           pattern: '[\w\W\s]*'
-          example: Fundos
-          description: Alguns logradouros ainda necessitam ser especificados por meio de complemento
+          example: Back
+          description: Some streets still need to be specified through complement
         districtName:
           type: string
           maxLength: 50
           pattern: '[\w\W\s]*'
-          example: Centro
+          example: Center
           description: |
-            Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. Preenchimento obrigatório, se houver.
+            Neighborhood is a community or region located in a city or municipality according to its geographical subdivisions. Mandatory filling, if any.
         townName:
           type: string
           maxLength: 50
@@ -663,13 +662,13 @@ components:
           minLength: 2
           example: Marília
           description: |
-            Localidade: O nome da localidade corresponde à designação da cidade ou município no qual o endereço está localizado.  
+            Locality: The locality name corresponds to the designation of the city or municipality where the address is located.
         ibgeTownCode:
           type: string
           pattern: '\d{7}$'
           maxLength: 7
           example: '3550308'
-          description: 'Código IBGE de Município. A Tabela de Códigos de Municípios do IBGE apresenta a lista dos municípios brasileiros associados a um código composto de 7 dígitos, sendo os dois primeiros referentes ao código da Unidade da Federação.'
+          description: 'IBGE Municipality Code. The IBGE Municipality Codes table presents the list of Brazilian municipalities associated with a 7-digit code, the first two referring to the Federative Unit code.'
         countrySubDivision:
           $ref: '#/components/schemas/EnumCountrySubDivision'
         postCode:
@@ -678,19 +677,19 @@ components:
           maxLength: 8
           example: '17500001'
           description: |
-            Código de Endereçamento Postal: Composto por um conjunto numérico de oito dígitos, o objetivo principal do CEP é orientar e acelerar o encaminhamento, o tratamento e a entrega de objetos postados nos Correios, por meio da sua atribuição a localidades, logradouros, unidades dos Correios, serviços, órgãos públicos, empresas e edifícios. p.ex. '01311000'
+            Postal Code: Composed of an eight-digit numerical set, the main objective of the Postal Code is to guide and accelerate the forwarding, processing, and delivery of objects posted at the Post Office, through its assignment to localities, streets, Post Office units, services, public agencies, companies, and buildings. e.g., '01311000'
         country:
           type: string
           maxLength: 80
           pattern: '[\w\W\s]*'
-          example: Brasil
-          description: Nome do país
+          example: Brazil
+          description: Country name
         countryCode:
           type: string
           maxLength: 3
           pattern: '^([A-Z]{3})$'
           example: BRA
-          description: Código do pais de acordo com o código alpha3 do ISO-3166
+          description: Country code according to ISO-3166 alpha3 code
         geographicCoordinates:
           $ref: '#/components/schemas/GeographicCoordinates'
     PersonalPostalAddress:
@@ -705,40 +704,40 @@ components:
         isMain:
           type: boolean
           example: true
-          description: Indica se o endereço informado é o principal.
+          description: Indicates if the informed address is the main one.
         address:
           type: string
           maxLength: 150
           pattern: '[\w\W\s]*'
           example: 'Av Naburo Ykesaki, 1270'
-          description: Corresponde ao endereço residencial do cliente.
+          description: Corresponds to the customer's residential address.
         additionalInfo:
           type: string
           maxLength: 30
           pattern: '[\w\W\s]*'
-          example: Fundos
-          description: Alguns logradouros ainda necessitam ser especificados por meio de complemento.
+          example: Back
+          description: Some streets still need to be specified through complement.
         districtName:
           type: string
           maxLength: 50
           pattern: '[\w\W\s]*'
-          example: Centro
+          example: Center
           description: |
-            Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas.
-            [Restrição] De preenchimento obrigatório, se houver.
+            Neighborhood is a community or region located in a city or municipality according to its geographical subdivisions.
+            [Restriction] Mandatory filling, if any.
         townName:
           type: string
           maxLength: 50
           pattern: '[\w\W\s]*'
           example: Marília
           description: |
-            Localidade: O nome da localidade corresponde à designação da cidade ou município no qual o endereço está localizado.
+            Locality: The locality name corresponds to the designation of the city or municipality where the address is located.
         ibgeTownCode:
           type: string
           pattern: '\d{7}$'
           maxLength: 7
           example: '3550308'
-          description: 'Código IBGE de Município. A Tabela de Códigos de Municípios do IBGE apresenta a lista dos municípios brasileiros associados a um código composto de 7 dígitos, sendo os dois primeiros referentes ao código da Unidade da Federação.'
+          description: 'IBGE Municipality Code. The IBGE Municipality Codes table presents the list of Brazilian municipalities associated with a 7-digit code, the first two referring to the Federative Unit code.'
         countrySubDivision:
           $ref: '#/components/schemas/EnumCountrySubDivision'
         postCode:
@@ -747,19 +746,19 @@ components:
           maxLength: 8
           example: '17500001'
           description: |
-            Código de Endereçamento Postal: Composto por um conjunto numérico de oito dígitos, o objetivo principal do CEP é orientar e acelerar o encaminhamento, o tratamento e a entrega de objetos postados nos Correios, por meio da sua atribuição a localidades, logradouros, unidades dos Correios, serviços, órgãos públicos, empresas e edifícios. p.ex. '01311000'.
+            Postal Code: Composed of an eight-digit numerical set, the main objective of the Postal Code is to guide and accelerate the forwarding, processing, and delivery of objects posted at the Post Office, through its assignment to localities, streets, Post Office units, services, public agencies, companies, and buildings. e.g., '01311000'.
         country:
           type: string
           maxLength: 80
           pattern: '[\w\W\s]*'
-          example: Brasil
-          description: Nome do país
+          example: Brazil
+          description: Country name
         countryCode:
           type: string
           pattern: '^([A-Z]{3})$'
           maxLength: 3
           example: BRA
-          description: Código do país de acordo com o código alpha3 do ISO-3166.
+          description: Country code according to ISO-3166 alpha3 code.
         geographicCoordinates:
           $ref: '#/components/schemas/GeographicCoordinates'
     BusinessAccount:
@@ -774,36 +773,36 @@ components:
           type: string
           maxLength: 3
           pattern: '^\d{3}$'
-          description: 'Código identificador atribuído pelo Banco Central do Brasil às instituições participantes do STR (Sistema de Transferência de reservas).O Compe (Sistema de Compensação de Cheques e Outros Papéis) é um sistema que identifica e processa as compensações bancárias. Ele é representado por um código de três dígitos que serve como identificador de bancos, sendo assim, cada instituição bancária possui um número exclusivo'
+          description: 'Identifier code assigned by the Central Bank of Brazil to institutions participating in STR (Reserve Transfer System). Compe (Check and Other Papers Compensation System) is a system that identifies and processes bank compensations. It is represented by a three-digit code that serves as a bank identifier, so each banking institution has an exclusive number'
           example: '001'
         branchCode:
           type: string
           maxLength: 4
           pattern: '^\d{4}$'
           description: |
-            Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)   
-            [Restrição] Obrigatoriamente deve ser preenchido quando o campo "type" for diferente de conta pré paga.
+            Branch Code holder of the account. (Branch is a dependency intended for customer service, the general public, and credit union associates, in the exercise of institution activities, cannot be mobile or temporary)   
+            [Restriction] Must be filled when the "type" field is different from prepaid account.
           example: '6272'
         number:
           type: string
           maxLength: 20
           pattern: '^\d{8,20}$'
           description: |
-            Número da conta
+            Account number
           example: '24550245'
         checkDigit:
           type: string
           maxLength: 1
           pattern: '[\w\W\s]*'
           description: |
-            Dígito da conta
+            Account digit
           example: '4'
         type:
           $ref: '#/components/schemas/EnumAccountTypeCustomers'
     PersonalAccount:
       type: object
       description: |
-        Lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
+        List of checking accounts, savings accounts, and prepaid payment accounts maintained by the customer at the transmitting institution and for which they have provided consent
       required:
         - compeCode
         - number
@@ -815,29 +814,29 @@ components:
           type: string
           maxLength: 3
           pattern: '^\d{3}$'
-          description: 'Código identificador atribuído pelo Banco Central do Brasil às instituições participantes do STR (Sistema de Transferência de reservas).O Compe (Sistema de Compensação de Cheques e Outros Papéis) é um sistema que identifica e processa as compensações bancárias. Ele é representado por um código de três dígitos que serve como identificador de bancos, sendo assim, cada instituição bancária possui um número exclusivo'
+          description: 'Identifier code assigned by the Central Bank of Brazil to institutions participating in STR (Reserve Transfer System). Compe (Check and Other Papers Compensation System) is a system that identifies and processes bank compensations. It is represented by a three-digit code that serves as a bank identifier, so each banking institution has an exclusive number'
           example: '001'
         branchCode:
           type: string
           maxLength: 4
           pattern: '^\d{4}$'
           description: |
-            Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)   
-            [Restrição] Obrigatoriamente deve ser preenchido quando o campo "type" for diferente de conta pré paga.
+            Branch Code holder of the account. (Branch is a dependency intended for customer service, the general public, and credit union associates, in the exercise of institution activities, cannot be mobile or temporary)   
+            [Restriction] Must be filled when the "type" field is different from prepaid account.
           example: '6272'
         number:
           type: string
           maxLength: 20
           pattern: '^\d{8,20}$'
           description: |
-            Número da conta
+            Account number
           example: '24550245'
         checkDigit:
           type: string
           maxLength: 1
           pattern: '[\w\W\s]*'
           description: |
-            Dígito da conta
+            Account digit
           example: '4'
         type:
           $ref: '#/components/schemas/EnumAccountTypeCustomers'
@@ -848,10 +847,10 @@ components:
             - CONJUNTA_SIMPLES
             - CONJUNTA_SOLIDARIA
           description: |
-            Subtipo de conta (vide Enum): 
-            Conta individual - possui um único titular
-            Conta conjunta simples - onde as movimentações financeiras só podem serem realizadas mediante autorização de TODOS os correntistas da conta.
-            Conta conjunta solidária - é a modalidade cujos titulares podem realizar movimentações de forma isolada, isto é, sem que seja necessária a autorização dos demais titulares.
+            Account subtype (see Enum): 
+            Individual account - has a single holder
+            Simple joint account - where financial transactions can only be carried out with authorization from ALL account holders.
+            Joint and several account - is the modality whose holders can carry out transactions in isolation, that is, without the need for authorization from other holders.
           example: INDIVIDUAL
     PortabilitiesReceived:
       type: object
@@ -867,34 +866,34 @@ components:
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 80
           description: |
-            Nome do empregador conforme recebido pela comunicação de portabilidade. O empregador pode ser pessoa natural ou pessoa jurídica, quando se tratar de pessoa jurídica, deve haver o envio da razão social.
+            Employer name as received by portability communication. The employer can be a natural person or legal entity, when it is a legal entity, the corporate name must be sent.
         employerCnpjCpf:
           type: string
           pattern: '^\d{14}$|^\d{11}$'
           maxLength: 14
           description: |
-            Número de inscrição (CPF/CNPJ) do empregador (contratante dos serviços de pagamento), conforme recebido pela comunicação de portabilidade.
+            Registration number (CPF/CNPJ) of the employer (payer of payment services), as received by portability communication.
         paycheckBankDetainerCnpj:
           type: string
           pattern: '^\d{14}$'
           maxLength: 14
           description: |
-            Número de inscrição no Cadastro Nacional da Pessoa Jurídica (CNPJ) do banco folha (instituição financeira detentora da conta salário) conforme recebido pela comunicação de portabilidade.
+            Registration number in the National Register of Legal Entities (CNPJ) of the payroll bank (financial institution holding the salary account) as received by portability communication.
         paycheckBankDetainerIspb:
           type: string
           pattern: '^[0-9]{8}$'
           maxLength: 8
           description: |
-            Número do ISPB do Banco Folha (instituição financeira detentora da conta salário) conforme recebido pela comunicação de portabilidade.
+            ISPB number of the Payroll Bank (financial institution holding the salary account) as received by portability communication.
         portabilityApprovalDate:
           type: string
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           maxLength: 10
           description: |
-            Data de aprovação da portabilidade, conforme recebido pela comunicação de portabilidade.
+            Portability approval date, as received by portability communication.
 
-            Obs.: somente devem ser compartilhadas solicitações aprovadas, mesmo que de forma compulsória.
+            Note: only approved requests should be shared, even if compulsory.
     PaychecksBankLink:
       type: object
       required:
@@ -909,32 +908,32 @@ components:
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 80
           description: |
-            Nome do empregador conforme registrado na abertura da conta salário. O empregador pode ser pessoa natural ou pessoa jurídica, quando se tratar de pessoa jurídica, deve haver o envio da razão social.
+            Employer name as registered in the salary account opening. The employer can be a natural person or legal entity, when it is a legal entity, the corporate name must be sent.
         employerCnpjCpf:
           type: string
           pattern: '^\d{14}$|^\d{11}$'
           maxLength: 14
           description: |
-            Documento do empregador (CNPJ/CPF), conforme registrado na abertura da conta salário.
+            Employer document (CNPJ/CPF), as registered in the salary account opening.
         paycheckBankCnpj:
           type: string
           pattern: '^\d{14}$'
           maxLength: 14
           description: |
-            CNPJ da instituição financeira contratada para prestar serviço de pagamento de salário (banco-folha).
+            CNPJ of the financial institution contracted to provide salary payment service (payroll bank).
         paycheckBankIspb:
           type: string
           pattern: '^[0-9]{8}$'
           maxLength: 8
           description: |
-            Número ISPB (Identificador do Sistema de Pagamentos Brasileiros) do instituição financeira contratada para prestar serviço de pagamento de salário (banco-folha).
+            ISPB number (Brazilian Payment System Identifier) of the financial institution contracted to provide salary payment service (payroll bank).
         accountOpeningDate:
           type: string
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           maxLength: 10
           description: |
-            Data de abertura da conta salário.
+            Salary account opening date.
     EconomicActivity:
       type: object
       required:
@@ -945,13 +944,13 @@ components:
           type: string
           pattern: '^\d{7}$'
           description: |
-            Traz o código do ramo da atividade principal da empresa consultada, segundo padrão CNAE (Classificação Nacional de Atividades Econômicas)
+            Brings the code of the main activity branch of the consulted company, according to CNAE standard (National Classification of Economic Activities)
 
-            [Observação] O campo sempre deve ser enviado com 7 caracteres, seguindo a classificação “CNAE-Subclasse 2.3”. Em casos em que o valor inicie com zeros, ele deve conter todos os caracteres, incluindo os zeros.
+            [Observation] The field must always be sent with 7 characters, following the "CNAE-Subclass 2.3" classification. In cases where the value starts with zeros, it must contain all characters, including zeros.
           example: '0600001'
         isMain:
           type: boolean
-          description: 'Indica se é o ramo principal de atividade da empresa quando true e se é o ramo secundário quando false. [Restrição] Somente uma ocorrência relativa ao código da atividade econômica principal deve trazer o valor true.'
+          description: 'Indicates if it is the main activity branch of the company when true and if it is the secondary branch when false. [Restriction] Only one occurrence relative to the code of the main economic activity must bring the value true.'
           example: true
     EnumAccountTypeCustomers:
       type: string
@@ -960,24 +959,24 @@ components:
         - CONTA_POUPANCA
         - CONTA_PAGAMENTO_PRE_PAGA
       description: |
-        Tipos de contas. Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica. Vide Enum:
+        Account types. Traditional modalities provided for by Resolution 4.753, not including linked accounts, accounts of those domiciled abroad, foreign currency accounts, and corresponding electronic money account. See Enum:
 
-        Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante.
+        Checking account or Current account - is the most common type. In it, the money is at your disposal to be withdrawn at any time. This account does not generate earnings for the depositor.
 
-        Conta poupança - foi criada para estimular as pessoas a pouparem. O dinheiro que ficar na conta por trinta dias passa a gerar rendimentos, com isenção de imposto de renda para quem declara. Ou seja, o dinheiro “cresce” (rende) enquanto ficar guardado na conta. Cada depósito terá rendimentos de mês em mês, sempre no dia do mês em que o dinheiro tiver sido depositado.
+        Savings account - was created to encourage people to save. The money that remains in the account for thirty days starts to generate earnings, with income tax exemption for those who declare. That is, the money "grows" (earns) while kept in the account. Each deposit will have earnings month by month, always on the day of the month when the money was deposited.
 
-        Conta de pagamento pré-paga - segundo CIRCULAR Nº 3.680, BCB de  2013, é a 'destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'.
+        Prepaid payment account - according to CIRCULAR No. 3,680, BCB of 2013, is 'intended for the execution of payment transactions in electronic currency carried out based on funds denominated in reais previously deposited'.
       example: CONTA_DEPOSITO_A_VISTA
     AreaCode:
       type: string
       example: '19'
-      description: Número de DDD (Discagem Direta à Distância) do telefone do cliente - se houver
+      description: DDD (Direct Distance Dialing) number of the customer's phone - if any
       maxLength: 3
       minLength: 2
       pattern: ^(\d{2,3})$
     EnumCountrySubDivision:
       type: string
-      description: 'Enumeração referente a cada sigla da unidade da federação que identifica o estado ou o distrito federal, no qual o endereço está localizado. p.ex. ''AC''. São consideradas apenas as siglas para os estados brasileiros'
+      description: 'Enumeration referring to each federative unit acronym that identifies the state or federal district where the address is located. e.g., ''AC''. Only acronyms for Brazilian states are considered'
       enum:
         - AC
         - AL
@@ -1009,7 +1008,7 @@ components:
       example: SP
     EnumCustomerPhoneType:
       type: string
-      description: Identificação do Tipo de telefone do cliente.
+      description: Customer phone type identification.
       enum:
         - FIXO
         - MOVEL
@@ -1021,12 +1020,12 @@ components:
         - MAE
         - PAI
       example: PAI
-      description: Tipo de filiação.
+      description: Type of filiation.
     EnumInformedRevenueFrequency:
       type: string
       description: |
-        Traz a frequência ou período do faturamento informado.
-        "O faturamento é calculado a partir de todos os benefícios que a empresa conseguiu com sua atividade econômica em um determinado período. Esses benefícios são os rendimentos ou ganhos da organização através de suas vendas ou serviços prestados".
+        Brings the frequency or period of the informed revenue.
+        "Revenue is calculated from all benefits that the company obtained with its economic activity in a given period. These benefits are the organization's earnings or gains through its sales or services provided".
       enum:
         - DIARIA
         - SEMANAL
@@ -1050,7 +1049,7 @@ components:
         - SEMESTRAL
         - ANUAL
         - OUTROS
-      description: Traz a frequência ou período da renda informada.
+      description: Brings the frequency or period of the informed income.
     EnumMaritalStatusCode:
       type: string
       enum:
@@ -1063,7 +1062,7 @@ components:
         - OUTRO
       example: OUTRO
       description: |
-        Estado marital do cliente.
+        Customer marital status.
     EnumOccupationMainCodeType:
       type: string
       enum:
@@ -1072,7 +1071,7 @@ components:
         - OUTRO
       example: RECEITA_FEDERAL
       description: |
-        Traz a relação dos códigos relativos à ocupação.
+        Brings the list of codes related to occupation.
     EnumPartiesParticipationDocumentType:
       type: string
       enum:
@@ -1081,7 +1080,7 @@ components:
         - OUTRO_DOCUMENTO_VIAGEM
         - CNPJ
       description: |
-        Tipo do documento informado. 
+        Type of informed document. 
     EnumPersonalOtherDocumentType:
       type: string
       enum:
@@ -1091,7 +1090,7 @@ components:
         - RNE
         - OUTROS
       description: |
-        Relação dos Códigos dos demais documentos pessoa natural.
+        List of other natural person document codes.
     EnumProcuratorsTypePersonal:
       type: string
       enum:
@@ -1099,9 +1098,9 @@ components:
         - PROCURADOR
       example: PROCURADOR
       description: |
-        Tipo de representante.
-        Representante legal - Nome Civil completo da Pessoa Natural que represente uma entidade ou uma empresa e é nomeado em seu ato constitutivo, ou seja, no contrato social ou estatuto social.
-        Procurador - é qualquer pessoa que represente a Pessoa Natural em algum negócio, mediante autorização escrita do mesmo.
+        Type of representative.
+        Legal representative - Full Civil Name of the Natural Person who represents an entity or company and is appointed in its constitutive act, i.e., in the articles of association or bylaws.
+        Attorney - is any person who represents the Natural Person in some business, through written authorization from them.
     EnumProductServiceType:
       type: string
       enum:
@@ -1118,7 +1117,7 @@ components:
         - CREDENCIAMENTO
         - OUTROS
       example: SEGURO
-      description: Lista com a relação dos produtos e serviços com contrato vigente.
+      description: List with the relationship of products and services with current contract.
     EnumSex:
       type: string
       enum:
@@ -1127,25 +1126,25 @@ components:
         - OUTRO
       example: FEMININO
       description: |
-        "Conjunto de características anatomofisiológicas que distinguem o homem e a mulher: Sexo masculino; sexo feminino". 
-        No caso de não ser feminino nem masculino é classificado como 'OUTRO'
+        "Set of anatomical-physiological characteristics that distinguish man and woman: Male sex; female sex". 
+        In case it is not female nor male, it is classified as 'OTHER'
     GeographicCoordinates:
       type: object
-      description: 'Conjunto de informações, que correspondem aos valores das coordenadas geográficas em graus decimais, no Sistema de referência WGS84'
+      description: 'Set of information, corresponding to the values of geographic coordinates in decimal degrees, in WGS84 reference system'
       required:
         - latitude
         - longitude
       properties:
         latitude:
           description: |
-            Informação da Latitude referente a geolocalização informada. Entre -90 e 90.p.ex. '-23.5475000'. (2 casas antes da vírgula, 11 posições)
+            Latitude information relative to informed geolocation. Between -90 and 90. e.g., '-23.5475000'. (2 places before comma, 11 positions)
           type: string
           pattern: '^-?\d{1,2}\.\d{1,9}$'
           maxLength: 13
           example: '-23.5475000'
         longitude:
           description: |
-            Informação da Longitude referente a geolocalização informada. Entre -180 e 180. p.ex '-46.6361100'. (3 casas antes da vírgula, 11 posições)
+            Longitude information relative to informed geolocation. Between -180 and 180. e.g., '-46.6361100'. (3 places before comma, 11 positions)
           type: string
           pattern: '^-?\d{1,3}\.\d{1,8}$'
           maxLength: 13
@@ -1161,29 +1160,29 @@ components:
           type: string
           maxLength: 100
           pattern: '[\w\W\s]*'
-          example: Informações adicionais
+          example: Additional information
           description: |
-            Texto livre para complementar informação relativa ao patrimonio.
+            Free text to complement information relative to patrimony.
 
-            [Restrição] Preencher quando frequency for igual OUTROS.
+            [Restriction] Fill when frequency is equal to OUTROS.
         amount:
           $ref: '#/components/schemas/InformedRevenueAmount'
         year:
           type: number
           maximum: 9999
           example: 2010
-          description: 'Ano de referência da Renda, conforme especificação RFC-3339.'
+          description: 'Reference year of the Income, according to RFC-3339 specification.'
     InformedRevenueAmount:
       type: object
       required:
         - amount
         - currency
-      description: Valor do patrimônio informado
+      description: Value of informed revenue
       properties:
         amount:
           description: |
-            Valor do patrimônio informado. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
-            Patrimônio é o conjunto de bens vinculado a uma pessoa ou a uma entidade.
+            Value of informed revenue. Expressed in monetary value with minimum 2 and maximum 4 decimal places.
+            Patrimony is the set of assets linked to a person or entity.
           type: string
           pattern: '^-?\d{1,15}\.\d{2,4}$'
           maxLength: 21
@@ -1193,7 +1192,7 @@ components:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency relative to monetary value, following ISO-4217 model.'
           example: BRL
     InformedIncome:
       type: object
@@ -1212,20 +1211,20 @@ components:
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
-          description: 'Data da renda, conforme especificação RFC-3339.'
+          description: 'Income date, according to RFC-3339 specification.'
     InformedIncomeAmount:
       type: object
       required:
         - amount
         - currency
-      description: Valor total da renda informada
+      description: Total value of informed income
       properties:
         amount:
           description: |
-            Valor total da renda informada. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais. 
-            Renda primária indica os montantes a pagar ou a receber em troca do uso temporário de recursos financeiros, trabalho ou ativos não financeiros não produzidos, a saber, remuneração de trabalhadores, renda de investimentos e demais rendas primárias.
-            Fazem parte da primeira a remuneração do trabalho assalariado (salários e ordenados); da segunda, renda de investimento direto, renda de investimento em carteira, renda de outros investimentos e renda de ativos de reserva; e da terceira, tributos sobre a produção e importação, subsídios e aluguéis.
-            Fonte: Banco Central do Brasil – Departamento Econômico
+            Total value of informed income. Expressed in monetary value with minimum 2 and maximum 4 decimal places. 
+            Primary income indicates amounts to be paid or received in exchange for temporary use of financial resources, labor, or non-produced non-financial assets, namely, employee compensation, investment income, and other primary income.
+            Part of the first is remuneration of salaried work (wages and salaries); of the second, direct investment income, portfolio investment income, other investment income, and reserve asset income; and of the third, taxes on production and imports, subsidies, and rents.
+            Source: Central Bank of Brazil - Economic Department
           type: string
           pattern: '^\d{1,15}\.\d{2,4}$'
           maxLength: 20
@@ -1235,19 +1234,19 @@ components:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency relative to monetary value, following ISO-4217 model.'
           example: BRL
     InformedPatrimonyAmount:
       type: object
       required:
         - amount
         - currency
-      description: Valor do patrimônio informado
+      description: Value of informed patrimony
       properties:
         amount:
           description: |
-            Valor do patrimônio informado. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
-            Patrimônio é o conjunto de bens vinculado a uma pessoa ou a uma entidade.
+            Value of informed patrimony. Expressed in monetary value with minimum 2 and maximum 4 decimal places.
+            Patrimony is the set of assets linked to a person or entity.
           type: string
           pattern: '^-?\d{1,15}\.\d{2,4}$'
           maxLength: 21
@@ -1257,11 +1256,11 @@ components:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          description: 'Currency relative to monetary value, following ISO-4217 model.'
           example: BRL
     Links:
       type: object
-      description: Referências para outros recusos da API requisitada.
+      description: References to other resources of the requested API.
       required:
         - self
       properties:
@@ -1269,47 +1268,47 @@ components:
           type: string
           format: url
           maxLength: 2000
-          description: URI completo que gerou a resposta atual.
+          description: Complete URI that generated the current response.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
         first:
           type: string
           format: url
           maxLength: 2000
-          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
         prev:
           type: string
           format: url
           maxLength: 2000
-          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
+          description: "URI of the previous page of this result list. Restriction - Mandatory when not the first page of the response"
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
         next:
           type: string
           format: url
           maxLength: 2000
-          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
         last:
           type: string
           format: url
           maxLength: 2000
-          description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          description: URI of the last page of this result list. Restriction - Mandatory when not the last page of the response
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
     Meta:
       type: object
-      description: Meta informações referente à API requisitada.
+      description: Meta information related to the requested API.
       required:
         - requestDateTime
       properties:
         requestDateTime:
-          description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+          description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
           type: string
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
     Nationality:
       type: object
-      description: Objeto que agrupa informações relativas à nacionalidade da Pessoa Natural
+      description: Object that groups information related to the nationality of the Natural Person
       required:
         - otherNationalitiesInfo
         - documents
@@ -1320,12 +1319,12 @@ components:
           maxLength: 40
           example: CAN
           description: |
-            Campo de preenchimento obrigatório caso o cliente não possua nacionalidade brasileira. Preencher indicando todas suas demais nacionalidades utilizando o código de pais de acordo com o código alpha3 do ISO-3166.p.ex.'CAN'
+            Mandatory filling field if the customer does not have Brazilian nationality. Fill indicating all their other nationalities using the country code according to ISO-3166 alpha3 code. e.g., 'CAN'
         documents:
           type: array
           items:
             $ref: '#/components/schemas/NationalityOtherDocument'
-          description: Lista que traz relação de documentos complementares de pessoas com nacionalidade diferente de brasileira
+          description: List that brings relationship of complementary documents of persons with nationality different from Brazilian
     NationalityOtherDocument:
       type: object
       required:
@@ -1336,23 +1335,23 @@ components:
           type: string
           maxLength: 10
           pattern: '[\w\W\s]*'
-          description: 'Tipo de documento. Campo livre, de preenchimento obrigatório quando a nacionalidade for diferente de brasileira. Informar tipo e número do documento, além da, vigência e demais informações complementares para se identificar o documento de pessoa estrangeira'
+          description: 'Document type. Free field, mandatory filling when nationality is different from Brazilian. Inform type and document number, in addition to validity and other complementary information to identify the foreign person document'
           example: SOCIAL SEC
         number:
           type: string
           maxLength: 40
           pattern: '[\w\W\s]*'
-          description: 'Número de identificação do documento. Campo livre, de preenchimento obrigatório quando a nacionalidade for diferente de brasileira. Informar o número do documento e demais informações complementares para se identificar o documento de pessoa estrangeira'
+          description: 'Document identification number. Free field, mandatory filling when nationality is different from Brazilian. Inform document number and other complementary information to identify the foreign person document'
           example: '423929299'
         expirationDate:
-          description: 'Data de validade do documento informado, conforme especificação RFC-3339.'
+          description: 'Validity date of the informed document, according to RFC-3339 specification.'
           type: string
           maxLength: 10
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
         issueDate:
-          description: 'Data de emissão do documento, conforme especificação RFC-3339.'
+          description: 'Document issue date, according to RFC-3339 specification.'
           type: string
           maxLength: 10
           format: date
@@ -1362,19 +1361,19 @@ components:
           type: string
           maxLength: 80
           pattern: '[\w\W\s]*'
-          example: Brasil
+          example: Brazil
           description: |
-            Nome do país.
+            Country name.
         additionalInfo:
           type: string
           maxLength: 70
           pattern: '[\w\W\s]*'
-          description: Campo livre de preenchimento quando necessário.
-          example: Informações adicionais.
+          description: Free field for filling when necessary.
+          example: Additional information.
     PartiesParticipation:
       type: object
       description: |
-        Lista relativa às informações das partes envolvidas, como: sócio e /ou administrador
+        List relative to information of involved parties, such as: partner and/or administrator
       required:
         - type
         - personType
@@ -1386,13 +1385,13 @@ components:
           enum:
             - PESSOA_NATURAL
             - PESSOA_JURIDICA
-          description: Indica se a pessoa da parte envolvida é uma pessoa natural ou juridica
+          description: Indicates if the person of the involved party is a natural person or legal entity
         type:
           type: string
           description: |
-            Indica o perfil de atuação na empresa. Vide Enum
-            O administrador é o responsável por desempenhar todas as funções administrativas da empresa. É ele quem conduz o dia a dia do negócio, assinando documentos, respondendo legalmente pela sociedade, realizando empréstimos e outras ações gerenciais. Apesar de estar na linha de frente da empresa, ele é denominado sócio por também possuir sua parcela de participação no Capital Social.
-            Sócio não tem qualquer envolvimento nas atividades administrativas da sociedade.
+            Indicates the performance profile in the company. See Enum
+            The administrator is responsible for performing all administrative functions of the company. They conduct the day-to-day business, signing documents, legally responding for the company, taking loans, and other management actions. Despite being on the front line of the company, they are called partner for also having their share of participation in the Share Capital.
+            Partner does not have any involvement in the administrative activities of the company.
           enum:
             - SOCIO
             - ADMINISTRADOR
@@ -1402,38 +1401,38 @@ components:
           pattern: '[\w\W\s]*'
           example: Juan Kaique Cláudio Fernandes
           description: |
-            Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte)
+            Full civil name of the natural person (Fundamental right of the person, civil name is the one assigned to the natural person from their birth registration, with which they will be identified throughout their life, as well as after their death)
 
-            [Restrição] O campo civilName deve ser obrigatoriamente preenchido quando personType for PESSOA_NATURAL.
+            [Restriction] The civilName field must be mandatorily filled when personType is PESSOA_NATURAL.
         socialName:
           type: string
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: Karina
           description: |
-            Nome social da pessoa natural, se houver. (aquele pelo qual travestis e transexuais se reconhecem, bem como são identificados por sua comunidade e em seu meio social, conforme Decreto Local).   
+            Social name of the natural person, if any. (the one by which transvestites and transsexuals recognize themselves, as well as are identified by their community and in their social environment, according to Local Decree).
         companyName:
           type: string
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: Luiza e Benjamin Assessoria Jurídica Ltda
           description: |
-            Razão social da empresa consultada é o termo registrado sob o qual uma pessoa jurídica (PJ) se individualiza e exerce suas atividades. Também pode ser chamada por denominação social ou firma empresarial
+            Corporate name of the consulted company is the term registered under which a legal entity (LE) individualizes and exercises its activities. Also called corporate denomination or business firm
 
-            [Restrição] o campo companyName deve ser obrigatoriamente preenchido quando personType for PESSOA_JURIDICA.
+            [Restriction] the companyName field must be mandatorily filled when personType is PESSOA_JURIDICA.
         tradeName:
           type: string
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: Mundo da Eletronica
-          description: 'Nome fantasia da pessoa jurídica, se houver. (É o nome popular da empresa, utilizado para divulgação da empresa e melhor fixação com o público). De preenchimento obrigatório se houver'
+          description: 'Trade name of the legal entity, if any. (It is the popular name of the company, used for company promotion and better fixation with the public). Mandatory filling if it exists'
         startDate:
           type: string
           maxLength: 20
           format: date-time
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2021-05-21T08:30:00Z'
-          description: 'Data de início da participação, conforme especificação RFC-3339.'
+          description: 'Start date of participation, according to RFC-3339 specification.'
         shareholding:
           type: string
           format: double
@@ -1442,9 +1441,9 @@ components:
           pattern: '^[01]\.\d{6}$'
           example: '0.510000'
           description: |
-            Percentual de participação societária (informar com 6 casas decimais). O Sócio só deve ser informado se sua participação societária for igual ou superior a 25%. p.ex: 0.250000 (Este valor  representa 25%. O valor '1 'representa 100%).
+            Percentage of shareholding participation (inform with 6 decimal places). The Partner should only be informed if their shareholding participation is equal to or greater than 25%. e.g., 0.250000 (This value represents 25%. The value '1' represents 100%).
 
-            [Restrição]: Campo obrigatório caso o type for igual a SOCIO e este tiver participação societária maior que 25%.
+            [Restriction]: Mandatory field if type is equal to SOCIO and they have shareholding participation greater than 25%.
         documentType:
           $ref: '#/components/schemas/EnumPartiesParticipationDocumentType'
         documentNumber:
@@ -1452,37 +1451,37 @@ components:
           maxLength: 20
           pattern: '[\w\W\s]*'
           example: '73677831148'
-          description: Número do documento informado. Campo Texto Livre para preencher número e dígito do documento se houver
+          description: Number of the informed document. Free Text field to fill number and digit of document if any
         documentAdditionalInfo:
           type: string
           maxLength: 100
           pattern: '[\w\W\s]*'
           example: CNH
-          description: 'Campo livre, de preenchimento obrigatório quando o documento informado tiver informações complementares relevantes para a sua identificação'
+          description: 'Free field, mandatory filling when the informed document has relevant complementary information for its identification'
         documentCountry:
           type: string
           maxLength: 3
           pattern: '[\w\W\s]*'
           example: CAN
           description: |
-            País de emissão do documento. Código do pais de acordo com o código alpha3 do ISO-3166.
+            Country of document issuance. Country code according to ISO-3166 alpha3 code.
         documentExpirationDate:
           type: string
           format: date
           maxLength: 10
           example: '2021-05-21'
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          description: 'Data de validade do documento informado, conforme especificação RFC-3339.'
+          description: 'Validity date of the informed document, according to RFC-3339 specification.'
         documentIssueDate:
           type: string
           maxLength: 10
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
-          description: 'Data de emissão do documento, conforme especificação RFC-3339.'
+          description: 'Issue date of the document, according to RFC-3339 specification.'
     PersonalDocument:
       type: object
-      description: Objeto agrupador de informações relativas a Documentos da pessoa natural
+      description: Object grouping information related to Natural Person Documents
       properties:
         cpfNumber:
           type: string
@@ -1490,16 +1489,16 @@ components:
           pattern: '^\d{11}$'
           example: '25872252137'
           description: |
-            Número completo do CPF. 
-            Atributo que corresponde às informações mínimas exigidas pela Regulamentação em vigor. 
-            O CPF é o Cadastro de Pessoa natural. Ele é um documento feito pela Receita Federal e serve para identificar os contribuintes. O CPF é uma numeração com 11 dígitos, que só mudam por decisão judicial. O documento é emitido pela receita federal.
+            Complete CPF number. 
+            Attribute that corresponds to the minimum information required by current Regulation. 
+            CPF is the Natural Person Registry. It is a document made by the Federal Revenue and serves to identify taxpayers. CPF is an 11-digit numbering, which only changes by court decision. The document is issued by the federal revenue.
 
-            [Restrição] Preenchimento obrigatório quando não for informado o passport.
+            [Restriction] Mandatory filling when passport is not informed.
         passport:
           $ref: '#/components/schemas/PersonalPassport'
     PersonalFinancialRelationData:
       type: object
-      description: 'Objeto que reúne as informações relativas ao relacionamento do cliente junto à Instituição. Considera-se relacionamento as informações que permitam conhecer desde quando a pessoa consultada é cliente da instituição, bem como um indicador dos produtos e serviços que ela consome atualmente e seus representantes'
+      description: 'Object that gathers information related to the customer relationship with the Institution. Relationship is considered as information that allows knowing since when the consulted person is a client of the institution, as well as an indicator of the products and services they currently consume and their representatives'
       required:
         - updateDateTime
         - startDate
@@ -1514,14 +1513,14 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2021-05-21T08:30:00Z'
           description: |
-            Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
+            Date and time of the update of the fields \<_endpoint_\>, according to RFC-3339 specification, UTC format. When there is no date specifically linked to the block, assume the date and time of the registration update as a whole.
         startDate:
           type: string
           format: date-time
           maxLength: 20
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2021-05-21T08:30:00Z'
-          description: Data de início de relacionamento com a Instituição Financeira. Deve trazer o menor valor entre a informação reportada ao BACEN pelo DOC 3040 e CCS.
+          description: Start date of relationship with the Financial Institution. Should bring the lowest value between the information reported to BACEN by DOC 3040 and CCS.
         productsServicesType:
           type: array
           items:
@@ -1532,46 +1531,46 @@ components:
           type: string
           pattern: '^[\w\W]*$'
           maxLength: 100
-          example: Informações adicionais do tipo de serviço.
+          example: Additional information of service type.
           description: |
-            Informações adicionais do tipo de serviço.
-            [Restrição] Campo obrigatório quando productsServicesType for 'OUTROS'.
+            Additional information of service type.
+            [Restriction] Mandatory field when productsServicesType is 'OUTROS'.
         procurators:
           type: array
           items:
             $ref: '#/components/schemas/PersonalProcurator'
           minItems: 0
           description: |
-            Lista dos representantes. 
-            [Restrição] De preenchimento obrigatório se houver representante.
+            List of representatives. 
+            [Restriction] Mandatory filling if there is a representative.
         accounts:
           type: array
           items:
             $ref: '#/components/schemas/PersonalAccount'
           minItems: 0
           description: |
-            Lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora.
+            List of checking accounts, savings accounts, and prepaid payment accounts maintained by the customer at the transmitting institution.
         portabilitiesReceived:
           type: array
           items:
             $ref: '#/components/schemas/PortabilitiesReceived'
           minItems: 1
           description: |
-            Lista de informações de empregador recebidos através de portabilidade de salário solicitada pelo cliente da transmissora à instituição detentora(s) de sua conta salário, ativos ou que já estiveram ativos,. Cada vínculo é associado a uma portabilidade de salário recebida pela transmissora.
+            List of employer information received through salary portability requested by the transmitter's customer to the institution(s) holding their salary account, active or that have been active. Each link is associated with a salary portability received by the transmitter.
             
-            Obs.: a portabilidade não é explicitamente encerrada, ou seja, a IF para a qual o salário foi portado não é avisado quando a conta salário se encerra ou o salário é portado para outra IF. Não é possível garantir que os dados informados sejam de uma portabilidade ativa, nem que o vínculo com o banco folha ainda exista. A transmissora terá tais informações apenas quando o pedido da portabilidade tiver sido solicitado em seus canais.
+            Note: portability is not explicitly terminated, i.e., the IF to which the salary was ported is not notified when the salary account is closed or the salary is ported to another IF. It is not possible to guarantee that the informed data is from an active portability, nor that the link with the payroll bank still exists. The transmitter will have such information only when the portability request has been requested through its channels.
         paychecksBankLink:
           type: array
           items:
             $ref: '#/components/schemas/PaychecksBankLink'
           minItems: 1
           description: |
-            Lista de informações de contas salário relacionadas com vínculos empregatícios, existentes ou que já existiram, firmados entre o cliente pessoa natural e um ou mais empregadores. Cada vínculo é associado a uma conta salário aberta mantida no banco-folha (instituição transmissora).
+            List of salary account information related to employment links, existing or that have existed, established between the natural person customer and one or more employers. Each link is associated with an opened salary account maintained at the payroll bank (transmitting institution).
 
-            Obs: como empregadores antigos podem não ter solicitado o fechamento da conta salário, não é possível garantir que os dados informados sejam do empregador atual.
+            Note: as old employers may not have requested the closing of the salary account, it is not possible to guarantee that the informed data is from the current employer.
     PersonalIdentificationData:
       type: object
-      description: Conjunto de informações relativas a Identificação ou seja a ação e o efeito de identificar de forma única a pessoa natural através de seus dados cadastrais.
+      description: Set of information related to Identification, i.e., the action and effect of uniquely identifying the natural person through their registration data.
       required:
         - updateDateTime
         - personalId
@@ -1590,50 +1589,50 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2021-05-21T08:30:00Z'
           description: |
-            Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
+            Date and time of the update of the fields \<_endpoint_\>, according to RFC-3339 specification, UTC format. When there is no date specifically linked to the block, assume the date and time of the registration update as a whole.
         personalId:
           type: string
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           maxLength: 100
           minLength: 1
-          description: Um identificador único e imutável usado para identificar o recurso cliente pessoa natural. Este identificador não tem significado para o cliente que deu o consentimento
+          description: A unique and immutable identifier used to identify the natural person customer resource. This identifier has no meaning for the customer who gave consent
           example: 578-psd-71md6971kjh-2d414
         brandName:
           type: string
           maxLength: 80
           pattern: '[\w\W\s]*'
-          example: Organização A
-          description: 'Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).'
+          example: Organization A
+          description: 'Brand name reported by the participant in Open Finance. It is recommended to use, whenever possible, the same brand name assigned in the Customer Friendly Server Name field of the directory (Authorisation Server).'
         civilName:
           type: string
           maxLength: 70
           pattern: '^[\w\W]*$'
           example: Juan Kaique Cláudio Fernandes
-          description: 'Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte)'
+          description: 'Full civil name of the natural person (Fundamental right of the person, civil name is the one assigned to the natural person from their birth registration, with which they will be identified throughout their life, as well as after their death)'
         socialName:
           type: string
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: Jaqueline de Freitas
-          description: 'Nome social da pessoa natural, se houver. (aquele pelo qual travestis e transexuais se reconhecem, bem como são identificados por sua comunidade e em seu meio social, conforme Decreto Local)'
+          description: 'Social name of the natural person, if any. (the one by which transvestites and transsexuals recognize themselves, as well as are identified by their community and in their social environment, according to Local Decree)'
         birthDate:
           type: string
           maxLength: 10
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '1989-03-23'
-          description: 'Data de nascimento, conforme especificação RFC-3339'
+          description: 'Birth date, according to RFC-3339 specification'
         maritalStatusCode:
           $ref: '#/components/schemas/EnumMaritalStatusCode'
         maritalStatusAdditionalInfo:
           type: string
           pattern: '[\w\W\s]*'
           maxLength: 50
-          example: Amasiado
+          example: Common-law marriage
           description: |
-            Campo livre para complementar a informação relativa ao estado marital.
+            Free field to complement information relative to marital status.
 
-            [Restrição] Preenchimento obrigatório quando selecionado o tipo 'OUTRO'.
+            [Restriction] Mandatory filling when selected type is 'OUTRO'.
         sex:
           $ref: '#/components/schemas/EnumSex'
         companiesCnpj:
@@ -1647,8 +1646,8 @@ components:
             - '01773247000103'
             - '01773247000563'
           description: |
-            Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. 
-            Deve-se ter apenas os números do CNPJ, sem máscara
+            Complete CNPJ number of the institution responsible for the Registration - CNPJ corresponds to the registration number in the Legal Entity Registry. 
+            Should have only CNPJ numbers, without mask
         documents:
           $ref: '#/components/schemas/PersonalDocument'
         otherDocuments:
@@ -1656,11 +1655,11 @@ components:
           items:
             $ref: '#/components/schemas/PersonalOtherDocument'
           minItems: 1
-          description: Relação dos demais documentos
+          description: List of other documents
         hasBrazilianNationality:
           type: boolean
           example: false
-          description: Informa se o Cliente tem nacionalidade brasileira.
+          description: Informs if the Customer has Brazilian nationality.
         nationality:
           type: array
           minItems: 1
@@ -1683,17 +1682,17 @@ components:
                 pattern: '^[\w\W]*$'
                 example: Marcelo Cláudio Fernandes
                 description: |
-                  Nome civil completo da pessoa relativa à filiação.
-                  (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, 
-                  com o qual será identificada por toda a sua vida, bem como após a sua morte).
+                  Full civil name of the person relative to filiation.
+                  (Fundamental right of the person, civil name is the one assigned to the natural person from their birth registration, 
+                  with which they will be identified throughout their life, as well as after their death).
               socialName:
                 type: string
                 maxLength: 70
                 pattern: '^[\w\W]*$'
                 description: |
-                  Nome social da pessoa natural, se houver. 
-                  (aquele pelo qual travestis e transexuais se reconhecem, 
-                  bem como são identificados por sua comunidade e em seu meio social, conforme Decreto Local).
+                  Social name of the natural person, if any. 
+                  (the one by which transvestites and transsexuals recognize themselves, 
+                  as well as are identified by their community and in their social environment, according to Local Decree).
         contacts:
           $ref: '#/components/schemas/PersonalContacts'
     PersonalOtherDocument:
@@ -1709,34 +1708,34 @@ components:
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: CREA-RJ
-          description: Campo livre de preenchimento obrigatório se selecionada a opção OUTROS tipos de documentos
+          description: Free field mandatory filling if selected option OTHER types of documents
         number:
           type: string
           maxLength: 40
           pattern: '[\w\W\s]*'
           example: '15291908'
-          description: Identificação/Número do documento informado
+          description: Identification/Number of the informed document
         checkDigit:
           type: string
           maxLength: 2
           pattern: '[\w\W\s]*'
           example: P
-          description: Dígito verificador do documento informado. De preenchimento obrigatório se o documento informado tiver dígito verificador
+          description: Check digit of the informed document. Mandatory filling if the informed document has check digit
         additionalInfo:
           type: string
           maxLength: 50
           pattern: '[\w\W\s]*'
           example: SSP/SP
           description: |
-            Para documentos em que se aplique o uso do local de emissão o mesmo deve ser enviado mandatoriamente, com a informação de órgão e UF. Exemplo: RG, local de emissão: SSP/RS.
-            [Restrição] Obrigatório quando o Local de Emissão do Documento for relevante.
+            For documents where the use of place of issuance applies, it must be sent mandatorily, with information of agency and UF. Example: RG, place of issuance: SSP/RS.
+            [Restriction] Mandatory when Document Place of Issuance is relevant.
         expirationDate:
           type: string
           format: date
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
-          description: 'Data de validade do documento informado, conforme especificação RFC-3339.'
+          description: 'Validity date of the informed document, according to RFC-3339 specification.'
     PersonalProcurator:
       type: object
       required:
@@ -1751,27 +1750,27 @@ components:
           maxLength: 11
           pattern: '^\d{11}$'
           example: '73677831148'
-          description: 'Número completo do CPF. O CPF é o Cadastro de Pessoa natural. Ele é um documento feito pela Receita Federal e serve para identificar os contribuintes. O CPF é uma numeração com 11 dígitos, que só mudam por decisão judicial. O documento é emitido pela receita federal'
+          description: 'Complete CPF number. CPF is the Natural Person Registry. It is a document made by the Federal Revenue and serves to identify taxpayers. CPF is an 11-digit numbering, which only changes by court decision. The document is issued by the federal revenue'
         civilName:
           type: string
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: Elza Milena Stefany Teixeira
-          description: 'Nome civil completo da pessoa natural. (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte)'
+          description: 'Full civil name of the natural person. (Fundamental right of the person, civil name is the one assigned to the natural person from their birth registration, with which they will be identified throughout their life, as well as after their death)'
         socialName:
           type: string
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: Carlos
-          description: 'Nome social da pessoa natural, se houver. (aquele pelo qual travestis e transexuais se reconhecem, bem como são identificados por sua comunidade e em seu meio social, conforme Decreto Nº 51.180, de 14 de janeiro de 2010)'
+          description: 'Social name of the natural person, if any. (the one by which transvestites and transsexuals recognize themselves, as well as are identified by their community and in their social environment, according to Decree No. 51,180, of January 14, 2010)'
     PersonalPassport:
       type: object
       description: |
-        Documento concedido aos viajantes por uma autoridade administrativa nacional a fim de certificar sua identidade perante autoridades estrangeiras. 
+        Document granted to travelers by a national administrative authority in order to certify their identity before foreign authorities. 
 
-        [Restrição] Aplicável somente à Pessoa natural residente no exterior desobrigada de inscrição no CPF.
+        [Restriction] Applicable only to Natural Person residing abroad exempt from CPF registration.
 
-        [Restrição] Preenchimento obrigatório quando não for informado o cpfNumber.
+        [Restriction] Mandatory filling when cpfNumber is not informed.
       required:
         - number
         - country
@@ -1782,14 +1781,14 @@ components:
           pattern: '^[\w\W]*$'
           example: '75253468744594820620'
           description: |
-            Número do Passaporte. 
+            Passport Number.
         country:
           type: string
           maxLength: 3
           pattern: '^(\w{3}){1}$'
           example: CAN
           description: |
-            Pais de emissão do passaporte. Código do pais de acordo com o código 'alpha3' do ISO-3166.
+            Country of passport issuance. Country code according to ISO-3166 'alpha3' code.
         expirationDate:
           type: string
           format: date
@@ -1797,7 +1796,7 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
           description: |
-            Data vigência do Passaporte, conforme especificação RFC-3339.
+            Passport validity date, according to RFC-3339 specification.
         issueDate:
           type: string
           format: date
@@ -1805,10 +1804,10 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
           description: |
-            Data de emissão do passaporte, conforme especificação RFC-3339.
+            Passport issue date, according to RFC-3339 specification.
     PersonalQualificationData:
       type: object
-      description: 'Conjunto de informações relativas ao processo de qualificação. Considera-se qualificação as informações que permitam as instituições apreciar, avaliar, caracterizar e classificar o cliente com a finalidade de conhecer o seu perfil de risco e sua capacidade econômico-financeira'
+      description: 'Set of information related to the qualification process. Qualification is considered as information that allows institutions to appreciate, evaluate, characterize, and classify the customer with the purpose of knowing their risk profile and economic-financial capacity'
       required:
         - updateDateTime
         - companyCnpj
@@ -1819,15 +1818,15 @@ components:
           format: date-time
           example: '2021-05-21T08:30:00Z'
           description: |
-            Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
+            Date and time of the update of the fields \<_endpoint_\>, according to RFC-3339 specification, UTC format. When there is no date specifically linked to the block, assume the date and time of the registration update as a whole.
         companyCnpj:
           type: string
           pattern: '^\d{14}$'
           maxLength: 14
           example: '50685362000135'
           description: |
-            Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. 
-            Deve-se ter apenas os números do CNPJ, sem máscara
+            Complete CNPJ number of the institution responsible for the Registration - CNPJ corresponds to the registration number in the Legal Entity Registry. 
+            Should have only CNPJ numbers, without mask
         occupationCode:
           $ref: '#/components/schemas/EnumOccupationMainCodeType'
         occupationDescription:
@@ -1836,8 +1835,8 @@ components:
           pattern: '[\w\W\s]*'
           example: '01'
           description: |
-            Campo livre, de preenchimento obrigatório. Se selecionada a opção *occupationCode* "RECEITA_FEDERAL" ou "CBO", informar o código desta lista padronizada.   
-            Se selecionada *occupationCode* "OUTRO", informar o descritivo da ocupação quando a IF não segue a lista padronizada da Receita Federal e nem da CBO.
+            Free field, mandatory filling. If selected option *occupationCode* "RECEITA_FEDERAL" or "CBO", inform the code from this standardized list.   
+            If selected *occupationCode* "OUTRO", inform the occupation description when the IF does not follow the standardized list of the Federal Revenue nor CBO.
         informedIncome:
           $ref: '#/components/schemas/InformedIncome'
         informedPatrimony:
@@ -1901,17 +1900,17 @@ components:
               - detail
             properties:
               code:
-                description: Código de erro específico do endpoint
+                description: Specific error code of the endpoint
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               title:
-                description: Título legível por humanos deste erro específico
+                description: Human-readable title of this specific error
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               detail:
-                description: Descrição legível por humanos deste erro específico
+                description: Human-readable description of this specific error
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 2048
@@ -1960,7 +1959,7 @@ components:
         meta:
           $ref: '#/components/schemas/Meta'
     XFapiInteractionId:
-      description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.
+      description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
       type: string
       format: uuid
       pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
@@ -1972,8 +1971,8 @@ components:
       name: setupId
       in: header
       description: |
-          O SetupUUID é o identificador único no ODR (GUID).  
-          Deverá ser usado para realizar todas as outras chamadas no ODR, como busca de contas, transações, etc.
+          SetupUUID is the unique identifier in ODR (GUID).  
+          Must be used to perform all other calls in ODR, such as account search, transactions, etc.
       required: true
       schema:
         type: string
@@ -1982,7 +1981,7 @@ components:
     xCustomerUserAgent:
       name: x-customer-user-agent
       in: header
-      description: Indica o user-agent que o usuário utiliza.
+      description: Indicates the user-agent that the user uses.
       required: false
       schema:
         type: string
@@ -1992,7 +1991,7 @@ components:
     xFapiAuthDate:
       name: x-fapi-auth-date
       in: header
-      description: 'Data em que o usuário logou pela última vez com o receptor. Representada de acordo com a [RFC7231](https://tools.ietf.org/html/rfc7231).Exemplo: Sun, 10 Sep 2017 19:43:31 UTC'
+      description: 'Date when the user last logged in with the receiver. Represented according to [RFC7231](https://tools.ietf.org/html/rfc7231).Example: Sun, 10 Sep 2017 19:43:31 UTC'
       required: false
       schema:
         type: string
@@ -2002,7 +2001,7 @@ components:
     xFapiCustomerIpAddress:
       name: x-fapi-customer-ip-address
       in: header
-      description: O endereço IP do usuário se estiver atualmente logado com o receptor.
+      description: The user's IP address if currently logged in with the receiver.
       required: false
       schema:
         type: string
@@ -2012,7 +2011,7 @@ components:
     xFapiInteractionId:
       name: x-fapi-interaction-id
       in: header
-      description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.
+      description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
       required: false
       schema:
         type: string
@@ -2024,7 +2023,7 @@ components:
     page:
       name: page
       in: query
-      description: Número da página que está sendo requisitada (o valor da primeira página é 1).
+      description: Number of the page being requested (first page value is 1).
       schema:
         type: integer
         default: 1
@@ -2034,7 +2033,7 @@ components:
     pageSize:
       name: page-size
       in: query
-      description: Quantidade total de registros por páginas.
+      description: Total number of records per page.
       schema:
         type: integer
         default: 25
@@ -2044,7 +2043,7 @@ components:
     pagination-key:
       name: pagination-key
       in: query
-      description: 'Identificador de rechamada, utilizado para evitar a contagem de chamadas ao endpoint durante a paginação.'
+      description: 'Recall identifier, used to avoid counting calls to the endpoint during pagination.'
       schema:
         type: string
         maxLength: 2048
@@ -2052,10 +2051,10 @@ components:
   
   responses:
     OKResponsePersonalCustomersIdentification:
-      description: Dados sobre identificação pessoa física.
+      description: Data about natural person identification.
       headers:
         x-fapi-interaction-id:
-          description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.
+          description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -2063,10 +2062,10 @@ components:
           schema:
             $ref: '#/components/schemas/ResponsePersonalCustomersIdentification'
     OKResponsePersonalCustomersQualification:
-      description: Dados sobre qualificação da pessoa física
+      description: Data about natural person qualification
       headers:
         x-fapi-interaction-id:
-          description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.
+          description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -2074,10 +2073,10 @@ components:
           schema:
             $ref: '#/components/schemas/ResponsePersonalCustomersQualification'
     OKResponsePersonalCustomersFinancialRelation:
-      description: Dados sobre relacionamento da pessoa física
+      description: Data about natural person relationship
       headers:
         x-fapi-interaction-id:
-          description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.
+          description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -2085,10 +2084,10 @@ components:
           schema:
             $ref: '#/components/schemas/ResponsePersonalCustomersFinancialRelation'
     OKResponseBusinessCustomersIdentification:
-      description: Dados sobre identificação pessoa jurídica
+      description: Data about legal entity identification
       headers:
         x-fapi-interaction-id:
-          description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.
+          description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -2096,10 +2095,10 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseBusinessCustomersIdentification'
     OKResponseBusinessCustomersQualification:
-      description: Dados sobre qualificação pessoa jurídica
+      description: Data about legal entity qualification
       headers:
         x-fapi-interaction-id:
-          description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.
+          description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -2107,10 +2106,10 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseBusinessCustomersQualification'
     OKResponseBusinessCustomersFinancialRelation:
-      description: Dados sobre relacionamento pessoa jurídica
+      description: Data about legal entity relationship
       headers:
         x-fapi-interaction-id:
-          description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. No contexto do Open Finance Brasil é um campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.
+          description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
       content:
@@ -2118,19 +2117,19 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseBusinessCustomersFinancialRelation'
     BadRequest:
-      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
+      description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     Forbidden:
-      description: O token tem escopo incorreto ou uma política de segurança foi violada
+      description: The token has incorrect scope or a security policy was violated
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     InternalServerError:
-      description: Ocorreu um erro no gateway da API ou no microsserviço
+      description: An error occurred in the API gateway or microservice
       content:
         application/json; charset=utf-8:
           schema:
@@ -2142,39 +2141,39 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseError'
     MethodNotAllowed:
-      description: O consumidor tentou acessar o recurso com um método não suportado
+      description: The consumer tried to access the resource with an unsupported method
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     NotAcceptable:
-      description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
+      description: The request contained an Accept header different from the allowed media types or a character set different from UTF-8
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     NotFound:
-      description: O recurso solicitado não existe ou não foi implementado
+      description: The requested resource does not exist or was not implemented
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     TooManyRequests:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
+      description: 'The operation was refused because too many requests were made within a certain period or the global concurrent request limit was reached'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     Unauthorized:
-      description: Cabeçalho de autenticação ausente/inválido ou token inválido
+      description: Missing/invalid authentication header or invalid token
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     UnprocessableEntity:
-      description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
+      description: 'The request syntax is correct, but it was not possible to process the present instructions.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
-    
+            
