@@ -161,6 +161,21 @@ window.onload = () => {
     "es-data-credit-fixed-incomes": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-credit-fixed-incomes.yml`,
     "es-data-treasury-bonds": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-treasury-bonds.yml`,
     "es-data-variable-incomes": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-variable-incomes.yml`,
+    // ODR
+    "es-odr-setup": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-setup_oas.yml`,
+    "es-odr-accounts": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-accounts_oas.yml`,
+    "es-odr-creditcard": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-creditcard_oas.yml`,
+    "es-odr-customer": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-customer_oas.yml`,
+    "es-odr-credit_financing": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-credit_financing_oas.yml`,
+    "es-odr-credit_loans": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/en-credit_loans_oas.yml`,
+    "es-odr-credit-invoice-financing": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-credit_invoice_financing_oas.yml`,
+    "es-odr-credit-unarranged-accounts": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-credit_unarranged_accounts_overdraft_oas.yml`,
+    "es-odr-investments_bank_fixed_income": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-investments_bank_fixed_income_oas.yml`,
+    "es-odr-investments_credit_fixed_income": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-investments_credit_fixed_incomes_oas.yml`,
+    "es-odr-investments_variable_incomes": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-investments_variable_incomes_oas.yml`,
+    "es-odr-investments_treasure_titles": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-investments_treasure_titles_oas.yml`,
+    "es-odr-investments_funds": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-investments_funds_oas.yml`,
+    "es-odr-exchanges": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-exchanges_oas.yml`, 
   };
 
   const apiUrl =
