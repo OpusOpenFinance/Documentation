@@ -15,12 +15,12 @@ alternate_lang:
 
 Este é um exemplo de arquivo JSON de resposta da API ***OpenData Insurance***.
 
-Clique [**aqui**](open-data-insurance.json){:download="open-data-insurance.json"} para fazer o download do arquivo exemplo.
+Clique [**aqui**](openData-insurance.json){:download="openData-insurance.json"} para fazer o download do arquivo exemplo.
 
 Para os possíveis valores de cada chave JSON consulte a [API associada][Link-API].
 
 ```json
-{% include_relative open-data-insurance.json %}
+{% include_relative openData-insurance.json %}
 ```
 
 [Link-API]: ../../../../swagger-ui/index.html?api=open-data-insurance

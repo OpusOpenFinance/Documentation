@@ -15,12 +15,12 @@ alternate_lang:
 
 Este é um exemplo de arquivo JSON de resposta da API ***OpenData Loans***.
 
-Clique [**aqui**](open-data-loans.json){:download="open-data-loans.json"} para fazer o download do arquivo exemplo.
+Clique [**aqui**](openData-loans.json){:download="openData-loans.json"} para fazer o download do arquivo exemplo.
 
 Para os possíveis valores de cada chave JSON consulte a [API associada][Link-API].
 
 ```json
-{% include_relative open-data-loans.json %}
+{% include_relative openData-loans.json %}
 ```
 
 [Link-API]: ../../../../swagger-ui/index.html?api=open-data-loans

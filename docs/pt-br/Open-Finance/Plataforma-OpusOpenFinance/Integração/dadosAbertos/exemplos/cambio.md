@@ -15,12 +15,12 @@ alternate_lang:
 
 Este é um exemplo de arquivo JSON de resposta da API ***OpenData Exchange***.
 
-Clique [**aqui**](open-data-exchange.json){:download="open-data-exchange.json"} para fazer o download do arquivo exemplo.
+Clique [**aqui**](openData-exchange.json){:download="openData-exchange.json"} para fazer o download do arquivo exemplo.
 
 Para os possíveis valores de cada chave JSON consulte a [API associada][Link-API].
 
 ```json
-{% include_relative open-data-exchange.json %}
+{% include_relative openData-exchange.json %}
 ```
 
 [Link-API]: ../../../../swagger-ui/index.html?api=open-data-exchange

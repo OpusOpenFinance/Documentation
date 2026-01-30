@@ -31,20 +31,20 @@ window.onload = () => {
     "oas-itp-pagamentos-automaticos": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos-automaticos.yml`,
     "oas-back-dados": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-oof-dados.yml`,
     "mobile": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-webapp2as.yml`,
-    // Open Data
-    "open-data-acquiring": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-acquiring-services.yml`,
-    "open-data-accounts": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-accounts.yml`,
-    "open-data-capitalization": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-capitalization-bonds.yml`,
-    "open-data-channels": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-channels.yml`,
-    "open-data-credit-cards": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-credit-cards.yml`,
-    "open-data-exchange": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-exchange.yml`,
-    "open-data-financings": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-financings.yml`,
-    "open-data-insurance": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-insurance.yml`,
-    "open-data-investments": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-investments.yml`,
-    "open-data-invoice-financings": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-invoice-financings.yml`,
-    "open-data-loans": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-loans.yml`,
-    "open-data-pension": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-pension.yml`,
-    "open-data-unarranged": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-unarranged-account-overdraft.yml`,
+    // Dados Abertos
+    "open-data-acquiring": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-acquiringServices.yml`,
+    "open-data-accounts": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-accounts.yml`,
+    "open-data-capitalization": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-capitalizationBonds.yml`,
+    "open-data-channels": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-channels.yml`,
+    "open-data-credit-cards": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-creditCards.yml`,
+    "open-data-exchange": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-exchange.yml`,
+    "open-data-financings": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-financings.yml`,
+    "open-data-insurance": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-insurance.yml`,
+    "open-data-investments": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-investments.yml`,
+    "open-data-invoice-financings": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-invoiceFinancings.yml`,
+    "open-data-loans": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-loans.yml`,
+    "open-data-pension": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-pension.yml`,
+    "open-data-unarranged": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-unarrangedAccountOverdraft.yml`,
     // Dados de Investimento
     "data-funds": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-funds.yml`,
     "data-bank-fixed-incomes": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-bank-fixed-incomes.yml`,
@@ -86,7 +86,7 @@ window.onload = () => {
     "en-oas-itp-pagamentos-automaticos": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos-automaticos.yml`,
     "en-oas-back-dados": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/en-oas-oof-dados.yml`,
     "en-mobile": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-webapp2as.yml`,
-    // Open Data
+    // Dados Abertos
     "en-open-data-acquiring": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/en-open-data-acquiring-services.yml`,
     "en-open-data-accounts": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/en-open-data-accounts.yml`,
     "en-open-data-capitalization": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/en-open-data-capitalization-bonds.yml`,
@@ -141,7 +141,7 @@ window.onload = () => {
     "es-oas-itp-pagamentos-automaticos": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos-automaticos.yml`,
     "es-oas-back-dados": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/es-oas-oof-dados.yml`,
     "es-mobile": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-webapp2as.yml`,
-    // Open Data
+    // Dados Abertos
     "es-open-data-acquiring": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-acquiring-services.yml`,
     "es-open-data-accounts": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-accounts.yml`,
     "es-open-data-capitalization": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-capitalization-bonds.yml`,

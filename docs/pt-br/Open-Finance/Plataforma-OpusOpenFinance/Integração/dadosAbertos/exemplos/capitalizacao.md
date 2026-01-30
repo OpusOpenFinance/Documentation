@@ -15,12 +15,12 @@ alternate_lang:
 
 Este é um exemplo de arquivo JSON de resposta da API ***OpenData Capitalization-bonds***.
 
-Clique [**aqui**](open-data-capitalization-bonds.json){:download="open-data-capitalization-bonds.json"} para fazer o download do arquivo exemplo.
+Clique [**aqui**](openData-capitalizationBonds.json){:download="openData-capitalizationBonds.json"} para fazer o download do arquivo exemplo.
 
 Para os possíveis valores de cada chave JSON consulte a [API associada][Link-API].
 
 ```json
-{% include_relative open-data-capitalization-bonds.json %}
+{% include_relative openData-capitalizationBonds.json %}
 ```
 
 [Link-API]: ../../../../swagger-ui/index.html?api=open-data-capitalization
