@@ -1,0 +1,1506 @@
+openapi: 3.0.0
+info:
+  title: API Unarranged-accounts-overdraft - Receptor de Datos Opus
+  description: |
+    API de información de operaciones de adelanto a depositantes guardadas en ODR. Usa como patrón la misma definición de operaciones de adelanto a depositantes de Open Finance Brasil –Fase 2. 
+
+    API que retorna información de operaciones de crédito del tipo adelanto a depositantes, mantenidas en las instituciones transmisoras por sus clientes, incluyendo datos como denominación, 
+    modalidad, número del contrato, tarifas, plazo, cuotas, pagos (al menos para los últimos 12 meses), amortizaciones, garantías, cargos y tasas de interés remuneratorios.\
+    
+    No posee segregación entre persona natural y persona jurídica.\
+    Requiere registro del cliente en ODR para todos los `endpoints`.
+
+    # Orientaciones
+    En el contexto de Open Finance, la `Role` del directorio de participantes relacionada a la presente API es `DADOS`.\
+    Los datos serán devueltos en la consulta desde que el `setupId` relacionado corresponda a un registro del cliente en ODR válido y con status `AUTHORISED`.\
+    Es también necesario que el recurso en cuestión (cuenta, contrato, etc) esté disponible en la institución transmisora (es decir, sin bloqueos de cualquier naturaleza y con todas las autorizaciones/consentimientos ya autorizados).\
+    Además, las `permissions` necesarias deberán haber sido solicitadas cuando de la creación del registro del cliente en ODR relacionado (`setupId`).\
+    Relacionamos a continuación las `permissions` necesarias para la consulta de datos en cada `endpoint` de la presente API.
+
+    ### Observación
+      - En el endpoint `/setup/credit/unarranged-accounts-overdraft/contracts/{contratId}/payments` la paginación ocurrirá sobre los datos contenidos en el campo `releases` del tipo lista.
+
+    ## Permissions necesarias para la API Unarranged-accounts-overdraft
+
+    Para cada uno de los paths de esta API, además de los alcances (`scopes`) indicados existen `permissions` que deberán ser observadas:
+
+    ### `/setup/credit/unarranged-accounts-overdraft/contracts`
+      - permissions:
+        - GET: **UNARRANGED_ACCOUNTS_OVERDRAFT_READ**
+    ### `/setup/credit/unarranged-accounts-overdraft/contracts/{contractId}`
+      - permissions: **UNARRANGED_ACCOUNTS_OVERDRAFT_READ**
+    ### `/setup/credit/unarranged-accounts-overdraft/contracts/{contractId}/warranties`
+      - permissions:
+        - GET: **UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ**
+    ### `/setup/credit/unarranged-accounts-overdraft/contracts/{contractId}/scheduled-instalments`
+      - permissions:
+        - GET: **UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ**
+    ### `/setup/credit/unarranged-accounts-overdraft/contracts/{contractId}/payments`
+      - permissions:
+        - GET: **UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ**
+  version: 2.4.0
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+ 
+tags:
+  - name: Unarranged Accounts Overdraft
+paths:
+  /setup/credit/unarranged-accounts-overdraft/contracts:
+    get:
+      tags:
+        - Unarranged Accounts Overdraft
+      summary: Obtiene la lista de contratos de adelanto a depositantes consentidos por el cliente.
+      description: Método para obtener la lista de contratos de adelanto a depositantes mantenidos por el cliente en la institución transmisora y para los cuales haya proporcionado consentimiento.
+      operationId: unarrangedAccountsOverdraftGetContracts
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseUnarrangedAccountOverdraftContractList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+        
+      
+  '/setup/credit/unarranged-accounts-overdraft/contracts/{contractId}':
+    get:
+      tags:
+        - Unarranged Accounts Overdraft
+      summary: Obtiene los datos del contrato de adelanto a depositantes identificado por contractId
+      description: Método para obtener los datos del contrato de adelanto a depositantes identificado por contractId mantenido por el cliente en la institución transmisora
+      operationId: unarrangedAccountsOverdraftGetContractsContractId
+      parameters:
+        - $ref: '#/components/parameters/contractId'
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseUnarrangedAccountOverdraftContract'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+        
+  '/setup/credit/unarranged-accounts-overdraft/contracts/{contractId}/warranties':
+    get:
+      tags:
+        - Unarranged Accounts Overdraft
+      summary: Obtiene la lista de garantías vinculadas al contrato de adelanto a depositantes identificado por contractId
+      description: Método para obtener la lista de garantías vinculadas al contrato de adelanto a depositantes identificado por contractId mantenido por el cliente en la institución transmisora. Para los productos que no posean garantías se debe retornar HTTP Status 200 con el objeto "data" vacío, sin ningún atributo interno.
+      operationId: unarrangedAccountsOverdraftGetContractsContractIdWarranties
+      parameters:
+        - $ref: '#/components/parameters/contractId'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseUnarrangedAccountOverdraftWarranties'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+        
+  '/setup/credit/unarranged-accounts-overdraft/contracts/{contractId}/scheduled-instalments':
+    get:
+      tags:
+        - Unarranged Accounts Overdraft
+      summary: Obtiene los datos del cronograma de cuotas del contrato de adelanto a depositantes identificado por contractId
+      description: Método para obtener los datos del cronograma de cuotas del contrato de adelanto a depositantes identificado por contractId mantenido por el cliente en la institución transmisora
+      operationId: unarrangedAccountsOverdraftGetContractsContractIdScheduledInstalments
+      parameters:
+        - $ref: '#/components/parameters/contractId'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseUnarrangedAccountOverdraftInstalments'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+        
+  '/setup/credit/unarranged-accounts-overdraft/contracts/{contractId}/payments':
+    get:
+      tags:
+        - Unarranged Accounts Overdraft
+      summary: Obtiene los datos de pagos del contrato de adelanto a depositantes identificado por contractId
+      description: Método para obtener los datos de pagos del contrato de adelanto a depositantes identificado por contractId mantenido por el cliente en la institución transmisora
+      operationId: unarrangedAccountsOverdraftGetContractsContractIdPayments
+      parameters:
+        - $ref: '#/components/parameters/contractId'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseUnarrangedAccountOverdraftPayments'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+        
+components:
+  schemas:
+    ResponseUnarrangedAccountOverdraftContract:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/UnarrangedAccountOverdraftContractData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseUnarrangedAccountOverdraftContractList:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/UnarrangedAccountOverdraftContractListData'
+          description: Conjunto de informaciones de contratos de adelanto a depositantes mantenidos por el cliente en la institución transmisora y para los cuales haya proporcionado consentimiento
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseUnarrangedAccountOverdraftInstalments:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/UnarrangedAccountOverdraftInstalmentsData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseUnarrangedAccountOverdraftPayments:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/UnarrangedAccountOverdraftPaymentsData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseUnarrangedAccountOverdraftWarranties:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          description: Conjunto de informaciones referentes a las garantías que avalan la operación de crédito de adelanto a depositantes
+          items:
+            $ref: '#/components/schemas/UnarrangedAccountsOverdraftContractedWarranty'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseErrorWithAbleAdditionalProperties:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Código de error específico del endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descripción legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          $ref: '#/components/schemas/Meta'
+    UnarrangedAccountOverdraftContractListData:
+      type: object
+      description: Conjunto de informaciones de contratos de adelanto a depositantes mantenidos por el cliente en la institución transmisora y para los cuales haya proporcionado consentimiento.
+      required:
+        - brandName
+        - companyCnpj
+        - productType
+        - productSubType
+        - ipocCode
+        - contractId
+      properties:
+        contractId:
+          type: string
+          maxLength: 100
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          description: Un identificador único e inmutable usado para identificar el contrato de una operación de crédito. Este identificador no tiene significado para el tomador del crédito
+          example: xcjklompowsa279212650822221989319aadrtjk
+        brandName:
+          type: string
+          maxLength: 80
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          description: |
+            Nombre de la Marca reportada por el participante en Open Finance. Se recomienda utilizar, siempre que posible, el mismo nombre de marca atribuido en el campo del directorio Customer Friendly Server Name (Authorisation Server).
+          example: Organización A
+        companyCnpj:
+          type: string
+          maxLength: 14
+          pattern: '^\d{14}$'
+          description: 'Número completo del CNPJ de la institución responsable por el Registro - el CNPJ corresponde al número de inscripción en el Registro de Persona Jurídica. Debe tenerse solo los números del CNPJ, sin máscara'
+          example: '60500998000144'
+        productType:
+          $ref: '#/components/schemas/ProductType'
+        productSubType:
+          $ref: '#/components/schemas/ProductSubType'
+        ipocCode:
+          type: string
+          maxLength: 67
+          minLength: 22
+          pattern: '^[\w\W]{22,67}$'
+          description: |
+            "Número estandarizado del contrato - IPOC (Identificación Estandarizada de la Operación de Crédito). Según DOC 3040, compuesta por:
+            - **CNPJ de la institución:** 8 (ocho) posiciones iniciales;
+            - **Modalidad de la operación:** 4 (cuatro) posiciones;
+            - **Tipo del cliente:** 1 (una) posición( 1 = persona natural - CPF, 2= persona jurídica – CNPJ, 3 = persona física en el exterior, 4 = persona jurídica en el exterior, 5 = persona natural sin CPF y 6 = persona jurídica sin CNPJ);
+            - **Código del cliente:** El número de posiciones varía conforme al tipo del cliente:
+              1. Para clientes persona física con CPF (tipo de cliente = 1), informar las 11 (once) posiciones del CPF;
+              2. Para clientes persona jurídica con CNPJ (tipo de cliente = 2), informar las 8 (ocho) posiciones iniciales del CNPJ;
+              3. Para los demás clientes (tipos de cliente 3, 4, 5 y 6), informar 14 (catorce) posiciones con complemento de ceros a la izquierda si la identificación tuviera tamaño inferior;
+            - **Código del contrato:** 1 (una) hasta 40 (cuarenta) posiciones, sin complemento de caracteres."
+          example: '92792126019929279212650822221989319252576'
+    EnumContractFeeCharge:
+      type: string
+      description: |
+        "Forma de cobro relativa a la tarifa pactada en el contrato. (Vea Enum)
+        - Mínimo
+        - Máximo
+        - Fijo
+        - Porcentual"
+      enum:
+        - MINIMO
+        - MAXIMO
+        - FIXO
+        - PERCENTUAL
+      example: MINIMO
+    EnumContractFeeChargeType:
+      type: string
+      description: Tipo de cobro para la tarifa pactada en el contrato.
+      enum:
+        - UNICA
+        - POR_PARCELA
+      example: UNICA
+    EnumContractInstalmentPeriodicity:
+      type: string
+      description: |
+        "Información relativa a la periodicidad regular de las cuotas. (Vea Enum)
+        sin periodicidad regular, semanal, quincenal, mensual, bimestral, trimestral, semestral, anual"
+      enum:
+        - SEM_PERIODICIDADE_REGULAR
+        - SEMANAL
+        - QUINZENAL
+        - MENSAL
+        - BIMESTRAL
+        - TRIMESTRAL
+        - SEMESTRAL
+        - ANUAL
+        - OUTROS
+      example: SEMANAL
+    EnumContractInterestRateType:
+      type: string
+      description: |
+        "Tipo de Intereses (vea Enum)
+        - SIMPLES (aplicada/cobrada siempre sobre el capital inicial, que es el valor prestado/invertido. No hay cobro de intereses sobre intereses acumulados en el/los período(s) anterior(es). Ejemplo: en un préstamo de R$1.000, con tasa de interés simple de 8% a.a., con duración de 2 años, el total de intereses será R$80 en el primer año y R$ 80 en el segundo año. Al final del contrato, el tomador devolverá el principal y los intereses simples de cada año: R$1.000+R$80+R$80=R$1.160)
+        - COMPOSTO (para cada período del contrato (diario, mensual, anual, etc.), hay un "nuevo capital" para el cobro de la tasa de interés contratada. Este "nuevo capital" es la suma del capital y del interés cobrado en el período anterior. Ejemplo: en un préstamo de R$1.000, con tasa de interés compuesta de 8% a.a., con duración de 2 años, el total de intereses será R$80 en el primer año. En el segundo año, los intereses se sumarán al capital (R$1.000 + R$ 80 = R$ 1.080), resultando en intereses de R$ 86 (8%de R$ 1.080))"
+      enum:
+        - SIMPLES
+        - COMPOSTO
+      example: SIMPLES
+    EnumContractReferentialRateIndexerSubType:
+      type: string
+      description: |
+        "Sub tipos de tasas referenciales o indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), del Documento 3040"
+      enum:
+        - SEM_SUB_TIPO_INDEXADOR
+        - PRE_FIXADO
+        - TR_TBF
+        - TJLP
+        - LIBOR
+        - TLP
+        - OUTRAS_TAXAS_POS_FIXADAS
+        - CDI
+        - SELIC
+        - OUTRAS_TAXAS_FLUTUANTES
+        - IGPM
+        - IPCA
+        - IPCC
+        - OUTROS_INDICES_PRECO
+        - TCR_PRE
+        - TCR_POS
+        - TRFC_PRE
+        - TRFC_POS
+        - OUTROS_INDEXADORES
+      example: TJLP
+    EnumContractReferentialRateIndexerType:
+      type: string
+      description: |
+        "Tipos de tasas referenciales o indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), del Documento 3040"
+      enum:
+        - SEM_TIPO_INDEXADOR
+        - PRE_FIXADO
+        - POS_FIXADO
+        - FLUTUANTES
+        - INDICES_PRECOS
+        - CREDITO_RURAL
+        - OUTROS_INDEXADORES
+      example: PRE_FIXADO
+    EnumContractTaxPeriodicity:
+      type: string
+      description: |
+        "Periodicidad de la tasa . (Vea Enum)
+        a.m - al mes
+        a.a. - al año"
+      enum:
+        - AM
+        - AA
+      example: AA
+    EnumContractTaxType:
+      type: string
+      description: |
+        "Tipo de Tasa (vea Enum)
+        - NOMINAL (tasa nominal es una tasa de interés en que la unidad referencial no coincide con la unidad de tiempo de la capitalización. Siempre es proporcionada en términos anuales, y sus períodos de capitalización pueden ser diarios, mensuales, trimestrales o semestrales. p.ej. Una tasa de 12% al año con capitalización mensual)
+        - EFECTIVA (Es la tasa de interés en que la unidad referencial coincide con la unidad de tiempo de la capitalización. Como las unidades de medida de tiempo de la tasa de interés y de los períodos de capitalización son iguales, se usan ejemplos simples como 1% al mes, 60% al año)"
+      enum:
+        - NOMINAL
+        - EFETIVA
+      example: EFETIVA
+    EnumWarrantySubType:
+      type: string
+      description: |
+        Denominación/Identificación del sub tipo de la garantía que avala la Modalidad de la Operación de Crédito contratada (Doc 3040, Anexo 12).
+      enum:
+        - ACOES_DEBENTURES
+        - ACORDOS_COMPENSACAO_LIQUIDACAO_OBRIGACOES
+        - APLICACOES_FINANCEIRAS_RENDA_FIXA
+        - APLICACOES_FINANCEIRAS_RENDA_VARIAVEL
+        - APOLICES_CREDITO_EXPORTACAO
+        - CCR_CONVENIO_CREDITOS_RECIPROCOS
+        - CHEQUES
+        - CIVIL
+        - DIREITOS_SOBRE_ALUGUEIS
+        - DEPOSITOS_A_VISTA_A_PRAZO_POUPANCA_OURO_TITULOS_PUBLICOS_FEDERAIS_ART_36
+        - DEPOSITO_TITULOS_EMITIDOS_ENTIDADES_ART_23
+        - DUPLICATAS
+        - EMD_ENTIDADES_MULTILATERAIS_DESENVOLVIMENTO_ART_37
+        - EQUIPAMENTOS
+        - ESTADUAL_OU_DISTRITAL
+        - FATURA_CARTAO_CREDITO
+        - FEDERAL
+        - FCVS_FUNDO_COMPENSACAO_VARIACOES_SALARIAIS
+        - FGI_FUNDO_GARANTIDOR_INVESTIMENTOS
+        - FGPC_FUNDO_GARANTIA_PROMOCAO_COMPETIT
+        - FGTS_FUNDO_GARANTIA_TEMPO_SERVICO
+        - FUNDO_GARANTIDOR_AVAL
+        - GARANTIA_PRESTADA_FGPC_LEI_9531_ART_37
+        - GARANTIA_PRESTADA_FUNDOS_QUAISQUER_OUTROS_MECANISMOS_COBERTURA_RISCO_CREDITO_ART_37
+        - GARANTIA_PRESTADA_TESOURO_NACIONAL_OU_BACEN_ART_37_BENS_DIREITOS_INTEGRANTES_PATRIMONIO_AFETACAO
+        - IMOVEIS
+        - IMOVEIS_RESIDENCIAIS
+        - MITIGADORAS
+        - MUNICIPAL
+        - NAO_MITIGADORAS
+        - NOTAS_PROMISSORIAS_OUTROS_DIREITOS_CREDITO
+        - OUTRAS
+        - OUTROS
+        - OUTROS_BENS
+        - OUTROS_GRAUS
+        - OUTROS_IMOVEIS
+        - OUTROS_SEGUROS_ASSEMELHADOS
+        - PESSOA_FISICA
+        - PESSOA_FISICA_EXTERIOR
+        - PESSOA_JURIDICA
+        - PESSOA_JURIDICA_EXTERIOR
+        - PRIMEIRO_GRAU_BENS_DIREITOS_INTEGRANTES_PATRIMONIO_AFETACAO
+        - PRIMEIRO_GRAU_IMOVEIS_RESIDENCIAIS
+        - PRIMEIRO_GRAU_OUTROS
+        - PROAGRO
+        - PRODUTOS_AGROPECUARIOS_COM_WARRANT
+        - PRODUTOS_AGROPECUARIOS_SEM_WARRANT
+        - SBCE_SOCIEDADE_BRASILEIRA_CREDITO_EXPORTAÇÃO
+        - SEGURO_RURAL
+        - SEM_SUB_TIPO_GARANTIA
+        - TRIBUTOS_RECEITAS_ORCAMENTARIAS
+        - VEICULOS
+        - VEICULOS_AUTOMOTORES
+      example: NOTAS_PROMISSORIAS_OUTROS_DIREITOS_CREDITO
+    EnumWarrantyType:
+      type: string
+      description: 'Denominación/Identificación del tipo de la garantía que avala la Modalidad de la Operación de Crédito contratada (Doc 3040, Anexo 12)'
+      enum:
+        - CESSAO_DIREITOS_CREDITORIOS
+        - CAUCAO
+        - PENHOR
+        - ALIENACAO_FIDUCIARIA
+        - HIPOTECA
+        - OPERACOES_GARANTIDAS_PELO_GOVERNO
+        - OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS
+        - SEGUROS_ASSEMELHADOS
+        - GARANTIA_FIDEJUSSORIA
+        - BENS_ARRENDADOS
+        - GARANTIAS_INTERNACIONAIS
+        - OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES
+        - ACORDOS_COMPENSACAO
+      example: CESSAO_DIREITOS_CREDITORIOS
+    ChargeType:
+      type: string
+      description: Tipo de cargo pactado en el contrato.
+      enum:
+        - JUROS_REMUNERATORIOS_POR_ATRASO
+        - MULTA_ATRASO_PAGAMENTO
+        - JUROS_MORA_ATRASO
+        - IOF_CONTRATACAO
+        - IOF_POR_ATRASO
+        - SEM_ENCARGO
+        - OUTROS
+      example: JUROS_REMUNERATORIOS_POR_ATRASO
+    UnarrangedAccountOverdraftFeeOverParcel:
+      type: object
+      required:
+        - feeName
+        - feeCode
+        - feeAmount
+      properties:
+        feeName:
+          type: string
+          description: |
+            Denominación de la Tarifa pactada.
+          maxLength: 140
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          example: Saque al descubierto
+        feeCode:
+          type: string
+          description: |
+            Sigla identificadora de la tarifa pactada.
+          maxLength: 140
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          example: Saque descubierto
+        feeAmount:
+          type: string
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '100000.0400'
+          description: |
+            Valor monetario de la tarifa pactada en el contrato.
+
+            Expresado en valor monetario con mínimo 2 casas y máximo 4 casas decimales.
+    UnarrangedAccountOverdraftFinanceCharge:
+      type: object
+      required:
+        - chargeType
+      properties:
+        chargeType:
+          $ref: '#/components/schemas/ChargeType'
+        chargeAdditionalInfo:
+          type: string
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          example: Informaciones adicionales sobre cargos.
+          description: |
+            Campo para informaciones adicionales.
+
+            [Restricción] Obligatorio si seleccionada la opción 'OUTROS' en Tipo de cargo pactado en el contrato.
+        chargeRate:
+          type: string
+          format: double
+          pattern: '^\d{1}\.\d{6}$'
+          maxLength: 8
+          minLength: 8
+          description: |
+            Representa el valor del cargo en porcentual pactado en el contrato.
+
+            El llenado debe respetar las 6 casas decimales, aunque vengan llenadas con ceros(representación de porcentaje p.ej: 0.150000. Este valor representa 15%. El valor 1 representa 100%).
+          example: '0.071200'
+    UnarrangedAccountOverdraftInstalmentsData:
+      type: object
+      description: Conjunto de informaciones referentes al plazo remanente y a las cuotas de una operación de crédito de adelanto a depositante
+      required:
+        - dueInstalments
+        - pastDueInstalments
+        - typeContractRemaining
+        - typeNumberOfInstalments
+        - paidInstalments
+      properties:
+        typeNumberOfInstalments:
+          $ref: '#/components/schemas/EnumTypeNumberOfInstalments'
+        totalNumberOfInstalments:
+          type: number
+          maximum: 999999
+          example: 130632
+          description: |
+            Plazo Total según el tipo (día, semana, mes, año) referente a la Modalidad de Crédito informada.
+
+            [Restricción] Obligatoriamente debe ser llenado caso el typeNumberOfInstalments sea diferente de SEM_PRAZO_TOTAL.
+        typeContractRemaining:
+          type: string
+          enum:
+            - DIA
+            - SEMANA
+            - MES
+            - ANO
+            - SEM_PRAZO_REMANESCENTE
+          description: |
+            Tipo de plazo remanente del contrato referente a la modalidad de crédito informada.
+        contractRemainingNumber:
+          type: number
+          maximum: 999999
+          description: |
+            Plazo Remanente según el tipo (día, semana, mes, año) referente a la Modalidad de Crédito informada.
+
+            [Restricción] Obligatoriamente debe ser llenado caso el typeContractRemaining sea diferente de SEM_PRAZO_REMANESCENTE.
+          example: 80
+        paidInstalments:
+          type: number
+          description: 'Cantidad de cuotas pagadas. (En el caso de modalidades que no posean cuotas, el número de cuotas es igual a cero)'
+          maximum: 999999
+          example: 73
+        dueInstalments:
+          type: number
+          maximum: 999999
+          description: 'Cantidad de cuotas por vencer.(En el caso de modalidades que no posean cuotas, el número de cuotas es igual a cero)'
+          example: 57
+        pastDueInstalments:
+          type: number
+          maximum: 999999
+          description: 'Cantidad de cuotas vencidas. (En el caso de modalidades que no posean cuotas, el número de cuotas es igual a cero)'
+          example: 73
+        balloonPayments:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnarrangedAccountOverdraftBalloonPayment'
+          minItems: 1
+          description: Lista que trae las fechas de vencimiento y valor de las cuotas no regulares del contrato de la modalidad de crédito consultada
+    UnarrangedAccountOverdraftPaymentsData:
+      type: object
+      description: Conjunto de informaciones referentes a los pagos realizados de una operación de crédito de adelanto a depositantes
+      required:
+        - contractOutstandingBalance
+        - releases
+      properties:
+        paidInstalments:
+          type: number
+          maximum: 999
+          example: 73
+          description: Cantidad total de cuotas pagadas del contrato referente a la Modalidad de Crédito informada.
+        contractOutstandingBalance:
+          type: string
+          minLength: 4
+          maxLength: 21
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          example: '100000.0400'
+          description: Valor necesario para el cliente liquidar la deuda.
+        releases:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/UnarrangedAccountOverdraftReleases'
+          description: Lista de los pagos realizados en el período
+    UnarrangedAccountOverdraftReleases:
+      type: object
+      description: Lista de los pagos realizados en el período
+      required:
+        - paymentId
+        - isOverParcelPayment
+        - paidDate
+        - currency
+        - paidAmount
+      properties:
+        paymentId:
+          type: string
+          maxLength: 100
+          minLength: 1
+          example: XlthLXpBLVowLTldW2EtekEtWjAtOVwtXXswLDk5fSQ
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          description: Código o identificador único prestado por la institución para representar el pago individual.
+        isOverParcelPayment:
+          type: boolean
+          example: true
+          description: Identifica si es un pago pactado (false) o suelto (true).
+        instalmentId:
+          type: string
+          maxLength: 100
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: WGx0aExYcEJMVm93TFRsZFcyRXRla0V0V2pBdE9Wd3RYWH
+          description: |
+            Identificador de cuota, de responsabilidad de cada Institución transmisora.
+
+            [Restricción] Información de envío obligatorio cuando isOverParcelPayment tenga el valor FALSE.
+        paidDate:
+          type: string
+          format: date
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-05-21'
+          description: 'Fecha efectiva del pago referente al contrato de la modalidad de crédito consultada, conforme especificación RFC-3339. p.ej. 2014-03-19'
+        currency:
+          type: string
+          maxLength: 3
+          pattern: '^(\w{3}){1}$'
+          example: BRL
+          description: |
+            Moneda referente al valor monetario informado, según modelo ISO-4217. p.ej. 'BRL'.
+            Todos los valores monetarios informados están representados con la moneda vigente de Brasil.
+        paidAmount:
+          type: string
+          maxLength: 21
+          minLength: 4
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          example: '100000.0400'
+          description: |
+            Valor del pago referente al  contrato de la modalidad de crédito consultada.
+            Expresado en valor monetario con mínimo 2 casas y máximo 4 casas decimales.
+        overParcel:
+          type: object
+          description: |
+            Objeto de las tarifas y cargos que fueron pagos fuera de la cuota.
+
+            [Restricción] Información debe ser enviada caso exista.
+          required:
+            - fees
+            - charges
+          properties:
+            fees:
+              type: array
+              minItems: 0
+              items:
+                $ref: '#/components/schemas/UnarrangedAccountOverdraftFeeOverParcel'
+              description: 'Lista de las tarifas que fueron pagas fuera de la cuota, solo para pago suelto.'
+            charges:
+              type: array
+              minItems: 0
+              items:
+                $ref: '#/components/schemas/UnarrangedAccountOverdraftChargeOverParcel'
+              description: Lista de los cargos que fueron pagos fuera de la cuota.
+    UnarrangedAccountOverdraftContractedFee:
+      type: object
+      required:
+        - feeName
+        - feeCode
+        - feeChargeType
+        - feeCharge
+      properties:
+        feeName:
+          type: string
+          maxLength: 140
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          description: Denominación de la Tarifa pactada
+          example: Exceso en Cuenta
+        feeCode:
+          type: string
+          maxLength: 140
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          description: Sigla identificadora de la tarifa pactada
+          example: EXCESSO_CONTA
+        feeChargeType:
+          $ref: '#/components/schemas/EnumContractFeeChargeType'
+        feeCharge:
+          $ref: '#/components/schemas/EnumContractFeeCharge'
+        feeAmount:
+          type: string
+          format: double
+          pattern: '^\d{1,15}\.\d{2,4}$'
+          maxLength: 20
+          minLength: 4
+          example: '1000.0400'
+          description: |
+            Valor monetario de la tarifa pactada en el contrato. 
+
+            [Restricción] Llenado obligatorio cuando la forma de cobro sea diferente de Porcentual.
+        feeRate:
+          type: string
+          pattern: '^[01]\.\d{6}$'
+          format: double
+          maxLength: 8
+          minLength: 8
+          description: |
+            Es el valor de la tarifa en porcentual pactada en el contrato.
+
+            [Restricción] Llenado obligatorio cuando la forma de cobro sea Porcentual.
+          example: '0.062000'
+    UnarrangedAccountsOverdraftContractedWarranty:
+      type: object
+      description: Conjunto de informaciones referentes a las garantías que avalan la operación de crédito contratada
+      required:
+        - currency
+        - warrantyAmount
+        - warrantyType
+        - warrantySubType
+      properties:
+        currency:
+          type: string
+          pattern: '^(\w{3}){1}$'
+          maxLength: 3
+          description: 'Moneda referente al valor de la garantía, según modelo ISO-4217. p.ej. ''BRL''. Todos los valores monetarios informados están representados con la moneda vigente de Brasil'
+          example: BRL
+        warrantyType:
+          $ref: '#/components/schemas/EnumWarrantyType'
+        warrantySubType:
+          $ref: '#/components/schemas/EnumWarrantySubType'
+        warrantyAmount:
+          description: |
+            Valor original de la garantía. Expresado en valor monetario con mínimo 2 casas y máximo 4 casas decimales.
+
+            [Restricción] Para casos en que warrantyType sea igual a "GARANTIA_FIDEJUSSORIA" el valor de la garantía corresponde a un porcentaje del total garantido. 
+            De esta forma, los casos de garantía fidejussoria para los cuales no es posible determinar un valor monetario para la garantía deben ser llenados con 0.00.
+          type: string
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '100000.0400'
+    UnarrangedAccountOverdraftBalloonPayment:
+      type: object
+      description: Lista que trae las fechas de vencimiento y valor de las cuotas no regulares  del contrato de la modalidad de crédito consultada.
+      required:
+        - dueDate
+        - amount
+      properties:
+        dueDate:
+          type: string
+          format: date
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          description: 'Fecha de vencimiento de la cuota no regular por vencer del contrato de la modalidad de crédito consultada, conforme especificación RFC-3339. p.ej. 2014-03-19'
+          maxLength: 10
+          example: '2020-01-10'
+        amount:
+          $ref: '#/components/schemas/UnarrangedAccountOverdraftBalloonPaymentAmount'
+    UnarrangedAccountOverdraftChargeOverParcel:
+      type: object
+      description: Lista de los cargos que fueron pagos fuera de la cuota.
+      required:
+        - chargeType
+        - chargeAmount
+      properties:
+        chargeType:
+          $ref: '#/components/schemas/ChargeType'
+        chargeAdditionalInfo:
+          type: string
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          maxLength: 140
+          example: Informaciones adicionales
+          description: |
+            Campo libre para llenado de las informaciones adicionales referentes al cargo.
+            [Restricción] Obligatorio cuando chargeType sea igual 'OUTROS'.
+        chargeAmount:
+          description: Valor del pago del cargo pagado fuera de la cuota. Expresado en valor monetario con mínimo 2 casas y máximo 4 casas decimales.
+          type: string
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '100000.0400'
+    UnarrangedAccountOverdraftContractData:
+      type: object
+      description: Conjunto de informaciones referentes a la identificación de la operación de crédito de adelanto a depositantes
+      required:
+        - contractNumber
+        - ipocCode
+        - productName
+        - productType
+        - productSubType
+        - contractDate
+        - contractAmount
+        - instalmentPeriodicity
+        - instalmentPeriodicityAdditionalInfo
+        - amortizationScheduled
+        - amortizationScheduledAdditionalInfo
+        - interestRates
+        - contractedFees
+        - contractedFinanceCharges
+      properties:
+        contractNumber:
+          type: string
+          maxLength: 100
+          minLength: 1
+          pattern: '^[\w\W]{1,100}$'
+          example: '1324926521496'
+          description: Número del contrato dado por la institución contratante.
+        ipocCode:
+          type: string
+          maxLength: 67
+          minLength: 22
+          pattern: '^[\w\W]{22,67}$'
+          example: '92792126019929279212650822221989319252576'
+          description: |
+            Número estandarizado del contrato - IPOC (Identificación Estandarizada de la Operación de Crédito). Según DOC 3040, compuesta por:
+            - **CNPJ de la institución:** 8 (ocho) posiciones iniciales;
+            - **Modalidad de la operación:** 4 (cuatro) posiciones;
+            - **Tipo del cliente:** 1 (una) posición( 1 = persona natural - CPF, 2= persona jurídica – CNPJ, 3 = persona física en el exterior, 4 = persona jurídica en el exterior, 5 = persona natural sin CPF y 6 = persona jurídica sin CNPJ);
+            - **Código del cliente:** El número de posiciones varía conforme al tipo del cliente:
+              1. Para clientes persona física con CPF (tipo de cliente = 1), informar las 11 (once) posiciones del CPF;
+              2. Para clientes persona jurídica con CNPJ (tipo de cliente = 2), informar las 8 (ocho) posiciones iniciales del CNPJ;
+              3. Para los demás clientes (tipos de cliente 3, 4, 5 y 6), informar 14 (catorce) posiciones con complemento de ceros a la izquierda si la identificación tuviera tamaño inferior;
+            - **Código del contrato:** 1 (una) hasta 40 (cuarenta) posiciones, sin complemento de caracteres.
+        productName:
+          type: string
+          maxLength: 140
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          example: AD
+          description: |
+            Denominación/Identificación del nombre de la Modalidad de la Operación de Crédito divulgado al cliente
+        productType:
+          $ref: '#/components/schemas/ProductType'
+        productSubType:
+          $ref: '#/components/schemas/ProductSubType'
+        contractDate:
+          description: Fecha de contratación de la operación de crédito. Especificación RFC-3339
+          type: string
+          format: date
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-01-05'
+        disbursementDates:
+          type: array
+          minItems: 1
+          description: |
+            Lista que trae las Fechas de Desembolso del valor contratado.
+          items:
+            type: string
+            format: date
+            maxLength: 10
+            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+            example: '2018-01-15'
+            description: |
+              Fecha del Desembolso del valor contratado. Especificación RFC-3339.
+              En el caso de una liberación de recursos hecha en D0 pero con referencia retroactiva hecha en D -1, contablemente la fecha correcta sería D -1.
+        settlementDate:
+          type: string
+          format: date
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-01-15'
+          description: |
+            Fecha de liquidación de la operación.
+        contractAmount:
+          description: Valor contratado de la operación. Expresado en valor monetario con mínimo 2 casas y máximo 4 casas decimales. En los casos en que no haya este valor explícito en el contrato del producto, enviar como 0.00.
+          type: string
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '100000.0400'
+        currency:
+          type: string
+          pattern: '^(\w{3}){1}$'
+          maxLength: 3
+          description: |
+            Moneda referente al valor de la garantía, según modelo ISO-4217. p.ej. 'BRL'
+            Todos los valores monetarios informados están representados con la moneda vigente de Brasil
+          example: BRL
+        dueDate:
+          type: string
+          format: date
+          maxLength: 10
+          minLength: 2
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2028-01-15'
+          description: |
+            Fecha de vencimiento Final de la operación. Especificación RFC-3339
+        instalmentPeriodicity:
+          $ref: '#/components/schemas/EnumContractInstalmentPeriodicity'
+        instalmentPeriodicityAdditionalInfo:
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 50
+          example: Informaciones adicionales sobre periodicidad
+          description: |
+            Campo obligatorio para complementar la información relativa a la periodicidad de pago regular cuando tenga la opción OUTROS. Llenar el campo cuando no aplicable con cadena vacía ("").
+        firstInstalmentDueDate:
+          type: string
+          format: date
+          maxLength: 10
+          minLength: 2
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-15'
+          description: |
+            Fecha de vencimiento primera cuota del principal
+        CET:
+          type: string
+          pattern: '^\d{1,6}\.\d{6}$'
+          format: double
+          description: |
+            CET – Costo Efectivo Total debe ser expresado en forma de tasa porcentual anual e incorpora todos los cargos y gastos incidentes en las operaciones de crédito (tasa de interés, pero también tarifas, tributos, seguros y otros gastos cobrados). 
+
+            El llenado debe respetar las 6 casas decimales, aunque vengan llenadas con ceros (representación de porcentaje p.ej: 0.150000. Este valor representa 15%. El valor 1 representa 100%).
+          maxLength: 13
+          minLength: 8
+          example: '0.290000'
+        amortizationScheduled:
+          type: string
+          description: |
+            Sistema de amortización (Vea Enum):
+            - SAC (Sistema de Amortización Constante) - Es aquel en que el valor de la amortización permanece igual hasta el final. Los intereses cobrados sobre el parcelamiento no entran en esta cuenta.
+            - PRICE (Sistema Francés de Amortización) - Las cuotas son fijas desde el inicio hasta el fin del contrato. Es decir, todas las cuotas tendrán el mismo valor, desde la primera hasta la última. En los primeros pagos, la mayor parte del valor de la cuota corresponde a los intereses. A lo largo del tiempo, la tasa de interés va decreciendo. Como el valor de la cuota es fijo, con el pasar de las cuotas, el valor de amortización va aumentando.
+            - SAM (Sistema de Amortización Mixto) - Cada cuota (pago) es el promedio aritmético de las cuotas respectivas en los Sistemas Price y en el Sistema de Amortización Constante (SAC).
+            - SIN SISTEMA DE AMORTIZACIÓN
+          enum:
+            - SAC
+            - PRICE
+            - SAM
+            - SEM_SISTEMA_AMORTIZACAO
+            - OUTROS
+          example: SAC
+        amortizationScheduledAdditionalInfo:
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 200
+          example: Informaciones complementares relativas a la amortización del tipo 'OUTROS'
+          description: |
+            Campo obligatorio para complementar la información relativa a la amortización cuando seleccionada la opción OUTROS. Llenar el campo cuando no aplicable con cadena vacía ("").
+        interestRates:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/UnarrangedAccountOverdraftContractInterestRate'
+          description: |
+            Objeto que trae el conjunto de informaciones necesarias para demostrar la composición de las tasas de interés remuneratorios de la Modalidad de crédito.  
+            Caso el contrato no posea tasas de interés, debe ser compartida una lista vacía. Caso el contrato posea una tasa de interés con valor 0, debe ser compartido un objeto con el valor 0 de forma explícita.
+        contractedFees:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/UnarrangedAccountOverdraftContractedFee'
+          description: Lista que trae las informaciones de las tarifas pactadas en el contrato.
+        contractedFinanceCharges:
+          type: array
+          minItems: 0
+          description: Lista que trae los cargos pactados en el contrato
+          items:
+            $ref: '#/components/schemas/UnarrangedAccountOverdraftFinanceCharge'
+    UnarrangedAccountOverdraftContractInterestRate:
+      type: object
+      description: Objeto que trae el conjunto de informaciones necesarias para demostrar la composición de las tasas de interés remuneratorios de la Modalidad de crédito
+      required:
+        - taxType
+        - interestRateType
+        - taxPeriodicity
+        - calculation
+        - referentialRateIndexerType
+        - preFixedRate
+        - postFixedRate
+      properties:
+        taxType:
+          $ref: '#/components/schemas/EnumContractTaxType'
+        interestRateType:
+          $ref: '#/components/schemas/EnumContractInterestRateType'
+        taxPeriodicity:
+          $ref: '#/components/schemas/EnumContractTaxPeriodicity'
+        calculation:
+          type: string
+          description: Base de cálculo
+          enum:
+            - 21/252
+            - 30/360
+            - 30/365
+          example: 21/252
+        referentialRateIndexerType:
+          $ref: '#/components/schemas/EnumContractReferentialRateIndexerType'
+        referentialRateIndexerSubType:
+          $ref: '#/components/schemas/EnumContractReferentialRateIndexerSubType'
+        referentialRateIndexerAdditionalInfo:
+          type: string
+          maxLength: 140
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          example: Informaciones adicionales
+          description: |
+            Campo libre para complementar la información relativa al Tipo de tasa referencial o indexador.
+            [Restricción] Obligatorio para complementar la información relativa al Tipo de tasa referencial o indexador, cuando seleccionado el tipo o subtipo OUTRO.
+        preFixedRate:
+          type: string
+          format: double
+          pattern: '^\d{1,2}\.\d{6}$'
+          maxLength: 9
+          minLength: 8
+          description: |
+            Tasa pre-fijada aplicada sobre el contrato de la modalidad crédito. p.ej. 0.014500. El llenado debe respetar las 6 casas decimales, aunque vengan llenadas con ceros(representación de porcentaje p.ej: 0.150000. Este valor representa 15%. El valor 1 representa 100%). Llenar el campo no aplicable al contrato con ceros, siguiendo el pattern (0.000000).
+          example: '0.600000'
+        postFixedRate:
+          type: string
+          format: double
+          pattern: '^\d{1,2}\.\d{6}$'
+          maxLength: 9
+          minLength: 8
+          description: |
+            Tasa post-fijada aplicada sobre el contrato de la modalidad crédito. p.ej. 0.0045 .El llenado debe respetar las 6 casas decimales, aunque vengan llenadas con ceros (representación de porcentaje p.ej: 0.1500. Este valor representa 15%. El valor 1 representa 100%). Llenar el campo no aplicable al contrato con ceros, siguiendo el pattern (0.000000).
+          example: '0.550000'
+        additionalInfo:
+          type: string
+          maxLength: 1200
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          example: Informaciones adicionales
+          description: |
+            Texto con informaciones adicionales sobre la composición de las tasas de interés pactadas. 
+
+            [Restricción] Caso la institución posea la información para compartir, esta deberá ser informada.
+    UnarrangedAccountOverdraftBalloonPaymentAmount:
+      type: object
+      required:
+        - amount
+        - currency
+      description: Valor monetario de la cuota no regular por vencer. Expresado en valor monetario con mínimo 2 casas y máximo 4 casas decimales.
+      properties:
+        amount:
+          type: string
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '100000.0400'
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+          example: BRL
+    ProductType:
+      type: string
+      description: |
+        "Tipo de la modalidad de crédito contratada, conforme circular 4.015 y descripción del DOC3040 del SCR). (Vea Enum)
+        Adelanto a depositantes, Derechos creditórios descontados Préstamos,  Financiamientos, Financiamientos rurales  y Financiamientos inmobiliarios"
+      enum:
+        - ADIANTAMENTO_A_DEPOSITANTES
+      example: ADIANTAMENTO_A_DEPOSITANTES
+    ProductSubType:
+      type: string
+      description: |
+        "Sub tipo de las modalidades de crédito contratadas, conforme  circular 4.015 y descripción del DOC3040 del SCR). (Vea Enum)
+        Adelanto a depositantes
+      enum:
+        - ADIANTAMENTO_A_DEPOSITANTES
+      example: ADIANTAMENTO_A_DEPOSITANTES
+    EnumTypeNumberOfInstalments:
+      type: string
+      description: Tipo de plazo total del contrato referente a la modalidad de crédito informada.
+      enum:
+        - DIA
+        - SEMANA
+        - MES
+        - ANO
+        - SEM_PRAZO_TOTAL
+      example: MES
+    Links:
+      type: object
+      description: Referencias para otros recursos de la API solicitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI completo que generó la respuesta actual.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        first:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI de la primera página que originó esta lista de resultados. Restricción - Obligatorio cuando no sea la primera página de la respuesta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        prev:
+          type: string
+          format: url
+          maxLength: 2000
+          description: "URI de la página anterior de esta lista de resultados. Restricción - Obligatorio cuando no sea la primera página de la respuesta"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        next:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI de la próxima página de esta lista de resultados. Restricción - Obligatorio cuando no sea la última página de la respuesta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        last:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI de la última página de esta lista de resultados. Restricción - Obligatorio cuando no sea la última página de la respuesta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+    Meta:
+      type: object
+      description: Meta informaciones referentes a la API solicitada.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Número total de registros en el resultado
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Número total de páginas en el resultado
+          example: 1
+        requestDateTime:
+          description: 'Fecha y hora de la consulta, conforme especificación RFC-3339, formato UTC.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+    XFapiInteractionId:
+      type: string
+      format: uuid
+      pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+      maxLength: 36
+      description: 'Un UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como un ID de correlación entre request y response. Campo de generación y envío obligatorio por la receptora (client) y su valor debe ser "espejado" por la transmisora (server) en el encabezado de respuesta. Caso no sea recibido o si fuera recibido un valor inválido, la transmisora debe generar un x-fapi-interaction-id y retornarlo en la respuesta con el HTTP Status Code 400. La receptora debe acatar el valor recibido de la transmisora.'
+      example: "d78fc4e5-37ca-4da3-adf2-9b082bf92280"
+  parameters:
+    SetupID:
+      name: setupId
+      in: header
+      description: |
+          El SetupUUID es el identificador único en ODR (GUID).  
+          Deberá ser usado para realizar todas las otras llamadas en ODR, como búsqueda de cuentas, transacciones, etc.
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: '550e8400-e29b-41d4-a716-446655440000' 
+    contractId:
+      name: contractId
+      in: path
+      description: Identificador del contrato para todos los tipos de operación de crédito.
+      required: true
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+        maxLength: 100
+    page:
+      name: page
+      in: query
+      description: Número de la página que está siendo solicitada (el valor de la primera página es 1).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+        maximum: 2147483647
+        format: int32
+    pageSize:
+      name: page-size
+      in: query
+      description: Cantidad total de registros por páginas.
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        format: int32
+        maximum: 1000
+    pagination-key:
+      name: pagination-key
+      in: query
+      description: 'Identificador de rellamada, utilizado para evitar el conteo de llamadas al endpoint durante la paginación.'
+      schema:
+        type: string
+        maxLength: 2048
+        pattern: '[\w\W\s]*'
+    xCustomerUserAgent:
+      name: x-customer-user-agent
+      in: header
+      description: Indica el user-agent que el usuario utiliza.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xFapiAuthDate:
+      name: x-fapi-auth-date
+      in: header
+      description: 'Fecha en que el usuario inició sesión por última vez con el receptor. Representada de acuerdo con la [RFC7231](https://tools.ietf.org/html/rfc7231).Ejemplo: Sun, 10 Sep 2017 19:43:31 UTC'
+      required: false
+      schema:
+        type: string
+        pattern: '^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$'
+        minLength: 29
+        maxLength: 29
+    xFapiCustomerIpAddress:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: La dirección IP del usuario si está actualmente conectado con el receptor.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xFapiInteractionId:
+      name: x-fapi-interaction-id
+      in: header
+      description: 'Un UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como un ID de correlación entre request y response. Campo de generación y envío obligatorio por la receptora (client) y su valor debe ser "espejado" por la transmisora (server) en el encabezado de respuesta. Caso no sea recibido o si fuera recibido un valor inválido, la transmisora debe generar un x-fapi-interaction-id y retornarlo en la respuesta con el HTTP Status Code 400. La receptora debe acatar el valor recibido de la transmisora.'
+      required: false
+      schema:
+        type: string
+        format: uuid
+        pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+        minLength: 1
+        maxLength: 36
+        example: "d78fc4e5-37ca-4da3-adf2-9b082bf92280"
+  securitySchemes:
+    OpenId:
+      type: openIdConnect
+      openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
+    OAuth2Security:
+      type: oauth2
+      description: Flujo OAuth necesario para que la receptora tenga acceso a los datos en la institución transmisora. Requiere el proceso de redireccionamiento y autenticación del usuario al que se refieren los datos.
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://authserver.example/authorization'
+          tokenUrl: 'https://authserver.example/token'
+          scopes:
+            unarranged-accounts-overdraft: Alcance necesario para acceso a la API Unarranged-accounts-overdraft. El control de los endpoints específicos es hecho vía permissions.
+  responses:
+    OKResponseUnarrangedAccountOverdraftContractList:
+      description: Lista de contratos obtenida con éxito.
+      headers:
+        x-fapi-interaction-id:
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseUnarrangedAccountOverdraftContractList'
+    OKResponseUnarrangedAccountOverdraftContract:
+      description: Datos del contrato de adelanto a depositantes identificado por contractId
+      headers:
+        x-fapi-interaction-id:
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseUnarrangedAccountOverdraftContract'
+    OKResponseUnarrangedAccountOverdraftWarranties:
+      description: Lista de garantías vinculadas al contrato de adelanto a depositantes identificado por contractId
+      headers:
+        x-fapi-interaction-id:
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseUnarrangedAccountOverdraftWarranties'
+    OKResponseUnarrangedAccountOverdraftInstalments:
+      description: Datos del cronograma de cuotas del contrato de adelanto a depositantes identificado por contractId
+      headers:
+        x-fapi-interaction-id:
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseUnarrangedAccountOverdraftInstalments'
+    OKResponseUnarrangedAccountOverdraftPayments:
+      description: Datos de pagos del contrato de adelanto a depositantes identificado por contractId
+      headers:
+        x-fapi-interaction-id:
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseUnarrangedAccountOverdraftPayments'
+    BadRequest:
+      description: 'La solicitud fue malformada, omitiendo atributos obligatorios, sea en el payload o a través de atributos en la URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    Forbidden:
+      description: El token tiene alcance incorrecto o una política de seguridad fue violada
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    InternalServerError:
+      description: Ocurrió un error en el gateway de la API o en el microservicio
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    Locked:
+      description: Bloqueado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    MethodNotAllowed:
+      description: El consumidor intentó acceder al recurso con un método no soportado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    NotAcceptable:
+      description: La solicitud contenía un encabezado Accept diferente de los tipos de medios permitidos o un conjunto de caracteres diferente de UTF-8
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    NotFound:
+      description: El recurso solicitado no existe o no fue implementado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    TooManyRequests:
+      description: 'La operación fue rechazada, pues muchas solicitudes fueron hechas dentro de un determinado período o el límite global de solicitudes concurrentes fue alcanzado'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    Unauthorized:
+      description: Encabezado de autenticación ausente/inválido o token inválido
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    UnprocessableEntity:
+      description: 'La sintaxis de la solicitud esta correcta, pero no fue posible procesar las instrucciones presentes.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'

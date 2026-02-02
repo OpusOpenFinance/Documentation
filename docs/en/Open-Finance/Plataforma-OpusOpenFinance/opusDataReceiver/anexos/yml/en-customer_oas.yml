@@ -1,0 +1,2179 @@
+openapi: 3.0.0
+info:
+  title: API Customers - Opus Data Receiver
+  description: |
+    API for customer registration data stored in ODR. Uses the same standard definition as the Open Finance Brazil - Phase 2 registration data.
+    API that returns customer registration data and their representatives, including identification data, financial qualification information, registered representative information, and information about the customer's financial relationship with the data transmitting institution.\
+    Has segregation between natural persons and legal entities.\
+    Requires customer registration in ODR for all `endpoints`.
+
+    # Guidelines
+    In the context of Open Finance, the directory `Role` related to this API is `DATA`.\
+    Data will be returned in the query as long as the related `setupId` corresponds to a valid customer registration in ODR with status `AUTHORISED`.\
+    It is also necessary that the resource in question (account, contract, etc.) is available at the transmitting institution (i.e., without any type of block and with all authorizations/consents already authorized).\
+    Additionally, the required `permissions` must have been requested when creating the related customer registration in ODR (`setupId`).\
+    We list below the `permissions` required for data query in each `endpoint` of this API.
+
+    ## Required permissions for the Customers API
+
+    For each of the paths in this API, in addition to the indicated scopes (`scopes`), there are `permissions` that must be observed:
+
+    ### `/setup/personal/identifications`
+      - permissions:
+        - GET: **CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ**
+    ### `/setup/personal/qualifications`
+      - permissions: **CUSTOMERS_PERSONAL_ADITTIONALINFO_READ**
+    ### `/setup/personal/financial-relations`
+      - permissions:
+        - GET: **CUSTOMERS_PERSONAL_ADITTIONALINFO_READ**
+    ### `/setup/business/identifications`
+      - permissions:
+        - GET: **CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ**
+    ### `/setup/business/qualifications`
+      - permissions:
+        - GET: **CUSTOMERS_BUSINESS_ADITTIONALINFO_READ**
+    ### `/setup/business/financial-relations`
+      - permissions:
+        - GET: **CUSTOMERS_BUSINESS_ADITTIONALINFO_READ**
+  version: 2.2.1
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+tags:
+  - name: Customers
+    description: Operations for listing Customer Registration Information
+paths:
+  /setup/personal/identifications:
+    get:
+      tags:
+        - Customers
+      summary: Gets the natural person identification records.
+      description: Method to obtain the natural person identification records maintained at the transmitting institution.
+      operationId: customersGetPersonalIdentifications
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponsePersonalCustomersIdentification'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+  /setup/personal/qualifications:
+    get:
+      tags:
+        - Customers
+      summary: Gets the natural person qualification records.
+      description: Method to obtain the natural person qualification records maintained at the transmitting institution.
+      operationId: customersGetPersonalQualifications
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponsePersonalCustomersQualification'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+  /setup/personal/financial-relations:
+    get:
+      tags:
+        - Customers
+      summary: Gets the records of relationships with the financial institution and representatives of the natural person.
+      description: Method to obtain records of relationships with the financial institution and representatives of the natural person maintained at the transmitting institution.
+      operationId: customersGetPersonalFinancialRelations
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponsePersonalCustomersFinancialRelation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+  /setup/business/identifications:
+    get:
+      tags:
+        - Customers
+      summary: Gets the legal entity identification records.
+      description: Method to obtain the legal entity identification records maintained at the transmitting institution.
+      operationId: customersGetBusinessIdentifications
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseBusinessCustomersIdentification'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+  /setup/business/qualifications:
+    get:
+      tags:
+        - Customers
+      summary: Gets the legal entity qualification records.
+      description: Method to obtain the legal entity qualification records maintained at the transmitting institution.
+      operationId: customersGetBusinessQualifications
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseBusinessCustomersQualification'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+  /setup/business/financial-relations:
+    get:
+      tags:
+        - Customers
+      summary: Gets the records of relationships with the financial institution and representatives of the legal entity.
+      description: Method to obtain records of relationships with the financial institution and representatives of the legal entity maintained at the transmitting institution.
+      operationId: customersGetBusinessFinancialRelations
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseBusinessCustomersFinancialRelation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    BusinessFinancialRelationData:
+      type: object
+      description: 'Object that gathers information related to the customer relationship with the Institution. Relationship is considered as information that allows knowing since when the consulted person is a client of the institution, as well as an indicator of the products and services they currently consume and their representatives'
+      required:
+        - updateDateTime
+        - startDate
+        - productsServicesType
+        - procurators
+        - accounts
+      properties:
+        updateDateTime:
+          type: string
+          format: date-time
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2020-07-21T08:30:00Z'
+          description: |
+            Date and time of the update of the fields \<_endpoint_\>, according to RFC-3339 specification, UTC format. When there is no date specifically linked to the block, assume the date and time of the registration update as a whole.
+        startDate:
+          type: string
+          format: date-time
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2020-07-21T08:30:00Z'
+          description: Start date of relationship with the Financial Institution. Should bring the lowest value between the information reported to BACEN by DOC 3040 and CCS.
+        productsServicesType:
+          type: array
+          minItems: 1
+          maxItems: 12
+          items:
+            $ref: '#/components/schemas/EnumProductServiceType'
+        procurators:
+          type: array
+          items:
+            $ref: '#/components/schemas/BusinessProcurator'
+          minItems: 0
+          description: List of representatives. Mandatory filling if there is a representative.
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BusinessAccount'
+          minItems: 0
+          description: |
+            List of checking accounts, savings accounts, and prepaid payment accounts maintained by the customer at the transmitting institution.
+    BusinessIdentificationData:
+      type: object
+      description: Set of information related to Identification, i.e., the action and effect of uniquely identifying the legal entity through its registration data
+      required:
+        - businessId
+        - updateDateTime
+        - brandName
+        - cnpjNumber
+        - companiesCnpj
+        - companyName
+        - incorporationDate
+        - parties
+        - contacts
+      properties:
+        updateDateTime:
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          description: |
+            Date and time of the update of the fields \<_endpoint_\>, according to RFC-3339 specification, UTC format. When there is no date specifically linked to the block, assume the date and time of the registration update as a whole.
+        businessId:
+          type: string
+          maxLength: 100
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: 578-psd-71md6971kjh-2d414
+          description: A unique and immutable identifier used to identify the legal entity customer resource.
+        brandName:
+          type: string
+          maxLength: 80
+          pattern: '[\w\W\s]*'
+          example: Organization A
+          description: |
+            Brand name reported by the participant in Open Finance. It is recommended to use, whenever possible, the same brand name assigned in the Customer Friendly Server Name field of the directory (Authorisation Server).
+        companyName:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          example: Luiza e Benjamin Legal Advisory Ltda
+          description: Corporate name of the consulted company is the term registered under which a legal entity (LE) individualizes and exercises its activities. Also called corporate denomination or business firm
+        tradeName:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          example: Electronics World
+          description: 'Trade name of the legal entity, if any. (It is the popular name of the company, used for company promotion and better fixation with the public). Mandatory filling if it exists'
+        incorporationDate:
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          description: 'Company incorporation date, according to RFC-3339 specification.'
+        cnpjNumber:
+          type: string
+          maxLength: 14
+          pattern: '^\d{14}$'
+          example: '50685362006773'
+          description: 'Complete CNPJ number of the consulted Company - CNPJ corresponds to the registration number in the Legal Entity Registry. Should have only CNPJ numbers, without mask'
+        companiesCnpj:
+          minItems: 1
+          type: array
+          example:
+            - '50685362000135'
+            - '50685362006555'
+          description: |
+            Complete CNPJ number of the institution responsible for the Registration - CNPJ corresponds to the registration number in the Legal Entity Registry. 
+            Should have only CNPJ numbers, without mask
+          items:
+            type: string
+            maxLength: 14
+            pattern: '^\d{14}$'
+            example: '50685362000135'
+        otherDocuments:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/BusinessOtherDocument'
+          description: List of other documents
+        parties:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartiesParticipation'
+          minItems: 0
+          description: |
+            List relative to information of involved parties, such as: partner and/or administrator. Mandatory sending object for all CNPJs that have partners and/or administrators in the QSA registry (Shareholders and Administrators Board)
+        contacts:
+          $ref: '#/components/schemas/BusinessContacts'
+    BusinessProcurator:
+      type: object
+      required:
+        - type
+        - cnpjCpfNumber
+        - civilName
+      properties:
+        type:
+          type: string
+          enum:
+            - REPRESENTANTE_LEGAL
+            - PROCURADOR
+          description: |
+            Type of representative.
+            Legal representative - Full Civil Name of the Natural Person who represents an entity or company and is appointed in its constitutive act, i.e., in the articles of association or bylaws.
+            Attorney - is any person who represents the Natural Person in some business, through written authorization from them.
+          example: PROCURADOR
+        cnpjCpfNumber:
+          type: string
+          maxLength: 14
+          pattern: '^\d{11}$|^\d{14}$'
+          example: '73677831148'
+          description: Identification of the Legal Representative or Attorney. Registration number with the Federal Revenue (Fill with CPF or CNPJ without formatting)
+        civilName:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          example: Elza Milena Stefany Teixeira
+          description: Full civil name or Corporate Name
+        socialName:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          example: Stefany Teixeirass
+          description: |
+            Social name of the natural person, if any. The one by which transvestites and transsexuals recognize themselves, 
+            as well as are identified by their community and in their social environment, according to Local Decree.
+    BusinessQualificationData:
+      type: object
+      description: 'Object that gathers information related to the qualification process. Qualification is considered as information that allows institutions to appreciate, evaluate, characterize, and classify the customer with the purpose of knowing their risk profile and economic-financial capacity'
+      required:
+        - updateDateTime
+      properties:
+        updateDateTime:
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          description: |
+            Date and time of the update of the fields \<_endpoint_\>, according to RFC-3339 specification, UTC format. When there is no date specifically linked to the block, assume the date and time of the registration update as a whole.
+        economicActivities:
+          type: array
+          items:
+            $ref: '#/components/schemas/EconomicActivity'
+          minItems: 0
+          description: 'List of other codes related to other economic activities of the company, according to CNAE standard (National Classification of Economic Activities). Mandatory filling, if any'
+        informedRevenue:
+          $ref: '#/components/schemas/InformedRevenue'
+        informedPatrimony:
+          $ref: '#/components/schemas/BusinessInformedPatrimony'
+    BusinessOtherDocument:
+      type: object
+      required:
+        - type
+        - number
+        - country
+      properties:
+        type:
+          type: string
+          maxLength: 20
+          pattern: '[\w\W\s]*'
+          example: EIN
+          description: 'Type of document number informed. Mandatory filling, for Legal entity with domicile or headquarters abroad, exempt from CNPJ registration'
+        number:
+          type: string
+          maxLength: 20
+          pattern: '[\w\W\s]*'
+          example: '128328453'
+          description: 'Number of other document. Mandatory filling, for Legal entity with domicile or headquarters abroad, exempt from CNPJ registration'
+        country:
+          type: string
+          maxLength: 3
+          pattern: '^(\w{3}){1}$'
+          example: CAN
+          description: Country of issuance of the informed document type. Country code according to ISO-3166 alpha3 code
+        expirationDate:
+          type: string
+          format: date
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-05-21'
+          description: 'Validity date of the informed document type, according to RFC-3339 specification.'
+    BusinessContacts:
+      type: object
+      description: Set of information referring to ways to contact the customer.
+      required:
+        - postalAddresses
+        - phones
+        - emails
+      properties:
+        postalAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/BusinessPostalAddress'
+          minItems: 0
+          description: List of addresses of the legal entity
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerPhone'
+          minItems: 0
+          description: List with contact phones of the legal entity
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerEmail'
+          minItems: 0
+          description: Contact email list
+    PersonalContacts:
+      type: object
+      description: Set of information referring to ways to contact the customer.
+      required:
+        - postalAddresses
+        - phones
+        - emails
+      properties:
+        postalAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonalPostalAddress'
+          minItems: 0
+          description: List of addresses of the natural person
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerPhone'
+          minItems: 0
+          description: List with contact phones of the natural person
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerEmail'
+          minItems: 0
+          description: Contact email list
+    BusinessInformedPatrimony:
+      type: object
+      required:
+        - amount
+        - date
+      properties:
+        amount:
+          $ref: '#/components/schemas/InformedPatrimonyAmount'
+        date:
+          type: string
+          format: date
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-05-21'
+          description: 'Reference date of the Patrimony, according to RFC-3339 specification.'
+    PersonalInformedPatrimony:
+      type: object
+      required:
+        - amount
+        - year
+      properties:
+        amount:
+          $ref: '#/components/schemas/InformedPatrimonyAmount'
+        year:
+          type: number
+          maximum: 9999
+          example: 2010
+          description: 'Reference year of the Income, according to RFC-3339 specification.'
+    CustomerEmail:
+      type: object
+      required:
+        - isMain
+        - email
+      properties:
+        isMain:
+          type: boolean
+          description: Indicates if the informed email is the main one
+          example: true
+        email:
+          type: string
+          format: email
+          description: Email address
+          maxLength: 320
+          example: karinafernandes-81@br.inter.net
+    CustomerPhone:
+      type: object
+      required:
+        - isMain
+        - type
+        - areaCode
+        - number
+      properties:
+        isMain:
+          type: boolean
+          description: Indicates if the informed phone is the main one
+          example: true
+        type:
+          $ref: '#/components/schemas/EnumCustomerPhoneType'
+        additionalInfo:
+          type: string
+          description: 'Complementary information related to the selected phone type. [Restriction] Mandatory filling when selected type is ''OTHER''.'
+          pattern: '[\w\W\s]*'
+          maxLength: 70
+          example: Additional information.
+        countryCallingCode:
+          type: string
+          maxLength: 4
+          pattern: '^\d{1,4}$'
+          example: '55'
+          description: |
+            IDD (International Direct Dialing) number for customer access phone - if any
+
+            [Restriction] Filling is mandatory when different from 55. 
+        areaCode:
+          $ref: '#/components/schemas/AreaCode'
+        number:
+          type: string
+          maxLength: 13
+          pattern: '^([0-9]{6,13})$'
+          example: '29875132'
+          description: Customer phone number
+        phoneExtension:
+          type: string
+          maxLength: 5
+          pattern: '^\d{1,5}$'
+          description: Extension number. Mandatory filling if part of the identification of the informed phone number
+          example: '932'
+    BusinessPostalAddress:
+      type: object
+      required:
+        - isMain
+        - townName
+        - country
+        - countryCode
+      properties:
+        isMain:
+          type: boolean
+          example: true
+          description: Indicates if the informed address is the main one
+        address:
+          type: string
+          maxLength: 150
+          minLength: 2
+          pattern: '^[\w\W\s]*$'
+          example: 'Av Naburo Ykesaki, 1270'
+          description: |
+            Corresponds to the customer's commercial address.
+        additionalInfo:
+          type: string
+          maxLength: 30
+          pattern: '[\w\W\s]*'
+          example: Back
+          description: Some streets still need to be specified through complement
+        districtName:
+          type: string
+          maxLength: 50
+          pattern: '[\w\W\s]*'
+          example: Center
+          description: |
+            Neighborhood is a community or region located in a city or municipality according to its geographical subdivisions. Mandatory filling, if any.
+        townName:
+          type: string
+          maxLength: 50
+          pattern: '^[\w\W\s]*$'
+          minLength: 2
+          example: Marília
+          description: |
+            Locality: The locality name corresponds to the designation of the city or municipality where the address is located.
+        ibgeTownCode:
+          type: string
+          pattern: '\d{7}$'
+          maxLength: 7
+          example: '3550308'
+          description: 'IBGE Municipality Code. The IBGE Municipality Codes table presents the list of Brazilian municipalities associated with a 7-digit code, the first two referring to the Federative Unit code.'
+        countrySubDivision:
+          $ref: '#/components/schemas/EnumCountrySubDivision'
+        postCode:
+          type: string
+          pattern: '^\d{8}$'
+          maxLength: 8
+          example: '17500001'
+          description: |
+            Postal Code: Composed of an eight-digit numerical set, the main objective of the Postal Code is to guide and accelerate the forwarding, processing, and delivery of objects posted at the Post Office, through its assignment to localities, streets, Post Office units, services, public agencies, companies, and buildings. e.g., '01311000'
+        country:
+          type: string
+          maxLength: 80
+          pattern: '[\w\W\s]*'
+          example: Brazil
+          description: Country name
+        countryCode:
+          type: string
+          maxLength: 3
+          pattern: '^([A-Z]{3})$'
+          example: BRA
+          description: Country code according to ISO-3166 alpha3 code
+        geographicCoordinates:
+          $ref: '#/components/schemas/GeographicCoordinates'
+    PersonalPostalAddress:
+      type: object
+      required:
+        - isMain
+        - address
+        - townName
+        - postCode
+        - country
+      properties:
+        isMain:
+          type: boolean
+          example: true
+          description: Indicates if the informed address is the main one.
+        address:
+          type: string
+          maxLength: 150
+          pattern: '[\w\W\s]*'
+          example: 'Av Naburo Ykesaki, 1270'
+          description: Corresponds to the customer's residential address.
+        additionalInfo:
+          type: string
+          maxLength: 30
+          pattern: '[\w\W\s]*'
+          example: Back
+          description: Some streets still need to be specified through complement.
+        districtName:
+          type: string
+          maxLength: 50
+          pattern: '[\w\W\s]*'
+          example: Center
+          description: |
+            Neighborhood is a community or region located in a city or municipality according to its geographical subdivisions.
+            [Restriction] Mandatory filling, if any.
+        townName:
+          type: string
+          maxLength: 50
+          pattern: '[\w\W\s]*'
+          example: Marília
+          description: |
+            Locality: The locality name corresponds to the designation of the city or municipality where the address is located.
+        ibgeTownCode:
+          type: string
+          pattern: '\d{7}$'
+          maxLength: 7
+          example: '3550308'
+          description: 'IBGE Municipality Code. The IBGE Municipality Codes table presents the list of Brazilian municipalities associated with a 7-digit code, the first two referring to the Federative Unit code.'
+        countrySubDivision:
+          $ref: '#/components/schemas/EnumCountrySubDivision'
+        postCode:
+          type: string
+          pattern: '^\d{8}$'
+          maxLength: 8
+          example: '17500001'
+          description: |
+            Postal Code: Composed of an eight-digit numerical set, the main objective of the Postal Code is to guide and accelerate the forwarding, processing, and delivery of objects posted at the Post Office, through its assignment to localities, streets, Post Office units, services, public agencies, companies, and buildings. e.g., '01311000'.
+        country:
+          type: string
+          maxLength: 80
+          pattern: '[\w\W\s]*'
+          example: Brazil
+          description: Country name
+        countryCode:
+          type: string
+          pattern: '^([A-Z]{3})$'
+          maxLength: 3
+          example: BRA
+          description: Country code according to ISO-3166 alpha3 code.
+        geographicCoordinates:
+          $ref: '#/components/schemas/GeographicCoordinates'
+    BusinessAccount:
+      type: object
+      required:
+        - compeCode
+        - number
+        - checkDigit
+        - type
+      properties:
+        compeCode:
+          type: string
+          maxLength: 3
+          pattern: '^\d{3}$'
+          description: 'Identifier code assigned by the Central Bank of Brazil to institutions participating in STR (Reserve Transfer System). Compe (Check and Other Papers Compensation System) is a system that identifies and processes bank compensations. It is represented by a three-digit code that serves as a bank identifier, so each banking institution has an exclusive number'
+          example: '001'
+        branchCode:
+          type: string
+          maxLength: 4
+          pattern: '^\d{4}$'
+          description: |
+            Branch Code holder of the account. (Branch is a dependency intended for customer service, the general public, and credit union associates, in the exercise of institution activities, cannot be mobile or temporary)   
+            [Restriction] Must be filled when the "type" field is different from prepaid account.
+          example: '6272'
+        number:
+          type: string
+          maxLength: 20
+          pattern: '^\d{8,20}$'
+          description: |
+            Account number
+          example: '24550245'
+        checkDigit:
+          type: string
+          maxLength: 1
+          pattern: '[\w\W\s]*'
+          description: |
+            Account digit
+          example: '4'
+        type:
+          $ref: '#/components/schemas/EnumAccountTypeCustomers'
+    PersonalAccount:
+      type: object
+      description: |
+        List of checking accounts, savings accounts, and prepaid payment accounts maintained by the customer at the transmitting institution and for which they have provided consent
+      required:
+        - compeCode
+        - number
+        - checkDigit
+        - type
+        - subtype
+      properties:
+        compeCode:
+          type: string
+          maxLength: 3
+          pattern: '^\d{3}$'
+          description: 'Identifier code assigned by the Central Bank of Brazil to institutions participating in STR (Reserve Transfer System). Compe (Check and Other Papers Compensation System) is a system that identifies and processes bank compensations. It is represented by a three-digit code that serves as a bank identifier, so each banking institution has an exclusive number'
+          example: '001'
+        branchCode:
+          type: string
+          maxLength: 4
+          pattern: '^\d{4}$'
+          description: |
+            Branch Code holder of the account. (Branch is a dependency intended for customer service, the general public, and credit union associates, in the exercise of institution activities, cannot be mobile or temporary)   
+            [Restriction] Must be filled when the "type" field is different from prepaid account.
+          example: '6272'
+        number:
+          type: string
+          maxLength: 20
+          pattern: '^\d{8,20}$'
+          description: |
+            Account number
+          example: '24550245'
+        checkDigit:
+          type: string
+          maxLength: 1
+          pattern: '[\w\W\s]*'
+          description: |
+            Account digit
+          example: '4'
+        type:
+          $ref: '#/components/schemas/EnumAccountTypeCustomers'
+        subtype:
+          type: string
+          enum:
+            - INDIVIDUAL
+            - CONJUNTA_SIMPLES
+            - CONJUNTA_SOLIDARIA
+          description: |
+            Account subtype (see Enum): 
+            Individual account - has a single holder
+            Simple joint account - where financial transactions can only be carried out with authorization from ALL account holders.
+            Joint and several account - is the modality whose holders can carry out transactions in isolation, that is, without the need for authorization from other holders.
+          example: INDIVIDUAL
+    PortabilitiesReceived:
+      type: object
+      required:
+        - employerName
+        - employerCnpjCpf
+        - paycheckBankDetainerCnpj
+        - paycheckBankDetainerIspb
+        - portabilityApprovalDate
+      properties:
+        employerName:
+          type: string
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          maxLength: 80
+          description: |
+            Employer name as received by portability communication. The employer can be a natural person or legal entity, when it is a legal entity, the corporate name must be sent.
+        employerCnpjCpf:
+          type: string
+          pattern: '^\d{14}$|^\d{11}$'
+          maxLength: 14
+          description: |
+            Registration number (CPF/CNPJ) of the employer (payer of payment services), as received by portability communication.
+        paycheckBankDetainerCnpj:
+          type: string
+          pattern: '^\d{14}$'
+          maxLength: 14
+          description: |
+            Registration number in the National Register of Legal Entities (CNPJ) of the payroll bank (financial institution holding the salary account) as received by portability communication.
+        paycheckBankDetainerIspb:
+          type: string
+          pattern: '^[0-9]{8}$'
+          maxLength: 8
+          description: |
+            ISPB number of the Payroll Bank (financial institution holding the salary account) as received by portability communication.
+        portabilityApprovalDate:
+          type: string
+          format: date
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          maxLength: 10
+          description: |
+            Portability approval date, as received by portability communication.
+
+            Note: only approved requests should be shared, even if compulsory.
+    PaychecksBankLink:
+      type: object
+      required:
+        - employerName
+        - employerCnpjCpf
+        - paycheckBankCnpj
+        - paycheckBankIspb
+        - accountOpeningDate 
+      properties:
+        employerName:
+          type: string
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          maxLength: 80
+          description: |
+            Employer name as registered in the salary account opening. The employer can be a natural person or legal entity, when it is a legal entity, the corporate name must be sent.
+        employerCnpjCpf:
+          type: string
+          pattern: '^\d{14}$|^\d{11}$'
+          maxLength: 14
+          description: |
+            Employer document (CNPJ/CPF), as registered in the salary account opening.
+        paycheckBankCnpj:
+          type: string
+          pattern: '^\d{14}$'
+          maxLength: 14
+          description: |
+            CNPJ of the financial institution contracted to provide salary payment service (payroll bank).
+        paycheckBankIspb:
+          type: string
+          pattern: '^[0-9]{8}$'
+          maxLength: 8
+          description: |
+            ISPB number (Brazilian Payment System Identifier) of the financial institution contracted to provide salary payment service (payroll bank).
+        accountOpeningDate:
+          type: string
+          format: date
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          maxLength: 10
+          description: |
+            Salary account opening date.
+    EconomicActivity:
+      type: object
+      required:
+        - code
+        - isMain
+      properties:
+        code:
+          type: string
+          pattern: '^\d{7}$'
+          description: |
+            Brings the code of the main activity branch of the consulted company, according to CNAE standard (National Classification of Economic Activities)
+
+            [Observation] The field must always be sent with 7 characters, following the "CNAE-Subclass 2.3" classification. In cases where the value starts with zeros, it must contain all characters, including zeros.
+          example: '0600001'
+        isMain:
+          type: boolean
+          description: 'Indicates if it is the main activity branch of the company when true and if it is the secondary branch when false. [Restriction] Only one occurrence relative to the code of the main economic activity must bring the value true.'
+          example: true
+    EnumAccountTypeCustomers:
+      type: string
+      enum:
+        - CONTA_DEPOSITO_A_VISTA
+        - CONTA_POUPANCA
+        - CONTA_PAGAMENTO_PRE_PAGA
+      description: |
+        Account types. Traditional modalities provided for by Resolution 4.753, not including linked accounts, accounts of those domiciled abroad, foreign currency accounts, and corresponding electronic money account. See Enum:
+
+        Checking account or Current account - is the most common type. In it, the money is at your disposal to be withdrawn at any time. This account does not generate earnings for the depositor.
+
+        Savings account - was created to encourage people to save. The money that remains in the account for thirty days starts to generate earnings, with income tax exemption for those who declare. That is, the money "grows" (earns) while kept in the account. Each deposit will have earnings month by month, always on the day of the month when the money was deposited.
+
+        Prepaid payment account - according to CIRCULAR No. 3,680, BCB of 2013, is 'intended for the execution of payment transactions in electronic currency carried out based on funds denominated in reais previously deposited'.
+      example: CONTA_DEPOSITO_A_VISTA
+    AreaCode:
+      type: string
+      example: '19'
+      description: DDD (Direct Distance Dialing) number of the customer's phone - if any
+      maxLength: 3
+      minLength: 2
+      pattern: ^(\d{2,3})$
+    EnumCountrySubDivision:
+      type: string
+      description: 'Enumeration referring to each federative unit acronym that identifies the state or federal district where the address is located. e.g., ''AC''. Only acronyms for Brazilian states are considered'
+      enum:
+        - AC
+        - AL
+        - AP
+        - AM
+        - BA
+        - CE
+        - DF
+        - ES
+        - GO
+        - MA
+        - MT
+        - MS
+        - MG
+        - PA
+        - PB
+        - PR
+        - PE
+        - PI
+        - RJ
+        - RN
+        - RS
+        - RO
+        - RR
+        - SC
+        - SP
+        - SE
+        - TO
+      example: SP
+    EnumCustomerPhoneType:
+      type: string
+      description: Customer phone type identification.
+      enum:
+        - FIXO
+        - MOVEL
+        - OUTRO
+      example: FIXO
+    EnumFiliationType:
+      type: string
+      enum:
+        - MAE
+        - PAI
+      example: PAI
+      description: Type of filiation.
+    EnumInformedRevenueFrequency:
+      type: string
+      description: |
+        Brings the frequency or period of the informed revenue.
+        "Revenue is calculated from all benefits that the company obtained with its economic activity in a given period. These benefits are the organization's earnings or gains through its sales or services provided".
+      enum:
+        - DIARIA
+        - SEMANAL
+        - QUINZENAL
+        - MENSAL
+        - BIMESTRAL
+        - TRIMESTRAL
+        - SEMESTRAL
+        - ANUAL
+        - OUTROS
+      example: DIARIA
+    EnumInformedIncomeFrequency:
+      type: string
+      enum:
+        - DIARIA
+        - SEMANAL
+        - QUINZENAL
+        - MENSAL
+        - BIMESTRAL
+        - TRIMESTRAL
+        - SEMESTRAL
+        - ANUAL
+        - OUTROS
+      description: Brings the frequency or period of the informed income.
+    EnumMaritalStatusCode:
+      type: string
+      enum:
+        - SOLTEIRO
+        - CASADO
+        - VIUVO
+        - SEPARADO_JUDICIALMENTE
+        - DIVORCIADO
+        - UNIAO_ESTAVEL
+        - OUTRO
+      example: OUTRO
+      description: |
+        Customer marital status.
+    EnumOccupationMainCodeType:
+      type: string
+      enum:
+        - RECEITA_FEDERAL
+        - CBO
+        - OUTRO
+      example: RECEITA_FEDERAL
+      description: |
+        Brings the list of codes related to occupation.
+    EnumPartiesParticipationDocumentType:
+      type: string
+      enum:
+        - CPF
+        - PASSAPORTE
+        - OUTRO_DOCUMENTO_VIAGEM
+        - CNPJ
+      description: |
+        Type of informed document. 
+    EnumPersonalOtherDocumentType:
+      type: string
+      enum:
+        - CNH
+        - RG
+        - NIF
+        - RNE
+        - OUTROS
+      description: |
+        List of other natural person document codes.
+    EnumProcuratorsTypePersonal:
+      type: string
+      enum:
+        - REPRESENTANTE_LEGAL
+        - PROCURADOR
+      example: PROCURADOR
+      description: |
+        Type of representative.
+        Legal representative - Full Civil Name of the Natural Person who represents an entity or company and is appointed in its constitutive act, i.e., in the articles of association or bylaws.
+        Attorney - is any person who represents the Natural Person in some business, through written authorization from them.
+    EnumProductServiceType:
+      type: string
+      enum:
+        - CONTA_DEPOSITO_A_VISTA
+        - CONTA_POUPANCA
+        - CONTA_PAGAMENTO_PRE_PAGA
+        - CARTAO_CREDITO
+        - OPERACAO_CREDITO
+        - SEGURO
+        - PREVIDENCIA
+        - INVESTIMENTO
+        - OPERACOES_CAMBIO
+        - CONTA_SALARIO
+        - CREDENCIAMENTO
+        - OUTROS
+      example: SEGURO
+      description: List with the relationship of products and services with current contract.
+    EnumSex:
+      type: string
+      enum:
+        - FEMININO
+        - MASCULINO
+        - OUTRO
+      example: FEMININO
+      description: |
+        "Set of anatomical-physiological characteristics that distinguish man and woman: Male sex; female sex". 
+        In case it is not female nor male, it is classified as 'OTHER'
+    GeographicCoordinates:
+      type: object
+      description: 'Set of information, corresponding to the values of geographic coordinates in decimal degrees, in WGS84 reference system'
+      required:
+        - latitude
+        - longitude
+      properties:
+        latitude:
+          description: |
+            Latitude information relative to informed geolocation. Between -90 and 90. e.g., '-23.5475000'. (2 places before comma, 11 positions)
+          type: string
+          pattern: '^-?\d{1,2}\.\d{1,9}$'
+          maxLength: 13
+          example: '-23.5475000'
+        longitude:
+          description: |
+            Longitude information relative to informed geolocation. Between -180 and 180. e.g., '-46.6361100'. (3 places before comma, 11 positions)
+          type: string
+          pattern: '^-?\d{1,3}\.\d{1,8}$'
+          maxLength: 13
+          example: '-46.6361100'
+    InformedRevenue:
+      type: object
+      required:
+        - amount
+      properties:
+        frequency:
+          $ref: '#/components/schemas/EnumInformedRevenueFrequency'
+        frequencyAdditionalInfo:
+          type: string
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+          example: Additional information
+          description: |
+            Free text to complement information relative to patrimony.
+
+            [Restriction] Fill when frequency is equal to OUTROS.
+        amount:
+          $ref: '#/components/schemas/InformedRevenueAmount'
+        year:
+          type: number
+          maximum: 9999
+          example: 2010
+          description: 'Reference year of the Income, according to RFC-3339 specification.'
+    InformedRevenueAmount:
+      type: object
+      required:
+        - amount
+        - currency
+      description: Value of informed revenue
+      properties:
+        amount:
+          description: |
+            Value of informed revenue. Expressed in monetary value with minimum 2 and maximum 4 decimal places.
+            Patrimony is the set of assets linked to a person or entity.
+          type: string
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '100000.0400'
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          description: 'Currency relative to monetary value, following ISO-4217 model.'
+          example: BRL
+    InformedIncome:
+      type: object
+      required:
+        - frequency
+        - amount
+        - date
+      properties:
+        frequency:
+          $ref: '#/components/schemas/EnumInformedIncomeFrequency'
+        amount:
+          $ref: '#/components/schemas/InformedIncomeAmount'
+        date:
+          type: string
+          format: date
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-05-21'
+          description: 'Income date, according to RFC-3339 specification.'
+    InformedIncomeAmount:
+      type: object
+      required:
+        - amount
+        - currency
+      description: Total value of informed income
+      properties:
+        amount:
+          description: |
+            Total value of informed income. Expressed in monetary value with minimum 2 and maximum 4 decimal places. 
+            Primary income indicates amounts to be paid or received in exchange for temporary use of financial resources, labor, or non-produced non-financial assets, namely, employee compensation, investment income, and other primary income.
+            Part of the first is remuneration of salaried work (wages and salaries); of the second, direct investment income, portfolio investment income, other investment income, and reserve asset income; and of the third, taxes on production and imports, subsidies, and rents.
+            Source: Central Bank of Brazil - Economic Department
+          type: string
+          pattern: '^\d{1,15}\.\d{2,4}$'
+          maxLength: 20
+          minLength: 4
+          example: '100000.0400'
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          description: 'Currency relative to monetary value, following ISO-4217 model.'
+          example: BRL
+    InformedPatrimonyAmount:
+      type: object
+      required:
+        - amount
+        - currency
+      description: Value of informed patrimony
+      properties:
+        amount:
+          description: |
+            Value of informed patrimony. Expressed in monetary value with minimum 2 and maximum 4 decimal places.
+            Patrimony is the set of assets linked to a person or entity.
+          type: string
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '100000.0400'
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          description: 'Currency relative to monetary value, following ISO-4217 model.'
+          example: BRL
+    Links:
+      type: object
+      description: References to other resources of the requested API.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: url
+          maxLength: 2000
+          description: Complete URI that generated the current response.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        first:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        prev:
+          type: string
+          format: url
+          maxLength: 2000
+          description: "URI of the previous page of this result list. Restriction - Mandatory when not the first page of the response"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        next:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        last:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI of the last page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+    Meta:
+      type: object
+      description: Meta information related to the requested API.
+      required:
+        - requestDateTime
+      properties:
+        requestDateTime:
+          description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+    Nationality:
+      type: object
+      description: Object that groups information related to the nationality of the Natural Person
+      required:
+        - otherNationalitiesInfo
+        - documents
+      properties:
+        otherNationalitiesInfo:
+          type: string
+          pattern: '^\S[\s\S]*$'
+          maxLength: 40
+          example: CAN
+          description: |
+            Mandatory filling field if the customer does not have Brazilian nationality. Fill indicating all their other nationalities using the country code according to ISO-3166 alpha3 code. e.g., 'CAN'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/NationalityOtherDocument'
+          description: List that brings relationship of complementary documents of persons with nationality different from Brazilian
+    NationalityOtherDocument:
+      type: object
+      required:
+        - type
+        - number
+      properties:
+        type:
+          type: string
+          maxLength: 10
+          pattern: '[\w\W\s]*'
+          description: 'Document type. Free field, mandatory filling when nationality is different from Brazilian. Inform type and document number, in addition to validity and other complementary information to identify the foreign person document'
+          example: SOCIAL SEC
+        number:
+          type: string
+          maxLength: 40
+          pattern: '[\w\W\s]*'
+          description: 'Document identification number. Free field, mandatory filling when nationality is different from Brazilian. Inform document number and other complementary information to identify the foreign person document'
+          example: '423929299'
+        expirationDate:
+          description: 'Validity date of the informed document, according to RFC-3339 specification.'
+          type: string
+          maxLength: 10
+          format: date
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-05-21'
+        issueDate:
+          description: 'Document issue date, according to RFC-3339 specification.'
+          type: string
+          maxLength: 10
+          format: date
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-05-21'
+        country:
+          type: string
+          maxLength: 80
+          pattern: '[\w\W\s]*'
+          example: Brazil
+          description: |
+            Country name.
+        additionalInfo:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          description: Free field for filling when necessary.
+          example: Additional information.
+    PartiesParticipation:
+      type: object
+      description: |
+        List relative to information of involved parties, such as: partner and/or administrator
+      required:
+        - type
+        - personType
+        - documentType
+        - documentNumber
+      properties:
+        personType:
+          type: string
+          enum:
+            - PESSOA_NATURAL
+            - PESSOA_JURIDICA
+          description: Indicates if the person of the involved party is a natural person or legal entity
+        type:
+          type: string
+          description: |
+            Indicates the performance profile in the company. See Enum
+            The administrator is responsible for performing all administrative functions of the company. They conduct the day-to-day business, signing documents, legally responding for the company, taking loans, and other management actions. Despite being on the front line of the company, they are called partner for also having their share of participation in the Share Capital.
+            Partner does not have any involvement in the administrative activities of the company.
+          enum:
+            - SOCIO
+            - ADMINISTRADOR
+        civilName:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          example: Juan Kaique Cláudio Fernandes
+          description: |
+            Full civil name of the natural person (Fundamental right of the person, civil name is the one assigned to the natural person from their birth registration, with which they will be identified throughout their life, as well as after their death)
+
+            [Restriction] The civilName field must be mandatorily filled when personType is PESSOA_NATURAL.
+        socialName:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          example: Karina
+          description: |
+            Social name of the natural person, if any. (the one by which transvestites and transsexuals recognize themselves, as well as are identified by their community and in their social environment, according to Local Decree).
+        companyName:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          example: Luiza e Benjamin Assessoria Jurídica Ltda
+          description: |
+            Corporate name of the consulted company is the term registered under which a legal entity (LE) individualizes and exercises its activities. Also called corporate denomination or business firm
+
+            [Restriction] the companyName field must be mandatorily filled when personType is PESSOA_JURIDICA.
+        tradeName:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          example: Mundo da Eletronica
+          description: 'Trade name of the legal entity, if any. (It is the popular name of the company, used for company promotion and better fixation with the public). Mandatory filling if it exists'
+        startDate:
+          type: string
+          maxLength: 20
+          format: date-time
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2021-05-21T08:30:00Z'
+          description: 'Start date of participation, according to RFC-3339 specification.'
+        shareholding:
+          type: string
+          format: double
+          maxLength: 8
+          minLength: 8
+          pattern: '^[01]\.\d{6}$'
+          example: '0.510000'
+          description: |
+            Percentage of shareholding participation (inform with 6 decimal places). The Partner should only be informed if their shareholding participation is equal to or greater than 25%. e.g., 0.250000 (This value represents 25%. The value '1' represents 100%).
+
+            [Restriction]: Mandatory field if type is equal to SOCIO and they have shareholding participation greater than 25%.
+        documentType:
+          $ref: '#/components/schemas/EnumPartiesParticipationDocumentType'
+        documentNumber:
+          type: string
+          maxLength: 20
+          pattern: '[\w\W\s]*'
+          example: '73677831148'
+          description: Number of the informed document. Free Text field to fill number and digit of document if any
+        documentAdditionalInfo:
+          type: string
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+          example: CNH
+          description: 'Free field, mandatory filling when the informed document has relevant complementary information for its identification'
+        documentCountry:
+          type: string
+          maxLength: 3
+          pattern: '[\w\W\s]*'
+          example: CAN
+          description: |
+            Country of document issuance. Country code according to ISO-3166 alpha3 code.
+        documentExpirationDate:
+          type: string
+          format: date
+          maxLength: 10
+          example: '2021-05-21'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          description: 'Validity date of the informed document, according to RFC-3339 specification.'
+        documentIssueDate:
+          type: string
+          maxLength: 10
+          format: date
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-05-21'
+          description: 'Issue date of the document, according to RFC-3339 specification.'
+    PersonalDocument:
+      type: object
+      description: Object grouping information related to Natural Person Documents
+      properties:
+        cpfNumber:
+          type: string
+          maxLength: 11
+          pattern: '^\d{11}$'
+          example: '25872252137'
+          description: |
+            Complete CPF number. 
+            Attribute that corresponds to the minimum information required by current Regulation. 
+            CPF is the Natural Person Registry. It is a document made by the Federal Revenue and serves to identify taxpayers. CPF is an 11-digit numbering, which only changes by court decision. The document is issued by the federal revenue.
+
+            [Restriction] Mandatory filling when passport is not informed.
+        passport:
+          $ref: '#/components/schemas/PersonalPassport'
+    PersonalFinancialRelationData:
+      type: object
+      description: 'Object that gathers information related to the customer relationship with the Institution. Relationship is considered as information that allows knowing since when the consulted person is a client of the institution, as well as an indicator of the products and services they currently consume and their representatives'
+      required:
+        - updateDateTime
+        - startDate
+        - productsServicesType
+        - accounts
+        - procurators
+      properties:
+        updateDateTime:
+          type: string
+          format: date-time
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2021-05-21T08:30:00Z'
+          description: |
+            Date and time of the update of the fields \<_endpoint_\>, according to RFC-3339 specification, UTC format. When there is no date specifically linked to the block, assume the date and time of the registration update as a whole.
+        startDate:
+          type: string
+          format: date-time
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2021-05-21T08:30:00Z'
+          description: Start date of relationship with the Financial Institution. Should bring the lowest value between the information reported to BACEN by DOC 3040 and CCS.
+        productsServicesType:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnumProductServiceType'
+          minItems: 1
+          maxItems: 12
+        productsServicesTypeAdditionalInfo:
+          type: string
+          pattern: '^[\w\W]*$'
+          maxLength: 100
+          example: Additional information of service type.
+          description: |
+            Additional information of service type.
+            [Restriction] Mandatory field when productsServicesType is 'OUTROS'.
+        procurators:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonalProcurator'
+          minItems: 0
+          description: |
+            List of representatives. 
+            [Restriction] Mandatory filling if there is a representative.
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonalAccount'
+          minItems: 0
+          description: |
+            List of checking accounts, savings accounts, and prepaid payment accounts maintained by the customer at the transmitting institution.
+        portabilitiesReceived:
+          type: array
+          items:
+            $ref: '#/components/schemas/PortabilitiesReceived'
+          minItems: 1
+          description: |
+            List of employer information received through salary portability requested by the transmitter's customer to the institution(s) holding their salary account, active or that have been active. Each link is associated with a salary portability received by the transmitter.
+            
+            Note: portability is not explicitly terminated, i.e., the IF to which the salary was ported is not notified when the salary account is closed or the salary is ported to another IF. It is not possible to guarantee that the informed data is from an active portability, nor that the link with the payroll bank still exists. The transmitter will have such information only when the portability request has been requested through its channels.
+        paychecksBankLink:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaychecksBankLink'
+          minItems: 1
+          description: |
+            List of salary account information related to employment links, existing or that have existed, established between the natural person customer and one or more employers. Each link is associated with an opened salary account maintained at the payroll bank (transmitting institution).
+
+            Note: as old employers may not have requested the closing of the salary account, it is not possible to guarantee that the informed data is from the current employer.
+    PersonalIdentificationData:
+      type: object
+      description: Set of information related to Identification, i.e., the action and effect of uniquely identifying the natural person through their registration data.
+      required:
+        - updateDateTime
+        - personalId
+        - brandName
+        - civilName
+        - birthDate
+        - documents
+        - hasBrazilianNationality
+        - contacts
+        - companiesCnpj
+      properties:
+        updateDateTime:
+          type: string
+          maxLength: 20
+          format: date-time
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2021-05-21T08:30:00Z'
+          description: |
+            Date and time of the update of the fields \<_endpoint_\>, according to RFC-3339 specification, UTC format. When there is no date specifically linked to the block, assume the date and time of the registration update as a whole.
+        personalId:
+          type: string
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          maxLength: 100
+          minLength: 1
+          description: A unique and immutable identifier used to identify the natural person customer resource. This identifier has no meaning for the customer who gave consent
+          example: 578-psd-71md6971kjh-2d414
+        brandName:
+          type: string
+          maxLength: 80
+          pattern: '[\w\W\s]*'
+          example: Organization A
+          description: 'Brand name reported by the participant in Open Finance. It is recommended to use, whenever possible, the same brand name assigned in the Customer Friendly Server Name field of the directory (Authorisation Server).'
+        civilName:
+          type: string
+          maxLength: 70
+          pattern: '^[\w\W]*$'
+          example: Juan Kaique Cláudio Fernandes
+          description: 'Full civil name of the natural person (Fundamental right of the person, civil name is the one assigned to the natural person from their birth registration, with which they will be identified throughout their life, as well as after their death)'
+        socialName:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          example: Jaqueline de Freitas
+          description: 'Social name of the natural person, if any. (the one by which transvestites and transsexuals recognize themselves, as well as are identified by their community and in their social environment, according to Local Decree)'
+        birthDate:
+          type: string
+          maxLength: 10
+          format: date
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '1989-03-23'
+          description: 'Birth date, according to RFC-3339 specification'
+        maritalStatusCode:
+          $ref: '#/components/schemas/EnumMaritalStatusCode'
+        maritalStatusAdditionalInfo:
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 50
+          example: Common-law marriage
+          description: |
+            Free field to complement information relative to marital status.
+
+            [Restriction] Mandatory filling when selected type is 'OUTRO'.
+        sex:
+          $ref: '#/components/schemas/EnumSex'
+        companiesCnpj:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            pattern: '^\d{14}$'
+            maxLength: 14
+          example:
+            - '01773247000103'
+            - '01773247000563'
+          description: |
+            Complete CNPJ number of the institution responsible for the Registration - CNPJ corresponds to the registration number in the Legal Entity Registry. 
+            Should have only CNPJ numbers, without mask
+        documents:
+          $ref: '#/components/schemas/PersonalDocument'
+        otherDocuments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonalOtherDocument'
+          minItems: 1
+          description: List of other documents
+        hasBrazilianNationality:
+          type: boolean
+          example: false
+          description: Informs if the Customer has Brazilian nationality.
+        nationality:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Nationality'
+        filiation:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required:
+              - type
+              - civilName
+            properties:
+              type:
+                $ref: '#/components/schemas/EnumFiliationType'
+              civilName:
+                type: string
+                maxLength: 70
+                pattern: '^[\w\W]*$'
+                example: Marcelo Cláudio Fernandes
+                description: |
+                  Full civil name of the person relative to filiation.
+                  (Fundamental right of the person, civil name is the one assigned to the natural person from their birth registration, 
+                  with which they will be identified throughout their life, as well as after their death).
+              socialName:
+                type: string
+                maxLength: 70
+                pattern: '^[\w\W]*$'
+                description: |
+                  Social name of the natural person, if any. 
+                  (the one by which transvestites and transsexuals recognize themselves, 
+                  as well as are identified by their community and in their social environment, according to Local Decree).
+        contacts:
+          $ref: '#/components/schemas/PersonalContacts'
+    PersonalOtherDocument:
+      type: object
+      required:
+        - type
+        - number
+      properties:
+        type:
+          $ref: '#/components/schemas/EnumPersonalOtherDocumentType'
+        typeAdditionalInfo:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          example: CREA-RJ
+          description: Free field mandatory filling if selected option OTHER types of documents
+        number:
+          type: string
+          maxLength: 40
+          pattern: '[\w\W\s]*'
+          example: '15291908'
+          description: Identification/Number of the informed document
+        checkDigit:
+          type: string
+          maxLength: 2
+          pattern: '[\w\W\s]*'
+          example: P
+          description: Check digit of the informed document. Mandatory filling if the informed document has check digit
+        additionalInfo:
+          type: string
+          maxLength: 50
+          pattern: '[\w\W\s]*'
+          example: SSP/SP
+          description: |
+            For documents where the use of place of issuance applies, it must be sent mandatorily, with information of agency and UF. Example: RG, place of issuance: SSP/RS.
+            [Restriction] Mandatory when Document Place of Issuance is relevant.
+        expirationDate:
+          type: string
+          format: date
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-05-21'
+          description: 'Validity date of the informed document, according to RFC-3339 specification.'
+    PersonalProcurator:
+      type: object
+      required:
+        - type
+        - cpfNumber
+        - civilName
+      properties:
+        type:
+          $ref: '#/components/schemas/EnumProcuratorsTypePersonal'
+        cpfNumber:
+          type: string
+          maxLength: 11
+          pattern: '^\d{11}$'
+          example: '73677831148'
+          description: 'Complete CPF number. CPF is the Natural Person Registry. It is a document made by the Federal Revenue and serves to identify taxpayers. CPF is an 11-digit numbering, which only changes by court decision. The document is issued by the federal revenue'
+        civilName:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          example: Elza Milena Stefany Teixeira
+          description: 'Full civil name of the natural person. (Fundamental right of the person, civil name is the one assigned to the natural person from their birth registration, with which they will be identified throughout their life, as well as after their death)'
+        socialName:
+          type: string
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+          example: Carlos
+          description: 'Social name of the natural person, if any. (the one by which transvestites and transsexuals recognize themselves, as well as are identified by their community and in their social environment, according to Decree No. 51,180, of January 14, 2010)'
+    PersonalPassport:
+      type: object
+      description: |
+        Document granted to travelers by a national administrative authority in order to certify their identity before foreign authorities. 
+
+        [Restriction] Applicable only to Natural Person residing abroad exempt from CPF registration.
+
+        [Restriction] Mandatory filling when cpfNumber is not informed.
+      required:
+        - number
+        - country
+      properties:
+        number:
+          type: string
+          maxLength: 20
+          pattern: '^[\w\W]*$'
+          example: '75253468744594820620'
+          description: |
+            Passport Number.
+        country:
+          type: string
+          maxLength: 3
+          pattern: '^(\w{3}){1}$'
+          example: CAN
+          description: |
+            Country of passport issuance. Country code according to ISO-3166 'alpha3' code.
+        expirationDate:
+          type: string
+          format: date
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-05-21'
+          description: |
+            Passport validity date, according to RFC-3339 specification.
+        issueDate:
+          type: string
+          format: date
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-05-21'
+          description: |
+            Passport issue date, according to RFC-3339 specification.
+    PersonalQualificationData:
+      type: object
+      description: 'Set of information related to the qualification process. Qualification is considered as information that allows institutions to appreciate, evaluate, characterize, and classify the customer with the purpose of knowing their risk profile and economic-financial capacity'
+      required:
+        - updateDateTime
+        - companyCnpj
+      properties:
+        updateDateTime:
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          description: |
+            Date and time of the update of the fields \<_endpoint_\>, according to RFC-3339 specification, UTC format. When there is no date specifically linked to the block, assume the date and time of the registration update as a whole.
+        companyCnpj:
+          type: string
+          pattern: '^\d{14}$'
+          maxLength: 14
+          example: '50685362000135'
+          description: |
+            Complete CNPJ number of the institution responsible for the Registration - CNPJ corresponds to the registration number in the Legal Entity Registry. 
+            Should have only CNPJ numbers, without mask
+        occupationCode:
+          $ref: '#/components/schemas/EnumOccupationMainCodeType'
+        occupationDescription:
+          type: string
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+          example: '01'
+          description: |
+            Free field, mandatory filling. If selected option *occupationCode* "RECEITA_FEDERAL" or "CBO", inform the code from this standardized list.   
+            If selected *occupationCode* "OUTRO", inform the occupation description when the IF does not follow the standardized list of the Federal Revenue nor CBO.
+        informedIncome:
+          $ref: '#/components/schemas/InformedIncome'
+        informedPatrimony:
+          $ref: '#/components/schemas/PersonalInformedPatrimony'
+    ResponseBusinessCustomersFinancialRelation:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/BusinessFinancialRelationData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseBusinessCustomersIdentification:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/BusinessIdentificationData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseBusinessCustomersQualification:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/BusinessQualificationData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Specific error code of the endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Human-readable title of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Human-readable description of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponsePersonalCustomersFinancialRelation:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/PersonalFinancialRelationData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponsePersonalCustomersIdentification:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/PersonalIdentificationData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponsePersonalCustomersQualification:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/PersonalQualificationData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    XFapiInteractionId:
+      description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
+      type: string
+      format: uuid
+      pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+      minLength: 1
+      maxLength: 36
+      example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+  parameters:
+    SetupID:
+      name: setupId
+      in: header
+      description: |
+          SetupUUID is the unique identifier in ODR (GUID).  
+          Must be used to perform all other calls in ODR, such as account search, transactions, etc.
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: '550e8400-e29b-41d4-a716-446655440000'   
+    xCustomerUserAgent:
+      name: x-customer-user-agent
+      in: header
+      description: Indicates the user-agent that the user uses.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xFapiAuthDate:
+      name: x-fapi-auth-date
+      in: header
+      description: 'Date when the user last logged in with the receiver. Represented according to [RFC7231](https://tools.ietf.org/html/rfc7231).Example: Sun, 10 Sep 2017 19:43:31 UTC'
+      required: false
+      schema:
+        type: string
+        pattern: '^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$'
+        minLength: 29
+        maxLength: 29
+    xFapiCustomerIpAddress:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: The user's IP address if currently logged in with the receiver.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xFapiInteractionId:
+      name: x-fapi-interaction-id
+      in: header
+      description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
+      required: false
+      schema:
+        type: string
+        format: uuid
+        pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+        minLength: 1
+        maxLength: 36
+        example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+    page:
+      name: page
+      in: query
+      description: Number of the page being requested (first page value is 1).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+        maximum: 2147483647
+        format: int32
+    pageSize:
+      name: page-size
+      in: query
+      description: Total number of records per page.
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        format: int32
+        maximum: 1000
+    pagination-key:
+      name: pagination-key
+      in: query
+      description: 'Recall identifier, used to avoid counting calls to the endpoint during pagination.'
+      schema:
+        type: string
+        maxLength: 2048
+        pattern: '[\w\W\s]*'
+  
+  responses:
+    OKResponsePersonalCustomersIdentification:
+      description: Data about natural person identification.
+      headers:
+        x-fapi-interaction-id:
+          description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponsePersonalCustomersIdentification'
+    OKResponsePersonalCustomersQualification:
+      description: Data about natural person qualification
+      headers:
+        x-fapi-interaction-id:
+          description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponsePersonalCustomersQualification'
+    OKResponsePersonalCustomersFinancialRelation:
+      description: Data about natural person relationship
+      headers:
+        x-fapi-interaction-id:
+          description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponsePersonalCustomersFinancialRelation'
+    OKResponseBusinessCustomersIdentification:
+      description: Data about legal entity identification
+      headers:
+        x-fapi-interaction-id:
+          description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseBusinessCustomersIdentification'
+    OKResponseBusinessCustomersQualification:
+      description: Data about legal entity qualification
+      headers:
+        x-fapi-interaction-id:
+          description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseBusinessCustomersQualification'
+    OKResponseBusinessCustomersFinancialRelation:
+      description: Data about legal entity relationship
+      headers:
+        x-fapi-interaction-id:
+          description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. In the context of Open Finance Brazil it is a mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header. If not received or if an invalid value is received, the transmitter must generate an x-fapi-interaction-id and return it in the response with HTTP Status Code 400. The receiver must accept the value received from the transmitter.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseBusinessCustomersFinancialRelation'
+    BadRequest:
+      description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Forbidden:
+      description: The token has incorrect scope or a security policy was violated
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    InternalServerError:
+      description: An error occurred in the API gateway or microservice
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Locked:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    MethodNotAllowed:
+      description: The consumer tried to access the resource with an unsupported method
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    NotAcceptable:
+      description: The request contained an Accept header different from the allowed media types or a character set different from UTF-8
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    NotFound:
+      description: The requested resource does not exist or was not implemented
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    TooManyRequests:
+      description: 'The operation was refused because too many requests were made within a certain period or the global concurrent request limit was reached'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Unauthorized:
+      description: Missing/invalid authentication header or invalid token
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    UnprocessableEntity:
+      description: 'The request syntax is correct, but it was not possible to process the present instructions.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+            
