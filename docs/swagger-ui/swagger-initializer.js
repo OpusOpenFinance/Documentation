@@ -51,6 +51,8 @@ window.onload = () => {
     "data-credit-fixed-incomes": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-credit-fixed-incomes.yml`,
     "data-treasury-bonds": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-treasury-bonds.yml`,
     "data-variable-incomes": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/dados-investimento/oas-variable-incomes.yml`,
+    //Portabilidade de Crédito
+    "portability": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/portability.yml`,
     // ODR
     "odr-setup": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/setup_oas.yml`,
     "odr-accounts": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/accounts_oas.yml`,
