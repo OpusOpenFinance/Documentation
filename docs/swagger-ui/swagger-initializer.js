@@ -31,6 +31,7 @@ window.onload = () => {
     "oas-itp-pagamentos-automaticos": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos-automaticos.yml`,
     "oas-back-dados": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-oof-dados.yml`,
     "mobile": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-webapp2as.yml`,
+    "oas-pagamentos-jsr": `${base}/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/anexos/yml/oasPagamentosSemRedirecionamento.yaml`,
     // Open Data
     "open-data-acquiring": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-acquiring-services.yml`,
     "open-data-accounts": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis-dados-abertos/open-data-accounts.yml`,

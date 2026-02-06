@@ -66,11 +66,12 @@ Para iniciar a utilização do software, existem alguns pré-requisitos:
 4. Completar todo o processo de [onboarding de ITP][OnboardingITP].
 
 {: .destaque}
-O módulo de iniciação de pagamentos da **Plataforma Opus Open Finance** é completamente autocontido e não exige a construção de uma camada de integração. Rodando de maneira autônoma, ele oferece APIs que isolam os detalhes específicos dos protocolos de autenticação e segurança do *Open Finance Brasil* e facilita muito a construção de aplicações.  A descrição dessas APIs pode ser encontrada [aqui (pagamentos)][API-pagamentos] e [aqui (pagamentos automáticos)][API-pagamentos-automáticos].  
+O módulo de iniciação de pagamentos da **Plataforma Opus Open Finance** é completamente autocontido e não exige a construção de uma camada de integração. Rodando de maneira autônoma, ele oferece APIs que isolam os detalhes específicos dos protocolos de autenticação e segurança do *Open Finance Brasil* e facilita muito a construção de aplicações.  A descrição dessas APIs pode ser encontrada [aqui (pagamentos)][API-pagamentos], [aqui (pagamentos automáticos)][API-pagamentos-automáticos] e [aqui (pagamentos sem redirecionamento)][API-pagamentos-jsr].  
 
 [GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+ri
 [API-pagamentos]: ../../../../swagger-ui/index.html?api=OAS-ITP-pagamentos
 [API-pagamentos-automáticos]: ../../../../swagger-ui/index.html?api=OAS-ITP-pagamentos-automaticos
+[API-pagamentos-jsr]: ../../../../swagger-ui/index.html?api=oas-pagamentos-jsr
 [OnboardingITP]: ../PerfisOFB/OnboardingITP.html
 [Setup]: ../../Plataforma-OpusOpenFinance/Implantação/OOF-Implantação.html
 [Jornada-Consentimento]: ../JornadaConsentimento/OFB-JornadaConsentimento.html
