@@ -3,10 +3,10 @@ info:
   title: Consent BackOffice Services
   version: 1.0.0
 security:
-  - jwt: [ ]
+  - jwt: []
 tags:
   - name: General
-    description: opus open banking services
+    description: Opus open banking services
   - name: Consents
     description: Consents opus open banking services
   - name: Payments
@@ -50,7 +50,7 @@ paths:
             type: string
             example: 2022-01-30T17:31:28Z
         - name: consentTermPeriod
-          description: Total consent term in months (integer). If indefinite, use '-1'. Cannot be used in conjunction with the createdOnBegin and/or createdOnEnd filters.
+          description: Total consent term in months (integer). If undetermined, use -1. Cannot be used together with createdOnBegin and/or createdOnEnd filters
           in: query
           schema:
             format: integer
@@ -62,7 +62,7 @@ paths:
           schema:
             $ref: "#/components/schemas/ModalityPaymentEnum"
         - name: modalityTypeList
-          description: Comma-separated list of payment consent modalities. Cannot be used in conjunction with the modalityType filter.
+          description: List of payment consent modalities separated by commas. Cannot be used together with modalityType filter.
           in: query
           schema:
             type: string
@@ -79,24 +79,24 @@ paths:
           schema:
             type: string
           in: query
-          description: Comma-separated list of search keys.
+          description: List of search keys separated by commas.
         - name: status
           in: query
           schema:
             $ref: "#/components/schemas/ConsentAuthorizationStatusEnum"
         - name: statusList
-          description: Comma-separated list of consent statuses. Cannot be used in conjunction with the status filter.
+          description: List of consent statuses separated by commas. Cannot be used together with status filter.
           in: query
           schema:
             type: string
             example: AUTHORISED,AWAITING_AUTHORISATION,REJECTED,REVOKED,EXPIRED,CONSUMED,TIMEOUT_AUTHORISATION,TIMEOUT_PAYMENT,AWAITING_RISK_SIGNALS,AWAITING_ACCOUNT_HOLDER_VALIDATION,AWAITING_ENROLLMENT,PARTIALLY_ACCEPTED
         - name: type
-          description: Returns only the consents of the specified type
+          description: Returns only consents of the specified type
           in: query
           schema:
             $ref: "#/components/schemas/ConsentTypesEnum"
         - name: typeList
-          description: Comma-separated list of consent types. Cannot be used in conjunction with the type filter.
+          description: List of consent types separated by commas. Cannot be used together with type filter.
           in: query
           schema:
             type: string
@@ -317,7 +317,7 @@ paths:
     patch:
       tags:
       - Consents Opus Open Banking
-      description: Edit enrollment consent
+      description: Enrollment consent editing
       parameters:
       - name: enrollmentId
         in: path
@@ -474,7 +474,7 @@ paths:
     post:
       tags:
         - Consents
-      description: Inform change of non-selectable resources for a CPF, CNPJ, or SEARCH KEY
+      description: Informs non-selectable resource changes for a CPF, CNPJ or SEARCH KEY
       requestBody:
         content:
           application/json:
@@ -567,7 +567,7 @@ paths:
     post:
       tags:
         - Consents
-      description: Post multiple search keys to consent
+      description: Post multiple search keys to a consent
       parameters:
         - name: consentId
           in: path
@@ -893,7 +893,7 @@ paths:
     get:
       tags:
         - Consents
-      description: Get meta-data information frpm consent
+      description: Get meta-data information from consent
       parameters:
         - name: consentId
           in: path
@@ -1029,7 +1029,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
   /open-banking/oob-consents/v1/webhook/toggle/{consentId}:
     patch:
-      description: Activate/Desactivate optional webhook sending
+      description: Enable/Disable optional webhook sending
       tags:
       - Consents Opus Open Banking
       parameters:
@@ -1055,7 +1055,7 @@ paths:
             x-zia-agent-param-type: dynamic
       responses:
         '204':
-          description: ""
+          description: 'No Content'
         'default':
           description: Default error response
           content:
@@ -1180,9 +1180,9 @@ components:
           type: string
           example: "Guia Seguros S.A."
         additionalInformation:
-          description: Additional information provided by the payer in automatic payment consents
+          description: Additional information entered by the paying user in Automatic Payment consents
           type: string
-          example: "Minha recorrência"
+          example: "My recurrence"
           pattern: '[\w\W\s]*'
           maxLength: 140
         tppName:
@@ -1252,7 +1252,7 @@ components:
           example: "Guia Seguros"
         tppLogo:
           type: string
-          example: "http://www.exemplo.com/logo.png"
+          example: "http://www.example.com/logo.png"
         journey:
           type: object
           properties:
@@ -1358,7 +1358,7 @@ components:
       minItems: 1
       items:
         type: object
-        description: Object containing creditor's data.
+        description: Object containing the receiver (creditor) data.
         required:
           - personType
           - cpfCnpj
@@ -1373,18 +1373,18 @@ components:
             pattern: '^\d{11}$|^\d{14}$'
             example: "58764789000137"
             description: |
-              Identification of the person involved in the transaction.  
-              Fill in with the CPF or CNPJ, according to the value chosen in the type field.  
-              CPF will be used with 11 digits and should be informed without dots or hyphens.  
-              CNPJ will be used with 14 digits and should be informed without dots or hyphens.
+              Identification of the person involved in the transaction.
+              Fill with CPF or CNPJ, according to the value chosen in the type field.
+              CPF will be used with 11 numbers and must be informed without dots or dashes.
+              CNPJ will be used with 14 numbers and must be informed without dots or dashes.
           name:
             type: string
             pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
             maxLength: 120
             example: Marco Antonio de Brito
             description: |
-              In case of an individual, the full name of the account holder should be provided.  
-              In case of a company, the corporate name or trade name of the account holder should be provided.
+              For natural person, the full name of the receiver's account holder must be provided.
+              For legal entity, the corporate name or trade name of the receiver's account must be provided.
     EnumPaymentPersonType:
       type: string
       enum:
@@ -1392,7 +1392,7 @@ components:
         - PESSOA_JURIDICA
       example: PESSOA_NATURAL
       description: |
-        Holder, individual or legal entity to whom the creditor's data refers.
+        Holder, natural or legal person to whom the receiver (creditor) data refers.
     ErrorResponse:
       type: object
       properties:
@@ -1479,7 +1479,7 @@ components:
         - SWEEPING
       type: string
     OrderTypeEnum:
-      description: Consent list ordering enum. ASC-> ascending order of creation date, DESC-> descending order of creation date, OPF-> open finance ordering (active, pending, expired and closed)
+      description: Consent list sorting enum. ASC -> ascending order by creation date, DESC -> descending order by creation date, OPF -> open finance ordering (active, pending, expired and closed)
       enum:
         - ASC
         - DESC
@@ -1516,25 +1516,25 @@ components:
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
           example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
           description: |
-            Code or unique identifier provided by the account holder institution to represent the payment initiation. The `recurringPaymentId` must be different from the `endToEndId`. 
-            This is the identifier that should be used to check the status of the initiated payment.
+            Unique code or identifier provided by the account holding institution to represent the payment initiation. The `recurringPaymentId` must be different from the `endToEndId`.
+            This is the identifier that should be used to query the status of the initiated payment.
         consentId:
           type: string
           maxLength: 256
           pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
           example: "urn:bancoex:C1DD33123"
           description: |
-            Unique identifier of the consent created for the requested payment initiation. It should be a URN - Uniform Resource Name.
+            Unique identifier of the consent created for the requested payment initiation. Must be a URN - Uniform Resource Name.
             A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
-            Identifier - URI - that is assigned under the URI scheme "urn" and a specific URN namespace, with the intention that the URN
-            be a persistent and location-independent resource identifier.
-            Considering the string urn:bancoex:C1DD33123 as an example for `recurringConsentId`, we have:
+            Identifier - URI - that is assigned under the "urn" URI scheme and a specific URN namespace, with the intention that the URN
+            be a persistent, location-independent resource identifier.
+            Considering the string urn:bancoex:C1DD33123 as an example for `recurringConsentId` we have:
             - the namespace (urn)
-            - the identifier associated with the namespace of the transmitting institution (bancoex)
+            - the identifier associated with the transmitting institution's namespace (bancoex)
             - the specific identifier within the namespace (C1DD33123).
-            More detailed information on the construction of namespaces should be consulted in [RFC8141](https://tools.ietf.org/html/rfc8141).
+            More detailed information about namespace construction can be found in [RFC8141](https://tools.ietf.org/html/rfc8141).
 
-            [Restriction] This field is mandatory when the value of the authorisationFlow field is FIDO_FLOW.
+            [Restriction] This field is mandatory when the authorisationFlow field value equals FIDO_FLOW.
         endToEndId:
           $ref: "#/components/schemas/EndToEndId"
         date:
@@ -1542,7 +1542,7 @@ components:
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: "2023-10-10"
-          description: Date the payment will be made.
+          description: Date when the payment will be made.
         creationDateTime:
           type: string
           format: date-time
@@ -1550,9 +1550,9 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: "2020-07-21T08:30:00Z"
           description: |
-            Date and time the payment was created. 
-            A date and time string as per [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
-            always using the UTC timezone (UTC time format).
+            Date and time when the payment was created.
+            A string with date and time according to [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339) specification,
+            always using UTC timezone.
         statusUpdateDateTime:
           type: string
           format: date-time
@@ -1560,9 +1560,9 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: "2020-07-21T08:30:00Z"
           description: |
-            Date and time the payment status was updated. 
-            A date and time string as per [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
-            always using the UTC timezone (UTC time format).
+            Date and time when the payment status was updated.
+            A string with date and time according to [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339) specification,
+            always using UTC timezone.
         ibgeTownCode:
           type: string
           minLength: 7
@@ -1572,7 +1572,7 @@ components:
           description: |
             The ibgeTownCode field in the Pix arrangement has the same behavior as the codMun field described in item 1.6.6 of the Pix manual.
 
-            1. If the information regarding the municipality is not sent, the recipient's PSP will assume that there are no state and municipal holidays during the period in question;
+            1. If municipality information is not sent, the receiver's PSP will assume there are no state and municipal holidays in the period in question;
         status:
           $ref: "#/components/schemas/EnumPaymentStatusType"
         localInstrument:
@@ -1586,7 +1586,7 @@ components:
           pattern: '^\d{14}$'
           maxLength: 14
           example: "50685362000135"
-          description: CNPJ of the Payment Initiator duly enabled to provide the Initiation Service in Pix.
+          description: CNPJ of the Payment Initiator duly authorized to provide the Pix Initiation Service.
         payment:
           $ref: "#/components/schemas/PaymentPix"
         remittanceInformation:
@@ -1595,7 +1595,7 @@ components:
           pattern: '[\w\W\s]*'
           example: Payment of invoice RSTO035-002.
           description: |
-            Should always be filled when the payer inserts additional information in a payment, to be sent to the recipient.
+            Must be filled whenever the paying user enters additional information in a payment, to be sent to the receiver.
         creditorAccount:
           $ref: "#/components/schemas/CreditorAccount"
         debtorAccount:
@@ -1612,19 +1612,19 @@ components:
           description: |
             Conditional field used to identify the authorization flow in which the payment was requested.
 
-            [Restriction] If CIBA or FIDO, mandatory field. If the field is not present in the payload, it is implied that the authorization flow used is HYBRID_FLOW.
+            [Restriction] If CIBA or FIDO, mandatory filling. If the field is not present in the payload, it is understood that the authorization flow used is HYBRID_FLOW.
         transactionIdentification:
           type: string
           pattern: ^[a-zA-Z0-9]{1,35}$
           maxLength: 35
           example: "E00038166201907261559y6j6"
           description: |
-            It is a transaction identifier that must be retransmitted intact by the payer's PSP when generating the payment order. 
-            This information will allow the recipient to identify and correlate the transfer, when received, with the instructions provided to the payer. 
-            The characters allowed in the context of Pix for the txid field (EMV 62-05) are: Lowercase letters from 'a' to 'z', Uppercase letters from 'A' to 'Z', Decimal digits from '0' to '9'.
+            This is a transaction identifier that must be retransmitted intact by the payer's PSP when generating the payment order.
+            This information will allow the receiver to identify and correlate the transfer, when received, with the presentation of instructions to the payer.
+            The allowed characters in the Pix context for the txid field (EMV 62-05) are: lowercase letters, 'a' to 'z'; uppercase letters, 'A' to 'Z'; decimal digits, '0' to '9'.
         document:
           type: object
-          description: Information of the identifying document.
+          description: Identification document information.
           required:
             - identification
             - rel
@@ -1635,14 +1635,14 @@ components:
               minLength: 11
               maxLength: 14
               example: "11111111111111"
-              description: Official identification document number of the individual or legal entity holder.
+              description: Official identification document number of the natural or legal person holder.
             rel:
               type: string
               enum:
                 - CPF
                 - CNPJ
               example: "CNPJ"
-              description: Type of official identification document of the individual or legal entity holder.
+              description: Type of official identification document of the natural or legal person holder.
     EndToEndId:
       type: string
       minLength: 32
@@ -1650,9 +1650,9 @@ components:
       pattern: "^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$"
       example: E9040088820210128000800123873170
       description: |
-        It is a unique identifier, generated at the payment initiating institution and received at the account holding institution, permeating the entire Pix payment journey.
+        This is a unique identifier, generated at the payment initiating institution and received at the account holding institution, permeating the entire Pix payment journey.
 
-        [Restriction] The holder must return the field with the same value received from the initiator.
+        [Restriction] The holder must mandatorily return the field with the same value received from the initiator.
     PaymentPix:
       type: object
       description: Object containing payment information.
@@ -1674,7 +1674,7 @@ components:
           pattern: "^([A-Z]{3})$"
           example: BRL
           description: |
-            Code of the national currency according to the ISO-4217 model, i.e., 'BRL'. All monetary values ​​provided are represented in the current currency of Brazil.
+            National currency code according to ISO-4217 model, i.e., 'BRL'. All monetary values ​​reported are represented in Brazil's current currency.
     EnumPaymentStatusType:
       type: string
       enum:
@@ -1689,22 +1689,22 @@ components:
       example: PDNG
       description: |
         Current payment status. The status evolves in the following order:
-        - RCVD (Received) - Indicates that the payment request has been successfully received by the holder, but there are still validations to be done before being submitted for settlement.
-        - CANC (Cancelled) - Indicates that the pending Pix transaction has been successfully canceled by the user before it was confirmed (ACCP) or rejected (RJCT) by the holder.
-        - ACCP (Accepted Customer Profile) - Indicates that all necessary checks have been performed by the holder and the transaction is ready to be sent for settlement (in SPI if it is a Pix for another institution or internally if it is for another account at the same institution).
-        - ACPD (Accepted Clearing Processed) - Indicates that the holder has already submitted the transaction for settlement but has not yet received confirmation whether it was settled or rejected.
-        - RJCT (Rejected) Indicates that the transaction was rejected by the holder or by the SPI.
-        - ACSC (Accepted Settlement Completed Debtor Account) - Indicates that the transaction has been completed by the holder or by the SPI.
-        - PDNG (Pending) - Indicates that the holder has temporarily held the Pix transaction for analysis.
-        - SCHD (Scheduled) - Indicates that the Pix transaction has been successfully scheduled by the holder.  
+        - RCVD (Received) - Indicates that the payment request was successfully received by the holder, but there are still validations to be performed before it is submitted for settlement.
+        - CANC (Cancelled) - Indicates that the pending Pix transaction was successfully cancelled by the user before it was confirmed (ACCP) or rejected (RJCT) by the holder.
+        - ACCP (Accepted Customer Profile) - Indicates that all necessary checks have already been performed by the holder and that the transaction is ready to be sent for settlement (in the SPI if it's Pix to another institution or internally if it's to another account in the same institution).
+        - ACPD (Accepted Clearing Processed) - Indicates that the holder has already submitted the transaction for settlement, but does not yet have confirmation whether it was settled or rejected.
+        - RJCT (Rejected) - Indicates that the transaction was rejected by the holder or by the SPI.
+        - ACSC (Accepted Settlement Completed Debitor Account) - Indicates that the transaction was settled by the holder or by the SPI.
+        - PDNG (Pending) - Indicates that the holder has temporarily retained the Pix transaction for analysis.
+        - SCHD (Scheduled) - Indicates that the Pix transaction was successfully scheduled at the holder.
         In case of failure:
         - RJCT (REJECTED) - Payment instruction rejected.
     PixPaymentCancellation:
       type: object
       description: |
-        Object containing data related to the payer who requested the cancellation, the channel used by them, and the reason.  
+        Object containing data regarding the paying user who requested the cancellation, the channel used by them, and the reason.
 
-        [Restriction] The cancellation object will only be mandatory when the status field value is CANC.
+        [Restriction] The cancellation object will only be mandatory when the status field value is equal to CANC.
       required:
         - cancelledAt
         - cancelledBy
@@ -1717,20 +1717,20 @@ components:
           $ref: "#/components/schemas/EnumPaymentCancellationFromType"
         cancelledAt:
           type: string
-          description: "Date and time the cancellation was made, as per [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), UTC format."
+          description: "Date and time the cancellation was performed, according to [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339) specification, UTC format."
           format: date-time
           maxLength: 20
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: "2021-05-21T08:30:00Z"
         cancelledBy:
           type: object
-          description: Information related to the payer who requested the payment cancellation.
+          description: Information related to the paying user who requested the payment cancellation.
           required:
             - document
           properties:
             document:
               type: object
-              description: Object consolidating the document data of the payer who requested the cancellation.
+              description: Object that consolidates the document data of the user who requested the cancellation.
               required:
                 - identification
                 - rel
@@ -1738,13 +1738,13 @@ components:
                 identification:
                   type: string
                   maxLength: 11
-                  description: Document number of the payer responsible for the payment cancellation.
+                  description: Document number of the paying user responsible for canceling the payment.
                   example: "11111111111"
                   pattern: '^\d{11}$'
                 rel:
                   type: string
                   maxLength: 3
-                  description: Document type of the payer responsible for the payment cancellation.
+                  description: Document type of the paying user responsible for canceling the payment.
                   example: CPF
                   pattern: "^[A-Z]{3}$"
     EnumPaymentCancellationFromType:
@@ -1754,13 +1754,13 @@ components:
         - DETENTORA
       example: INICIADORA
       description: |
-        Field used to inform the means by which the cancellation was made.
+        Field used to inform the means by which the cancellation was performed.
 
         Possible values:
 
-        INICIADORA - Payment canceled by the payer through the initiator's channels
+        INICIADORA - Payment canceled by the paying user through the initiator's channels
 
-        DETENTORA - Payment canceled by the payer through the holder's channels
+        DETENTORA - Payment canceled by the paying user through the holder's channels
     EnumPaymentCancellationReasonType:
       type: string
       enum:
@@ -1769,15 +1769,15 @@ components:
         - CANCELADO_MULTIPLAS_ALCADAS
       example: CANCELADO_PENDENCIA
       description: |
-        The completion of this field for return must be made by the account holder based on the payment status at the time of the cancellation request (e.g., Payment status = PDNG, the field must be filled with enum CANCELADO_PENDENCIA)
+        The completion of this field for return must be done by the account holder based on the payment status at the time of the cancellation request (e.g., Payment status = PDNG, field must be filled with enum CANCELADO_PENDENCIA)
 
         Possible values:
 
-        CANCELADO_PENDENCIA - Payment canceled while it was in the PDNG status
+        CANCELADO_PENDENCIA - Payment canceled while in PDNG situation
 
-        CANCELADO_AGENDAMENTO - Payment canceled while it was in the SCHD status
+        CANCELADO_AGENDAMENTO - Payment canceled while in SCHD situation
 
-        CANCELADO_MULTIPLAS_ALCADAS - Payment canceled while it was in the PATC status
+        CANCELADO_MULTIPLAS_ALCADAS - Payment canceled while in PATC situation
     PaymentConsent:
       required:
         - type
@@ -1865,7 +1865,7 @@ components:
       description: |
         Risk signals for automatic payment initiation
 
-        [Restriction] Must be sent when consent is for the Pix Automatic product (The object "/data/recurringConfiguration/automatic" used in oneOf). Will only be present after the first long-term consent edit.
+        [Restriction] Must be sent when the consent is for the Pix Automatic product (the object "/data/recurringConfiguration/automatic" used in oneOf). Will only be present after the first long-term consent edition.
       properties:
         deviceId:
           type: string
@@ -1873,19 +1873,19 @@ components:
           example: 00000000-54b3-e7c7-0000-000046bffd97
         isRootedDevice:
           type: boolean
-          description: Indicates whether the device is currently rooted.
+          description: Indicates whether the device currently has root permission.
           example: false
         screenBrightness:
           type: number
           format: double
           description: |
-            Indicates the screen brightness level of the device.  
-            On Android devices, the value is an integer between 0 and 255, inclusive;  
-            On iOS devices, the value is a floating point between 0.0 and 1.0.
+            Indicates the screen brightness level of the device.
+            On Android devices, the value is an integer between 0 and 255, inclusive;
+            On iOS devices, the value is a floating point number between 0.0 and 1.0.
         elapsedTimeSinceBoot:
           type: integer
           format: int64
-          description: Indicates how long (in milliseconds) the device has been on.
+          description: Indicates how long (in milliseconds) the device has been turned on.
         osVersion:
           type: string
           description: Operating system version.
@@ -1918,7 +1918,7 @@ components:
           description: Customer registration date at the initiator.
         geolocation:
           type: object
-          description: Geolocation data of the customer while logged into the initiator
+          description: Customer geolocation data while logged into the initiator
           properties:
             latitude:
               type: number
@@ -1939,9 +1939,9 @@ components:
         isCallInProgress:
           type: boolean
           description: |
-            Indicates an active call at the time of binding.
+            Indicates an active call at the time of enrollment.
 
-            [Restriction] If the risk signal is available (customer allowed it to be collected), it must be sent
+            [Restriction] If the risk signal is available (client allowed it to be collected), it must be sent
         isDevModeEnabled:
           type: boolean
           description: Indicates whether the device is in developer mode.
@@ -1956,7 +1956,7 @@ components:
           description: Indicates the use of MonkeyRunner.
         isCharging:
           type: boolean
-          description: Indicates whether the device battery is being charged.
+          description: Indicates whether the device battery is charging.
         antennaInformation:
           type: string
           description: Indicates which antenna the device is connected to.
@@ -1966,19 +1966,19 @@ components:
         integrity:
           type: object
           description: |
-            Reports the integrity of the device and app.  
-            On Android, as per the Play API Integrity documentation - [Android](https://developer.android.com/google/play/integrity/overview?hl=pt-br).  
-            On iOS, as per the App Attest documentation [iOS](https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity)
+            Informs the integrity of the device and app.
+            On Android, according to Play API Integrity documentation - [Android](https://developer.android.com/google/play/integrity/overview?hl=en).
+            On iOS, according to App Attest documentation [iOS](https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity)
           properties:
             appRecognitionVerdict:
               type: string
-              description: Reports app integrity
+              description: Informs the app integrity
             deviceRecognitionVerdict:
               type: string
-              description: Reports device integrity
+              description: Informs the device integrity
     RecurringConfiguration:
       type: object
-      description: Field intended for configuring the different recurring payment products.
+      description: Field intended for configuration of different recurring payment products.
       oneOf:
         - $ref: "#/components/schemas/Automatic"
         - $ref: "#/components/schemas/Sweeping"
@@ -1989,7 +1989,7 @@ components:
       properties:
         automatic:
           type: object
-          description: Definition of the recurrence configuration for automatic payments
+          description: Recurrence configuration definition for automatic payments
           required:
             - contractId
             - interval
@@ -2012,9 +2012,9 @@ components:
               maxLength: 19
               example: '100000.12'
               description: |
-                Fixed charge amount, if filled, represents consent for fixed payments, or not subject to change during the term of the consent.
+                Fixed charge amount, if filled, represents a consent for payments of fixed amounts, or not subject to change during the consent term.
                 
-                [Restriction] Exclusive with the field “/data/recurringConfiguration/automatic/maximumVariableAmount”
+                [Restriction] Mutually exclusive with the field “/data/recurringConfiguration/automatic/maximumVariableAmount”
             maximumVariableAmount:
               type: string
               pattern: '^((\d{1,16}\.\d{2}))$'
@@ -2022,9 +2022,9 @@ components:
               maxLength: 19
               example: '1000000.12'
               description: |
-                Maximum amount allowed per charge, if filled, represents consent for variable payments.
+                Maximum amount allowed per charge, if filled, represents a consent for variable amount payments.
                 
-                [Restriction] Exclusive with the field “/data/recurringConfiguration/automatic/fixedAmount”
+                [Restriction] Mutually exclusive with the field “/data/recurringConfiguration/automatic/fixedAmount”
             interval:
               type: string
               enum:
@@ -2035,12 +2035,12 @@ components:
                 - TRIMESTRAL
               example: SEMANAL
               description: |
-                Defines the allowed periodicity for transactions
-                - SEMANAL
-                - MENSAL
-                - ANUAL
-                - SEMESTRAL
-                - TRIMESTRAL
+                Defines the allowed periodicity for carrying out transactions
+                - WEEKLY
+                - MONTHLY
+                - ANNUAL
+                - SEMIANNUAL
+                - QUARTERLY
             contractDebtor:
               $ref: "#/components/schemas/ContractDebtor"
             firstPayment:
@@ -2053,28 +2053,28 @@ components:
               example: '100000.12'
               description: |
                 Amount defined by the receiving user.
-                If the paying user assigns a maximum amount for payments of that authorization, it cannot be less than the minimum amount (floor) defined by the receiving user.
+                If the paying user assigns a maximum amount for the payments of that authorization, it cannot be less than the minimum amount (floor) defined by the receiving user.
                 Cannot be filled in fixed amount authorizations.
             isRetryAccepted:
               type: boolean
-              description: Indicates whether the receiving customer is allowed to make payment attempts (extraday), according to the rules established in the Pix arrangement.
+              description: Indicates whether the receiving client allows payment attempts (extra day), according to the rules established in the Pix arrangement.
               example: false
             useOverdraftLimit:
               type: boolean
               default: true
               example: true
-              description: Indicates whether the paying user has authorized the use of a pre-approved limit (overdraft) in their account for making payments, if the customer has the product.
+              description: Indicates whether the paying user authorized the use of pre-approved limit (overdraft) in their account for making payments, if the client has the product.
             referenceStartDate:
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               description: |
                 Represents the expected date for the first occurrence of a payment associated with the recurrence.
-                A string with date and time as per [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339) specification, always using the UTC timezone (UTC time format).
+                A string with date and time according to [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339) specification, always using UTC timezone.
               example: '2023-05-21'
     ContractDebtor:
       type: object
-      description: Information about the contract debtor customer.
+      description: Information about the contract debtor client.
       required: 
         - name
         - document
@@ -2084,7 +2084,7 @@ components:
           pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
           maxLength: 120
           example: Policarpo Quaresma
-          description: In case of an individual, the full name of the contract debtor must be provided.
+          description: For natural persons, the full name of the contract debtor holder must be provided.
         document:
           type: object
           required:
@@ -2094,19 +2094,19 @@ components:
             identification:
               type: string
               maxLength: 14
-              description: Official identification document number of the contract debtor customer.
+              description: Official identification document number of the contract debtor client.
               example: '11111111111111'
               pattern: '^(?:\d{11}|\d{14})$'
             rel:
               type: string
-              description: Type of official identification document of the contract debtor customer.
+              description: Type of official identification document of the contract debtor client.
               enum:
                 - CPF
                 - CNPJ
     FirstPayment:
       type: object
       description: |
-        Definitions for the first payment. It is considered as the payment for the service subscription by the paying user. In cases where the receiving account and the paying account belong to the same holder, the holder must ensure that the credit account provided belongs to the holder of the CNPJ sent in the field “/data/creditors/cpfCnpj”. The credit account provided at the time of the first payment must be the same as the one provided within this object. If not respected, the holder must reject the payment with the reason DETALHE_PAGAMENTO_INVALIDO, synchronously (HTTP 422) or asynchronously (HTTP 200).
+        Definitions for the first payment. Considered as the payment for service subscription by the paying user. For cases where the receiving account and the paying account belong to the same holder, the holder must ensure that the credit account provided belongs to the holder of the CNPJ sent in the “/data/creditors/cpfCnpj” field. The credit account informed at the time of the first payment must be the same as the one informed within this object. If not respected, the holder must reject the payment with reason DETALHE_PAGAMENTO_INVALIDO, synchronously (HTTP 422) or asynchronously (HTTP 200).
       required:
         - type
         - date
@@ -2122,17 +2122,17 @@ components:
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-01-01'
-          description: |
+          description: |  
             Defines the target date for payment settlement.
-            Brasília time zone should be used for creation and rationalization of the data in this field.
+            Brasília timezone must be used for creating and rationalizing data in this field.
         currency:
           type: string
           maxLength: 3
           pattern: '^([A-Z]{3})$'
           example: BRL
           description: |
-            National currency code according to the ISO-4217 model, i.e., 'BRL'.
-            All monetary values provided are represented in the current currency of Brazil.
+            National currency code according to ISO-4217 model, i.e., 'BRL'.
+            All monetary values ​​reported are represented in Brazil's current currency.
         amount:
           type: string
           minLength: 4
@@ -2145,15 +2145,15 @@ components:
           type: string
           maxLength: 140
           pattern: '[\w\W\s]*'
-          example: 'Pagamento da nota RSTO035-002'
+          example: 'Payment of invoice RSTO035-002'
           description: |
-            Must be filled whenever the paying user inserts any additional information in a payment, to be sent to the recipient.
+            Must be filled whenever the paying user enters additional information in a payment, to be sent to the receiver.
         creditorAccount:
           $ref: "#/components/schemas/CreditorAccountConsent"
     CreditorAccountConsent:
       type: object
       description: |
-        Receives the account data of the receiving user. 
+        Receives the receiving user's account data.
       required:
         - ispb
         - number
@@ -2166,7 +2166,7 @@ components:
           pattern: '^[0-9]{8}$'
           example: '12345678'
           description: |
-            Must be filled with the ISPB (Identifier of the Brazilian Payment System) of the SPI (Instant Payment System) participant, using only numbers.
+            Must be filled with the ISPB (Brazilian Payment System Identifier) of the SPI participant (instant payment system) with numbers only.
         issuer:
           type: string
           minLength: 1
@@ -2174,10 +2174,11 @@ components:
           pattern: '^[0-9]{1,4}$'
           example: '1774'
           description: |
-            Code of the issuing agency of the account without a digit.
-            (An agency is a branch intended for customer service, public service, and credit union members, in the exercise of the institution's activities, and cannot be mobile or transitory).
+            Code of the issuing branch of the account without check digit.
+            (Branch is the dependency intended for serving clients, the general public, and credit cooperative associates,
+            in the exercise of the institution's activities, and cannot be mobile or temporary).
             
-            [Restriction] Mandatory for the following account types: CACC (CONTA_DEPOSITO_A_VISTA) and SVGS (CONTA_POUPANCA).
+            [Restriction] Mandatory filling for the following account types: CACC (CHECKING_ACCOUNT) and SVGS (SAVINGS_ACCOUNT).
         number:
           type: string
           minLength: 1
@@ -2185,8 +2186,8 @@ components:
           pattern: '^[0-9]{1,20}$'
           example: '1234567890'
           description: |
-            Must be filled with the transaction account number of the paying user, including the check digit (if it exists). 
-            If there is an alphanumeric value, it should be converted to 0.
+            Must be filled with the paying user's transactional account number, with check digit (if it exists),
+            if there is an alphanumeric value, it must be converted to 0.
         accountType:
           $ref: "#/components/schemas/EnumAccountTypeConsents"
     EnumAccountTypeConsents:
@@ -2198,12 +2199,13 @@ components:
       example: CACC
       description: |
         Types of accounts used for payment.
-        Traditional modalities provided by Resolution 4.753, not including linked accounts, accounts domiciled abroad, foreign currency accounts, and electronic money correspondent accounts.
-        Below is a description of each ENUM value.
+        Traditional modalities provided for by Resolution 4.753, not including linked accounts,
+        accounts of domiciled abroad, foreign currency accounts, and electronic currency correspondent account.
+        Below is the description of each ENUM value.
 
-        - CACC - Current - Current Account.
-        - SVGS - Savings - Savings Account.
-        - TRAN - TransactingAccount - Prepaid Payment Account.
+        - CACC - Current Account.
+        - SVGS - Savings Account.
+        - TRAN - Prepaid Payment Account.
     EnumPaymentType:
       type: string
       enum:
@@ -2238,32 +2240,32 @@ components:
         - DETALHE_PAGAMENTO_INVALIDO
       example: SALDO_INSUFICIENTE
       description: |
-        Identifier code for the rejection reason.
-        Reason for payment rejection. Additional information about the status reason.
-        - SALDO_INSUFICIENTE
-        - VALOR_ACIMA_LIMITE
-        - VALOR_INVALIDO
-        - NAO_INFORMADO
-        - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
-        - PAGAMENTO_RECUSADO_DETENTORA
-        - PAGAMENTO_RECUSADO_SPI
-        - CONSENTIMENTO_INVALIDO
-        - FALHA_INFRAESTRUTURA_SPI
-        - FALHA_INFRAESTRUTURA_ICP
-        - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
-        - FALHA_INFRAESTRUTURA_DETENTORA
-        - LIMITE_PERIODO_VALOR_EXCEDIDO
-        - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
-        - TITULARIDADE_INCONSISTENTE
-        - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
-        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação
-        - CONSENTIMENTO_REVOGADO
-        - LIMITE_TENTATIVAS_EXCEDIDO
-        - FORA_PRAZO_PERMITIDO
-        - DETALHE_TENTATIVA_INVALIDO
-        - DETALHE_PAGAMENTO_INVALIDO
+        Payment rejection reason identifier code.
+        Complementary information about the status reason.
+        - INSUFFICIENT_BALANCE
+        - AMOUNT_ABOVE_LIMIT
+        - INVALID_AMOUNT
+        - NOT_INFORMED
+        - PAYMENT_DIVERGENT_FROM_CONSENT
+        - PAYMENT_REFUSED_BY_HOLDER
+        - PAYMENT_REFUSED_BY_SPI
+        - INVALID_CONSENT
+        - SPI_INFRASTRUCTURE_FAILURE
+        - ICP_INFRASTRUCTURE_FAILURE
+        - RECEIVER_PSP_INFRASTRUCTURE_FAILURE
+        - HOLDER_INFRASTRUCTURE_FAILURE
+        - PERIOD_VALUE_LIMIT_EXCEEDED
+        - PERIOD_QUANTITY_LIMIT_EXCEEDED
+        - INCONSISTENT_OWNERSHIP
+        - TOTAL_CONSENT_VALUE_LIMIT_EXCEEDED
+        - CONSENT_TRANSACTION_VALUE_LIMIT_EXCEEDED: The transaction value exceeds the per-transaction value limit
+        - REVOKED_CONSENT
+        - ATTEMPT_LIMIT_EXCEEDED
+        - OUTSIDE_ALLOWED_DEADLINE
+        - INVALID_ATTEMPT_DETAIL
+        - INVALID_PAYMENT_DETAIL
 
-        [Restriction] This reason must be sent when the field `/data/status` is equal to RJCT (REJECTED).
+        [Restriction] This reason must be sent when the `/data/status` field is equal to RJCT (REJECTED).
     Sweeping:
       type: object
       required:
@@ -2271,7 +2273,7 @@ components:
       properties:
         sweeping:
           type: object
-          description: Definition of the sweeping configuration for automatic funds transfers.
+          description: Recurrence configuration definition for automatic fund transfers.
           properties:
             totalAllowedAmount:
               type: string
@@ -2279,19 +2281,19 @@ components:
               maxLength: 19
               pattern: '^((\d{1,16}\.\d{2}))$'
               example: "100000.12"
-              description: Maximum amount to be reached by the sum of all transactions using the consent authorized by the customer. If the amount is exceeded, the account holder must deny the transaction requested by the initiator.
+              description: Maximum amount to be reached by the sum of all transactions using the consent authorized by the client. If the amount is exceeded, the account holder must deny the transaction requested by the initiator.
             transactionLimit:
               type: string
               pattern: '^((\d{1,16}\.\d{2}))$'
               minLength: 4
               maxLength: 19
               example: "1000000.12"
-              description: Maximum amount for each payment transaction associated with this consent. If the payment amount exceeds this limit, the account holder must reject the payment transaction.
+              description: Maximum amount for each payment transaction associated with this consent. If the payment amount is greater than this limit, the account holder must reject the payment transaction.
             periodicLimits:
               $ref: "#/components/schemas/PeriodicLimits"
     PeriodicLimits:
       type: object
-      description: Transaction limits per period determined by the payer.
+      description: Transaction limits per period determined by the paying user.
       properties:
         day:
           $ref: "#/components/schemas/Day"
@@ -2304,14 +2306,14 @@ components:
     Day:
       type: object
       description: |
-        Set daily transaction limit determined by the payer.
+        Configure daily transactional limit determined by the paying user.
 
-        [Restriction] If the object is sent, at least one of the fields (`quantityLimit` or `transactionLimit`) must be filled in.
+        [Restriction] If the object is sent, at least one of the fields (`quantityLimit` or `transactionLimit`) must be filled.
       properties:
         quantityLimit:
           type: integer
           example: 2
-          description: Maximum number of transactions allowed to occur during a day.
+          description: Limit quantity of transactions allowed to occur during a day.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
@@ -2322,14 +2324,14 @@ components:
     Week:
       type: object
       description: |
-        Set weekly transaction limit determined by the payer.
+        Configure weekly transactional limit determined by the paying user.
 
-        [Restriction] If the object is sent, at least one of the fields (`quantityLimit` or `transactionLimit`) must be filled in
+        [Restriction] If the object is sent, at least one of the fields (`quantityLimit` or `transactionLimit`) must be filled.
       properties:
         quantityLimit:
           type: integer
           example: 10
-          description: Maximum number of transactions allowed to occur during a week.
+          description: Limit quantity of transactions allowed to occur during a week.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
@@ -2340,14 +2342,14 @@ components:
     Month:
       type: object
       description: |
-        Set monthly transaction limit determined by the payer.
+        Configure monthly transactional limit determined by the paying user.
 
-        [Restriction] If the object is sent, at least one of the fields (`quantityLimit` or `transactionLimit`) must be filled in
+        [Restriction] If the object is sent, at least one of the fields (`quantityLimit` or `transactionLimit`) must be filled.
       properties:
         quantityLimit:
           type: integer
           example: 30
-          description: Maximum number of transactions allowed to occur during a month.
+          description: Limit quantity of transactions allowed to occur during a month.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
@@ -2358,21 +2360,21 @@ components:
     Year:
       type: object
       description: |
-        Set annual transaction limit determined by the payer.
+        Configure annual transactional limit determined by the paying user.
 
-        [Restriction] If the object is sent, at least one of the fields (`quantityLimit` or `transactionLimit`) must be filled in
+        [Restriction] If the object is sent, at least one of the fields (`quantityLimit` or `transactionLimit`) must be filled.
       properties:
         quantityLimit:
           type: integer
           example: 100
-          description: Maximum number of transactions allowed to occur during a year.
+          description: Limit quantity of transactions allowed to occur during a year.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
           minLength: 4
           maxLength: 19
           example: "100000.12"
-          description: Maximum amount to be transacted annually, from the date defined in the field `/data/startDateTime`.
+          description: Maximum amount to be transacted over one year, starting from the date defined in the `/data/startDateTime` field.
     PaymentPersonTypeEnum:
       enum:
         - PESSOA_NATURAL
@@ -2467,10 +2469,10 @@ components:
             type: string
             example: 11111678912329
             nullable: false
-            description: Resource owner identifier. It can be a CPF, CNPJ, or a SEARCH KEY.
+            description: Identifier of the updated resource owner. Can be a CPF, CNPJ or a SEARCH KEY
           type:
             $ref: "#/components/schemas/UnselectableResourceTypeEnum"
-            description: Type of updated non-selectable resource
+            description: Type of non-selectable resource that was changed
     UnselectableResourceTypeEnum:
       enum:
         - LOAN
@@ -2649,14 +2651,14 @@ components:
           type: object
           required:
             - code
-          description: Reason for enrollment revocation.
+          description: Account enrollment revocation reason.
           properties:
             code:
               $ref: "#/components/schemas/EnrollmentRevocationReasonCodeEnum"
         additionalInformation:
           type: string
           pattern: '[\w\W\s]*'
-          example: Contract between initiator and account holder interrupted
+          example: Contract between initiator and holder terminated
           maxLength: 2048
         cancelledFrom:
           $ref: "#/components/schemas/EnumEnrollmentCancelledFrom"
@@ -2674,14 +2676,14 @@ components:
           type: object
           required:
             - code
-          description: Reason for enrollment rejection.
+          description: Account enrollment revocation reason.
           properties:
             code:
               $ref: "#/components/schemas/EnrollmentRejectedReasonCodeEnum"
         additionalInformation:
           type: string
           pattern: '[\w\W\s]*'
-          example: Contract between initiator and account holder interrupted
+          example: Contract between initiator and holder terminated
           maxLength: 2048
         cancelledFrom:
           $ref: "#/components/schemas/EnumEnrollmentCancelledFrom"
@@ -2879,7 +2881,8 @@ components:
       example: "2020-07-21T08:30:00Z"
       description: >
         Date and time of the last payment initiation update.
-        A string with date and time as per RFC-3339 specification, always using the UTC time format.
+        A string with date and time according to
+        RFC-3339 specification, always using UTC timezone.
     RevokeConsentData:
       required:
         - status
@@ -2927,7 +2930,7 @@ components:
           type: string
     PaymentRejection:
       type: object
-      description: "Reason for payment rejection. Additional information about the reason for the status. Must be sent when the field /data/paymentStatus is equal to RJCT (REJECTED)."
+      description: "Payment rejection reason. Complementary information about the status reason. Must be sent when the /data/paymentStatus field is equal to RJCT (REJECTED)."
       properties:
         code:
           $ref: "#/components/schemas/PaymentRejectionReasonEnum"
@@ -3046,7 +3049,7 @@ components:
       properties:
         single:
           type: object
-          description: Define a política de agendamento único.
+          description: Defines the single scheduling policy.
           required:
             - date
           properties:
@@ -3057,12 +3060,12 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               example: "2023-08-23"
               description: |
-                Define a data alvo da liquidação do pagamento.
-                O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
+                Defines the target date for payment settlement.
+                Brasília timezone must be used for creating and rationalizing data in this field.
 
-                [Restrição] Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em 
-                relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+730 corridos a 
-                partir da data do consentimento, também considerando o fuso horário de Brasília.
+                [Restriction] This field must always be at least D+1 business day, that is, the immediately subsequent date
+                in relation to the consent date considering Brasília timezone and must be at most D+730 business days from
+                the consent date, also considering Brasília timezone.
     ScheduleDaily:
       type: object
       required:
@@ -3075,14 +3078,14 @@ components:
             - quantity
           properties:
             startDate:
-              description: Define o início da vigência da recorrência.
+              description: Defines the beginning of the recurrence validity.
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               maxLength: 10
               example: "2023-08-23"
             quantity:
-              description: Define a quantidade de pagamentos que serão enviados para liquidação.
+              description: Defines the quantity of payments that will be sent for settlement.
               type: integer
               format: int32
               minimum: 2
@@ -3109,26 +3112,26 @@ components:
             - quantity
           properties:
             dayOfWeek:
-              description: Define o dia da semana planejado para a ocorrência das liquidações.
+              description: Defines the day of the week planned for settlement occurrences.
               type: string
               enum:
-                - SEGUNDA_FEIRA
-                - TERCA_FEIRA
-                - QUARTA_FEIRA
-                - QUINTA_FEIRA
-                - SEXTA_FEIRA
-                - SABADO
-                - DOMINGO
-              example: QUINTA_FEIRA
+                - MONDAY
+                - TUESDAY
+                - WEDNESDAY
+                - THURSDAY
+                - FRIDAY
+                - SATURDAY
+                - SUNDAY
+              example: THURSDAY
             startDate:
-              description: Define o início da vigência da recorrência.
+              description: Defines the beginning of the recurrence validity.
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               maxLength: 10
               example: "2023-08-23"
             quantity:
-              description: Define a quantidade de pagamentos que serão enviados para liquidação.
+              description: Defines the quantity of payments that will be sent for settlement.
               type: integer
               format: int32
               minimum: 2
@@ -3155,20 +3158,20 @@ components:
             - quantity
           properties:
             dayOfMonth:
-              description: Define o dia do mês planejado para a ocorrência das liquidações.
+              description: Defines the day of the month planned for settlement occurrences.
               type: integer
               minimum: 1
               maximum: 31
               example: 10
             startDate:
-              description: Define o início da vigência da recorrência.
+              description: Defines the beginning of the recurrence validity.
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               maxLength: 10
               example: "2023-08-23"
             quantity:
-              description: Define a quantidade de pagamentos que serão enviados para liquidação.
+              description: Defines the quantity of payments that will be sent for settlement.
               type: integer
               format: int32
               minimum: 2
@@ -3190,14 +3193,14 @@ components:
         custom:
           type: object
           description: |
-            [Restrição] As datas enviadas na lista de datas (array “dates”) não podem ser repetidas. 
-            Caso datas repetidas sejam enviadas, o detentor deve rejeitar a criação do consentimento, informando o erro PARAMETRO_INVALIDO.
+            [Restriction] The dates sent in the dates array cannot be repeated.
+            If repeated dates are sent, the holder must reject the consent creation, informing the error PARAMETRO_INVALIDO.
           required:
             - dates
             - additionalInformation
           properties:
             dates:
-              description: Define os dias em que estão planejadas as ocorrências das liquidações.
+              description: Defines the days on which settlement occurrences are planned.
               type: array
               maxItems: 60
               minItems: 2
@@ -3211,11 +3214,11 @@ components:
             additionalInformation:
               type: string
               description: |
-                Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. 
-                O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.
+                Free text for Initiator to fill in a comprehensible way for the approving/paying user.
+                The text can be used by the holder to display the transaction summary during approval by the approving/paying user.
               pattern: '[\w\W\s]*'
               maxLength: 255
-              example: Todas quintas e domingos por 6 meses
+              example: Every Thursday and Sunday for 6 months
             scheduleDates:
               type: array
               items:
@@ -3276,8 +3279,8 @@ components:
             $ref: "#/components/schemas/PaymentManualRiskSignal"
         enrollmentName:
           type: string
-          description: Nome do dispositivo autorizado pelo cliente para o vínculo de dispositivo da JSR.
-          example: "Meu Celular"
+          description: Name of the device authorized by the client for JSR device enrollment.
+          example: "My Cell Phone"
         dailyLimit:
           format: double
           type: number
@@ -3326,58 +3329,58 @@ components:
       properties:
         deviceId:
           type: string
-          description: Identificador único do dispositivo.
+          description: Unique device identifier.
         isRootedDevice:
           type: boolean
-          description: Indica se o dispositivo está com root.
+          description: Indicates if the device is rooted.
         screenBrightness:
           type: number
           format: double
-          description: Nível de brilho da tela do dispositivo.
+          description: Device screen brightness level.
         elapsedTimeSinceBoot:
           type: integer
           format: int64
-          description: Tempo decorrido desde a última inicialização do dispositivo.
+          description: Time elapsed since the last device boot.
         osVersion:
           type: string
-          description: Versão do sistema operacional do dispositivo.
+          description: Device operating system version.
         userTimeZoneOffset:
           type: string
-          description: Deslocamento do fuso horário do usuário.
+          description: User's time zone offset.
         language:
           type: string
-          description: Idioma usado pelo dispositivo.
+          description: Language used by the device.
         screenDimensions:
           $ref: "#/components/schemas/ScreenDimensions"
         accountTenure:
           type: string
-          description: Tempo em que a conta está ativa.
+          description: Time the account has been active.
         geolocation:
           $ref: "#/components/schemas/Geolocation"
         isCallingProgress:
           type: boolean
-          description: Indica se uma chamada está em andamento.
+          description: Indicates if a call is in progress.
         isDevModeEnabled:
           type: boolean
-          description: Indica se o modo de desenvolvedor está ativado no dispositivo.
+          description: Indicates if developer mode is enabled on the device.
         isMockGPS:
           type: boolean
-          description: Indica se o dispositivo está usando uma localização GPS simulada.
+          description: Indicates if the device is using a simulated GPS location.
         isEmulated:
           type: boolean
-          description: Indica se o dispositivo está emulado.
+          description: Indicates if the device is emulated.
         isMonkeyRunner:
           type: boolean
-          description: Indica se o dispositivo está usando a ferramenta MonkeyRunner.
+          description: Indicates if the device is using the MonkeyRunner tool.
         isCharging:
           type: boolean
-          description: Indica se o dispositivo está atualmente carregando.
+          description: Indicates if the device is currently charging.
         antennaInformation:
           type: string
-          description: Informações sobre a antena do dispositivo.
+          description: Information about the device antenna.
         isUsbConnected:
           type: boolean
-          description: Indica se o dispositivo está conectado a uma porta USB.
+          description: Indicates if the device is connected to a USB port.
         integrity:
           $ref: "#/components/schemas/Integrity"
     ScreenDimensions:
@@ -3386,34 +3389,34 @@ components:
         height:
           type: integer
           format: int64
-          description: Altura da tela do dispositivo em pixels.
+          description: Device screen height in pixels.
         width:
           type: integer
           format: int64
-          description: Largura da tela do dispositivo em pixels.
+          description: Device screen width in pixels.
     Geolocation:
       type: object
       properties:
         latitude:
           type: number
           format: double
-          description: Coordenada de latitude da localização do dispositivo.
+          description: Latitude coordinate of the device location.
         longitude:
           type: number
           format: double
-          description: Coordenada de longitude da localização do dispositivo.
+          description: Longitude coordinate of the device location.
         type:
           type: string
-          description: Tipo de dados de geolocalização.
+          description: Type of geolocation data.
     Integrity:
       type: object
       properties:
         appRecognitionVerdict:
           type: string
-          description: Veredito do processo de reconhecimento do aplicativo.
+          description: Verdict of the application recognition process.
         deviceRecognitionVerdict:
           type: string
-          description: Veredito do processo de reconhecimento do dispositivo.
+          description: Verdict of the device recognition process.
     RequestRevokeOobEnrollmentConsent:
       required:
         - data
@@ -3424,7 +3427,7 @@ components:
             - $ref: "#/components/schemas/EnrollmentDataPatch"
             - nullable: false
         applicationName:
-          description: Nome da aplicação cliente
+          description: Client application name
           type: string
     EnrollmentDataPatch:
       required:
@@ -3481,32 +3484,32 @@ components:
         - INICIADORA
         - DETENTORA
       description: |
-        Campo utilizado para informar o meio pelo qual foi realizado o cancelamento do vínculo de conta. Valores possíveis:
+        Field used to inform the means by which the account enrollment was canceled. Possible values:
 
-          INICIADORA - Vínculo de conta nos canais da iniciadora.
+          INICIADORA - Account enrollment through the initiator's channels.
 
-          DETENTORA - Vínculo de conta nos canais da detentora.
+          DETENTORA - Account enrollment through the holder's channels.
     EnrollmentRejectedAt:
       type: string
       format: date-time
       example: "2023-07-12T08:30:00Z"
       pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
       maxLength: 20
-      description: Instante de rejeição do vínculo de conta no ambiente da detentora.
+      description: Account enrollment rejection timestamp in the holder's environment.
     AutomaticPaymentConsentEdition:
       type: object
       properties:
         maximumVariableAmount:
-          description: Definição da configuração de recorrência para pagamentos automáticos, se não enviado
-            será considerado como indefinido (sem limite).
+          description: Recurrence configuration definition for automatic payments, if not sent
+            will be considered as undefined (no limit).
           maxLength: 19
           minLength: 4
           nullable: true
           type: string
           example: "1000000.12"
         useOverdraftLimit:
-          description: Indica se o consentimento permite a utilização do limite de
-            cheque especial.
+          description: Indicates whether the consent allows the use of
+            overdraft limit.
           type: boolean
           example: true
     RequestPortabilityStatusUpdate:
@@ -3526,31 +3529,31 @@ components:
               properties:
                 reasonType:
                     description: |
-                      Motivo de recusa do pedido de portabilidade, onde:
+                      Portability request rejection reason, where:
                       
-                      `CANCELADO_PELO_CLIENTE` - Cliente desiste do pedido da portabilidade 
+                      `CANCELADO_PELO_CLIENTE` - Client cancels the portability request
                       
-                      `SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE` - Saldo devedor atualizado divergente (superior a 15%) do informado inicialmente 
+                      `SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE` - Updated outstanding balance diverges (greater than 15%) from initially informed
                       
-                      `POLITICA_DE_CREDITO` - Proponente desiste da oferta ao cliente por políticas internas 
+                      `POLITICA_DE_CREDITO` - Proponent withdraws offer to client due to internal policies
                       
-                      `RETENCAO_DO_CLIENTE` - Cliente aceitou contraproposta da instituição credora (dentro do prazo)
+                      `RETENCAO_DO_CLIENTE` - Client accepted counteroffer from creditor institution (within deadline)
                       
-                      `CONTRATO_JA_LIQUIDADO` - Contrato liquidado pelo cliente. 
+                      `CONTRATO_JA_LIQUIDADO` - Contract settled by client.
                       
-                      `DIVERGENCIA_DE_PAGAMENTO_EFETUADO` - Proponente realizou a liquidação com valor divergente 
+                      `DIVERGENCIA_DE_PAGAMENTO_EFETUADO` - Proponent made settlement with divergent amount
 
-                      `DECURSO_DO_PRAZO_PARA_PAGAMENTO` - Proponente realizou a liquidação fora do prazo 
+                      `DECURSO_DO_PRAZO_PARA_PAGAMENTO` - Proponent made settlement outside the deadline
                       
-                      `PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO` - Proponente não realizou a liquidação do contrato 
+                      `PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO` - Proponent did not settle the contract
                       
-                      `PORTABILIDADE_EM_ANDAMENTO` - Posteriormente à efetivação do pedido de portabilidade, a IF credora identificou que o cliente já possui outro pedido de portabilidade em andamento para o mesmo contrato. 
+                      `PORTABILIDADE_EM_ANDAMENTO` - After the portability request was effected, the creditor IF identified that the client already has another portability request in progress for the same contract.
                       
-                      `CLIENTE_COM_ACAO_JUDICIAL` - Possui ação judicial 
+                      `CLIENTE_COM_ACAO_JUDICIAL` - Has legal action
 
-                      `MODALIDADE_DA_OPERACAO_INCOMPATIVEL` - Modalidade divergente da indicada pela instituição proponente
+                      `MODALIDADE_DA_OPERACAO_INCOMPATIVEL` - Modality diverges from that indicated by the proponent institution
 
-                      `OUTROS` - Motivo da rejeição não se encaixa nas opções disponíveis
+                      `OUTROS` - Rejection reason does not fit into available options
                     type: string
                     enum:
                       - CANCELADO_PELO_CLIENTE
@@ -3567,20 +3570,20 @@ components:
                       - OUTROS
                 reasonTypeAdditionalInfo: 
                   description: |
-                    Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito.
-                    Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance 
-                    para discussão e mapeamento em futuras versões.
+                    Information about the availability or not of a contract for credit portability.
+                    When using this option, it is strongly recommended to send a ticket as a suggestion to the Open Finance structure
+                    for discussion and mapping in future versions.
 
-                    [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `reasonType` for igual `OUTROS`
+                    [RESTRICTION] Mandatory field when `reasonType` field equals `OUTROS`
                 digitalSignatureProof:
                     type: object
                     required:
                       - documentId
                       - signatureDateTime
                     description: |
-                      Comprovante de assinatura da contraproposta
+                      Counteroffer signature proof
                       
-                      [RESTRIÇÃO] Objeto de preenchimento obrigatório quando campo `reasonType` for igual a `RETENCAO_DO_CLIENTE`
+                      [RESTRICTION] Mandatory object when `reasonType` field equals `RETENCAO_DO_CLIENTE`
                     properties:
                       documentId:
                         type: string
@@ -3588,26 +3591,26 @@ components:
                         maxLength: 100
                         minLength: 1
                         example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
-                        description: "Código identificador do Documento assinado na instituição proponente."
+                        description: "Identifier code of the Document signed at the proponent institution."
                       signatureDateTime:
                         type: string
                         maxLength: 20
                         pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
                         example: "2020-07-21T08:30:00Z"
                         description: |
-                          Data e hora em que o contrato foi assinado pelo cliente  no canal digital da Instituição Proponente
+                          Date and time when the contract was signed by the client in the Proponent Institution's digital channel
                 paymentIssueDetail:
                     type: string
                     description: |
-                      Detalhes da inconsistência encontrada pela Instituição Credora na etapa de validação da liquidação do pedido de portabilidade de crédito. Devem ser mensagens claras, detalhadas, para compreensão entre Proponente e Credora, principalmente em casos que demandam ação por uma das partes.
+                      Details of the inconsistency found by the Creditor Institution in the validation stage of the credit portability request settlement. Must be clear, detailed messages, for understanding between Proponent and Creditor, especially in cases that require action by one of the parties.
                       
-                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `status` for igual `PAYMENT_ISSUE`
+                      [RESTRICTION] Mandatory field when the `status` field equals `PAYMENT_ISSUE`
             rejection:
                 type: object
                 description: |
-                  Objeto contendo detalhes do cancelamento do pedido de portabilidade de crédito junto a Instituição Credora.
+                  Object containing details of the credit portability request cancellation with the Creditor Institution.
 
-                  [RESTRIÇÃO] Campo de preenchimento obrigatório quando `status` for igual a `REJECTED` ou `CANCELLED`
+                  [RESTRICTION] Mandatory field when `status` equals `REJECTED` or `CANCELLED`
                 required:
                   - rejectedBy
                   - reason
@@ -3615,12 +3618,12 @@ components:
                   rejectedBy:
                     type: string
                     description: |
-                      Informar usuário responsável pela rejeição da proposta, onde:
-                      PROPONENTE - Indica que o pedido de portabilidade de crédito foi rejeitado pela proponente, seja porque a
-                      proponente rejeitou a liquidação que excedeu em 15% o valor do contrato original, entre outras possibilidades.
-                      USUARIO - Indica que o cliente cancelou o pedido de portabilidade de crédito.
-                      CREDORA- Indica que a Instituição Credora cancelou o contrato por retenção do cliente ou outros motivos
-                      conforme motivo de recusa.
+                      Inform user responsible for proposal rejection, where:
+                      PROPONENTE - Indicates that the credit portability request was rejected by the proponent, either because the
+                      proponent rejected the settlement that exceeded 15% of the original contract value, among other possibilities.
+                      USUARIO - Indicates that the client canceled the credit portability request.
+                      CREDORA- Indicates that the Creditor Institution canceled the contract due to client retention or other reasons
+                      according to refusal reason.
                     example: PROPONENTE
                     enum:
                       - PROPONENTE
@@ -3628,26 +3631,26 @@ components:
                       - CREDORA
                   reason:
                     type: object
-                    description: Motivo de recusa do pedido de portabilidade de crédito.
+                    description: Credit portability request rejection reason.
                     required:
                       - type
                     properties:
                       type:
                         type: string
                         description: |
-                          Motivo de recusa do pedido de portabilidade, onde:
-                          CANCELADO_PELO_CLIENTE - Cliente desiste do pedido da portabilidade;   
-                          SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE - Saldo devedor atualizado divergente (superior a 15%) do informado inicialmente;   
-                          POLITICA_DE_CREDITO - Proponente desiste da oferta ao cliente por políticas internas;   
-                          RETENCAO_DO_CLIENTE - Cliente aceitou contraproposta da instituição credora (dentro do prazo);   
-                          CONTRATO_JA_LIQUIDADO - Contrato liquidado pelo cliente;   
-                          DIVERGENCIA_DE_PAGAMENTO_EFETUADO - Proponente realizou a liquidação com valor divergente;   
-                          DECURSO_DO_PRAZO_PARA_PAGAMENTO - Proponente realizou a liquidação fora do prazo;   
-                          PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO - Proponente não realizou a liquidação da Portabilidade;   
-                          PORTABILIDADE_EM_ANDAMENTO - Posteriormente à efetivação do pedido de portabilidade, a IF credora identificou que o cliente já possui outro pedido de portabilidade em andamento para o mesmo contrato;   
-                          CLIENTE_COM_ACAO_JUDICIAL - Possui ação judicial;   
-                          MODALIDADE_DA_OPERACAO_INCOMPATIVEL - Modalidade divergente da indicada pela instituição proponente;  
-                          OUTROS - Motivo da rejeição não se encaixa nas opções disponíveis.  
+                          Credit portability request rejection reason, where:
+                          CANCELADO_PELO_CLIENTE - Client cancels the portability request;   
+                          SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE - Updated outstanding balance diverges (greater than 15%) from initially informed;   
+                          POLITICA_DE_CREDITO - Proponent withdraws offer to client due to internal policies;   
+                          RETENCAO_DO_CLIENTE - Client accepted counteroffer from creditor institution (within deadline);   
+                          CONTRATO_JA_LIQUIDADO - Contract settled by client;   
+                          DIVERGENCIA_DE_PAGAMENTO_EFETUADO - Proponent made settlement with divergent amount;   
+                          DECURSO_DO_PRAZO_PARA_PAGAMENTO - Proponent made settlement outside the deadline;   
+                          PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO - Proponent did not settle the Portability;   
+                          PORTABILIDADE_EM_ANDAMENTO - After the portability request was effected, the creditor IF identified that the client already has another portability request in progress for the same contract;   
+                          CLIENTE_COM_ACAO_JUDICIAL - Has legal action;   
+                          MODALIDADE_DA_OPERACAO_INCOMPATIVEL - Modality diverges from that indicated by the proponent institution;  
+                          OUTROS - Rejection reason does not fit into available options.  
                         enum:
                         - CANCELADO_PELO_CLIENTE
                         - SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE
@@ -3665,20 +3668,20 @@ components:
                       typeAdditionalInfo:
                         type: string
                         description: |
-                          Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito. 
-                          Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance para discussão e mapeamento em futuras versões.
+                          Information about the availability or not of a contract for credit portability.
+                          When using this option, it is strongly recommended to send a ticket as a suggestion to the Open Finance structure for discussion and mapping in future versions.
                           
-                          [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo type for igual a OUTROS.
+                          [RESTRICTION] Mandatory field when type field equals OUTROS.
                         maxLength: 144
                         pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-                        example: Informações Adicionais
+                        example: Additional Information
             receipt:
                 type: object
                 description: |
-                  Objeto contendo o recibo de quitação do contrato original de empréstimo após finalizado o
-                  pedido de portabilidade de crédito com sucesso junto a Instituição Credora.
+                  Object containing the original loan contract settlement receipt after the
+                  credit portability request is successfully completed with the Creditor Institution.
 
-                  [RESTRIÇÃO] Campo de preenchimento obrigatório quando `status` for igual a `PORTABILITY_COMPLETED`
+                  [RESTRICTION] Mandatory field when `status` equals `PORTABILITY_COMPLETED`
                 required:
                   - settlementDateTime
                   - settlementAmount
@@ -3686,7 +3689,7 @@ components:
                 properties:
                   settlementDateTime:
                     type: string
-                    description: Data e hora em que a instituição credora realizou a quitação do contrato de empréstimo.
+                    description: Date and time when the creditor institution settled the loan contract.
                     maxLength: 20
                     minLength: 20
                     pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
@@ -3694,7 +3697,7 @@ components:
                   settlementAmount:
                     type: object
                     minItems: 1
-                    description: Objeto para representar o valor pago para liquidação do contrato de empréstimo.
+                    description: Object to represent the amount paid for settlement of the loan contract.
                     required:
                       - amount
                       - currency
@@ -3706,17 +3709,17 @@ components:
                         minLength: 4
                         pattern: '^\d{1,15}\.\d{2,4}$'
                         example: '1000.0400'
-                        description: Valor pago para liquidação do contrato de empréstimo.
+                        description: Amount paid for settlement of the loan contract.
                       currency:
                         type: string
                         maxLength: 3
                         minLength: 3
                         pattern: '^(\w{3}){1}$'
                         example: 'BRL'
-                        description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+                        description: Currency referenced to the `amount` field, according to ISO-4217 model.
                   transactionId:
                     type: string
-                    description: Identificador da transação utilizado para liquidar o contrato de empréstimo. No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Número de Controle da STR).
+                    description: Transaction identifier used to settle the loan contract. In the context of STR0047, use the value of the return field NumCtrlSTR (STR Control Number).
                     maxLength: 20
                     minLength: 1
                     pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,20}$'
@@ -3732,7 +3735,7 @@ components:
           properties:
             portabilityId:
               type: string
-              description: Identificador do pedido de portabilidade
+              description: Portability request identifier
               format: uuid
               example: 54d5348c-1a3f-4ff4-a8a8-d0724fb806c6
             status:
@@ -3740,16 +3743,16 @@ components:
     PortabilityStatus:
       type: string
       description: |
-        Informação sobre o status de um pedido de portabilidade de crédito, onde:
+        Information about the status of a credit portability request, where:
         
-        - `RECEIVED`: Estado inicial. Indica que o pedido de portabilidade foi solicitado junto a instituição credora. O pedido deve permanecer neste estado até que o próximo dia útil (D+1) aonde começará a contar o prazo de 3 dias úteis para a etapa de contraproposta e o pedido de portabilidade deverá ser movido para PENDING
-        - `PENDING`: Indica que o pedido de portabilidade de crédito está na fase de contraproposta, onde a instituição credora poderá enviar uma contraproposta ou não para o cliente por qualquer canal (email, telefone, etc.) porém o aceite só deverá ser valido se o cliente aprovar no canal digital da instituição credora
-        - `ACCEPTED_SETTLEMENT_IN_PROCESS`: Indica que a contraproposta não foi aceita pelo cliente e a instituição proponente terá que quitar o valor do contrato no mesmo dia em que o estado foi ativado
-        - `ACCEPTED_SETTLEMENT_COMPLETED`: Indica que a instituição proponente já liquidou o contrato e comunicou a respeito a credora que está validando os dados do contratos bem como valores recebidos para a quitação do mesmo (nesta etapa a instituição credora tem 2 dias úteis para fornecer a confirmação e o recibo de quitação do contrato de empréstimo)
-        - `PORTABILITY_COMPLETED`: Indica que o pedido de portabilidade foi concluído com sucesso
-        - `REJECTED`: Indica que o pedido de portabilidade de crédito foi rejeitado, seja porque o cliente aceitou a contraproposta, ou porque a proponente rejeitou a liquidação que excedeu em 15% o valor do contrato original, entre outras possibilidades
-        - `CANCELLED`: Indica que o cliente cancelou o pedido de portabilidade de crédito
-        - `PAYMENT_ISSUE`: Indica que a Instituição Credora encontrou alguma inconsistência na liquidação efetuada e que a Instituição Proponente deverá realizar ajustes conforme sugerido pela Instituição Credora para solucionar a pendencia antes do cancelamento do pedido de portabilidade de crédito
+        - `RECEIVED`: Initial state. Indicates that the portability request was made to the creditor institution. The request must remain in this state until the next business day (D+1) when the 3 business day period for the counteroffer stage will begin and the portability request should be moved to PENDING
+        - `PENDING`: Indicates that the credit portability request is in the counteroffer phase, where the creditor institution may or may not send a counteroffer to the client through any channel (email, telephone, etc.) but acceptance should only be valid if the client approves in the creditor institution's digital channel
+        - `ACCEPTED_SETTLEMENT_IN_PROCESS`: Indicates that the counteroffer was not accepted by the client and the proponent institution will have to settle the contract value on the same day the state was activated
+        - `ACCEPTED_SETTLEMENT_COMPLETED`: Indicates that the proponent institution has already settled the contract and informed the creditor institution, which is validating contract data as well as amounts received for settlement (at this stage the creditor institution has 2 business days to provide confirmation and the loan contract settlement receipt)
+        - `PORTABILITY_COMPLETED`: Indicates that the portability request was successfully completed
+        - `REJECTED`: Indicates that the credit portability request was rejected, either because the client accepted the counteroffer, or because the proponent rejected the settlement that exceeded 15% of the original contract value, among other possibilities
+        - `CANCELLED`: Indicates that the client canceled the credit portability request
+        - `PAYMENT_ISSUE`: Indicates that the Creditor Institution found some inconsistency in the settlement made and that the Proponent Institution should make adjustments as suggested by the Creditor Institution to resolve the pending issue before the credit portability request is canceled
       enum:
         - RECEIVED
         - PENDING
@@ -3783,12 +3786,13 @@ components:
           type: string
           example: "1000.00"
         transactionLimit:
-          description: Transaction limit for the consent
+          description: Per transaction limit for the consent
           type: string
           example: "1000.00"
   securitySchemes:
     jwt:
       type: http
-      description: Token JWT
+      description: JWT Token
       scheme: bearer
       bearerFormat: jwt
+      
