@@ -1,104 +1,104 @@
 openapi: 3.0.0
 info:
-  title: API Cuentas - Capa de Integración - OPUS Open Finance Brasil
+  title: API Accounts - Integration Layer - OPUS Open Finance Brasil
   description: |
-    API de cuentas de depósito a la vista, cuentas de ahorro y cuentas prepagas de la Capa de Integración de la Institución Transmisora con el Opus Open Finance Brasil.
-    API que devuelve información de cuentas de depósito a la vista, cuentas de ahorro y cuentas de pago prepagas mantenidas en las instituciones transmisoras por sus clientes, 
-    incluyendo datos de identificación de la cuenta, saldos, límites y transacciones.\
+    API de cuentas de depósito a la vista, cuentas de ahorro y cuentas prepagas de la Capa de Integración de la Institución Transmisora con Opus Open Finance Brasil.
+    API que retorna información de cuentas de depósito a la vista, cuentas de ahorro y cuentas de pago prepagas mantenidas en las instituciones transmisoras por sus clientes,
+    incluyendo datos de identificación de la cuenta, saldos, límites y transacciones.
     No posee segregación entre persona natural y persona jurídica.
 
-    # Instrucciones
+    # Orientaciones 
 
     ## Fecha de inmutabilidad por tipo de transacción​
-    El identificador de transacciones de cuentas es de envío obligatorio en el Open Finance Brasil. Según el tipo de transacción, debe haber el envío de un identificador único, estable e inmutable en D0 o D+1, según la tabla abajo.
+    El identificador de transacciones de cuentas es de envío obligatorio en Open Finance Brasil. Según el tipo de transacción debe enviarse un identificador único, estable e inmutable en D0 o D+1, según la tabla a continuación
     ```
     |---------------------------------------|-------------------------|-----------------------|
-    | Transaction Type                      | Mandatory Date          | Immutability Date     |
+    | Tipo de Transacción                  | Fecha de Obligatoriedad | Fecha de Inmutabilidad |
     |---------------------------------------|-------------------------|-----------------------|
-    | TED                                   | DO                      | DO                    |
+    | TED                                   | D0                      | D0                    |
     |---------------------------------------|-------------------------|-----------------------|
-    | PIX                                   | DO                      | DO                    |
+    | PIX                                   | D0                      | D0                    |
     |---------------------------------------|-------------------------|-----------------------|
-    | TRANSFERENCIA MESMA INSTITUICAO (TEF) | DO                      | DO                    |
+    | TRANSFERENCIA MISMA INSTITUCIÓN (TEF) | D0                      | D0                    |
     |---------------------------------------|-------------------------|-----------------------|
-    | TARIFA SERVICOS AVULSOS               | DO                      | DO                    |
+    | TARIFA SERVICIOS SUELTOS             | D0                      | D0                    |
     |---------------------------------------|-------------------------|-----------------------|
-    | FOLHA DE PAGAMENTO                    | DO                      | DO                    |
+    | NÓMINA DE PAGO                       | D0                      | D0                    |
     |---------------------------------------|-------------------------|-----------------------|
-    | DOC                                   | DO                      | D+1                   |
+    | DOC                                   | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | BOLETO                                | DO                      | D+1                   |
+    | BOLETO                               | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | CONVENIO ARRECADACAO                  | DO                      | D+1                   |
+    | CONVENIO RECAUDACIÓN                | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | PACOTE TARIFA SERVICOS                | DO                      | D+1                   |
+    | PAQUETE TARIFA SERVICIOS            | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | DEPOSITO                              | DO                      | D+1                   |
+    | DEPÓSITO                            | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | SAQUE                                 | DO                      | D+1                   |
+    | RETIRO                              | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | CARTAO                                | DO                      | D+1                   |
+    | TARJETA                             | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | ENCARGOS JUROS CHEQUE ESPECIAL        | DO                      | D+1                   |
+    | CARGOS INTERESES SOBREGIRO          | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | RENDIMENTO APLICACAO FINANCEIRA       | DO                      | D+1                   |
+    | RENDIMIENTO APLICACIÓN FINANCIERA   | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | PORTABILIDADE SALARIO                 | DO                      | D+1                   |
+    | PORTABILIDAD SALARIO               | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | RESGATE APLICACAO FINANCEIRA          | DO                      | D+1                   |
+    | RESCATE APLICACIÓN FINANCIERA       | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | OPERACAO DE CREDITO                   | DO                      | D+1                   |
+    | OPERACIÓN DE CRÉDITO               | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
-    | OUTROS                                | DO                      | D+1                   |
+    | OTROS                               | D0                      | D+1                   |
     |---------------------------------------|-------------------------|-----------------------|
     ```
 
     ## Reglas de Inmutabilidad​
 
-    Para las transacciones que puedan tener su identificador alterado, según las reglas delimitadas, deben seguirse los siguientes comportamientos: ​
+    Para las transacciones que pueden tener su identificador alterado, según reglas delimitadas, los comportamientos a continuación deben seguirse: ​
 
-    - El identificador "provisional" compartido en D0 debe ser alterado por el identificador definitivo en D+1:​
-      
-        - Es importante considerar que las instituciones financieras tienen diferentes formas de tratar feriados al procesar transacciones. Algunas solo consideran feriados nacionales y otras consideran feriados regionales. ​
+    - El identificador "provisional" compartido en D0 debe cambiarse al identificador definitivo en D+1:​
+        
+        - Es importante considerar que las instituciones financieras tienen diferentes formas de tratar feriados al procesar transacciones. Unas consideran solo feriados nacionales y otras consideran feriados regionales. ​
             
-        - Para transacciones en D+1 con estado TRANSACCIÓN_EFECTIVADA se entiende que D+1 se refiere a días hábiles.
+        - Para transacciones en D+1 con estado TRANSACCION_EFECTIVADA se entiende que D+1 se refiere a días hábiles.
             
-    - No deben compartirse al mismo tiempo el identificador provisional y el identificador definitivo, es decir, después de que se altere el estado de la transacción a TRANSACCIÓN_EFECTIVADA, solo debe exponerse la transacción con el identificador definitivo.​
+    - No deben compartirse al mismo tiempo el identificador provisional y el identificador definitivo, es decir, después del cambio de estado de la transacción a TRANSACCION_EFECTIVADA, solo la transacción con el identificador definitivo debe exponerse.​
         
-    - La fecha y el valor de la transacción pueden ser alterados al cambiar el estado a TRANSACCIÓN_EFECTIVADA, de acuerdo con los procesos internos existentes en las instituciones. Por ejemplo: Rescates de inversiones sin liquidez y Compra y Venta de acciones. ​
+    - La fecha y el valor de la transacción pueden modificarse al cambiar el estado a TRANSACCION_EFECTIVADA, de acuerdo con los procesos internos existentes en las instituciones. Por ejemplo: Rescates de inversiones sin liquidez, y Compra y Venta de acciones. ​
         
-    - La propiedad de identificador de transacción único, estable e inmutable comienza a regir desde el momento en que el estado de la transacción pasa a ser TRANSACCIÓN_EFECTIVADA. Sin embargo:​
+    - La propiedad de identificador de transacción único, estable e inmutable entra en vigor a partir del momento en que el estado de la transacción pasa a ser TRANSACCION_EFECTIVADA. Sin embargo:​
         
-        - No debe tenerse el mismo identificador entre transacciones en diferentes estados. Por ejemplo, no es posible tener al mismo tiempo el identificador 123 siendo utilizado para transacciones en el estado TRANSACCIÓN_PROCESANDO y TRANSACCIÓN_EFECTIVADA, incluso si los valores y fechas son distintos. ​
+        - No debe tenerse el mismo identificador entre transacciones en diferentes estados. Por ejemplo, no es posible tener al mismo tiempo el identificador 123 siendo utilizado para transacciones en estado TRANSACCION_PROCESANDO y TRANSACCION_EFECTIVADA, incluso si los valores y fechas son distintos.​
             
-    - Específicamente en los casos de transacciones en el estado LANZAMIENTO_FUTURO, la fecha del campo transactionDateTime debe ser enviada con la información de día/mes/año previstos para el procesamiento de la transacción, y los demás campos de precisión de la fecha/hora pueden ser enviados como 0 (00:00:00.000). ​
+    - Específicamente en los casos de transacciones en estado LANZAMIENTO_FUTURO la fecha del campo transactionDateTime debe enviarse con la información de día/mes/año prevista para el procesamiento de la transacción y los demás campos de precisión de la fecha/hora pueden enviarse como 0 (00:00:00.000).​
         
-    - El identificador de transacción puede repetirse solo para transacciones en el estado TRANSACCIÓN_PROCESANDO y LANZAMIENTO_FUTURO. Es decir, una institución puede utilizar, por ejemplo, el identificador 9999999 para identificar todas las transacciones que aún serán confirmadas (estado TRANSACCIÓN_PROCESANDO). ​
+    - El identificador de transacción puede repetirse solo para transacciones en estado TRANSACCION_PROCESANDO y LANZAMIENTO_FUTURO. Es decir, una institución puede utilizar, por ejemplo, el identificador 9999999 para identificar todas las transacciones que aún serán confirmadas (estado TRANSACCION_PROCESANDO). 
         
-    - Para las transacciones que no pueden tener su identificador alterado, según las reglas delimitadas, hay excepciones mapeadas: ​​
+    - Para las transacciones que no pueden tener su identificador alterado, según reglas delimitadas, hay excepciones mapeadas:  ​
         
-        - Existen situaciones, principalmente para clientes Persona Jurídica, en las que las transacciones son lanzadas de forma individual (múltiples transacciones) en D0 y en D+1 son consolidadas en un único lanzamiento. También podemos tener el escenario opuesto, en el cual la transacción es lanzada de forma consolidada en D0 y en D+1 "abiertas" en múltiples lanzamientos individuales. Es importante que no haya duplicidad de información en la exposición, es decir, las transacciones individuales y la transacción consolidada no deben exponerse al mismo tiempo.​​
+        - Existen situaciones, principalmente para clientes Persona Jurídica, en las cuales las transacciones se registran de forma individual (múltiples transacciones) en D0 y en D+1 se consolidan en un único registro. También podemos tener el escenario opuesto, en el cual la transacción se registra de forma consolidada en D0 y en D+1 se "abren" en múltiples registros individuales. Es importante que no haya duplicidad de información en la exposición, es decir, las transacciones individuales y la transacción consolidada no se expongan al mismo tiempo. ​
             
-            - Por ejemplo, para transacciones de boleto, pix o nómina, en D0 se hacen lanzamientos individuales con TransactionId individuales, y en D+1 se realiza un lanzamiento único con un nuevo transactionID.​​
+            - Por ejemplo, para transacciones de boleto, pix o nómina de pago, en D0 se realizan registros individuales con TransactionId individuales, y en D+1 se efectúa un registro único con un nuevo transactionID. ​
                 
-        - Existen situaciones excepcionales en las que un lanzamiento con identificador estable en D0 puede ser eliminado en D+1.​​
+        - Existen situaciones de excepción en las cuales un registro con identificador estable en D0 puede eliminarse en D+1. ​
             
-            - Por ejemplo, para situaciones de cobro de tarifa a la carta en las cuales existe acuerdo negocial o insuficiencia de saldo.
+            - Por ejemplo, para situaciones de cobro de tarifa suelta en las cuales existe acuerdo comercial o insuficiencia de saldo.
   version: 4.0.0-rc.1-base2.4.2
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
 tags:
-  - name: Cuentas
+  - name: Accounts
     description: Operaciones para listar la información de la Cuenta del Cliente
 paths:
   /account-discovery:
     post:
       tags:
-        - Cuentas
-      summary: Obtiene una lista de recursos que representa todas las cuentas disponibles para que el cliente elija consentir.
+        - Accounts
+      summary: Obtiene una lista de recursos representando todas las cuentas disponibles para que el cliente elija consentir.
       operationId: discoverAccounts
-      description: Método para obtener la lista de cuentas de depósito a la vista, ahorro y pago prepagados mantenidas por el cliente en la institución transmisora y para las cuales él pueda proporcionar consentimiento.
+      description: Método para obtener la lista de cuentas de depósito a la vista, ahorro y pago prepagas mantenidas por el cliente en la institución transmisora y para las cuales él pueda proporcionar consentimiento.
       requestBody:
         required: true
         content:
@@ -137,10 +137,10 @@ paths:
   /accounts:
     post:
       tags:
-        - Cuentas
+        - Accounts
       summary: Obtiene la lista de cuentas consentidas por el cliente.
       operationId: accountsGetAccounts
-      description: 'Método para obtener la lista de cuentas de depósito a la vista, ahorro y pago prepagados mantenidas por el cliente en la institución transmisora y para las cuales él haya proporcionado su consentimiento.'
+      description: 'Método para obtener la lista de cuentas de depósito a la vista, ahorro y pago prepagas mantenidas por el cliente en la institución transmisora y para las cuales haya proporcionado consentimiento.'
       requestBody:
         required: true
         content:
@@ -179,9 +179,9 @@ paths:
   /find:
     post:
       tags:
-        - Cuentas
+        - Accounts
       summary: Obtiene los datos de identificación de la cuenta identificada por accountId.
-      description: 'Método para obtener los datos de identificación de la cuenta de depósito a la vista, ahorro o pago prepago identificada por accountId mantenida por el cliente en la institución transmisora.'
+      description: 'Método para obtener los datos de identificación de la cuenta de depósito a la vista, ahorro o pago prepaga identificada por accountId mantenida por el cliente en la institución transmisora.'
       operationId: accountsGetAccountsAccountId
       requestBody:
         required: true
@@ -221,10 +221,10 @@ paths:
   /balances:
     post:
       tags:
-        - Cuentas
+        - Accounts
       summary: Obtiene los saldos de la cuenta identificada por accountId.
       operationId: accountsGetAccountsAccountIdBalances
-      description: 'Método para obtener los saldos de la cuenta de depósito a la vista, ahorro o pago prepago identificada por accountId mantenida por el cliente en la institución transmisora.'
+      description: 'Método para obtener los saldos de la cuenta de depósito a la vista, ahorro o pago prepaga identificada por accountId mantenida por el cliente en la institución transmisora.'
       requestBody:
         required: true
         content:
@@ -263,10 +263,10 @@ paths:
   /transactions:
     post:
       tags:
-        - Cuentas
+        - Accounts
       summary: Obtiene la lista de transacciones de la cuenta identificada por accountId.
       operationId: accountsGetAccountsAccountIdTransactions
-      description: Método para obtener la lista de transacciones de la cuenta de depósito a la vista, ahorro o pago prepago identificada por accountId mantenida por el cliente en la institución transmisora. Se permite una consulta máxima que se extienda 12 meses en el pasado más 12 meses en el futuro.
+      description: Método para obtener la lista de transacciones de la cuenta de depósito a la vista, ahorro o pago prepaga identificada por accountId mantenida por el cliente en la institución transmisora. Se permite una consulta máxima que se extienda hasta 12 meses en el pasado más 12 meses en el futuro.
       requestBody:
         required: true
         content:
@@ -305,10 +305,10 @@ paths:
   /transactions-current:
     post:
       tags:
-        - Cuentas
+        - Accounts
       summary: Obtiene la lista de transacciones recientes (últimos 7 días) de la cuenta identificada por accountId.
       operationId: accountsGetAccountsAccountIdTransactionsCurrent
-      description: Método para obtener la lista de transacciones de la cuenta de depósito a la vista, ahorro o pago prepago identificada por accountId mantenida por el cliente en la institución transmisora. Se permite una consulta máxima que se extienda en 7 días en el pasado más 12 meses en el futuro.
+      description: Método para obtener la lista de transacciones de la cuenta de depósito a la vista, ahorro o pago prepaga identificada por accountId mantenida por el cliente en la institución transmisora. Se permite una consulta máxima que se extienda hasta 7 días en el pasado más 12 meses en el futuro.
       requestBody:
         required: true
         content:
@@ -347,10 +347,10 @@ paths:
   /overdraft-limits:
     post:
       tags:
-        - Cuentas
+        - Accounts
       summary: Obtiene los límites de la cuenta identificada por accountId.
       operationId: accountsGetAccountsAccountIdOverdraftLimits
-      description: Método para obtener los límites de la cuenta de depósito a la vista, ahorro o pago prepago identificada por accountId mantenida por el cliente en la institución transmisora. Para las instituciones financieras transmisoras que posean cuentas sin límites asociados, deben devolver HTTP Status 200 con el objeto “data” vacío, sin ningún atributo interno.
+      description: Método para obtener los límites de la cuenta de depósito a la vista, ahorro o pago prepaga identificada por accountId mantenida por el cliente en la institución transmisora. Para las instituciones financieras transmisoras que posean cuentas sin límites asociados deben retornar HTTP Status 200 con el objeto "data" vacío, sin ningún atributo interno.
       requestBody:
         required: true
         content:
@@ -390,7 +390,7 @@ components:
   schemas:
     AccountBalancesDataAutomaticallyInvestedAmount:
       type: object
-      description: Saldo disponible con aplicación automática - corresponde a la suma del saldo disponible más el valor obtenido a partir de la aplicación automática. Expresado en valor monetario con un mínimo de 2 y un máximo de 4 decimales.
+      description: Saldo disponible con aplicación automática - corresponde a la suma del saldo disponible más el valor obtenido a partir de la aplicación automática. Expresado en valor monetario con mínimo 2 decimales y máximo 4 decimales.
       required:
         - amount
         - currency
@@ -411,7 +411,7 @@ components:
           example: BRL
     AccountOverdraftLimitsDataOverdraftContractedLimit:
       type: object
-      description: Valor del límite contratado del cheque especial.
+      description: Valor del límite contratado del sobregiro.
       required:
         - amount
         - currency
@@ -432,7 +432,7 @@ components:
           example: BRL
     AccountOverdraftLimitsDataOverdraftUsedLimit:
       type: object
-      description: Valor total utilizado del límite del cheque especial y el adelanto al depositante.
+      description: Valor utilizado total del límite del sobregiro y el adelanto a depositante.
       required:
         - amount
         - currency
@@ -453,7 +453,7 @@ components:
           example: BRL
     AccountOverdraftLimitsDataUnarrangedOverdraftAmount:
       type: object
-      description: Valor de operación contratada en carácter de emergencia para cobertura de saldo deudor en cuenta de depósitos a la vista y de exceso sobre el límite pactado del cheque especial.
+      description: Valor de operación contratada en carácter emergencial para cobertura de saldo deudor en cuenta de depósitos a la vista y de exceso sobre el límite pactado de sobregiro.
       required:
         - amount
         - currency
@@ -474,7 +474,7 @@ components:
           example: BRL
     AccountBalancesDataBlockedAmount:
       type: object
-      description: 'Saldo bloqueado, no disponible para uso inmediato, por motivo de bloqueo presentado al cliente en los canales electrónicos. Expresado en valor monetario con un mínimo de 2 y un máximo de 4 decimales.'
+      description: 'Saldo bloqueado, no disponible para utilización inmediata, por motivo de bloqueo presentado al cliente en los canales electrónicos. Expresado en valor monetario con mínimo 2 decimales y máximo 4 decimales.'
       required:
         - amount
         - currency
@@ -495,7 +495,7 @@ components:
           example: BRL
     AccountBalancesDataAvailableAmount:
       type: object
-      description: 'Saldo disponible para uso inmediato. En el caso de cuentas de depósito a la vista, sin considerar cheque especial e inversiones vinculadas a la cuenta. Expresado en valor monetario con un mínimo de 2 y un máximo de 4 decimales.'
+      description: 'Saldo disponible para utilización inmediata. En el caso de cuenta de depósito a la vista, sin considerar sobregiro e inversiones vinculadas a la cuenta. Expresado en valor monetario con mínimo 2 decimales y máximo 4 decimales.'
       required:
         - amount
         - currency
@@ -517,7 +517,7 @@ components:
     AccountBalancesData:
       type: object
       description: |
-        Conjunto de información de las Cuentas de: depósito a la vista, ahorro y de pago prepago
+        Conjunto de información de las Cuentas de: depósito a la vista, ahorro y de pago prepaga
       required:
         - availableAmount
         - blockedAmount
@@ -537,12 +537,12 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2021-05-21T08:30:00Z'
           description: |
-            Fecha y hora de la última actualización del saldo. Se espera que la institución informe la última vez que capturó el saldo para compartirlo en el Open Finance. De esta forma, es posible que:
+            Fecha y hora de la última actualización del saldo. Se espera que la institución informe la última vez que capturó el saldo para compartir en Open Finance. De esta forma, es posible que:
             - Si la institución captura datos de forma síncrona, esta información sea de pocos momentos;
             - Si la institución captura datos de forma asíncrona, esta información sea de horas o días en el pasado;
-            - Cuando no existe una fecha vinculada específicamente al bloque, se asume la fecha y hora de actualización del registro como un todo.
+            - Cuando no exista una fecha vinculada específicamente al bloque, se asume la fecha y hora de actualización del registro como un todo.
 
-            De cualquier forma, es necesario continuar respetando el plazo máximo de actualidad de la API de Cuentas.
+            De cualquier forma, es preciso continuar respetando el plazo máximo de tempestividad de la API de Cuentas.
     AccountData:
       type: object
       required:
@@ -556,30 +556,30 @@ components:
       properties:
         brandName:
           type: string
-          description: 'Nombre de la Marca reportada por el participante en Open Finance. Se recomienda utilizar, siempre que sea posible, el mismo nombre de marca atribuido en el campo del directorio Nombre del Servidor Amigable para el Cliente (Servidor de Autorización).'
+          description: 'Nombre de la Marca reportada por el participante en Open Finance. Se recomienda utilizar, siempre que sea posible, el mismo nombre de marca asignado en el campo del directorio Customer Friendly Server Name (Authorisation Server).'
           maxLength: 80
           pattern: '[\w\W\s]*'
-          example: Organización A
+          example: Organização A
         companyCnpj:
           type: string
           maxLength: 14
           pattern: '^\d{14}$'
-          description: 'Número completo del CNPJ de la institución responsable por el Registro - el CNPJ corresponde al número de inscripción en el Registro Nacional de Personas Jurídicas. Se debe tener solo los números del CNPJ, sin máscara.'
+          description: 'Número completo del CNPJ de la institución responsable del Registro - el CNPJ corresponde al número de inscripción en el Registro de Persona Jurídica. Debe tener solo los números del CNPJ, sin máscara'
           example: '21128159000166'
         type:
           $ref: '#/components/schemas/EnumAccountType'
         compeCode:
           type: string
-          description: 'Código identificador asignado por el Banco Central de Brasil a las instituciones participantes del STR (Sistema de Transferencia de Reservas). El Compe (Sistema de Compensación de Cheques y Otros Papeles) es un sistema que identifica y procesa las compensaciones bancarias. Está representado por un código de tres dígitos que sirve como identificador de bancos, siendo así, cada institución bancaria posee un número exclusivo.'
+          description: 'Código identificador asignado por el Banco Central de Brasil a las instituciones participantes del STR (Sistema de Transferencia de Reservas). El Compe (Sistema de Compensación de Cheques y Otros Papeles) es un sistema que identifica y procesa las compensaciones bancarias. Está representado por un código de tres dígitos que sirve como identificador de bancos, por lo tanto, cada institución bancaria posee un número exclusivo'
           pattern: '^\d{3}$'
           maxLength: 3
           example: '001'
         branchCode:
           type: string
           description: |
-            Código de la Agencia que posee la cuenta. (La agencia es la dependencia destinada a la atención a los clientes, al público en general y a los asociados de cooperativas de crédito, en el ejercicio de actividades de la institución, no pudiendo ser móvil o transitoria.)
+            Código de la Agencia titular de la cuenta. (Agencia es la dependencia destinada a la atención al cliente, al público en general y a los asociados de cooperativas de crédito, en el ejercicio de actividades de la institución, no pudiendo ser móvil o transitoria)
 
-            [Restricción] Obligatoriamente debe ser completado cuando el campo "type" sea diferente de CONTA_PAGAMENTO_PRE_PAGA (cuenta de pago prepaga).
+            [Restricción] Obligatoriamente debe llenarse cuando el campo "type" sea diferente de CUENTA_PAGO_PREPAGA.
           pattern: '^\d{4}$'
           maxLength: 4
           example: '6272'
@@ -600,7 +600,7 @@ components:
     AccountIdentificationData:
       type: object
       description: |
-        Conjunto de atributos que caracterizan a las Cuentas de: depósito a la vista, ahorro y de pago prepago
+        Conjunto de los atributos que caracterizan las Cuentas de: depósito a la vista, ahorro y de pago prepaga
       required:
         - compeCode
         - number
@@ -613,16 +613,16 @@ components:
           type: string
           maxLength: 3
           pattern: '^\d{3}$'
-          description: 'Código identificador asignado por el Banco Central de Brasil a las instituciones participantes del STR (Sistema de Transferencia de Reservas). El número-código reemplaza el antiguo código COMPE. Todos los participantes del STR, exceptuando las Infraestructuras del Mercado Financiero (IMF) y la Secretaría del Tesoro Nacional, poseen un número-código independientemente de participar en la Centralizadora de Compensación de Cheques (Compe).'
+          description: 'Código identificador asignado por el Banco Central de Brasil a las instituciones participantes del STR (Sistema de Transferencia de Reservas). El número-código sustituyó al antiguo código COMPE. Todos los participantes del STR, excepto las Infraestructuras del Mercado Financiero (IMF) y la Secretaría del Tesoro Nacional, poseen un número-código independientemente de participar en la Centralizadora de la Compensación de Cheques (Compe).'
           example: '001'
         branchCode:
           type: string
           maxLength: 4
           pattern: '^\d{4}$'
           description: |
-            Código de la Agencia que posee la cuenta. (La agencia es la dependencia destinada a la atención a los clientes, al público en general y a los asociados de cooperativas de crédito, en el ejercicio de actividades de la institución, no pudiendo ser móvil o transitoria.)
+            Código de la Agencia titular de la cuenta. (Agencia es la dependencia destinada a la atención al cliente, al público en general y a los asociados de cooperativas de crédito, en el ejercicio de actividades de la institución, no pudiendo ser móvil o transitoria)
 
-            [Restricción] Obligatoriamente debe ser completado cuando el campo "type" sea diferente de cuenta prepaga.
+            [Restricción] Obligatoriamente debe llenarse cuando el campo "type" sea diferente de cuenta prepaga.
           example: '6272'
         number:
           type: string
@@ -647,11 +647,10 @@ components:
           pattern: '^(\w{3}){1}$'
           maxLength: 3
           description: |
-            Moneda referente al valor de la transacción, según el modelo ISO-4217. p. ej. 'BRL'
-            Todos los saldos informados están representados con la moneda vigente de Brasil.
+            Moneda referente al valor de la transacción, según modelo ISO-4217. p.ej. 'BRL' 
+            Todos los saldos informados están representados con la moneda vigente de Brasil
           example: BRL
-
-   AccountOverdraftLimitsData:
+    AccountOverdraftLimitsData:
       type: object
       description: |
         Conjunto de información de la Cuenta de: depósito a la vista
@@ -684,11 +683,11 @@ components:
           maxLength: 200
           pattern: '[\w\W\s]*'
           description: |
-            Literal utilizada en la institución financiera para identificar la transacción. 
-            La información presentada debe ser la misma utilizada en los canales digitales de la institución (al igual que el historial de transacciones presentado en la pantalla de la aplicación o del navegador). 
-            Si la institución posee más de un canal digital, la información compartida debe ser la del canal que presente la descripción más completa posible de la transacción.
-            En casos donde la descripción de la transacción se presente con múltiples líneas, todas las líneas deben ser enviadas (concatenadas) en este atributo, no siendo obligatoria la concatenación de las informaciones ya enviadas en otros atributos (ej: valor, fecha) del mismo endpoint. 
-            Adicionalmente, el Banco Central puede determinar el formato de compartición a ser adoptado por una institución participante específica.
+            Literal usada en la institución financiera para identificar la transacción.
+            La información presentada debe ser la misma utilizada en los canales digitales de la institución (así como el historial de transacciones presentado en la pantalla de la aplicación o del navegador).
+            Si la institución posee más de un canal digital, la información compartida debe ser la del canal que presenta la descripción más completa posible de la transacción.
+            En casos donde la descripción de la transacción se presenta con múltiples líneas, todas las líneas deben enviarse (concatenadas) en este atributo, no siendo obligatoria la concatenación de la información ya enviada en otros atributos (ej: valor, fecha) del mismo endpoint.
+            Adicionalmente, el Banco Central puede determinar el formato de intercambio a ser adoptado por una institución participante específica.
           example: Transferencia Enviada Lima Santos
         type:
           $ref: '#/components/schemas/EnumTransactionTypes'
@@ -706,9 +705,9 @@ components:
           maxLength: 14
           pattern: '^\d{11}$|^\d{14}$'
           description: |
-            Identificación de la persona involucrada en la transacción: pagador o receptor (Llenar con el CPF o CNPJ, sin formato). Con la IN BCB nº 371, desde el 02/05/23, el envío de las informaciones de identificación de contraparte se volvió obligatorio para transacciones de pago. Para más detalles, por favor consulte la página `Orientaciones - Cuentas`.
+            Identificación de la persona involucrada en la transacción: pagador o beneficiario (Completar con el CPF o CNPJ, sin formato). Con la IN BCB nº 371, a partir del 02/05/23, el envío de la información de identificación de contraparte se volvió obligatorio para transacciones de pago. Para mayores detalles, consultar la página `Orientaciones - Cuentas`.
 
-            [Restricción] Cuando "type" esté llenado con un valor FOLHA_PAGAMENTO y la transmisora sea la responsable por el pago de salario (banco-folha), el partieCnpjCpf informado debe ser del empleador relacionado.
+            [Restricción] Cuando el "type" se complete con valor NOMINA_PAGO y la transmisora sea la responsable del pago de salario (banco-nómina), el partieCnpjCpf informado debe ser del empleador relacionado.
           example: '43908445778'
         partiePersonType:
           $ref: '#/components/schemas/EnumPartiePersonType'
@@ -716,13 +715,13 @@ components:
           type: string
           maxLength: 3
           pattern: '^\d{3}$'
-          description: 'Código identificador asignado por el Banco Central de Brasil a las instituciones participantes del STR (Sistema de Transferencia de Reservas) referente a la persona involucrada en la transacción. El número-código reemplaza el antiguo código COMPE. Todos los participantes del STR, exceptuando las Infraestructuras del Mercado Financiero (IMF) y la Secretaría del Tesoro Nacional, poseen un número-código independientemente de participar en la Centralizadora de Compensación de Cheques (Compe).'
+          description: 'Código identificador asignado por el Banco Central de Brasil a las instituciones participantes del STR (Sistema de Transferencia de Reservas) referente a la persona involucrada en la transacción. El número-código sustituyó al antiguo código COMPE. Todos los participantes del STR, excepto las Infraestructuras del Mercado Financiero (IMF) y la Secretaría del Tesoro Nacional, poseen un número-código independientemente de participar en la Centralizadora de la Compensación de Cheques (Compe).'
           example: '001'
         partieBranchCode:
           type: string
           maxLength: 4
           pattern: '^\d{4}$'
-          description: 'Código de la Agencia que posee la cuenta de la persona involucrada en la transacción. (La agencia es la dependencia destinada a la atención a los clientes, al público en general y a los asociados de cooperativas de crédito, en el ejercicio de actividades de la institución, no pudiendo ser móvil o transitoria).'
+          description: 'Código de la Agencia titular de la cuenta de la persona involucrada en la transacción. (Agencia es la dependencia destinada a la atención al cliente, al público en general y a los asociados de cooperativas de crédito, en el ejercicio de actividades de la institución, no pudiendo ser móvil o transitoria)'
           example: '6272'
         partieNumber:
           type: string
@@ -738,7 +737,7 @@ components:
           example: '4'
     AccountTransactionsDataAmount:
       type: object
-      description: Valor de la transacción. Expresado en valor monetario con un mínimo de 2 y un máximo de 4 decimales.
+      description: Valor de la transacción. Expresado en valor monetario con mínimo 2 decimales y máximo 4 decimales.
       required:
         - amount
         - currency
@@ -766,8 +765,8 @@ components:
       description: |
         Subtipo de cuenta (ver Enum): 
         Cuenta individual - posee un único titular
-        Cuenta conjunta simple - donde los movimientos financieros solo pueden ser realizados mediante autorización de TODOS los titulares de la cuenta.
-        Cuenta conjunta solidaria - es la modalidad cuyos titulares pueden realizar movimientos de forma aislada, es decir, sin que sea necesaria la autorización de los demás titulares
+        Cuenta conjunta simple - donde las movilizaciones financieras solo pueden realizarse mediante autorización de TODOS los titulares de la cuenta.
+        Cuenta conjunta solidaria - es la modalidad cuyos titulares pueden realizar movilizaciones de forma aislada, es decir, sin que sea necesaria la autorización de los demás titulares
       example: INDIVIDUAL
     EnumAccountType:
       type: string
@@ -780,21 +779,21 @@ components:
         Modalidades tradicionales previstas por la Resolución 4.753, no contemplando cuentas vinculadas, cuenta de domiciliados en el exterior, cuentas en monedas extranjeras y cuenta correspondiente moneda electrónica.
         Ver Enum
         Cuenta de depósito a la vista o Cuenta corriente - es el tipo más común.
-        En ella, el dinero está a disposición para ser retirado en cualquier momento.
+        En ella, el dinero está a su disposición para ser retirado en cualquier momento.
         Esta cuenta no genera rendimientos para el depositante
         Cuenta de ahorro - fue creada para estimular a las personas a ahorrar.
-        El dinero que permanezca en la cuenta por treinta días comienza a generar rendimientos, con exención de impuesto de renta para quienes declaran.
-        Es decir, el dinero "crece" (rende) mientras permanece guardado en la cuenta.
-        Cada depósito tendrá rendimientos de mes en mes, siempre en el día del mes en que el dinero fue depositado
-        Cuenta de pago prepago: según la CIRCULAR Nº 3.680, BCB de 2013, es la 'destinada a la ejecución de transacciones de pago en moneda electrónica realizadas con base en fondos denominados en reales previamente aportados'
+        El dinero que permanezca en la cuenta por treinta días pasa a generar rendimientos, con exención de impuesto a la renta para quien declara.
+        Es decir, el dinero "crece" (rinde) mientras permanezca guardado en la cuenta.
+        Cada depósito tendrá rendimientos mes a mes, siempre en el día del mes en que el dinero haya sido depositado
+        Cuenta de pago prepaga: según CIRCULAR Nº 3.680, BCB de 2013, es la 'destinada a la ejecución de transacciones de pago en moneda electrónica realizadas con base en fondos denominados en reales previamente aportados'
       example: CONTA_DEPOSITO_A_VISTA
       maxLength: 24
     EnumCompletedAuthorisedPaymentIndicator:
       type: string
       description: |
-        Indicador de la transacción: 
-          - Transacción efectuada: la transacción alcanza este estado cuando el `transactionId` se vuelve inmutable;
-          - Lanzamiento futuro: la transacción será efectuada en un momento futuro, es decir, el `transactionId` puede cambiar;
+        Indicador de la transacción:
+          - Transacción efectivizada: la transacción alcanza este estado cuando el `transactionId` se vuelve inmutable;
+          - Lanzamiento futuro: la transacción se efectivizará en momento futuro, es decir, el `transactionId` puede cambiar;
           - Transacción procesando: la transacción está en procesamiento, es decir, el `transactionId` puede cambiar.
       enum:
         - TRANSACAO_EFETIVADA
@@ -804,9 +803,9 @@ components:
     EnumCreditDebitIndicator:
       type: string
       description: |
-        Indicador del tipo de lanzamiento: 
-        Débito (en el extracto) En un extracto bancario, los débitos, marcados con la letra “D” al lado del valor registrado, informan las salidas de dinero en la cuenta corriente.
-        Crédito (en el extracto) En un extracto bancario, los créditos, marcados con la letra “C” al lado del valor registrado, informan las entradas de dinero en la cuenta corriente.
+        Indicador del tipo de registro:
+        Débito (en el extracto) En un extracto bancario, los débitos, marcados con la letra "D" al lado del valor registrado, informan las salidas de dinero en la cuenta corriente.
+        Crédito (en el extracto) En un extracto bancario, los créditos, marcados con la letra "C" al lado del valor registrado, informan las entradas de dinero en la cuenta corriente.
       enum:
         - CREDITO
         - DEBITO
@@ -819,16 +818,16 @@ components:
         - PESSOA_JURIDICA
       example: PESSOA_NATURAL
       description: |
-        Identificación del Tipo de Persona de la persona involucrada en la transacción.   
-        Persona Natural - Informar CPF en el campo “partieCnpjCpf”.   
-        Persona Jurídica - Informar CNPJ en el campo “partieCnpjCpf”.
+        Identificación del Tipo de Persona de la persona involucrada en la transacción.
+        Persona Natural - Informar CPF en el campo "partieCnpjCpf".
+        Persona Jurídica - Informar CNPJ en el campo "partieCnpjCpf".
     EnumTransactionTypes:
       type: string
       description: |
-        El campo debe clasificar la transacción en uno de los tipos descritos. 
-        El transmisor debe clasificar las transacciones disponibles asociándolas a uno de los ítems del Enum listado en este campo. 
-        La opción OTROS solo debe ser utilizada para los casos en que de hecho la transacción compartida no pueda ser clasificada como uno de los ítems de este Enum. 
-        Por ejemplo, en el caso de recepción de pensión alimenticia.
+        El campo debe clasificar la transacción en uno de los tipos descritos.
+        El transmisor debe clasificar las transacciones disponibles asociándola a uno de los elementos del Enum listado en este campo.
+        La opción OTROS solo debe utilizarse para los casos en que de hecho la transacción compartida no pueda clasificarse como uno de los elementos de este Enum.
+        Por ejemplo en el caso de recepción de pensión alimenticia.
       enum:
         - TED
         - DOC
@@ -851,7 +850,7 @@ components:
       example: PIX
     Meta:
       type: object
-      description: Metainformaciones referentes a la API solicitada.
+      description: Meta información referente a la API solicitada.
       required:
         - totalRecords
         - totalPages
@@ -875,7 +874,7 @@ components:
           example: '2021-05-21T08:30:00Z'
     MetaOnlyRequestDateTime:
       type: object
-      description: Metainformaciones referentes a la API solicitada.
+      description: Meta información referente a la API solicitada.
       required:
         - requestDateTime
       properties:
@@ -885,7 +884,7 @@ components:
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
-ResponseAccountList:
+    ResponseAccountList:
       type: object
       required:
         - data
@@ -893,7 +892,7 @@ ResponseAccountList:
       properties:
         data:
           type: array
-          description: 'Lista de cuentas de depósito a la vista, ahorro y pago prepagas mantenidas por el cliente en la institución transmisora y para las cuales él haya proporcionado consentimiento.'
+          description: 'Lista de cuentas de depósito a la vista, ahorro y pago prepagas mantenidas por el cliente en la institución transmisora y para las cuales haya proporcionado consentimiento'
           minItems: 0
           items:
             $ref: '#/components/schemas/AccountData'
@@ -938,7 +937,7 @@ ResponseAccountList:
         data:
           type: array
           description: |
-            Lista de lanzamientos relacionados con las transacciones realizadas y los lanzamientos futuros para las cuentas de: depósito a la vista, ahorro y de pago prepago.
+            Lista de los registros referentes a las transacciones realizadas y de registros futuros para las cuentas de: depósito a la vista, ahorro y de pago prepaga
           minItems: 0
           items:
             $ref: '#/components/schemas/AccountTransactionsData'
@@ -1012,7 +1011,7 @@ ResponseAccountList:
           $ref: '#/components/schemas/Meta'
     LegacyId:
       description: |
-        Array de clave y valor que contiene las claves de identificación del recurso en el sistema de origen (legado), permitiendo claves compuestas.
+        Array de clave y valor con la clave de identificación del recurso en el sistema de origen (legado), permitiendo claves compuestas
       type: array
       items:
         type: object
@@ -1035,46 +1034,46 @@ ResponseAccountList:
       maxItems: 10
     ToBookingDate:
       description: |
-        Fecha final para el filtrado.
-        [Restricción] Debe enviarse obligatoriamente si el campo fromBookingDate está informado.
-        Si no se indica, se debe asumir el día actual.
+        Fecha final de filtrado.
+        [Restricción] Debe obligatoriamente enviarse si el campo fromBookingDate es informado.
+        Si no se informa, debe asumirse el día actual.
       type: string
       maxLength: 10
       format: date
       example: '2021-05-21'
     FromBookingDate:
       description: |
-        Fecha inicial para el filtrado.
-        [Restricción] Debe enviarse obligatoriamente si el campo toBookingDate está informado.
-        Si no se indica, se debe asumir el día actual.
+        Fecha inicial de filtrado.
+        [Restricción] Debe obligatoriamente enviarse si el campo toBookingDate es informado.
+        Si no se informa, debe asumirse el día actual.
       type: string
       maxLength: 10
       format: date
       example: '2021-05-21'
     ToBookingDateMaxLimited:
       description: |
-        Fecha final para el filtrado.
+        Fecha final de filtrado.
         El período máximo utilizado en el filtro es de 7 días inclusive (D-6).
-        [Restricción] Debe enviarse obligatoriamente si el campo fromBookingDate está informado.
-        Si no se indica, se debe asumir el día actual.
+        [Restricción] Debe obligatoriamente enviarse si el campo fromBookingDate es informado.
+        Si no se informa, debe asumirse el día actual.
       type: string
       maxLength: 10
       format: date
       example: '2021-05-21'
     FromBookingDateMaxLimited:
       description: |
-        Fecha inicial para el filtrado.
+        Fecha inicial de filtrado.
         El período máximo utilizado en el filtro es de 7 días inclusive (D-6).
-        [Restricción] Debe enviarse obligatoriamente si el campo toBookingDate está informado.
-        Si no se indica, se debe asumir el día actual.
+        [Restricción] Debe obligatoriamente enviarse si el campo toBookingDate es informado.
+        Si no se informa, debe asumirse el día actual.
       type: string
       maxLength: 10
       format: date
       example: '2021-05-21'
     PaginationKey:
       description: |
-        Identificador de re-llamada, utilizado para evitar el conteo de llamadas al endpoint durante la paginación.
-        Este campo puede ser pasado desde un flujo anterior como un valor residual y, aunque pueda estar presente en la solicitud, no es necesario utilizarlo — puede simplemente ser ignorado.
+        Identificador de rellamada, utilizado para evitar el conteo de llamadas al endpoint durante la paginación.
+        Este campo puede ser transferido de un flujo anterior como un valor residual y, aunque pueda estar presente en la solicitud, no es necesario utilizarlo — puede simplemente ignorarse.
       type: string
       maxLength: 2048
       pattern: '[\w\W\s]*'
@@ -1096,7 +1095,7 @@ ResponseAccountList:
       maximum: 1000
     ConsentDataSharing:
       description: |
-        Consentimiento para compartir datos
+        Consentimiento de intercambio de datos
       type: object
       required:
         - brandId
@@ -1110,7 +1109,7 @@ ResponseAccountList:
           type: array
           description: |
             Array de clave y valor con datos adicionales provenientes del autorizador.
-            Estos datos pueden ser utilizados como filtros de recursos.
+            Estos datos pueden utilizarse como filtros de recursos.
           items:
             type: object
             required:
@@ -1127,7 +1126,7 @@ ResponseAccountList:
           deprecated: true
           type: array
           description: |
-            [Obsoleto] Array de clave y valor con los datos de identificación referente al titular del consentimiento.
+            [Obsoleto] Array de clave y valor con los datos de identificación referentes al propietario del consentimiento.
           items:
             type: object
             required:
@@ -1143,22 +1142,22 @@ ResponseAccountList:
         brandId:
           type: string
           description: |
-            Identificador de la marca reportada por el participante del Open Finance.
+            Identificador de la marca reportada por el participante de Open Finance
           example: cbanco
           minLength: 1
           maxLength: 50
         creationDateTime:
           description: |
             Fecha y hora en que se creó el consentimiento.
-            Una cadena con fecha y hora según especificación RFC-3339, siempre utilizando la zona horaria UTC (formato UTC time).
+            Una cadena con fecha y hora según especificación RFC-3339, siempre con la utilización de zona horaria UTC (formato de hora UTC).
           type: string
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$ '
           example: '2021-05-21T08:30:00Z'
           maxLength: 20
         tpp:
           type: object
           description: |
-            Detalles del TPP (Proveedor de Servicios de Terceros) que solicitó el consentimiento.
+            Detalles del TPP (Third Party Provider) que solicitó el consentimiento
           additionalProperties: false
           required:
             - name
@@ -1166,19 +1165,19 @@ ResponseAccountList:
             name:
               type: string
               description: |
-                Nombre del TPP que solicitó el consentimiento.
+                Nombre del TPP que solicitó el consentimiento
               example: GuiaBolsa
               maxLength: 100
         externalId:
           type: string
           description: |
-            Identificador del consentimiento utilizado fuera de la plataforma Opus Open Finance.
+            Identificador del consentimiento utilizado fuera de la plataforma Opus Open Finance
           example: urn:oob-bank:2f710909-4ccd-4998-8679-3d8de00e5ccf
           maxLength: 100
         loggedUser:
           type: object
           description: |
-            Usuario (persona natural) que está registrado en la institución Transmisora de Datos.
+            Usuario (persona natural) que se encuentra conectado en la institución Transmisora de Datos.
           additionalProperties: false
           required:
             - document
@@ -1203,14 +1202,14 @@ ResponseAccountList:
                   type: string
                   maxLength: 3
                   description: |
-                    Tipo del documento de identificación oficial del usuario.
+                    Tipo de documento de identificación oficial del usuario.
                   example: CPF
                   pattern: ^[A-Z]{3}$
         businessDocumentType:
           type: object
           description: |
-            Usuario (persona jurídica) que está registrado en la institución Transmisora de Datos.
-            [Restricción] Relleno obligatorio si el usuario registrado en la institución Transmisora de Datos es un CNPJ (persona jurídica).
+            Usuario (persona jurídica) que se encuentra conectado en la institución Transmisora de Datos.
+            [Restricción] Llenado obligatorio si el usuario conectado en la institución Transmisora de Datos es un CNPJ (persona jurídica).
           additionalProperties: false
           required:
             - document
@@ -1235,7 +1234,7 @@ ResponseAccountList:
                   type: string
                   maxLength: 4
                   description: |
-                    Tipo del documento de identificación oficial del titular persona jurídica.
+                    Tipo de documento de identificación oficial del titular persona jurídica.
                   example: CNPJ
                   pattern: ^[A-Z]{4}$
         resources:
@@ -1252,7 +1251,7 @@ ResponseAccountList:
             properties:
               type:
                 description: |
-                  Tipo del recurso
+                  Tipo de recurso
                 type: string
                 enum:
                   - ACCOUNT
@@ -1273,8 +1272,8 @@ ResponseAccountList:
               authorizers:
                 deprecated: true
                 description: |
-                  [Obsoleto] Lista de autorizadores para el recurso en casos de múltiples niveles.
-                  Si el recurso es seleccionado, todos los autorizadores deberán aceptar el consentimiento al que el recurso pertenece.
+                  [Obsoleto] Lista de los autorizadores para el recurso en casos de múltiples niveles de aprobación.
+                  Si el recurso es seleccionado, todos los autorizadores deberán aceptar el consentimiento del cual el recurso forma parte
                 type: array
                 items:
                   type: object
@@ -1305,18 +1304,18 @@ ResponseAccountList:
         expirationDateTime:
           description: |
             Fecha y hora de expiración del permiso.
-            De relleno obligatorio, refleja la fecha límite de validez del consentimiento.
-            Una cadena con fecha y hora según especificación RFC-3339, siempre utilizando la zona horaria UTC (formato UTC time).
+            De llenado obligatorio, refleja la fecha límite de validez del consentimiento.
+            Una cadena con fecha y hora según especificación RFC-3339, siempre con la utilización de zona horaria UTC (formato de hora UTC).
           type: string
           maxLength: 20
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$ '
           example: '2021-05-21T08:30:00Z'
         permissions:
           type: array
           items:
             description: |
-              Solo para consentimientos de compartición de datos.
-              Especifica los tipos de permisos de acceso a las APIs en el ámbito del Open Finance Brasil - Fase 2, de acuerdo con los bloques de consentimiento proporcionados por el usuario y necesarios para el acceso a cada endpoint de las APIs.
+              Solo para consentimientos de intercambio de datos.
+              Especifica los tipos de permisos de acceso a las APIs en el ámbito de Open Finance Brasil - Fase 2, de acuerdo con los bloques de consentimiento proporcionados por el usuario y necesarios para el acceso a cada endpoint de las APIs.
             type: string
             enum:
               - ACCOUNTS_READ
@@ -1365,7 +1364,7 @@ ResponseAccountList:
     RequestMeta:
       type: object
       description: |
-        Objeto que contiene datos referentes al contexto en el cual la solicitud fue recibida.
+        Objeto que contiene datos referentes al contexto en el cual se recibió la solicitud.
       required:
         - correlationId
         - brandId
@@ -1373,14 +1372,14 @@ ResponseAccountList:
         correlationId:
           type: string
           description: |
-            UUID que identifica el ID de correlación de la solicitud realizada.
-            Debe ser propagado para todas las llamadas realizadas entre sistemas y registrado siempre que sea posible para facilitar el rastreo de errores.
+            UUID que identifica el correlation ID de la solicitud realizada.
+            Debe propagarse para todas las llamadas realizadas entre sistemas y registrarse siempre que sea posible para facilitar el rastreo de errores
           pattern: ^(localID:)?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
           example: localID:97623ed1-4732-4bf2-8d4b-ae7aced5443b
         brandId:
           type: string
           description: |
-            Identificador de la marca reportada por el participante del Open Finance.
+            Identificador de la marca reportada por el participante de Open Finance
           example: cbanco
           minLength: 1
           maxLength: 50
@@ -1398,7 +1397,7 @@ ResponseAccountList:
     MetaOnlyRequestDateTimeAndHasMoreRecords:
       type: object
       description: |
-        Metainformaciones referentes a la API solicitada.
+        Meta información referente a la API solicitada.
       required:
         - requestDateTime
         - hasMoreRecords
@@ -1413,7 +1412,7 @@ ResponseAccountList:
         hasMoreRecords:
           type: boolean
           description: |
-            Indica si hay más registros por ser retornados (true) o no (false).
+            Indica si hay más registros por retornar (true) o no (false).
           example: true
     SelectableResourceDiscoveryResponse:
       type: object
@@ -1423,13 +1422,13 @@ ResponseAccountList:
         data:
           type: object
           description: |
-            Objeto que contiene la lista de recursos disponibles para que el cliente consienta.
+            Objeto que contiene la lista de recursos disponibles para que el cliente consienta
           required:
             - resources
           properties:
             resources:
               description: |
-                Lista de recursos relacionados con el discovery.
+                Lista de recursos relacionados al discovery
               type: array
               items:
                 type: object
@@ -1437,21 +1436,21 @@ ResponseAccountList:
                   resourceName:
                     description: |
                       Array de clave y valor con el nombre del recurso.
-                      Estos datos pueden ser utilizados para presentación en la pantalla de consentimiento.
+                      Estos datos pueden utilizarse para presentación en la pantalla de consentimiento.
                     type: array
                     items:
                       type: object
                       properties:
                         key:
                           description: |
-                            Clave de la etiqueta del nombre del recurso.
+                            Clave del caption del nombre del recurso
                           type: string
                           example: resourceName
                         value:
                           description: |
-                            Valor de la etiqueta del nombre del recurso.
+                            Valor del caption del nombre del recurso
                           type: string
-                          example: Cuenta Corriente 1234
+                          example: Conta Corrente 1234
                       required:
                         - key
                         - value
@@ -1469,9 +1468,9 @@ ResponseAccountList:
                     type: number
                   authorizers:
                     description: |
-                      [Obsoleto] Lista de autorizadores para el recurso en casos de múltiples niveles.
+                      [Obsoleto] Lista de los autorizadores para el recurso en casos de múltiples niveles de aprobación.
                       Este campo será descontinuado en futuras versiones.
-                      Como la versión actual exige este campo, debe ser completado con al menos el nombre y CPF del loggedUser.
+                      Como la versión actual exige este campo, debe llenarse con al menos el nombre y CPF del loggedUser.
                     type: array
                     items:
                       type: object
@@ -1494,7 +1493,7 @@ ResponseAccountList:
                   defaultSelected:
                     description: |
                       Indica si el recurso debe estar seleccionado por defecto en la pantalla de consentimiento.
-                      Valor predeterminado: false
+                      Valor por defecto: false
                     type: boolean
                 required:
                   - resourceName
@@ -1607,79 +1606,79 @@ ResponseAccountList:
           schema:
             $ref: '#/components/schemas/ResponseAccountTransactions'
     OKResponseAccountOverdraftLimits:
-      description: Datos de los límites de la cuenta identificada por accountId obtenidos con éxito.
+      description: Datos de límites de la cuenta identificada por accountId obtenidos con éxito.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseAccountOverdraftLimits'
     BadRequest:
-      description: 'La solicitud fue malformada, omitiendo atributos obligatorios, ya sea en el payload o mediante atributos en la URL.'
+      description: 'La solicitud fue malformada, omitiendo atributos obligatorios, ya sea en el payload o a través de atributos en la URL.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     Forbidden:
-      description: El token tiene un ámbito incorrecto o se violó una política de seguridad.
+      description: El token tiene alcance incorrecto o se ha violado una política de seguridad
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     GatewayTimeout:
-      description: GATEWAY TIMEOUT - La solicitud no fue respondida dentro del tiempo límite establecido.
+      description: GATEWAY TIMEOUT - La solicitud no fue atendida dentro del tiempo límite establecido
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     InternalServerError:
-      description: Ocurrió un error en el gateway de la API o en el microservicio.
+      description: Ocurrió un error en el gateway de la API o en el microservicio
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     Locked:
-      description: Bloqueado.
+      description: Bloqueado
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     MethodNotAllowed:
-      description: El consumidor intentó acceder al recurso con un método no soportado.
+      description: El consumidor intentó acceder al recurso con un método no soportado
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     NotAcceptable:
-      description: La solicitud contenía un encabezado Accept diferente de los tipos de medios permitidos o un conjunto de caracteres diferente de UTF-8.
+      description: La solicitud contenía un encabezado Accept diferente de los tipos de medios permitidos o un conjunto de caracteres diferente de UTF-8
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     NotFound:
-      description: El recurso solicitado no existe o no fue implementado.
+      description: El recurso solicitado no existe o no ha sido implementado
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     TooManyRequests:
-      description: 'La operación fue rechazada, ya que se realizaron demasiadas solicitudes dentro de un determinado período o se alcanzó el límite global de solicitudes concurrentes.'
+      description: 'La operación fue rechazada, ya que se realizaron demasiadas solicitudes dentro de un período determinado o se alcanzó el límite global de solicitudes concurrentes'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     Unauthorized:
-      description: Encabezado de autenticación ausente/inválido o token inválido.
+      description: Encabezado de autenticación ausente/inválido o token inválido
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     UnprocessableEntity:
-      description: 'La sintaxis de la solicitud es correcta, pero no se pudo procesar las instrucciones presentes.'
+      description: 'La sintaxis de la solicitud es correcta, pero no fue posible procesar las instrucciones presentes.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     SiteIsOverloaded:
-      description: 'El sitio está sobrecargado y la operación fue rechazada, ya que se alcanzó el límite máximo de TPS (transacciones por segundo) global en este momento.'
+      description: 'El sitio está sobrecargado y la operación fue rechazada, ya que se alcanzó el límite máximo de TPS global en este momento.'
       content:
         application/json; charset=utf-8:
           schema:
@@ -1691,67 +1690,67 @@ ResponseAccountList:
           schema:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     BadRequestWithAdditionalProperties:
-      description: 'La solicitud fue malformada, omitiendo atributos obligatorios, ya sea en el payload o mediante atributos en la URL.'
+      description: 'La solicitud fue malformada, omitiendo atributos obligatorios, ya sea en el payload o a través de atributos en la URL.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     ForbiddenWithAdditionalProperties:
-      description: El token tiene un ámbito incorrecto o se violó una política de seguridad.
+      description: El token tiene alcance incorrecto o se ha violado una política de seguridad
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     GatewayTimeoutWithAdditionalProperties:
-      description: GATEWAY TIMEOUT - La solicitud no fue respondida dentro del tiempo límite establecido.
+      description: GATEWAY TIMEOUT - La solicitud no fue atendida dentro del tiempo límite establecido
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     InternalServerErrorWithAdditionalProperties:
-      description: Ocurrió un error en el gateway de la API o en el microservicio.
+      description: Ocurrió un error en el gateway de la API o en el microservicio
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     LockedWithAdditionalProperties:
-      description: Bloqueado.
+      description: Bloqueado
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     MethodNotAllowedWithAdditionalProperties:
-      description: El consumidor intentó acceder al recurso con un método no soportado.
+      description: El consumidor intentó acceder al recurso con un método no soportado
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     NotAcceptableWithAdditionalProperties:
-      description: La solicitud contenía un encabezado Accept diferente de los tipos de medios permitidos o un conjunto de caracteres diferente de UTF-8.
+      description: La solicitud contenía un encabezado Accept diferente de los tipos de medios permitidos o un conjunto de caracteres diferente de UTF-8
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     NotFoundWithAdditionalProperties:
-      description: El recurso solicitado no existe o no fue implementado.
+      description: El recurso solicitado no existe o no ha sido implementado
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     TooManyRequestsWithAdditionalProperties:
-      description: 'La operación fue rechazada, ya que se realizaron demasiadas solicitudes dentro de un determinado período o se alcanzó el límite global de solicitudes concurrentes.'
+      description: 'La operación fue rechazada, ya que se realizaron demasiadas solicitudes dentro de un período determinado o se alcanzó el límite global de solicitudes concurrentes'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     UnauthorizedWithAdditionalProperties:
-      description: Encabezado de autenticación ausente/inválido o token inválido.
+      description: Encabezado de autenticación ausente/inválido o token inválido
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     UnprocessableEntityWithAdditionalProperties:
-      description: 'La sintaxis de la solicitud es correcta, pero no se pudo procesar las instrucciones presentes.'
+      description: 'La sintaxis de la solicitud es correcta, pero no fue posible procesar las instrucciones presentes.'
       content:
         application/json; charset=utf-8:
           schema:
@@ -1763,13 +1762,13 @@ ResponseAccountList:
           schema:
             $ref: '#/components/schemas/ResponseError'
     SiteIsOverloadedWithAdditionalProperties:
-      description: 'El sitio está sobrecargado y la operación fue rechazada, ya que se alcanzó el límite máximo de TPS (transacciones por segundo) global en este momento.'
+      description: 'El sitio está sobrecargado y la operación fue rechazada, ya que se alcanzó el límite máximo de TPS global en este momento.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     OKResponseAccountDiscovery:
-      description: Lista de recursos que representan cuentas disponibles para que el cliente consienta, obtenidos con éxito.
+      description: Lista de recursos representando cuentas disponibles para que el cliente consienta obtenidos con éxito.
       content:
         application/json:
           schema:

@@ -81,13 +81,13 @@ Información detallada sobre los datos necesarios para cada una de estas operaci
 
 Las inversiones también están divididas en diferentes productos. A continuación, se presenta una lista de los productos posibles de inversión, así como el enlace lleva al documento detallado sobre los datos del producto en cuestión:
 
-- [Renta fija bancaria](./datos-inversiones/datos-renta-fija-bancaria.html);
-- [Renta fija crédito](./datos-inversiones/datos-renta-fija-crédito.html);
-- [Renta variable](./datos-inversiones/datos-renta-variable.html);
-- [Títulos del tesoro directo](./datos-inversiones/datos-tesoro.html);
-- [Fondos de inversión](./datos-inversiones/datos-fondos.html).
+- [Renta fija bancaria](./investimentos/rendaFixaBancaria.html);
+- [Renta fija crédito](./investimentos/rendaFixaCredito.html);
+- [Renta variable](./investimentos/rendaVariavel.html);
+- [Títulos del tesoro directo](./investimentos/titulosTesouroDireto.html);
+- [Fondos de inversión](./investimentos/fundosInvestimento.html).
 
-Información detallada sobre los datos necesarios para este producto pueden encontrarse en la [página específica para inversiones](./OOF-Inversión.html).
+Información detallada sobre los datos necesarios para este producto pueden encontrarse en la [página específica para inversiones](./investimentos/index.html).
 
 ### Cambio
 
@@ -95,19 +95,14 @@ Información de operaciones de cambio realizadas en las instituciones transmisor
 
 Información detallada sobre los datos necesarios para este producto pueden encontrarse en la [página específica para cambio][Cambio].
 
-<!-- **gambia**: [API-Commons](../../../../swagger-ui/index.html?api=Opus-Commons) -->
-
-<!-- Definición de enlaces utilizados en esta página -->
-
-[Imagen de la Capa de Integración]: ./images/CamadaIntegração.png
+[Imagen de la Capa de Integración]: ./anexos/imagens/camadaIntegracao.png
 [Tiempos de Respuesta]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17957025/Refer+ncia
-<!-- [Guía APIs]: https://openfinancebrasil.atlassian.net/wiki/pages/viewpageattachments.action?pageId=17378841&preview=%2F17378841%2F17378864%2F%5B23-06%5DGuia_GT_Implementa%C3%A7%C3%A3oAPIs.pdf -->
-[Datos-Registro]: ../apis/Dados-Cadastrais.html
-[Tarjeta-Crédito]: ../apis/Cartão-de-Credito.html
-[Cuentas]: ../apis/Contas.html
-[Crédito]: ./OOF-Crédito.html
-[Cambio]: ../apis/Câmbio.html
-[Préstamo]: ../apis/Empréstimo.html
-[Financiación]: ../apis/Financiamento.html
-[Adelanto]: ../apis/Adiantamento.html
-[Derechos-Crediticios]: ../apis/DireitosCreditórios.html
+[Datos-Registro]: ./dadosCadastrais.html
+[Tarjeta-Crédito]: ./cartaoDeCredito.html
+[Cuentas]: ./contas.html
+[Crédito]: ./operacoesDeCredito/index.html
+[Cambio]: ./cambio.html
+[Préstamo]: ./operacoesDeCredito/emprestimos.html
+[Financiación]: ./operacoesDeCredito/financiamento.html
+[Adelanto]: ./operacoesDeCredito/adiantamentoDepositantes.html
+[Derechos-Crediticios]: ./operacoesDeCredito/direitosCreditorios.html

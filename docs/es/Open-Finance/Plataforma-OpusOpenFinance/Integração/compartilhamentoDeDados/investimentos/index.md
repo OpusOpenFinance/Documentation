@@ -54,10 +54,10 @@ A continuación se encuentra el enlace para cada una de las APIs de Inversión:
 
 |API                        |Enlace                   |
 |---------------------------|:-----------------------:|
-|Renta fija bancaria        |[Enlace](./datos-inversiones/datos-renta-fija-bancaria.html)|
-|Renta fija crédito         |[Enlace](./datos-inversiones/datos-renta-fija-credito.html) |
-|Renta variable             |[Enlace](./datos-inversiones/datos-renta-variable.html)     |
-|Títulos del tesoro directo |[Enlace](./datos-inversiones/datos-tesouro.html)            |
-|Fondos de inversión        |[Enlace](./datos-inversiones/datos-fondos.html)             |
+|Renta fija bancaria        |[Enlace](./rendaFixaBancaria.html)|
+|Renta fija crédito         |[Enlace](./rendaFixaCredito.html) |
+|Renta variable             |[Enlace](./rendaVariavel.html)     |
+|Títulos del tesoro directo |[Enlace](./titulosTesouroDireto.html)            |
+|Fondos de inversión        |[Enlace](./fundosInvestimento.html)             |
 
 [Tabla-Inversión-OFB]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/102957060/Orienta+es+-+DC+Investimentos

@@ -37,9 +37,9 @@ Existen *endpoints* para:
 
 La documentación de la API de Cambio a ser construida en la *capa de integración* puede encontrarse [**aquí**][API-Cambio].
 
-Para descargar el archivo YAML/OAS que contiene la especificación de la API haga clic [**aquí**](exchange-1-0-0.yml){:download="exchange-1-0-0.yml"}.
+Para descargar el archivo YAML/OAS que contiene la especificación de la API haga clic [**aquí**](./anexos/yml/es-exchange-1-0-0.yml){:download="es-exchange-1-0-0.yml"}.
 
 {: .destaque}
 Algunos navegadores de internet, como *Chrome*, ocasionalmente señalan como *no segura* la operación de *descarga* de archivos YAML, exigiendo el desbloqueo manual por el usuario. Estos archivos, sin embargo, tienen contenido del tipo texto y no presentan riesgo por sí solos.
 
-[API-Cambio]: ../../../../swagger-ui/index.html?api=Câmbio
+[API-Cambio]: ../../../../../swagger-ui/index.html?api=es-cambio

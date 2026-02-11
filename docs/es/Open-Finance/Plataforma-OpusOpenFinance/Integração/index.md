@@ -38,12 +38,12 @@ En términos generales, las solicitudes de *Open Finance Brasil* se dividen en d
 
 Dadas las características específicas de cada categoría de solicitudes, la plataforma utiliza modelos de integración distintos para cada una. En ambos casos, **es necesaria la construcción de artefactos de software** que realizarán la interacción entre la plataforma y los sistemas de retaguardia de la institución financiera.
 
-En el caso de la integración de datos, necesaria para el [perfil *transmisor de datos*][Transmisor], el detalle del modelo de integración puede encontrarse [**en este enlace**][Capa de integración].
+En el caso de la integración de datos, necesaria para el [perfil *transmisor de datos*][Transmisor], el detalle del modelo de integración puede encontrarse [**en este enlace**][Compartición].
 
-En el caso de pagos, necesario para el [perfil *tenedor de cuentas*][Tenedor], el detalle del modelo de integración puede encontrarse [**en este enlace**][Conectores de Pago].
+En el caso de pagos, necesario para el [perfil *tenedor de cuentas*][Tenedor], el detalle del modelo de integración puede encontrarse [**en este enlace**][Pagos].
 
-[Capa de Integración]: ./CamadaIntegração.html
-[Conectores de Pago]: ./Conectores-Pagto.html
+[Compartición]: ./compartilhamentoDeDados/index.html
+[Pagos]: ./Pagamentos/CamadaIntegraçãoPagamentos.html
 [Integración app-web]: ./App-e-Web.html
 [Transmisor]: ../../Open-Finance-Brasil/PerfisOFB/OFB-Transmissor.html
 [Tenedor]: ../../Open-Finance-Brasil/PerfisOFB/OFB-Detentor.html

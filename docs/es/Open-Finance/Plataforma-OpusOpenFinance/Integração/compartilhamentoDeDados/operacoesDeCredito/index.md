@@ -49,8 +49,8 @@ El detalle de las APIs de cada modalidad de operación de crédito puede encontr
 |Adelanto a depositantes         |[Enlace][Adelanto]|
 |Derechos crediticios descontados|[Enlace][Derechos-Crediticios]|
 
-[Préstamo]: ../apis/Empréstimo.html
-[Financiamiento]: ../apis/Financiamento.html
-[Adelanto]: ../apis/Adiantamento.html
-[Derechos-Crediticios]: ../apis/DireitosCreditórios.html
+[Préstamo]: ./emprestimos.html
+[Financiamiento]: ./financiamento.html
+[Adelanto]: ./adiantamentoDepositantes.html
+[Derechos-Crediticios]: ./direitosCreditorios.html
 [Tabla-Crédito-OFB]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/320176146/Orienta+es+-+DC+Opera+es+de+cr+dito#Tabela-com-as-modalidades-e-submodalidades-das-APIs-de-opera%C3%A7%C3%B5es-de-cr%C3%A9dito

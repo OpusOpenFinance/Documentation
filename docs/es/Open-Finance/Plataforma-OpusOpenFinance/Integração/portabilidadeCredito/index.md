@@ -26,9 +26,9 @@ En líneas generales, existen *endpoints* para:
 
 La documentación de la API de Portabilidad de Crédito a construir en la *capa de integración* se puede encontrar [**aquí**][API-Portabilidad].
 
-Para descargar el archivo YAML/OAS que contiene la especificación de la API, haga clic [**aquí**](../apis/es-portability.yml){:download="es-portability.yml"}.
+Para descargar el archivo YAML/OAS que contiene la especificación de la API, haga clic [**aquí**](./anexos/yml/es-portability.yml){:download="es-portability.yml"}.
 
 {: .destaque}
 Algunos navegadores de internet, como *Chrome*, ocasionalmente señalan como *no segura* la operación de *descarga* de archivos YAML, exigiendo el desbloqueo manual por parte del usuario. Sin embargo, estos archivos son de tipo texto y no presentan riesgo por sí mismos.
 
-[API-Portabilidad]: ../../../../swagger-ui/index.html?api=es-portability
+[API-Portabilidad]: ../../../../../swagger-ui/index.html?api=es-portability

@@ -31,9 +31,9 @@ Existen *endpoints* para:
 
 La documentación de la API de Préstamos a ser construida en la *capa de integración* puede encontrarse [**aquí**][API-Préstamo].
 
-Para descargar el archivo YAML/OAS que contiene la especificación de la API haga clic [**aquí**](loans-2-4-0.yml){:download="loans-2-4-0.yml"}.
+Para descargar el archivo YAML/OAS que contiene la especificación de la API haga clic [**aquí**](../anexos/yml/operacoesDeCredito/es-loans-2-4-0.yml){:download="es-loans-2-4-0.yml"}.
 
 {: .destaque}
 Algunos navegadores de internet, como *Chrome*, ocasionalmente señalan como *no segura* la operación de *descarga* de archivos YAML, exigiendo el desbloqueo manual por el usuario. Estos archivos, sin embargo, tienen contenido del tipo texto y no presentan riesgo por sí solos.
 
-[API-Préstamo]: ../../../../swagger-ui/index.html?api=Empréstimo
+[API-Préstamo]: ../../../../../../swagger-ui/index.html?api=es-emprestimos

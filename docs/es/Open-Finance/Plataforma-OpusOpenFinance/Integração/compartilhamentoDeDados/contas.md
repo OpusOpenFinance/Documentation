@@ -36,11 +36,11 @@ La documentación de las APIs a ser construida en la *capa de integración* pued
 
 |API            |Enlace                |YAML/OAS                                |
 |:-------------:|:---------------------:|:--------------------------------------:|
-|    Cuentas    |[**Enlace**][API-Cuentas] |[**Descargar**](accounts-2-4-1.yml){:download="accounts-2-4-1.yml"}      |
-|    Common     |[**Enlace**][API-Common] |[**Descargar**](opus-commons-1-0-0.yml){:download="opus-commons-1-0-0.yml"}  |
+|    Cuentas    |[**Enlace**][API-Cuentas] |[**Descargar**](./anexos/yml/es-accounts-2-4-1.yml){:download="es-accounts-2-4-1.yml"}      |
+|    Common     |[**Enlace**][API-Common] |[**Descargar**](./anexos/yml/es-opusCommons-1-0-0.yml){:download="es-opusCommons-1-0-0.yml"}  |
 
 {: .destaque}
 Algunos navegadores de internet, como *Chrome*, ocasionalmente señalan como *no segura* la operación de *descarga* de archivos YAML, exigiendo el desbloqueo manual por el usuario. Estos archivos, sin embargo, tienen contenido del tipo texto y no presentan riesgo por sí solos.
 
-[API-Cuentas]: ../../../../swagger-ui/index.html?api=Contas
-[API-Common]: ../../../../swagger-ui/index.html?api=Opus-Commons
+[API-Cuentas]: ../../../../../swagger-ui/index.html?api=es-contas
+[API-Common]: ../../../../../swagger-ui/index.html?api=es-opus-commons
