@@ -1,28 +1,28 @@
 openapi: 3.0.0
 info:
-  title: API OpenData Financings do Open Finance Brasil
-  description: A API descrita neste documento é referente as API Financings da fase OpenData do Open Finance Brasil.
+  title: API OpenData Financiamientos del Open Finance Brasil
+  description: El documento describe la API de Financiamientos de la fase OpenData del Open Finance Brasil.
   version: 1.0.1
   license:
     name: Apache 2.0
     url: "https://www.apache.org/licenses/LICENSE-2.0"
 tags:
   - name: Financings
-    description: Operações para listagem financiamentos
+    description: Operaciones para listar financiamientos
 paths:
   /personal-financings:
     get:
       tags:
         - Financings
-      summary: Obtém a lista de Financiamentos de Pessoa Natural.
-      description: Obtém a lista de Financiamentos de Pessoa Natural
+      summary: Obtiene la lista de Financiamientos para Persona Natural.
+      description: Obtiene la lista de Financiamientos para Persona Natural
       operationId: getPersonalFinancings
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
       responses:
         '200':
-          description: Lista de financiamentos de pessoa natural obtida com sucesso.
+          description: Lista de financiamientos para persona natural obtenida con éxito.
           content:
             application/json:
               schema:
@@ -47,15 +47,15 @@ paths:
     get:
       tags:
         - Financings
-      summary: Obtém a lista de Financiamentos de Pessoa Jurídica.
-      description: Obtém a lista de Financiamentos de Pessoa Jurídica.
+      summary: Obtiene la lista de Financiamientos para Persona Jurídica.
+      description: Obtiene la lista de Financiamientos para Persona Jurídica.
       operationId: getBusinessFinancings
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
       responses:
         '200':
-          description: Lista de financiamentos de pessoa jurídica obtida com sucesso.
+          description: Lista de financiamientos para persona jurídica obtenida con éxito.
           content:
             application/json:
               schema:
@@ -106,10 +106,10 @@ components:
           minLength: 8
           maxLength: 8
           description: |
-            Percentual que corresponde a mediana da taxa pré fixada cobrada do cliente pela contratação do crédito, no intervalo informado. Ex: 0.087000 = 8,7%. 
-            Nos casos de produtos puramente pós fixados, as faixas 1,2, 3 e 4 deverão receber o valor 0.000000 (zero). 
-            Nesse caso, o customers/rate deverá ser representado com 1.000000, ou seja, 100%.
-            A apuração pode acontecer com até 6 casas decimais. O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1.000000 representa 100%).
+            Porcentaje que corresponde a la mediana de la tasa fija cobrada al cliente por la contratación del crédito, en el intervalo informado. Ej: 0.087000 = 8.7%. 
+            En el caso de productos puramente posfijados, las franjas 1, 2, 3 y 4 deben recibir el valor 0.000000 (cero). 
+            En ese caso, el customers/rate deberá representarse con 1.000000, es decir, 100%.
+            El cálculo puede realizarse con hasta 6 decimales. El llenado debe respetar las 6 decimales, incluso si vienen completadas con ceros (representación de porcentaje, p.ej: 0.150000. Este valor representa 15%. El valor 1.000000 representa 100%).
           example: '0.087000'
     PriceIntervals:
       type: string
@@ -119,12 +119,12 @@ components:
         - 3_FAIXA
         - 4_FAIXA
       description: |
-        Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
+        Según Normativa nº 32, BCB, de 2020: La distribución de frecuencia relativa de los valores de tarifas cobradas a los clientes, de que trata el § 2º del art. 3º de la Circular nº 4.015, de 2020, debe basarse en cuatro franjas de igual tamaño, con explicación de los valores sobre la mediana en cada una de esas franjas. Informando: 1ª franja, 2ª franja, 3ª franja y 4ª franja.
       example: 1_FAIXA
     ApplicationIntervals:
       type: string
       description: |
-        Faixas para cobrança da taxa efetiva aplicada pela contratação do crédito, no intervalo informado: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa. Segundo Normativa nº32 de 2020: 'Distribuição de frequência relativa dos valores de tarifas e taxas de juros cobrados dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana e o percentual de clientes em cada uma dessas faixas.
+        Franjas para el cobro de la tasa efectiva aplicada por la contratación del crédito, en el intervalo informado: 1ª franja, 2ª franja, 3ª franja y 4ª franja. Según Normativa nº32 de 2020: 'La distribución de frecuencia relativa de los valores de tarifas y tasas de interés cobrados a los clientes, de que trata el § 2º del art. 3º de la Circular nº 4.015, de 2020, debe basarse en cuatro franjas de igual tamaño, con explicación de los valores sobre la mediana y el porcentaje de clientes en cada una de esas franjas.
       enum:
         - 1_FAIXA
         - 2_FAIXA
@@ -149,20 +149,20 @@ components:
         - ACORDOS_COMPENSACAO
         - NAO_EXIGE_GARANTIA
       description: |
-        Relação de garantias exigidas, segundo documento 3040 do Bacen:
-        * `CESSAO_DIREITOS_CREDITORIOS`: o cedente transfere ao credor/cessionário a titularidade de direitos creditórios, até a liquidação da dívida. O credor/cessionário passa a recebê-los diretamente dos devedores e credita o produto da operação para o cedente na operação que originou a cessão, até a sua liquidação
-        * `CAUCAO`: garantia instituída sobre créditos do garantidor
-        * `PENHOR`: direito real que consiste na tradição de uma coisa móvel ou mobilizável, suscetível de alienação, realizada pelo devedor ou por terceiro ao credor, a fim de garantir o pagamento do débito
-        * `ALIENACAO_FIDUCIARIA`: transferência ao credor, ou fiduciário, da propriedade do bem
-        * `HIPOTECA`: direito real de garantia que afeta um bem imóvel para o cumprimento da obrigação
-        * `OPERACOES_GARANTIDAS_PELO_GOVERNO`: nas instâncias federal, estadual ou municipal
-        * `OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS`: as garantias reais não descritas como: cessão de direitos creditórios, caução, penhor, alienação fiduciária, hipoteca ou operação garantida pelo governo
-        * `SEGUROS_ASSEMELHADOS`: os seguros (e assemelhados) contratados para garantir o pagamento da operação em circunstâncias adversas
-        * `GARANTIA_FIDEJUSSORIA`: baseada na fidelidade do garantidor em cumprir as obrigações, caso o devedor não o faça
-        * `BENS_ARRENDADOS`: bem objeto do arrendamento financeiro
-        * `GARANTIAS_INTERNACIONAIS`: declarar se a garantia é mitigadora ou não, observados os critérios definidos pela Circular 3.644, de 4 de março de 2013
-        * `OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES`: declarar as garantias prestadas pelas entidades descritas no item 3. Informações de Garantias (i) do documento 3040 - Bacen
-        * `ACORDOS_COMPENSACAO`: operações que sejam abrangidas por acordos para a compensação e liquidação de obrigações no âmbito do SFN, nos termos da Resolução 3.263, de 24 de fevereiro de 2005
+        Relación de garantías exigidas, según el documento 3040 del Bacen:
+        * `CESSAO_DIREITOS_CREDITORIOS`: el cedente transfiere al acreedor/cesionario la titularidad de derechos crediticios, hasta la liquidación de la deuda. El acreedor/cesionario pasa a recibirlos directamente de los deudores y acredita el producto de la operación al cedente en la operación que originó la cesión, hasta su liquidación.
+        * `CAUCAO`: garantía constituida sobre créditos del garante.
+        * `PENHOR`: derecho real que consiste en la entrega de un bien mueble o movilizable, susceptible de enajenación, realizada por el deudor o un tercero al acreedor, para garantizar el pago de la deuda.
+        * `ALIENACAO_FIDUCIARIA`: transferencia al acreedor, o fiduciario, de la propiedad del bien.
+        * `HIPOTECA`: derecho real de garantía que afecta un bien inmueble para el cumplimiento de la obligación.
+        * `OPERACOES_GARANTIDAS_PELO_GOVERNO`: en instancias federal, estatal o municipal.
+        * `OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS`: garantías reales no descritas como: cesión de derechos crediticios, caución, prenda, alienación fiduciaria, hipoteca u operación garantizada por el gobierno.
+        * `SEGUROS_ASSEMELHADOS`: seguros (y similares) contratados para garantizar el pago de la operación en circunstancias adversas.
+        * `GARANTIA_FIDEJUSSORIA`: basada en la fidelidad del garante para cumplir las obligaciones, si el deudor no lo hace.
+        * `BENS_ARRENDADOS`: bien objeto del arrendamiento financiero.
+        * `GARANTIAS_INTERNACIONAIS`: declarar si la garantía es mitigadora o no, observando los criterios definidos por la Circular 3.644, del 4 de marzo de 2013.
+        * `OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES`: declarar las garantías prestadas por las entidades descritas en el punto 3. Información de Garantías (i) del documento 3040 - Bacen.
+        * `ACORDOS_COMPENSACAO`: operaciones amparadas por acuerdos para la compensación y liquidación de obligaciones en el ámbito del SFN, según la Resolución 3.263, del 24 de febrero de 2005.
         * `NAO_EXIGE_GARANTIA`
       example: CESSAO_DIREITOS_CREDITORIOS
     ResponsePersonalFinancings:
@@ -174,7 +174,7 @@ components:
       properties:
         data:
           type: array
-          description: Conjunto de informações referente ao produto Financiamentos.
+          description: Conjunto de informaciones referentes al producto Financiamientos.
           minItems: 1
           items:
             $ref: '#/components/schemas/ResponsePersonalFinancingsData'
@@ -209,7 +209,7 @@ components:
             - FINANCIAMENTO_RURAL_INDUSTRIALIZACAO
             - FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO_SFH
             - FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO_SFI
-          description: 'Modalidades de financiamentos ofertados para pessoas naturais, conforme Circular 4015-Bacen. Segundo cartilha do Bacen: Financiamento é um contrato entre o cliente e uma instituição financeira, mas com, destinação específica como para a aquisição de veículo ou de bem imóvel, que funcionam como garantia para o crédito concedido'
+          description: 'Modalidades de financiamiento ofrecidas a personas naturales, conforme a la Circular 4015-Bacen. Según cartilla del Bacen: El financiamiento es un contrato entre el cliente y una institución financiera, pero con destinación específica, como la adquisición de vehículo o bien inmueble, que funcionan como garantía para el crédito concedido.'
           example: FINANCIAMENTO_AQUISICAO_BENS_VEICULOS_AUTOMOTORES
         fees:
           $ref: '#/components/schemas/Fee'
@@ -219,7 +219,7 @@ components:
             $ref: '#/components/schemas/FinancingInterestRate'
           minItems: 1
           maxItems: 20
-          description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito
+          description: Lista que contiene el conjunto de informaciones necesarias para demostrar la distribución de frecuencias de las tasas de interés remuneratorias de la Modalidad de crédito.
         requiredWarranties:
           type: array
           items:
@@ -230,11 +230,11 @@ components:
           type: string
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 2000
-          description: Campo aberto para informar as condições contratuais relativas ao produto ou serviço informado. Pode ser informada a URL referente ao endereço onde constam as condições informadas.
+          description: Campo abierto para informar las condiciones contractuales relativas al producto o servicio informado. Se puede informar la URL referente a la dirección donde constan las condiciones informadas.
           example: 'https://empresaa1.com/personal_financing'
     Participant:
       type: object
-      description: Conjunto de informações relativas ao participante do Open Finance que oferta este produto.
+      description: Conjunto de informaciones relativas al participante del Open Finance que ofrece este producto.
       required:
         - brand
         - name
@@ -249,11 +249,11 @@ components:
           type: string
           maxLength: 80
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: Nome da Marca selecionada pelas Organizações
-          example: Organização A
+          description: Nombre de la Marca seleccionada por las Organizaciones.
+          example: Organización A
         name:
           type: string
-          description: Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A'
+          description: Nombre de la Institución, perteneciente a la marca, responsable de la modalidad de Préstamos. p.ej. 'Empresa de la Organización A'.
           maxLength: 80
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: 'Empresa A1'
@@ -269,9 +269,9 @@ components:
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 1024
           description: |
-            URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
-            Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
-          example: 'https://empresadaorganizacaoa.com/complementarylist'
+            URL del enlace que contendrá la lista complementaria con los nombres y CNPJs agrupados bajo el mismo cnpjNumber. Los contenidos en esta lista tienen las mismas características para productos y servicios. Dirección electrónica de acceso al canal. Será obligatoriamente llenado si existe una lista complementaria con los nombres y CNPJs a ser disponible.
+            Restricción: Será obligatoriamente llenado si existe una lista complementaria con los nombres y CNPJs a ser disponible.
+          example: 'https://empresadaorganizaciona.com/complementarylist'
     FinancingService:
       type: object
       required:
@@ -289,21 +289,21 @@ components:
         name:
           type: string
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: 'Nomes das Tarifas cobradas sobre Serviços ofertados à Modalidade de Financiamento, para pessoa natural'
+          description: 'Nombres de las Tarifas cobradas por Servicios ofrecidos a la Modalidad de Financiamiento, para persona natural.'
           maxLength: 250
-          example: 'Avaliação, Reavaliação e Substituição de Bens Recebidos em Garantia'
+          example: 'Evaluación, Reevaluación y Sustitución de Bienes Recibidos en Garantía'
         code:
           type: string
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: 'Sigla de identificação do serviço relacionado à Modalidade de Financiamento informada, para pessoa natural. Campo aberto'
+          description: 'Sigla de identificación del servicio relacionado a la Modalidad de Financiamiento informada, para persona natural. Campo abierto.'
           maxLength: 100
           example: AQBAM009
         chargingTriggerInfo:
           type: string
           maxLength: 2000
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: 'Fatores geradores de cobrança que incidem sobre as Modalidades de Financiamentos, para pessoa natural. Campo Livre'
-          example: 'R$ 570.00 Por solicitação'
+          description: 'Factores generadores de cobro que inciden sobre las Modalidades de Financiamiento, para persona natural. Campo libre.'
+          example: 'R$ 570.00 Por solicitud'
         prices:
           type: array
           items:
@@ -349,16 +349,16 @@ components:
             - CREDITO_RURAL_TRFC_PRE
             - CREDITO_RURAL_TRFC_POS
             - OUTROS_INDEXADORES
-          description: 'Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040'
+          description: 'Tipos de tasas referenciales o indexadores, conforme Anexo 5: Tasa referencial o Indexador (Indx), del Documento 3040.'
           example: PRE_FIXADO
         rate:
           type: string
           pattern: '^\d{1}\.\d{6}$'
           description: |
-            Percentual que representa o indexador Pós selecionado. Ex: 100% da TR = 1.000000 da TR, 90% da TR = 0.9000000. 
-            Em casos em que não haja indexador, deve ser selecionado Sem Indexador no campo /referentialRateIndexe e representado o rate de 0.000000 (zero). 
-            Em caso em que a taxa é somente Pré fixada, o rate também deverá ser colocado como 0.000000 (zero).
-            A apuração pode acontecer com até 6 casas decimais. O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem - Ex: 0.150000 = 15%. O valor 1.000000 representa 100%).
+            Porcentaje que representa el indexador Pos seleccionado. Ej: 100% de la TR = 1.000000 de la TR, 90% de la TR = 0.9000000. 
+            En casos donde no haya indexador, debe seleccionarse Sin Indexador en el campo /referentialRateIndexer y representarse la tasa de 0.000000 (cero). 
+            En caso de que la tasa sea solo Fija, la tasa también deberá ser 0.000000 (cero).
+            El cálculo puede realizarse con hasta 6 decimales. El llenado debe respetar las 6 decimales, incluso si vienen completadas con ceros (representación de porcentaje - Ej: 0.150000 = 15%. El valor 1.000000 representa 100%).
           example: '0.150000'
           minLength: 8
           maxLength: 8
@@ -392,14 +392,14 @@ components:
         minimumRate:
           type: string
           pattern: '^\d{1}\.\d{6}$'
-          description: 'Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)'
+          description: 'Porcentaje mínimo cobrado (tasa efectiva) en el mes de referencia, para el Financiamiento contratado. El cálculo puede realizarse con hasta 4 decimales. El llenado debe respetar las 4 decimales, incluso si vienen completadas con ceros (representación de porcentaje, p.ej: 0.1500. Este valor representa 15%. El valor 1 representa 100%).'
           example: '0.045600'
           minLength: 8
           maxLength: 8
         maximumRate:
           type: string
           pattern: '^\d{1}\.\d{6}$'
-          description: 'Percentual máximo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)'
+          description: 'Porcentaje máximo cobrado (tasa efectiva) en el mes de referencia, para el Financiamiento contratado. El cálculo puede realizarse con hasta 4 decimales. El llenado debe respetar las 4 decimales, incluso si vienen completadas con ceros (representación de porcentaje, p.ej: 0.1500. Este valor representa 15%. El valor 1 representa 100%).'
           example: '0.686500'
           minLength: 8
           maxLength: 8
@@ -412,7 +412,7 @@ components:
       properties:
         data:
           type: array
-          description: Conjunto de informações referente ao produto Financiamentos.
+          description: Conjunto de informaciones referentes al producto Financiamientos.
           minItems: 1
           items:
             $ref: '#/components/schemas/BusinessFinancingData'
@@ -447,7 +447,7 @@ components:
             - FINANCIAMENTO_RURAL_INDUSTRIALIZACAO
             - FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO_SFH
             - FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO_SFI
-          description: 'Modalidades de financiamentos ofertados para pessoas jurídicas, conforme Circular 4015-Bacen. Segundo cartilha do Bacen: Financiamento é um contrato entre o cliente e uma instituição financeira, mas com, destinação específica como para a aquisição de veículo ou de bem imóvel, que funcionam como garantia para o crédito concedido'
+          description: 'Modalidades de financiamiento ofrecidas a personas jurídicas, conforme a la Circular 4015-Bacen. Según cartilla del Bacen: El financiamiento es un contrato entre el cliente y una institución financiera, pero con destinación específica, como la adquisición de vehículo o bien inmueble, que funcionan como garantía para el crédito concedido.'
           example: FINANCIAMENTO_AQUISICAO_BENS_VEICULOS_AUTOMOTORES
         fees:
           $ref: '#/components/schemas/Fee'
@@ -457,7 +457,7 @@ components:
             $ref: '#/components/schemas/FinancingInterestRate'
           minItems: 1
           maxItems: 20
-          description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito
+          description: Lista que contiene el conjunto de informaciones necesarias para demostrar la distribución de frecuencias de las tasas de interés remuneratorias de la Modalidad de crédito.
         requiredWarranties:
           type: array
           items:
@@ -468,18 +468,18 @@ components:
           type: string
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 2000
-          description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
+          description: Campo abierto para informar las condiciones contractuales relativas a la Modalidad de Financiamiento para persona jurídica informada. Se puede informar la URL referente a la dirección donde constan las condiciones informadas. Dirección electrónica de acceso al canal.
           example: 'https://empresaa1.com/personal_financing'
     Fee:
       type: object
-      description: Objeto que reúne informações de tarifas de serviços.
+      description: Objeto que reúne informaciones de tarifas de servicios.
       properties:
         services:
           type: array
           description: |
-            Lista das Tarifas cobradas sobre Serviço.
+            Lista de las Tarifas cobradas por Servicio.
 
-            Para melhor entendimento da regra de envio, verificar área do desenvolvedor na página de Dados Abertos a seção: tabela verdade com instruções de envio de dados por Instituições.
+            Para mejor comprensión de la regla de envío, verificar el área del desarrollador en la página de Datos Abiertos, sección: tabla verdad con instrucciones de envío de datos por Instituciones.
           items:
             $ref: '#/components/schemas/FinancingService'
           minItems: 1
@@ -506,9 +506,9 @@ components:
           maxLength: 12
           x-cds-type: AmountString
           description: |
-            Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar).
+            Valor de la mediana de cada franja relativa al servicio ofertado, informado en el período, conforme Res. nº 32 BCB, 2020. p.ej. '45.00' (representa un valor monetario. p.ej: 1547368.92. Este valor, considerando que la moneda sea BRL, significa R$ 1.547.368,92. El único separador presente debe ser el '.' (punto) para indicar el decimal. No debe haber separador de miles).
           
-            Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
+            Observación: Para efecto de comparación de tasas de los productos, las instituciones participantes, cuando no cobran tarifas, deben enviar el valor 0.00 señalando que para esa tasa no hay cobro por el servicio.
           example: '2000.00'
         currency:
           $ref:  '#/components/schemas/Currency'
@@ -530,9 +530,9 @@ components:
           maxLength: 12
           x-cds-type: AmountString
           description: |
-            Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
+            Valor mínimo apurado para la tarifa de servicios sobre la base de clientes en el mes de referencia.
 
-            Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
+            Observación: Para efecto de comparación de tasas de los productos, las instituciones participantes, cuando no cobran tarifas, deben enviar el valor 0.00 señalando que para esa tasa no hay cobro por el servicio.
           example: '1350.00'
         currency:
           $ref:  "#/components/schemas/Currency"
@@ -552,15 +552,15 @@ components:
           maxLength: 12
           x-cds-type: AmountString
           description: |
-            Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
+            Valor máximo apurado para la tarifa de servicios sobre la base de clientes en el mes de referencia.
 
-            Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
+            Observación: Para efecto de comparación de tasas de los productos, las instituciones participantes, cuando no cobran tarifas, deben enviar el valor 0.00 señalando que para esa tasa no hay cobro por el servicio.
           example: '8800.00'
         currency:
           $ref:  "#/components/schemas/Currency"
     Customer:
       type: object
-      description: Informações relevantes para o cliente.
+      description: Informaciones relevantes para el cliente.
       required:
         - rate
       x-regulatory-required:
@@ -569,7 +569,7 @@ components:
         rate:
           type: string
           description: |
-            Percentual de clientes em cada faixa.
+            Porcentaje de clientes en cada franja.
           pattern: '^\d{1}\.\d{6}$'
           example: '0.150000'
           minLength: 8
@@ -580,58 +580,58 @@ components:
       minLength: 3
       maxLength: 3
       x-cds-type: CurrencyString
-      description: 'Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217'
+      description: 'Moneda referente al valor mínimo de la Tarifa, según modelo ISO-4217.'
       example: BRL
     Links:
       type: object
-      description: Referências para outros recursos da API requisitada.
+      description: Referencias a otros recursos de la API solicitada.
       properties:
         self:
           type: string
           format: url
           minLength: 5
           maxLength: 2000
-          description: URL da página atualmente requisitada
+          description: URL de la página actualmente solicitada.
           example: 'https://api.banco.com.br/open-banking/opendata-financings/v1/resource'
         first:
           type: string
           format: url
           minLength: 5
           maxLength: 2000
-          description: URL da primeira página de registros
+          description: URL de la primera página de registros.
           example: 'https://api.banco.com.br/open-banking/opendata-financings/v1/resource'
         prev:
           type: string
           format: url
           minLength: 5
           maxLength: 2000
-          description: URL da página anterior de registros
+          description: URL de la página anterior de registros.
           example: 'https://api.banco.com.br/open-banking/opendata-financings/v1/resource'
         next:
           type: string
           format: url
           minLength: 5
           maxLength: 2000
-          description: URL da próxima página de registros
+          description: URL de la próxima página de registros.
           example: 'https://api.banco.com.br/open-banking/opendata-financings/v1/resource'
         last:
           type: string
           format: url
           minLength: 5
           maxLength: 2000
-          description: URL da última página de registros
+          description: URL de la última página de registros.
           example: 'https://api.banco.com.br/open-banking/opendata-financings/v1/resource'
     Meta:
       type: object
-      description: Meta informações referente à API requisitada.
+      description: Meta informaciones referentes a la API solicitada.
       properties:
         totalRecords:
           type: integer
-          description: Total de registros encontrados
+          description: Total de registros encontrados.
           example: 1
         totalPages:
           type: integer
-          description: Total de páginas para os registros encontrados
+          description: Total de páginas para los registros encontrados.
           example: 1
       required:
         - totalRecords
@@ -653,28 +653,28 @@ components:
               - detail
             properties:
               code:
-                description: Código de erro específico do endpoint
+                description: Código de error específico del endpoint.
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 255
               title:
-                description: Título legível por humanos deste erro específico
+                description: Título legible por humanos de este error específico.
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 255
               detail:
-                description: Descrição legível por humanos deste erro específico
+                description: Descripción legible por humanos de este error específico.
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 2048
         meta:
           type: object
-          description: Meta informações referente à API requisitada.
+          description: Meta informaciones referentes a la API solicitada.
           required:
             - requestDateTime
           properties:
             requestDateTime:
-              description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+              description: 'Fecha y hora de la consulta, conforme a la especificación RFC-3339, formato UTC.'
               type: string
               maxLength: 20
               format: date-time
@@ -696,28 +696,28 @@ components:
               - detail
             properties:
               code:
-                description: Código de erro específico do endpoint
+                description: Código de error específico del endpoint.
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 255
               title:
-                description: Título legível por humanos deste erro específico
+                description: Título legible por humanos de este error específico.
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 255
               detail:
-                description: Descrição legível por humanos deste erro específico
+                description: Descripción legible por humanos de este error específico.
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 2048
         meta:
           type: object
-          description: Meta informações referente à API requisitada.
+          description: Meta informaciones referentes a la API solicitada.
           required:
             - requestDateTime
           properties:
             requestDateTime:
-              description: Data e hora da consulta, conforme especificação RFC-3339, formato UTC.
+              description: Fecha y hora de la consulta, conforme a la especificación RFC-3339, formato UTC.
               type: string
               format: date-time
               minLength: 20
@@ -737,7 +737,7 @@ components:
     page:
       name: page
       in: query
-      description: Número da página que está sendo requisitada (o valor da primeira página é 1).
+      description: Número de la página que se está solicitando (el valor de la primera página es 1).
       schema:
         type: integer
         format: int32
@@ -747,7 +747,7 @@ components:
     pageSize:
       name: page-size
       in: query
-      description: Quantidade total de registros por páginas.
+      description: Cantidad total de registros por página.
       schema:
         type: integer
         format: int32
@@ -756,43 +756,43 @@ components:
         maximum: 1000
   responses:
     BadRequest:
-      description: A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.
+      description: La solicitud fue malformada, omitiendo atributos obligatorios, ya sea en el payload o a través de atributos en la URL.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     NotFound:
-      description: O recurso solicitado não existe ou não foi implementado.
+      description: El recurso solicitado no existe o no ha sido implementado.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     MethodNotAllowed:
-      description: O consumidor tentou acessar o recurso com um método não suportado.
+      description: El consumidor intentó acceder al recurso con un método no soportado.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     TooManyRequests:
-      description: A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
+      description: La operación fue rechazada, ya que se realizaron demasiadas solicitudes dentro de un período determinado o se alcanzó el límite global de solicitudes concurrentes.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     InternalServerError:
-      description: Ocorreu um erro no gateway da API ou no microsserviço.
+      description: Ocurrió un error en el gateway de la API o en el microservicio.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     GatewayTimeout:
-      description: GATEWAY TIMEOUT - A requisição não foi atendida dentro do tempo limite estabelecido.
+      description: GATEWAY TIMEOUT - La solicitud no fue atendida dentro del tiempo límite establecido.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     SiteIsOverloaded:
-      description: O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.
+      description: El sitio está sobrecargado y la operación fue rechazada, ya que se alcanzó el límite máximo de TPS global, en este momento.
       content:
         application/json; charset=utf-8:
           schema:
@@ -803,3 +803,4 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
+            

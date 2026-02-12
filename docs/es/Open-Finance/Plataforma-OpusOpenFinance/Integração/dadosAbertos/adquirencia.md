@@ -15,12 +15,8 @@ alternate_lang:
 
 Este es un ejemplo de archivo JSON de respuesta de la API ***OpenData Acquiring Services***.
 
-Haga clic [**aquí**](open-data-acquiring-services.json){:download="open-data-acquiring-services.json"} para descargar el archivo de ejemplo.
+Haga clic [**aquí**](./anexos/json/es-openData-acquiringServices.json){:download="es-openData-acquiringServices.json"} para descargar el archivo de ejemplo y verlo [**aquí**](./anexos/json/es-openData-acquiringServices.json).
 
 Para los posibles valores de cada clave JSON consulte la [API asociada][Link-API].
 
-```json
-{% include_relative open-data-acquiring-services.json %}
-```
-
-[Link-API]: ../../../../swagger-ui/index.html?api=open-data-acquiring
+[Link-API]: ../../../../../swagger-ui/index.html?api=es-open-data-acquiring

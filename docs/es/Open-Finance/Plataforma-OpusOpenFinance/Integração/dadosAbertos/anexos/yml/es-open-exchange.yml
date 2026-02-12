@@ -2,28 +2,28 @@ openapi: 3.0.0
 info:
   title: API OpenData Exchange - Open Finance Brasil
   description: |
-    API de Câmbio da fase OpenData do Open Finance Brasil.
-    API que retorna informações de Câmbio.
+    API de Cambio de la fase OpenData del Open Finance Brasil.
+    API que retorna información de Cambio.
   version: 1.0.1
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
 tags:
   - name: Exchange Online Rate
-    description: Operações para obter as informações de Câmbio para taxa online.
+    description: Operaciones para obtener la información de Cambio para tasa online.
   - name: Exchange VET Value
-    description: Operações para obter as informações de Câmbio para valor do VET.
+    description: Operaciones para obtener la información de Cambio para valor del VET.
 paths:
   /online-rates:
     get:
       tags:
         - Exchange Online Rate
-      summary: Conjunto de informações de Câmbio para taxa online.
+      summary: Conjunto de información de Cambio para tasa online.
       operationId: exchangeGetOnlineRate
       description: |-
-        As instituições autorizadas a operar em câmbio que disponibilizam em seus canais digitais a possibilidade de contratação ou a informação de taxa de câmbio devem retornar as condições no momento da consulta, sendo admitida uma defasagem máxima de atualização de 5 minutos em relação a seus canais digitais.
+        Las instituciones autorizadas a operar en cambio que disponibilizan en sus canales digitales la posibilidad de contratación o la información de tasa de cambio deben retornar las condiciones en el momento de la consulta, siendo admitida una desfase máxima de actualización de 5 minutos en relación a sus canales digitales.
 
-        Já as demais instituições participantes do Open Finance autorizadas a operar em câmbio podem adotar as janelas de consulta da PTAX como frequência mínima de atualização das informações retornadas neste serviço.
+        Ya las demás instituciones participantes del Open Finance autorizadas a operar en cambio pueden adoptar las ventanas de consulta de la PTAX como frecuencia mínima de actualización de las informaciones retornadas en este servicio.
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
@@ -46,9 +46,9 @@ paths:
     get:
       tags:
         - Exchange VET Value
-      summary: Conjunto de informações de Câmbio para valor do VET.
+      summary: Conjunto de información de Cambio para valor del VET.
       operationId: exchangeGetVetValue
-      description: 'Método para disponibilizar os VETs praticados pela instituição nas operações de câmbio, agrupados por tipo de operação (compra ou venda), moeda, forma de entrega, faixas de valores e público-alvo (pessoa física, pessoa jurídica ou ambos).'
+      description: 'Método para disponibilizar los VETs practicados por la institución en las operaciones de cambio, agrupados por tipo de operación (compra o venta), moneda, forma de entrega, franjas de valores y público objetivo (persona física, persona jurídica o ambos).'
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
@@ -71,7 +71,7 @@ components:
   schemas:
     Links:
       type: object
-      description: Referências para outros recusos da API requisitada.
+      description: Referencias a otros recursos de la API solicitada.
       required:
         - self
       properties:
@@ -79,36 +79,36 @@ components:
           type: string
           format: url
           maxLength: 2000
-          description: URI completo que gerou a resposta atual.
+          description: URI completo que generó la respuesta actual.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
         first:
           type: string
           format: url
           maxLength: 2000
-          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
+          description: URI de la primera página que originó esta lista de resultados. Restricción - Obligatorio cuando no sea la primera página de la respuesta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
         prev:
           type: string
           format: url
           maxLength: 2000
-          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
+          description: "URI de la página anterior de esta lista de resultados. Restricción - \tObligatorio cuando no sea la primera página de la respuesta"
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
         next:
           type: string
           format: url
           maxLength: 2000
-          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          description: URI de la próxima página de esta lista de resultados. Restricción - Obligatorio cuando no sea la última página de la respuesta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
         last:
           type: string
           format: url
           maxLength: 2000
-          description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          description: URI de la última página de esta lista de resultados. Restricción - Obligatorio cuando no sea la última página de la respuesta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
       additionalProperties: false
     OpenDataMeta:
       type: object
-      description: Meta informações referente à API requisitada.
+      description: Meta informaciones referentes a la API solicitada.
       required:
         - totalRecords
         - totalPages
@@ -116,12 +116,12 @@ components:
         totalRecords:
           type: integer
           format: int32
-          description: Número total de registros no resultado
+          description: Número total de registros en el resultado
           example: 1
         totalPages:
           type: integer
           format: int32
-          description: Número total de páginas no resultado
+          description: Número total de páginas en el resultado
           example: 1
       additionalProperties: false
     OKResponseExchangeOnlineRate:
@@ -158,7 +158,7 @@ components:
       additionalProperties: false
     ExchangeOnlineRate:
       type: object
-      description: Conjunto de informações referentes às informações de câmbio
+      description: Conjunto de información referente a las informaciones de cambio
       required:
         - participant
         - foreignCurrency
@@ -188,22 +188,22 @@ components:
           minLength: 8
           pattern: '^\d{1,15}\.\d{6}$'
           example: '0.019800'
-          description: Valor da operação.
+          description: Valor de la operación.
         valueUpdateDateTime:
           type: string
           format: date-time
           maxLength: 20
           example: '2017-07-21T17:32:28Z'
-          description: Data e hora da última atualização da cotação.
+          description: Fecha y hora de la última actualización de la cotización.
           pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
         disclaimer:
           type: string
-          description: 'Disclaimer informando que a taxa apresentada é somente informativa, para a contratação de uma operação, deverá ser consultado o canal correspondente de cada instituição.'
-          example: 'Informamos que esta taxa é estimada e exclusiva para fins de Open Finance,  não sendo válida para a contratação de operações de câmbio. Para obter a taxa para fechamento do câmbio, pedimos consultar os canais disponíveis para contratação.'
+          description: 'Disclaimer informando que la tasa presentada es solamente informativa, para la contratación de una operación, deberá consultarse el canal correspondiente de cada institución.'
+          example: 'Informamos que esta tasa es estimada y exclusiva para fines de Open Finance, no siendo válida para la contratación de operaciones de cambio. Para obtener la tasa para cierre del cambio, pedimos consultar los canales disponibles para contratación.'
       example:
         participant:
-          brand: Organização
-          name: Organização A1
+          brand: Organización
+          name: Organización A1
           cnpjNumber: '13456789000112'
           urlComplementaryList: 'https://empresaa1.com/companies'
         foreignCurrency: USD
@@ -213,11 +213,11 @@ components:
         targetAudience: PESSOA_NATURAL
         value: '0.019800'
         valueUpdateDateTime: '2017-07-21T17:32:28Z'
-        disclaimer: 'Informamos que esta taxa é estimada e exclusiva para fins de Open Finance,  não sendo válida para a contratação de operações de câmbio. Para obter a taxa para fechamento do câmbio, pedimos consultar os canais disponíveis para contratação.'
+        disclaimer: 'Informamos que esta tasa es estimada y exclusiva para fines de Open Finance, no siendo válida para la contratación de operaciones de cambio. Para obtener la tasa para cierre del cambio, pedimos consultar los canales disponibles para contratación.'
       additionalProperties: false
     ExchangeVetValue:
       type: object
-      description: Conjunto de informações referentes às informações de câmbio
+      description: Conjunto de información referente a las informaciones de cambio
       required:
         - participant
         - transactionType
@@ -245,8 +245,8 @@ components:
     ExchangeNoIdentificationFrequencyDistribution:
       type: object
       description: |
-        Distribuição por frequência.  
-        É necessário que as Instituições Financeiras desconsiderem os valores de VET negativo no cálculo de vetAmount.
+        Distribución por frecuencia.  
+        Es necesario que las Instituciones Financieras desconsideren los valores de VET negativo en el cálculo de vetAmount.
       required:
         - prices
         - minimum
@@ -254,7 +254,7 @@ components:
       properties:
         prices:
           type: array
-          description: Distribuição dos preços.
+          description: Distribución de los precios.
           items:
             $ref: '#/components/schemas/ExchangeFrequencyDistributionPrice'
           minItems: 4
@@ -305,7 +305,7 @@ components:
           pattern: '^\d{1,15}\.\d{6}$'
         operationRate:
           type: string
-          description: Percentual de Operação.
+          description: Porcentaje de Operación.
           example: '0.500000'
           minLength: 8
           maxLength: 8
@@ -313,7 +313,7 @@ components:
       additionalProperties: false
     OnlineRate:
       type: object
-      description: Taxa disponibilizada (taxa online) pelas instituições no formato D+0/D+2 (valor U$500 operações câmbio pronto) separado por moeda dólar e euro compra e venda PF/PJ.
+      description: Tasa disponibilizada (tasa online) por las instituciones en el formato D+0/D+2 (valor U$500 operaciones cambio pronto) separado por moneda dólar y euro compra y venta PF/PJ.
       required:
         - foreignCurrency
         - deliveryForeignCurrency
@@ -339,18 +339,18 @@ components:
           minLength: 3
           pattern: '^\d{1}\.\d{1,5}$'
           example: '5.5023'
-          description: Valor da operação.
+          description: Valor de la operación.
         valueUpdateDateTime:
           type: string
           format: date-time
           maxLength: 20
           example: '2017-07-21T17:32:28Z'
-          description: Data e hora da última atualização da cotação.
+          description: Fecha y hora de la última actualización de la cotización.
           pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
       additionalProperties: false
     EnumExchangeDeliveryForeignCurrency:
       type: string
-      description: 'A classificação da forma de operação, conforme Resolução BCB nº 277 de 31/12/2022 ou outro normativo que a revogue. (Vide Enum)<br><ul><li>ESPECIE</li><li>CARTAO_PRE_PAGO</li><li>TELETRANSMISSAO_SWIFT</li></ul>'
+      description: 'La clasificación de la forma de operación, conforme Resolución BCB nº 277 de 31/12/2022 u otro normativo que la revoque. (Véase Enum)<br><ul><li>ESPECIE</li><li>CARTAO_PRE_PAGO</li><li>TELETRANSMISSAO_SWIFT</li></ul>'
       enum:
         - ESPECIE
         - CARTAO_PRE_PAGO
@@ -359,9 +359,9 @@ components:
     EnumExchangeRangeTransactionCategory:
       type: string
       description: |
-        Faixa de valor da operação (equivalente em USD), conforme Instrução
+        Franja de valor de la operación (equivalente en USD), conforme Instrucción
 
-        Normativa BCB 184, de 12 Novembro de 2021.
+        Normativa BCB 184, de 12 Noviembre de 2021.
       enum:
         - '0,01_200'
         - '200,01_500'
@@ -373,7 +373,7 @@ components:
       example: '0,01_200'
     EnumExchangeTransactionCategory:
       type: string
-      description: 'A classificação do tipo de operação, conforme Resolução BCB nº 277 de 31/12/2022 ou outro normativo que a revogue.'
+      description: 'La clasificación del tipo de operación, conforme Resolución BCB nº 277 de 31/12/2022 u otro normativo que la revoque.'
       enum:
         - COMERCIO_EXTERIOR
         - TRANSPORTE
@@ -389,17 +389,17 @@ components:
     EnumExchangeTransactionType:
       type: string
       description: |
-        Determina se o Banco está comprando ou vendendo a moeda estrangeira nas operações
-        spot,  que se liquidam em até dois dias (não aplica-se a operações futuras. (Vide Enum)
+        Determina si el Banco está comprando o vendiendo la moneda extranjera en las operaciones
+        spot, que se liquidan en hasta dos días (no aplica a operaciones futuras). (Véase Enum)
         - Compra
-        - Venda
+        - Venta
       enum:
         - COMPRA
         - VENDA
       example: COMPRA
     EnumDistinctTargetAudienceExchange:
       type: string
-      description: 'Público alvo. Em casos em que a instituição não possua taxas de câmbio diferenciadas para pessoa natural e jurídica utilizar a opção:PESSOA_NATURAL_JURIDICA.'
+      description: 'Público objetivo. En casos en que la institución no posea tasas de cambio diferenciadas para persona natural y jurídica utilizar la opción: PESSOA_NATURAL_JURIDICA.'
       enum:
         - PESSOA_NATURAL
         - PESSOA_JURIDICA
@@ -407,7 +407,7 @@ components:
       example: PESSOA_JURIDICA
     EnumInterval:
       type: string
-      description: Faixas de frequência
+      description: Franjas de frecuencia
       enum:
         - 1_FAIXA
         - 2_FAIXA
@@ -416,13 +416,13 @@ components:
       example: 1_FAIXA
     CnpjNumber:
       type: string
-      description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
+      description: 'El CNPJ corresponde al número de inscripción en el Cadastro de Pessoa Jurídica. Debe contener solo los números del CNPJ, sin máscara.'
       maxLength: 14
       pattern: '^\d{14}$'
       example: '13456789000112'
     Participant:
       type: object
-      description: Conjunto de informações relativas ao participante do produto de Open Finance
+      description: Conjunto de información relativa al participante del producto de Open Finance
       required:
         - brand
         - name
@@ -430,31 +430,31 @@ components:
       properties:
         brand:
           type: string
-          description: 'Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
+          description: 'Nombre de la marca reportada por el participante del Open Finance. El concepto al que se refiere la ''marca'' es en esencia una promesa de la empresa de proporcionar una serie específica de atributos, beneficios y servicios uniformes a los clientes.'
           pattern: '[\w\W\s]*'
           maxLength: 80
-          example: Organização
+          example: Organización
         name:
           type: string
-          description: Nome do participante do Open Finance.
+          description: Nombre del participante del Open Finance.
           pattern: '[\w\W\s]*'
           maxLength: 80
-          example: Organização A1
+          example: Organización A1
         cnpjNumber:
           $ref: '#/components/schemas/CnpjNumber'
         urlComplementaryList:
           type: string
           format: url
           description: |
-            Espera-se que valor de retorno, após acesso ao link ‘urlComplementaryList’, deve ser array de objeto com a estrutura abaixo:
+            Se espera que el valor de retorno, después del acceso al enlace 'urlComplementaryList', sea un array de objeto con la estructura abajo:
 
-            - ‘name’ com o valor contido no campo ‘LegalEntityName’ conforme cadastro no diretório;
+            - 'name' con el valor contenido en el campo 'LegalEntityName' según registro en el directorio;
 
-            - 'cnpjNumber' com o valor contido no campo CNPJ (‘RegistrationNumber’) correspondente a esta instituição;
+            - 'cnpjNumber' con el valor contenido en el campo CNPJ ('RegistrationNumber') correspondiente a esta institución;
 
-            - Ambos do tipo string;
+            - Ambos de tipo string;
 
-            - Ambos obrigatórios.
+            - Ambos obligatorios.
           maxLength: 1024
           example: 'https://empresaa1.com/companies'
       additionalProperties: false
@@ -462,7 +462,7 @@ components:
       type: string
       pattern: '^[A-Z]{3}$'
       maxLength: 3
-      description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+      description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
       example: BRL
     OpenDataResponseError:
       type: object
@@ -481,17 +481,17 @@ components:
               - detail
             properties:
               code:
-                description: Código de erro específico do endpoint
+                description: Código de error específico del endpoint
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               title:
-                description: Título legível por humanos deste erro específico
+                description: Título legible por humanos de este error específico
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               detail:
-                description: Descrição legível por humanos deste erro específico
+                description: Descripción legible por humanos de este error específico
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 2048
@@ -503,7 +503,7 @@ components:
     page:
       name: page
       in: query
-      description: Número da página que está sendo requisitada (o valor da primeira página é 1).
+      description: Número de la página que se está solicitando (el valor de la primera página es 1).
       schema:
         type: integer
         default: 1
@@ -513,7 +513,7 @@ components:
     pageSize:
       name: page-size
       in: query
-      description: Quantidade total de registros por páginas.
+      description: Cantidad total de registros por páginas.
       schema:
         type: integer
         default: 25
@@ -522,49 +522,49 @@ components:
         maximum: 1000
   responses:
     OKResponseExchangeOnlineRate:
-      description: Dados de operações de câmbio da instituição obtidos com sucesso.
+      description: Datos de operaciones de cambio de la institución obtenidos con éxito.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/OKResponseExchangeOnlineRate'
     OKResponseExchangeVetValue:
-      description: Dados de operações de câmbio da instituição obtidos com sucesso.
+      description: Datos de operaciones de cambio de la institución obtenidos con éxito.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/OKResponseExchangeVetValue'
     BadRequest:
-      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
+      description: 'La solicitud fue malformada, omitiendo atributos obligatorios, sea en el payload o a través de atributos en la URL.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/OpenDataResponseError'
     NotFound:
-      description: O recurso solicitado não existe ou não foi implementado
+      description: El recurso solicitado no existe o no ha sido implementado
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/OpenDataResponseError'
     MethodNotAllowed:
-      description: O consumidor tentou acessar o recurso com um método não suportado
+      description: El consumidor intentó acceder al recurso con un método no soportado
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/OpenDataResponseError'
     TooManyRequests:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite de requisições concorrentes foi atingido.'
+      description: 'La operación fue rechazada, pues muchas solicitudes fueron hechas dentro de un determinado período o el límite de solicitudes concurrentes fue alcanzado.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/OpenDataResponseError'
     InternalServerError:
-      description: Ocorreu um erro no gateway da API ou no microsserviço
+      description: Ocurrió un error en el gateway de la API o en el microservicio
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/OpenDataResponseError'
     SiteIsOverloaded:
-      description: 'O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.'
+      description: 'El sitio está sobrecargado y la operación fue rechazada, pues se alcanzó el límite máximo de TPS global, en este momento.'
       content:
         application/json; charset=utf-8:
           schema:
@@ -584,29 +584,30 @@ components:
                     - detail
                   properties:
                     code:
-                      description: Código de erro específico do endpoint
+                      description: Código de error específico del endpoint
                       type: string
                       pattern: '[\w\W\s]*'
                       maxLength: 255
                     title:
-                      description: Título legível por humanos deste erro específico
+                      description: Título legible por humanos de este error específico
                       type: string
                       pattern: '[\w\W\s]*'
                       maxLength: 255
                     detail:
-                      description: Descrição legível por humanos deste erro específico
+                      description: Descripción legible por humanos de este error específico
                       type: string
                       pattern: '[\w\W\s]*'
                       maxLength: 2048
               meta:
                 type: object
-                description: Meta informações referente à API requisitada.
+                description: Meta informaciones referentes a la API solicitada.
                 required:
                   - requestDateTime
                 properties:
                   requestDateTime:
-                    description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+                    description: 'Fecha y hora de la consulta, según especificación RFC-3339, formato UTC.'
                     type: string
                     maxLength: 20
                     format: date-time
                     example: '2021-05-21T08:30:00Z'
+                    

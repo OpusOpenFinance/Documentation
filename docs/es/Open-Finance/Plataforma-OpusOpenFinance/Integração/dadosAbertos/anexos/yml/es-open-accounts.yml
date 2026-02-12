@@ -1,28 +1,28 @@
 openapi: 3.0.0
 info:
-  title: API OpenData Accounts do Open Finance Brasil
-  description: A API descrita neste documento é referente as API Accounts da fase OpenData do Open Finance Brasil.
+  title: API OpenData Accounts del Open Finance Brasil
+  description: La API descrita en este documento se refiere a las API Accounts de la fase OpenData del Open Finance Brasil.
   version: 1.0.1
   license:
     name: Apache 2.0
     url: "https://www.apache.org/licenses/LICENSE-2.0"
 tags:
   - name: Accounts
-    description: Operações para listagem de contas.
+    description: Operaciones para listado de cuentas.
 paths:
   /personal-accounts:
     get:
       tags:
         - Accounts
-      summary: Obtém dados das contas pessoa natural
-      description: Obtém dados das contas
+      summary: Obtiene datos de las cuentas de persona natural
+      description: Obtiene datos de las cuentas
       operationId: getPersonalAccounts
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
       responses:
         '200':
-          description: Dados sobre contas pessoa natural obtidos com sucesso.
+          description: Datos sobre cuentas de persona natural obtenidos con éxito.
           content:
             application/json:
               schema:
@@ -47,15 +47,15 @@ paths:
     get:
       tags:
         - Accounts
-      summary: Obtém dados das contas pessoa jurídica
-      description: Obtém dados das contas pessoa jurídica
+      summary: Obtiene datos de las cuentas de persona jurídica
+      description: Obtiene datos de las cuentas de persona jurídica
       operationId: getBusinessAccounts
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
       responses:
         '200':
-          description: Dados sobre contas pessoa jurídica obtidos com sucesso.
+          description: Datos sobre cuentas de persona jurídica obtenidos con éxito.
           content:
             application/json:
               schema:
@@ -80,7 +80,7 @@ components:
   schemas:
     AccountsTermsConditions:
       type: object
-      description: Objeto que reúne informações relativas a Termos e Condições para as modalidades tratadas
+      description: Objeto que reúne información relativa a Términos y Condiciones para las modalidades tratadas
       required:
         - minimumBalance
         - elegibilityCriteriaInfo
@@ -96,13 +96,13 @@ components:
           type: string
           maxLength: 2000
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: 'Critérios de qualificação do cliente com a finalidade de definir sua elegibilidade para a aquisição do tipo de conta. Campo Aberto'
+          description: 'Criterios de calificación del cliente con el fin de definir su elegibilidad para la adquisición del tipo de cuenta. Campo Abierto'
           example: 'https://example.com/mobile-banking'
         closingProcessInfo:
           type: string
           maxLength: 2000
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: 'Procedimentos de encerramento para o tipo de conta tratado. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-banking'' '
+          description: 'Procedimientos de cierre para el tipo de cuenta tratado. Posibilidad de inscripción de la URL. Dirección electrónica de acceso al canal. p.ej. ''https://example.com/mobile-banking'' '
           example: 'https://example.com/mobile-banking'
     ResponsePersonalAccounts:
       type: object
@@ -114,7 +114,7 @@ components:
         data:
           type: array
           minItems: 1
-          description: Conjunto de informações referente ao produto Contas.
+          description: Conjunto de información referente al producto Cuentas.
           items:
             $ref: '#/components/schemas/PersonalData'
         links:
@@ -138,7 +138,7 @@ components:
       properties:
         participant:
           type: object
-          description: Conjunto de informações relativas ao participante do Open Finance que oferta este produto.
+          description: Conjunto de información relativa al participante del Open Finance que ofrece este producto.
           required:
             - brand
             - name
@@ -153,11 +153,11 @@ components:
               type: string
               maxLength: 80
               pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-              description: 'Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes'
-              example: Organização A
+              description: 'Nombre de la Marca reportada por el participante del Open Finance. El concepto al que se refiere la ''marca'' es en esencia una promesa de la empresa de proporcionar una serie específica de atributos, beneficios y servicios uniformes a los clientes'
+              example: Organización A
             name:
               type: string
-              description: Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A'
+              description: Nombre de la Institución, perteneciente a la marca, responsable de la modalidad de Préstamos. p.ej.'Empresa de la Organización A'
               maxLength: 80
               pattern: '^(?!\s)[\w\W\s]*[^\s]$'
               example: 'Empresa A1'
@@ -173,8 +173,8 @@ components:
               pattern: '^(?!\s)[\w\W\s]*[^\s]$'
               maxLength: 1024
               description: |
-                URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
-                Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
+                URL del enlace que contendrá la lista complementaria con los nombres y CNPJs agrupados bajo el mismo cnpjNumber. Los contenidos en esta lista tienen las mismas características para productos y servicios. Dirección electrónica de acceso al canal. Será obligatoriamente completado si hay una lista complementaria con los nombres y CNPJs a ser disponible.
+                Restricción: Será obligatoriamente completado si hay una lista complementaria con los nombres y CNPJs a ser disponible
               example: 'https://empresadaorganizacaoa.com/complementarylist'
         type:
           $ref: '#/components/schemas/AccountType'
@@ -187,42 +187,42 @@ components:
           minItems: 1
           maxItems: 200
           description: |
-            Lista dos pacotes de serviços de contas com serviços essenciais padronizados e regulados pela Resolução BC 3919, de 25/11/2010
+            Lista de los paquetes de servicios de cuentas con servicios esenciales estandarizados y regulados por la Resolución BC 3919, de 25/11/2010
 
-            [Restrição]
-            - Obrigatório quando "type" for igual "CONTA_DEPOSITO_A_VISTA" (conta corrente) ou "CONTA_POUPANCA", porque existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados);
+            [Restricción]
+            - Obligatorio cuando "type" sea igual a "CONTA_DEPOSITO_A_VISTA" (cuenta corriente) o "CONTA_POUPANCA", porque existen hoy paquetes sujetos a cobro diferentes de los servicios esenciales (que no son cobrados);
 
-            - Opcional quando "type" for igual "CONTA_PAGAMENTO_PRE_PAGA" ficando condicionado caso a instituição tenha pacote de serviço atrelado a este tipo de conta.
+            - Opcional cuando "type" sea igual a "CONTA_PAGAMENTO_PRE_PAGA", condicionado a que la institución tenga un paquete de servicio vinculado a este tipo de cuenta.
         openingClosingChannels:
           type: array
           items:
             $ref: '#/components/schemas/OpeningClosingChannels'
           minItems: 1
           maxItems: 7
-          description: Lista dos canais para aberturas e encerramento
+          description: Lista de los canales para aperturas y cierre
         openingClosingChannelsAdditionalInfo:
           type: string
           maxLength: 140
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           description: |
-            Campo livre para preenchimento das informações adicionais referente ao "openingClosingChannels". 
+            Campo libre para completar la información adicional referente al "openingClosingChannels". 
 
-            [Restrição] Obrigatório quando "openingClosingChannels" for igual 'OUTROS'.
-          example: Informações adicionais 
+            [Restricción] Obligatorio cuando "openingClosingChannels" sea igual a 'OUTROS'.
+          example: Informaciones adicionales 
         transactionMethods:
           type: array
           items:
             $ref: '#/components/schemas/TransactionMethods'
           minItems: 1
           maxItems: 4
-          description: Lista de formas de movimentação
+          description: Lista de formas de movimiento
         termsConditions:
           $ref: '#/components/schemas/AccountsTermsConditions'
         incomeRate:
           $ref: '#/components/schemas/AccountsIncomeRate'
     AccountFee:
       type: object
-      description: Objeto que reúne informações de tarifas de serviços.
+      description: Objeto que reúne información de tarifas de servicios.
       x-regulatory-required:
         - priorityServices
       properties:
@@ -233,16 +233,16 @@ components:
           minItems: 1
           maxItems: 40
           description: |
-            Lista das tarifas cobradas sobre serviços prioritários. 
+            Lista de las tarifas cobradas sobre servicios prioritarios. 
 
-            [Restrição] Obrigatório quando "type" for igual "CONTA_DEPOSITO_A_VISTA" ou "CONTA_POUPANCA"
+            [Restricción] Obligatorio cuando "type" sea igual a "CONTA_DEPOSITO_A_VISTA" o "CONTA_POUPANCA"
         otherServices:
           type: array
           items:
             $ref: '#/components/schemas/AccountOtherService'
           minItems: 1
           maxItems: 100
-          description: Lista das Tarifas cobradas sobre outros Serviços, que não prioritários
+          description: Lista de las Tarifas cobradas sobre otros Servicios, no prioritarios
     AccountPriorityService:
       type: object
       required:
@@ -268,15 +268,15 @@ components:
           type: string
           maxLength: 2000
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: 'Fatos geradores de cobrança que incidem sobre os serviços prioritários, segundo Resolução 3.919 do Bacen, para pessoa natural.'
-          example: 'Fornecimento de extrato com a movimentação de um período em guichê de caixa ou por outras formas de atendimento pessoal, tal como atendimento telefônico realizado por atendente.'
+          description: 'Hechos generadores de cobro que inciden sobre los servicios prioritarios, según Resolución 3.919 del Bacen, para persona natural.'
+          example: 'Suministro de extracto con la movimentación de un período en ventanilla de caja u otras formas de atención personal, como atención telefónica realizada por operador.'
         prices:
           type: array
           items:
             $ref: '#/components/schemas/PersonalAccountPriorityServicePrice'
           minItems: 4
           maxItems: 4
-          description: Lista distribuição preços tarifas de serviços
+          description: Lista distribución precios tarifas de servicios
         minimum:
           $ref: '#/components/schemas/PriorityServiceMinimumPrice'
         maximum:
@@ -288,10 +288,10 @@ components:
         - CONTA_POUPANCA
         - CONTA_PAGAMENTO_PRE_PAGA
       description: |
-        Tipos de contas ofertadas para pessoa natural ou jurídica, p.ex. 'CONTA_DEPOSITO_A_VISTA'.
-        Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante
-        Conta poupança - foi criada para estimular as pessoas a pouparem. O dinheiro que ficar na conta por trinta dias passa a gerar rendimentos, com isenção de imposto de renda para quem declara. Ou seja, o dinheiro “cresce” (rende) enquanto ficar guardado na conta. Cada depósito terá rendimentos de mês em mês, sempre no dia do mês em que o dinheiro tiver sido depositado
-        Conta de pagamento pré-paga: segundo CIRCULAR Nº 3.680, BCB de  2013, é a 'destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'
+        Tipos de cuentas ofrecidas para persona natural o jurídica, p.ej. 'CONTA_DEPOSITO_A_VISTA'.
+        Cuenta de depósito a la vista o Cuenta corriente - es el tipo más común. En ella, el dinero está a su disposición para ser retirado en cualquier momento. Esta cuenta no genera rendimientos para el depositante
+        Cuenta de ahorro - fue creada para estimular a las personas a ahorrar. El dinero que permanezca en la cuenta por treinta días comienza a generar rendimientos, con exención de impuesto a la renta para quien declara. Es decir, el dinero "crece" (rinde) mientras está guardado en la cuenta. Cada depósito generará rendimientos mes a mes, siempre en el día del mes en que el dinero fue depositado
+        Cuenta de pago prepaga: según CIRCULAR Nº 3.680, BCB de 2013, es la 'destinada a la ejecución de transacciones de pago en moneda electrónica realizadas con base en fondos denominados en reales previamente aportados'
       example: CONTA_DEPOSITO_A_VISTA
     OpeningClosingChannels:
       type: string
@@ -303,7 +303,7 @@ components:
         - CENTRAL_TELEFONICA
         - CHAT
         - OUTROS
-      description: Canais disponíveis para abertura e encerramento de contas, p.ex. 'DEPENDENCIAS_PROPRIAS'
+      description: Canales disponibles para apertura y cierre de cuentas, p.ej. 'DEPENDENCIAS_PROPRIAS'
       example: DEPENDENCIAS_PROPRIAS
     TransactionMethods:
       type: string
@@ -312,7 +312,7 @@ components:
         - MOVIMENTACAO_CHEQUE
         - MOVIMENTACAO_CARTAO
         - MOVIMENTACAO_PRESENCIAL
-      description: Lista de formas de movimentação possíveis para a conta
+      description: Lista de formas de movimiento posibles para la cuenta
       example: MOVIMENTACAO_CARTAO
     PriorityServiceName:
       type: string
@@ -357,7 +357,7 @@ components:
         - FORNECIMENTO_SEGUNDA_VIA_FUNCAO_CREDITO
         - PAGAMENTO_CONTAS_UTILIZANDO_FUNCAO_CREDITO
         - SMS
-      description: 'Nome dos Serviços prioritários, segundo Resolução 3.919 do Bacen, para pessoa natural.'
+      description: 'Nombre de los Servicios prioritarios, según Resolución 3.919 del Bacen, para persona natural.'
       example: TRANSFERENCIA_TED_PESSOAL_OU_PRESENCIAL
     AccountOtherService:
       type: object
@@ -380,34 +380,34 @@ components:
           type: string
           maxLength: 250
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: 'Nome do Serviço que incide sobre tipo de conta (Campo Livre)'
+          description: 'Nombre del Servicio que incide sobre tipo de cuenta (Campo Libre)'
           example: Evento personalizado
         code:
           type: string
           maxLength: 100
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: 'Siglas de identificação do Serviço (Campo Livre)'
+          description: 'Siglas de identificación del Servicio (Campo Libre)'
           example: TALAO_DOMICILIO
         chargingTriggerInfo:
           type: string
           maxLength: 2000
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: Fatos geradores de cobrança que incidem sobre outros serviços para pessoa natural. (Campo Livre)
-          example: Cobrança devido a evento personalizado
+          description: Hechos generadores de cobro que inciden sobre otros servicios para persona natural. (Campo Libre)
+          example: Cobro debido a evento personalizado
         prices:
           type: array
           items:
             $ref: "#/components/schemas/Price"
           minItems: 4
           maxItems: 4
-          description: Lista distribuição preços tarifas de serviços
+          description: Lista distribución precios tarifas de servicios
         minimum:
           $ref: "#/components/schemas/MinimumPrice"
         maximum:
           $ref: "#/components/schemas/MaximumPrice"
     AccountPriorityServiceCode:
       type: string
-      description: 'Lista das Siglas de identificação do Serviço Prioritário, segundo Resolução 3.919 do Bacen.'
+      description: 'Lista de las Siglas de identificación del Servicio Prioritario, según Resolución 3.919 del Bacen.'
       example: TARIFA_PAGAMENTO_CONTAS
       enum:
         - CADASTRO
@@ -465,22 +465,22 @@ components:
           type: string
           maxLength: 250
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: Nome do Pacote de Serviços dado pela instituição.
-          example: Conta de depósitos à vista Movimentação com cartão (sem cheque)
+          description: Nombre del Paquete de Servicios dado por la institución.
+          example: Cuenta de depósitos a la vista Movimiento con tarjeta (sin cheque)
         services:
           type: array
           minItems: 1
           maxItems: 100
           items:
             $ref: '#/components/schemas/ServiceBundleServiceDetail'
-          description: Lista dos serviços que compõe o pacote de serviços
+          description: Lista de los servicios que componen el paquete de servicios
         prices:
           type: array
           items:
             $ref: "#/components/schemas/MonthlyPrice"
           minItems: 4
           maxItems: 4
-          description: Lista distribuição preços tarifas de serviços
+          description: Lista distribución precios tarifas de servicios
         minimum:
           $ref:  "#/components/schemas/MinimumPrice"
         maximum:
@@ -503,22 +503,22 @@ components:
           maxLength: 100
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           description: |
-            Código que identifica o Serviço que compõe o Pacote de Serviços, podendo ser da lista de Serviços Prioritários ou Outros Serviços. p.ex. segundo Resolução 3.919 do Bacen: 'SAQUE_TERMINAL'.
+            Código que identifica el Servicio que compone el Paquete de Servicios, pudiendo ser de la lista de Servicios Prioritarios u Otros Servicios. p.ej. según Resolución 3.919 del Bacen: 'SAQUE_TERMINAL'.
           example: SAQUE_TERMINAL
         chargingTriggerInfo:
           type: string
           maxLength: 2000
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           description: |
-            Fatos geradores de cobrança que incidem sobre serviço que compõe o Pacote de Serviços.
-          example: Realização de pesquisa em serviços de proteção ao crédito, base de dados e informações cadastrais, e tratamento de dados e informações necessários ao início relacionamento decorrente da abertura de conta de depósitos à vista ou de poupança ou contratação de operação de crédito ou de arrendamento mercantil, não podendo ser cobrada cumulativamente
+            Hechos generadores de cobro que inciden sobre el servicio que compone el Paquete de Servicios.
+          example: Realización de investigación en servicios de protección al crédito, base de datos e informaciones cadastrales, y tratamiento de datos e informaciones necesarios para el inicio de la relación derivado de la apertura de cuenta de depósitos a la vista o de ahorro o contratación de operación de crédito o de arrendamiento mercantil, no pudiendo ser cobrada acumulativamente
         eventLimitQuantity:
           type: string
           pattern: ^(\d{1,6}){1}$
           minLength: 1
           maxLength: 6
           description: |
-            Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços (Número de eventos incluídos no mês) p.ex.'2'. No caso de quantidade ilimitada, reportar 999999
+            Según Resolución 4196, BCB, de 2013: Cantidad de eventos previstos en el Paquete de Servicios (Número de eventos incluidos en el mes) p.ej.'2'. En caso de cantidad ilimitada, reportar 999999
           example: '2'
         freeEventQuantity:
           type: string
@@ -526,7 +526,7 @@ components:
           minLength: 1
           maxLength: 6
           description: |
-            Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços com isenção de Tarifa.p.ex.'1'  No caso de quantidade ilimitada, reportar 999999
+            Según Resolución 4196, BCB, de 2013: Cantidad de eventos previstos en el Paquete de Servicios con exención de Tarifa.p.ej.'1' En caso de cantidad ilimitada, reportar 999999
           example: '1'
     AccountsIncomeRate:
       type: object
@@ -538,17 +538,17 @@ components:
           type: string
           maxLength: 2000
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          example: Remuneração trimestral de x% + TR conforme determinação legal vigente​
+          example: Remuneración trimestral de x% + TR según determinación legal vigente​
           description: |
-            Descrição da Remuneração especificamente para Conta de Poupança. Deve ser preenchido com a determinação legal vigente. 
+            Descripción de la Remuneración específicamente para Cuenta de Ahorro. Debe ser completado con la determinación legal vigente. 
             
-            [Restrição] Obrigatório quando "type" for igual "CONTA_POUPANCA".
+            [Restricción] Obligatorio cuando "type" sea igual a "CONTA_POUPANCA".
         prepaidPaymentAccount:
           type: string
           maxLength: 2000
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: Campo Livre. Deve explicitar o Percentual em favor do titular da conta de pagamento pré-paga.
-          example: '40% Rendimento a.m.'
+          description: Campo Libre. Debe explicitar el Porcentaje a favor del titular de la cuenta de pago prepaga.
+          example: '40% Rendimiento a.m.'
     ResponseBusinessAccounts:
       type: object
       required:
@@ -559,7 +559,7 @@ components:
         data:
           type: array
           minItems: 1
-          description: Conjunto de informações referente ao produto Contas.
+          description: Conjunto de información referente al producto Cuentas.
           items:
             $ref: '#/components/schemas/BusinessData'
         links:
@@ -583,7 +583,7 @@ components:
       properties:
         participant:
           type: object
-          description: Conjunto de informações relativas ao participante do Open Finance que oferta este produto.
+          description: Conjunto de información relativa al participante del Open Finance que ofrece este producto.
           required:
             - brand
             - name
@@ -598,11 +598,11 @@ components:
               type: string
               maxLength: 80
               pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-              description: 'Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes'
-              example: Organização A
+              description: 'Nombre de la Marca reportada por el participante del Open Finance. El concepto al que se refiere la ''marca'' es en esencia una promesa de la empresa de proporcionar una serie específica de atributos, beneficios y servicios uniformes a los clientes'
+              example: Organización A
             name:
               type: string
-              description: Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A'
+              description: Nombre de la Institución, perteneciente a la marca, responsable de la modalidad de Préstamos. p.ej.'Empresa de la Organización A'
               maxLength: 80
               pattern: '^(?!\s)[\w\W\s]*[^\s]$'
               example: 'Empresa A1'
@@ -618,14 +618,14 @@ components:
               pattern: '^(?!\s)[\w\W\s]*[^\s]$'
               maxLength: 1024
               description: |
-                URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
-                Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
+                URL del enlace que contendrá la lista complementaria con los nombres y CNPJs agrupados bajo el mismo cnpjNumber. Los contenidos en esta lista tienen las mismas características para productos y servicios. Dirección electrónica de acceso al canal. Será obligatoriamente completado si hay una lista complementaria con los nombres y CNPJs a ser disponible.
+                Restricción: Será obligatoriamente completado si hay una lista complementaria con los nombres y CNPJs a ser disponible
               example: 'https://empresadaorganizacaoa.com/complementarylist'
         type:
           $ref:  "#/components/schemas/AccountType"
         fees:
           type: object
-          description: Objeto que reúne informações de tarifas de serviços.
+          description: Objeto que reúne información de tarifas de servicios.
           required:
             - services
           properties:
@@ -635,7 +635,7 @@ components:
               items:
                 $ref: '#/components/schemas/BusinessAccountsService'
               minItems: 1
-              description: Lista das Tarifas cobradas sobre Serviços
+              description: Lista de las Tarifas cobradas sobre Servicios
         serviceBundles:
           type: array
           maxItems: 100
@@ -643,35 +643,35 @@ components:
             $ref:  "#/components/schemas/ServiceBundle"
           minItems: 1
           description: |
-            Lista dos pacotes de serviços de contas com serviços essenciais padronizados e regulados pela Resolução BC 3919, de 25/11/2010
+            Lista de los paquetes de servicios de cuentas con servicios esenciales estandarizados y regulados por la Resolución BC 3919, de 25/11/2010
 
-            [Restrição]
-            - Obrigatório quando "type" for igual "CONTA_DEPOSITO_A_VISTA" (conta corrente) ou "CONTA_POUPANCA", porque existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados);
+            [Restricción]
+            - Obligatorio cuando "type" sea igual a "CONTA_DEPOSITO_A_VISTA" (cuenta corriente) o "CONTA_POUPANCA", porque existen hoy paquetes sujetos a cobro diferentes de los servicios esenciales (que no son cobrados);
 
-            - Opcional quando "type" for igual "CONTA_PAGAMENTO_PRE_PAGA" ficando condicionado caso a instituição tenha pacote de serviço atrelado a este tipo de conta.
+            - Opcional cuando "type" sea igual a "CONTA_PAGAMENTO_PRE_PAGA", condicionado a que la institución tenga un paquete de servicio vinculado a este tipo de cuenta.
         openingClosingChannels:
           type: array
           items:
             $ref: '#/components/schemas/OpeningClosingChannels'
           minItems: 1
           maxItems: 7
-          description: Lista dos canais para aberturas e encerramento
+          description: Lista de los canales para aperturas y cierre
         openingClosingChannelsAdditionalInfo:
           type: string
           maxLength: 140
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           description: |
-            Campo livre para preenchimento das informações adicionais referente ao "openingClosingChannels". 
+            Campo libre para completar la información adicional referente al "openingClosingChannels". 
 
-            [Restrição] Obrigatório quando "openingClosingChannels" for igual 'OUTROS'.
-          example: Informações adicionais 
+            [Restricción] Obligatorio cuando "openingClosingChannels" sea igual a 'OUTROS'.
+          example: Informaciones adicionales 
         transactionMethods:
           type: array
           items:
             $ref: '#/components/schemas/TransactionMethods'
           minItems: 1
           maxItems: 4
-          description: Lista de formas de movimentação
+          description: Lista de formas de movimiento
         termsConditions:
           $ref: '#/components/schemas/AccountsTermsConditions'
         incomeRate:
@@ -697,27 +697,27 @@ components:
           type: string
           maxLength: 250
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: 'Nome do Serviço que incide sobre tipo de conta selecionado para pessoa jurídica(Campo Livre)'
+          description: 'Nombre del Servicio que incide sobre tipo de cuenta seleccionado para persona jurídica (Campo Libre)'
           example: Evento personalizado
         code:
           type: string
           maxLength: 100
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: Sigla de identificação de Outros Serviços que incidem sobre os tipos de contas informados.
+          description: Sigla de identificación de Otros Servicios que inciden sobre los tipos de cuentas informados.
           example: EVENTO_PERSONALIZADO
         chargingTriggerInfo:
           type: string
           maxLength: 2000
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          description: Fatos geradores de cobrança que incidem sobre serviço que compõe o Pacote de Serviços.
-          example: Cobrança devido a evento personalizado
+          description: Hechos generadores de cobro que inciden sobre el servicio que compone el Paquete de Servicios.
+          example: Cobro debido a evento personalizado
         prices:
           type: array
           items:
             $ref: '#/components/schemas/Price'
           minItems: 4
           maxItems: 4
-          description: Lista distribuição preços tarifas de serviços
+          description: Lista distribución precios tarifas de servicios
         minimum:
           $ref: '#/components/schemas/MinimumPrice'
         maximum:
@@ -730,7 +730,7 @@ components:
         - 3_FAIXA
         - 4_FAIXA
       description: |
-        Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
+        Según Normativa nº 32, BCB, de 2020: Distribución de frecuencia relativa de los valores de tarifas cobradas a los clientes, de que trata el § 2º del art. 3º de la Circular nº 4.015, de 2020, debe darse con base en cuatro franjas de igual tamaño, con explicitación de los valores sobre la mediana en cada una de estas franjas. Informando: 1ª franja, 2ª franja, 3ª franja y 4ª franja
       example: 1_FAIXA
     Price:
       type: object
@@ -754,12 +754,12 @@ components:
           maxLength: 12
           x-cds-type: AmountString
           description: |
-            Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' 
-            (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. 
-            O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar).
+            Valor de la mediana de cada franja relativa al servicio ofertado, informado en el período, según Res nº 32 BCB, 2020. p.ej. '45.00' 
+            (representa un valor monetario. p.ej: 1547368.92. Este valor, considerando que la moneda sea BRL, significa R$ 1.547.368,92. 
+            El único separador presente debe ser el '.' (punto) para indicar la casa decimal. No debe haber separador de miles).
 
-            Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
-            devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
+            Observación: Para efecto de comparación de tasas de los productos, las instituciones participantes, cuando no cobran tarifas, 
+            deben enviar el valor 0.00 señalizando que para aquella tasa no hay cobro por el servicio.
           example: '2000.00'
         currency:
           $ref:  '#/components/schemas/Currency'
@@ -787,7 +787,7 @@ components:
           maxLength: 12
           x-cds-type: AmountString
           description: |
-            Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)
+            Valor de la mediana de cada franja relativa al servicio ofertado, informado en el período, según Res nº 32 BCB, 2020. p.ej. '45.00' (representa un valor monetario. p.ej: 1547368.92. Este valor, considerando que la moneda sea BRL, significa R$ 1.547.368,92. El único separador presente debe ser el '.' (punto) para indicar la casa decimal. No debe haber separador de miles)
           example: '2000.00'
         currency:
           $ref:  '#/components/schemas/Currency'
@@ -815,12 +815,12 @@ components:
           maxLength: 12
           x-cds-type: AmountString
           description: |
-            Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. ''45.00''
-            (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. 
-            O único separador presente deve ser o ''.'' (ponto) para indicar a casa decimal. Não deve haver separador de milhar).
+            Valor de la mediana de cada franja relativa al servicio ofertado, informado en el período, según Res nº 32 BCB, 2020. p.ej. ''45.00''
+            (representa un valor monetario. p.ej: 1547368.92. Este valor, considerando que la moneda sea BRL, significa R$ 1.547.368,92. 
+            El único separador presente debe ser el ''.'' (punto) para indicar la casa decimal. No debe haber separador de miles).
 
-            Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
-            devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
+            Observación: Para efecto de comparación de tasas de los productos, las instituciones participantes, cuando no cobran tarifas, 
+            deben enviar el valor 0.00 señalizando que para aquella tasa no hay cobro por el servicio.
           example: '2000.00'
         currency:
           $ref:  "#/components/schemas/Currency"
@@ -842,10 +842,10 @@ components:
           maxLength: 12
           x-cds-type: AmountString
           description: |
-            Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
+            Valor mínimo determinado para la tarifa de servicios sobre la base de clientes en el mes de referencia.
 
-            Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
-            devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
+            Observación: Para efecto de comparación de tasas de los productos, las instituciones participantes, cuando no cobran tarifas, 
+            deben enviar el valor 0.00 señalizando que para aquella tasa no hay cobro por el servicio.
           example: '1350.00'
         currency:
           $ref:  "#/components/schemas/Currency"
@@ -864,7 +864,7 @@ components:
           minLength: 4
           maxLength: 12
           x-cds-type: AmountString
-          description: Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência
+          description: Valor mínimo determinado para la tarifa de servicios sobre la base de clientes en el mes de referencia
           example: '1350.00'
         currency:
           $ref:  "#/components/schemas/Currency"
@@ -884,10 +884,10 @@ components:
           maxLength: 12
           x-cds-type: AmountString
           description: |
-            Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
+            Valor máximo determinado para la tarifa de servicios sobre la base de clientes en el mes de referencia.
 
-            Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
-            devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
+            Observación: Para efecto de comparación de tasas de los productos, las instituciones participantes, cuando no cobran tarifas, 
+            deben enviar el valor 0.00 señalizando que para aquella tasa no hay cobro por el servicio.
           example: '8800.00'
         currency:
           $ref:  "#/components/schemas/Currency"
@@ -906,13 +906,13 @@ components:
           minLength: 4
           maxLength: 12
           x-cds-type: AmountString
-          description: Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência
+          description: Valor máximo determinado para la tarifa de servicios sobre la base de clientes en el mes de referencia
           example: '8800.00'
         currency:
           $ref:  "#/components/schemas/Currency"
     Customer:
       type: object
-      description: Informações relevantes para o cliente.
+      description: Informaciones relevantes para el cliente.
       required:
         - rate
       x-regulatory-required:
@@ -921,7 +921,7 @@ components:
         rate:
           type: string
           description: |
-            Percentual de clientes em cada faixa.
+            Porcentaje de clientes en cada franja.
           pattern: '^\d{1}\.\d{6}$'
           example: '0.150000'
           minLength: 8
@@ -940,7 +940,7 @@ components:
           pattern: '^(\d{1,9}\.\d{2}){1}$'
           minLength: 4
           maxLength: 12
-          description: 'Saldo mínimo exigido nos Termos e condições contratuais, que regem as contas comercializadas.'
+          description: 'Saldo mínimo exigido en los Términos y condiciones contractuales, que rigen las cuentas comercializadas.'
           example: '200.00'
         currency:
           $ref:  "#/components/schemas/Currency"
@@ -950,50 +950,50 @@ components:
       minLength: 3
       maxLength: 3
       x-cds-type: CurrencyString
-      description: 'Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217'
+      description: 'Moneda referente al valor mínimo de la Tarifa, según modelo ISO-4217'
       example: BRL
     Links:
       type: object
-      description: Referências para outros recursos da API requisitada
+      description: Referencias a otros recursos de la API solicitada
       properties:
         self:
           type: string
           format: url
           minLength: 5
           maxLength: 2000
-          description: URL da página atualmente requisitada
+          description: URL de la página actualmente solicitada
           example: 'https://api.banco.com.br/open-banking/opendata-accounts/v1/resource'
         first:
           type: string
           format: url
           minLength: 5
           maxLength: 2000
-          description: URL da primeira página de registros
+          description: URL de la primera página de registros
           example: 'https://api.banco.com.br/open-banking/opendata-accounts/v1/resource'
         prev:
           type: string
           format: url
           minLength: 5
           maxLength: 2000
-          description: URL da página anterior de registros
+          description: URL de la página anterior de registros
           example: 'https://api.banco.com.br/open-banking/opendata-accounts/v1/resource'
         next:
           type: string
           format: url
           minLength: 5
           maxLength: 2000
-          description: URL da próxima página de registros
+          description: URL de la próxima página de registros
           example: 'https://api.banco.com.br/open-banking/opendata-accounts/v1/resource'
         last:
           type: string
           format: url
           minLength: 5
           maxLength: 2000
-          description: URL da última página de registros
+          description: URL de la última página de registros
           example: 'https://api.banco.com.br/open-banking/opendata-accounts/v1/resource'
     Meta:
       type: object
-      description: Meta informações referente à API requisitada
+      description: Meta informaciones referentes a la API solicitada
       properties:
         totalRecords:
           type: integer
@@ -1001,7 +1001,7 @@ components:
           example: 1
         totalPages:
           type: integer
-          description: Total de páginas para os registros encontrados
+          description: Total de páginas para los registros encontrados
           example: 1
       required:
         - totalRecords
@@ -1023,28 +1023,28 @@ components:
               - detail
             properties:
               code:
-                description: Código de erro específico do endpoint
+                description: Código de error específico del endpoint
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 255
               title:
-                description: Título legível por humanos deste erro específico
+                description: Título legible por humanos de este error específico
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 255
               detail:
-                description: Descrição legível por humanos deste erro específico
+                description: Descripción legible por humanos de este error específico
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 2048
         meta:
           type: object
-          description: Meta informações referente à API requisitada.
+          description: Meta informaciones referentes a la API solicitada.
           required:
             - requestDateTime
           properties:
             requestDateTime:
-              description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+              description: 'Fecha y hora de la consulta, según especificación RFC-3339, formato UTC.'
               type: string
               maxLength: 20
               format: date-time
@@ -1066,28 +1066,28 @@ components:
               - detail
             properties:
               code:
-                description: Código de erro específico do endpoint
+                description: Código de error específico del endpoint
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 255
               title:
-                description: Título legível por humanos deste erro específico
+                description: Título legible por humanos de este error específico
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 255
               detail:
-                description: Descrição legível por humanos deste erro específico
+                description: Descripción legible por humanos de este error específico
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 2048
         meta:
           type: object
-          description: Meta informações referente à API requisitada.
+          description: Meta informaciones referentes a la API solicitada.
           required:
             - requestDateTime
           properties:
             requestDateTime:
-              description: Data e hora da consulta, conforme especificação RFC-3339, formato UTC.
+              description: Fecha y hora de la consulta, según especificación RFC-3339, formato UTC.
               type: string
               format: date-time
               minLength: 20
@@ -1107,7 +1107,7 @@ components:
     page:
       name: page
       in: query
-      description: Número da página que está sendo requisitada (o valor da primeira página é 1).
+      description: Número de la página que se está solicitando (el valor de la primera página es 1).
       schema:
         type: integer
         format: int32
@@ -1117,7 +1117,7 @@ components:
     pageSize:
       name: page-size
       in: query
-      description: Quantidade total de registros por páginas.
+      description: Cantidad total de registros por páginas.
       schema:
         type: integer
         format: int32
@@ -1126,43 +1126,43 @@ components:
         maximum: 1000
   responses:
     BadRequest:
-      description: A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.
+      description: La solicitud fue malformada, omitiendo atributos obligatorios, sea en el payload o a través de atributos en la URL.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     NotFound:
-      description: O recurso solicitado não existe ou não foi implementado.
+      description: El recurso solicitado no existe o no ha sido implementado.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     MethodNotAllowed:
-      description: O consumidor tentou acessar o recurso com um método não suportado.
+      description: El consumidor intentó acceder al recurso con un método no soportado.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     TooManyRequests:
-      description: A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
+      description: La operación fue rechazada, pues muchas solicitudes fueron hechas dentro de un determinado período o el límite global de solicitudes concurrentes fue alcanzado.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     InternalServerError:
-      description: Ocorreu um erro no gateway da API ou no microsserviço.
+      description: Ocurrió un error en el gateway de la API o en el microservicio.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     GatewayTimeout:
-      description: GATEWAY TIMEOUT - A requisição não foi atendida dentro do tempo limite estabelecido.
+      description: GATEWAY TIMEOUT - La solicitud no fue atendida dentro del tiempo límite establecido.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     SiteIsOverloaded:
-      description: O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.
+      description: El sitio está sobrecargado y la operación fue rechazada, pues se alcanzó el límite máximo de TPS global, en este momento.
       content:
         application/json; charset=utf-8:
           schema:
@@ -1173,4 +1173,4 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
-        
+            

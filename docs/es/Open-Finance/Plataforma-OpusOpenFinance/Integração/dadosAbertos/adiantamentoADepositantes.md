@@ -15,12 +15,8 @@ alternate_lang:
 
 Este es un ejemplo de archivo JSON de respuesta de la API ***OpenData Unarranged Account Overdraft***.
 
-Haga clic [**aquí**](open-data-unarranged-account-overdraft.json){:download="open-data-unarranged-account-overdraft.json"} para descargar el archivo de ejemplo.
+Haga clic [**aquí**](./anexos/json/es-openData-unarrangedAccountOverdraft.json){:download="es-openData-unarrangedAccountOverdraft.json"} para descargar el archivo de ejemplo  y verlo [**aquí**](./anexos/json/es-openData-unarrangedAccountOverdraft.json).
 
 Para los posibles valores de cada clave JSON, consulte la [API asociada][Link-API].
 
-```json
-{% include_relative open-data-unarranged-account-overdraft.json %}
-```
-
-[Link-API]: ../../../../swagger-ui/index.html?api=open-data-unarranged
+[Link-API]: ../../../../../swagger-ui/index.html?api=es-open-data-unarranged

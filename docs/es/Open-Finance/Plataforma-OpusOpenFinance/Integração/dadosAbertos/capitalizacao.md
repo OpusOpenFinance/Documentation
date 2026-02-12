@@ -15,12 +15,8 @@ alternate_lang:
 
 Este es un ejemplo de archivo JSON de respuesta de la API ***OpenData Capitalization-bonds***.
 
-Haga clic [**aquí**](open-data-capitalization-bonds.json){:download="open-data-capitalization-bonds.json"} para descargar el archivo de ejemplo.
+Haga clic [**aquí**](./anexos/json/es-openData-capitalizationBonds.json){:download="es-openData-capitalizationBonds.json"} para descargar el archivo de ejemplo y verlo [**aquí**](./anexos/json/es-openData-capitalizationBonds.json).
 
 Para los posibles valores de cada clave JSON consulte la [API asociada][Link-API].
 
-```json
-{% include_relative open-data-capitalization-bonds.json %}
-```
-
-[Link-API]: ../../../../swagger-ui/index.html?api=open-data-capitalization
+[Link-API]: ../../../../../swagger-ui/index.html?api=es-open-data-capitalization

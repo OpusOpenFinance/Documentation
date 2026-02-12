@@ -15,12 +15,8 @@ alternate_lang:
 
 Este es un ejemplo de archivo JSON de respuesta de la API ***OpenData Accounts***.
 
-Haga clic [**aquí**](open-data-accounts.json){:download="open-data-accounts.json"} para descargar el archivo de ejemplo.
+Haga clic [**aquí**](./anexos/json/es-openData-accounts.json){:download="es-openData-accounts.json"} para descargar el archivo de ejemplo y verlo [**aquí**](./anexos/json/es-openData-accounts.json).
 
 Para los posibles valores de cada clave JSON consulte la [API asociada][Link-API].
 
-```json
-{% include_relative open-data-accounts.json %}
-```
-
-[Link-API]: ../../../../swagger-ui/index.html?api=open-data-accounts
+[Link-API]: ../../../../../swagger-ui/index.html?api=es-open-data-accounts

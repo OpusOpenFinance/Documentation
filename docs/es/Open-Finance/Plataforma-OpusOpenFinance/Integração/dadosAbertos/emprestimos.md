@@ -15,12 +15,8 @@ alternate_lang:
 
 Este es un ejemplo de archivo JSON de respuesta de la API ***OpenData Loans***.
 
-Haga clic [**aquí**](open-data-loans.json){:download="open-data-loans.json"} para descargar el archivo de ejemplo.
+Haga clic [**aquí**](./anexos/json/es-openData-loans.json){:download="es-openData-loans.json"} para descargar el archivo de ejemplo y verlo [**aquí**](./anexos/json/es-openData-loans.json).
 
 Para los posibles valores de cada clave JSON, consulte la [API asociada][Link-API].
 
-```json
-{% include_relative open-data-loans.json %}
-```
-
-[Link-API]: ../../../../swagger-ui/index.html?api=open-data-loans
+[Link-API]: ../../../../../swagger-ui/index.html?api=es-open-data-loans

@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  title: API OpenData Insurance - Open Finance Brasil
+  title: API OpenData Seguros - Open Finance Brasil
   description: |
-    As APIs descritas neste documento são referentes a API de Seguros da fase OpenData do Open Finance Brasil.
+    Las APIs descritas en este documento son referentes a la API de Seguros de la fase OpenData del Open Finance Brasil.
     Obs: Some elements of this API were defined by the Open Finance Brazil ecosystem (OPIN).
   version: 2.0.0
   license:
@@ -10,15 +10,15 @@ info:
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
 tags:
   - name: Seguros
-    description: 'Operações para consulta de informações de seguros automotivos, residenciais e pessoais'
+    description: 'Operaciones para consulta de información de seguros automotrices, residenciales y personales'
 paths:
   /personals:
     get:
       tags:
         - Seguros
-      summary: Conjunto de informações referentes a seguros pessoais de uma instituição
+      summary: Conjunto de informaciones referentes a seguros personales de una institución
       operationId: getPersonalInsurance
-      description: Método para obter a lista de todos os seguros pessoais de uma instituição
+      description: Método para obtener la lista de todos los seguros personales de una institución
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
@@ -41,7 +41,7 @@ components:
   schemas:
     Participant:
       type: object
-      description: Conjunto de informações relativas ao participante do produto de Open Finance
+      description: Conjunto de informaciones relativas al participante del producto de Open Finance
       required:
         - brand
         - name
@@ -53,36 +53,36 @@ components:
       properties:
         brand:
           type: string
-          description: 'Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
+          description: 'Nombre de la marca reportada por el participante del Open Finance. El concepto al que se refiere la ''marca'' es en esencia una promesa de la empresa de proporcionar una serie específica de atributos, beneficios y servicios uniformes a los clientes.'
           minLength: 1
           maxLength: 80
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          example: Organização
+          example: Organización
         name:
           type: string
-          description: Nome do participante do Open Finance.
+          description: Nombre del participante del Open Finance.
           minLength: 1
           maxLength: 80
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          example: Organização A1
+          example: Organización A1
         cnpjNumber:
           $ref: '#/components/schemas/CnpjNumber'
         urlComplementaryList:
           type: string
           format: url
           description: |
-            Espera-se que valor de retorno, após acesso ao link 'urlComplementaryList', deve ser array de objeto com a estrutura abaixo:
-            - 'name' com o valor contido no campo 'LegalEntityName' conforme cadastro no diretório;
-            - 'cnpjNumber' com o valor contido no campo CNPJ ('RegistrationNumber') correspondente a esta instituição;
-            - Ambos do tipo string;
-            - Ambos obrigatórios. 
+            Se espera que el valor de retorno, después de acceder al enlace 'urlComplementaryList', sea un array de objetos con la siguiente estructura:
+            - 'name' con el valor contenido en el campo 'LegalEntityName' según registro en el directorio;
+            - 'cnpjNumber' con el valor contenido en el campo CNPJ ('RegistrationNumber') correspondiente a esta institución;
+            - Ambos de tipo string;
+            - Ambos obligatorios.
           minLength: 0
           maxLength: 1024
           example: 'https://empresaa1.com/companies'
       additionalProperties: false
     CnpjNumber:
       type: string
-      description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
+      description: 'El CNPJ corresponde al número de inscripción en el Registro de Persona Jurídica. Deben ser solo los números del CNPJ, sin máscara.'
       minLength: 14
       maxLength: 14
       pattern: '^(\d{14})$'
@@ -92,17 +92,17 @@ components:
       pattern: '^([A-Z]{3})$'
       minLength: 3
       maxLength: 3
-      description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+      description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
       example: BRL
     InsurancePensionMinValue:
       type: object
       x-regulatory-required:
         - amount
         - currency
-      description: 'Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.'
+      description: 'Listado del valor mínimo de cobertura (Capital Asegurado), diario o parcela aceptado por la sociedad para cada combinación de modalidad/cobertura del producto.<br>Conforme a moneda.'
       properties:
         amount:
-          description: Campo sem descrição na API em OPIN.
+          description: Campo sin descripción en la API en OPIN.
           type: string
           minLength: 1
           maxLength: 21
@@ -116,10 +116,10 @@ components:
       x-regulatory-required:
         - amount
         - currency
-      description: 'Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.'
+      description: 'Listado del valor máximo de cobertura (Capital Asegurado), diario o parcela aceptado por la sociedad para cada combinación de modalidad/cobertura del producto.<br>Conforme a moneda.'
       properties:
         amount:
-          description: Campo sem descrição na API em OPIN.
+          description: Campo sin descripción en la API en OPIN.
           type: string
           minLength: 1
           maxLength: 21
@@ -139,14 +139,14 @@ components:
       properties:
         susepProcessNumber:
           type: string
-          description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
+          description: 'Secuencia numérica utilizada para consulta de los procesos electrónicos en la SUSEP, con caracteres especiales, conforme al campo de consulta en el sitio web de SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observación&#58; Máscaras de SUSEP – Serán permitidas todas las máscaras de Productos. Limitar por los códigos de las Máscaras.'
           minLength: 2
           maxLength: 20
           pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$'
           example: 15414.622222/2222-22
         detail:
           type: string
-          description: 'Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL)'
+          description: 'Representan las Condiciones Generales, Condiciones Especiales y Condiciones o Cláusulas Particulares de un mismo producto. (Circular SUSEP 321/06). Campo abierto (posibilidad de incluir URL)'
           minLength: 1
           maxLength: 1024
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
@@ -156,22 +156,22 @@ components:
       type: string
       description: |
         - Funeral
-        - Prestamista (exceto Habitacional e Rural)
-        - Viagem
+        - Prestamista (excepto Habitacional y Rural)
+        - Viaje
         - Educacional
-        - Dotal (Misto e Puro)
-        - Acidentes Pessoais
+        - Dotal (Mixto y Puro)
+        - Accidentes Personales
         - Vida
-        - Perda do Certificado de Habilitação de Voo – PCHV
-        - Doenças Graves ou Doença Terminal
-        - Desemprego/ Perda de Renda
-        - Eventos Aleatórios
-        - Pecúlio
-        - Pensão prazo certo
-        - Pensão menores 21 anos
-        - Pensão menores 24 anos
-        - Pensão cônjuge vitalícia
-        - Pensão cônjuge temporária
+        - Pérdida del Certificado de Habilitación de Vuelo – PCHV
+        - Enfermedades Graves o Enfermedad Terminal
+        - Desempleo/Pérdida de Ingresos
+        - Eventos Aleatorios
+        - Peculio
+        - Pensión plazo cierto
+        - Pensión menores 21 años
+        - Pensión menores 24 años
+        - Pensión cónyuge vitalicia
+        - Pensión cónyuge temporal
       enum:
         - FUNERAL
         - PRESTAMISTA
@@ -194,8 +194,8 @@ components:
     EnumGracePeriodUnit:
       type: string
       description: |
-        Informar o critério de carência para a cobertura
-          - Dias 
+        Informar el criterio de carencia para la cobertura
+          - Días 
           - Meses
       enum:
         - DIAS
@@ -203,7 +203,7 @@ components:
       example: MESES
     InsurancePensionEnumPmbacRemuneration:
       type: object
-      description: Somente informado se Regime Financeiro for igual a Capitalização.
+      description: Solo se informa si el Régimen Financiero es igual a Capitalización.
       x-regulatory-required:
         - interestRate
         - updateIndexes
@@ -211,7 +211,7 @@ components:
         interestRate:
           type: string
           pattern: '^(\d{1}\.\d{6})$'
-          description: Taxa de juros para capitalização da PMBaC
+          description: Tasa de interés para capitalización de la PMBaC
           minLength: 8
           maxLength: 9
           example: '0.019800'
@@ -221,7 +221,7 @@ components:
             $ref: '#/components/schemas/EnumPersonalUpdateIndex'
       additionalProperties: false
     AgeAdjustment:
-      description: Campo sem descrição na API em OPIN.
+      description: Campo sin descripción en la API en OPIN.
       type: object
       required:
         - frequency
@@ -236,10 +236,10 @@ components:
           items:
             type: string
             description: |
-              Critério escolhido para reenquadramento etário
-                1. Após período em anos
-                2. A cada período em anos
-                3. Por mudança de faixa etária
+              Criterio elegido para el reencuadramiento etario
+                1. Después de período en años
+                2. Cada período en años
+                3. Por cambio de rango etario
             example: APOS_PERIODO_ANOS
             enum:
               - APOS_PERIODO_ANOS
@@ -247,7 +247,7 @@ components:
               - MUDANCA_FAIXA_ETARIA
         frequency:
           type: integer
-          description: 'Período em anos, caso critério de reenquadramento após ou a cada período em anos.'
+          description: 'Período en años, si el criterio de reencuadramiento es después o cada período en años.'
           minimum: 0
           maximum: 2147483647
           example: 10
@@ -255,10 +255,10 @@ components:
     InsurancePensionEnumFinancialRegime:
       type: string
       description: |
-        Listagem de regime financeiro para cada combinação de modalidade/cobertura do produto indicando:
-          1. Repartição simples
-          2. Repartição Capitais Cobertura
-          3. Capitalização
+        Listado de régimen financiero para cada combinación de modalidad/cobertura del producto indicando:
+          1. Reparto simple
+          2. Reparto Capitales Cobertura
+          3. Capitalización
       example: REPARTICAO_SIMPLES
       enum:
         - REPARTICAO_SIMPLES
@@ -267,7 +267,7 @@ components:
     EnumInsurancePersonalBenefitRecalculationUpdateIndex:
       type: string
       description: |
-        Índice utilizado na atualização do prêmio/contribuição e do capital segurado/ benefício, caso critério de atualização por meio de índice
+        Índice utilizado en la actualización de la prima/contribución y del capital asegurado/beneficio, si el criterio de actualización es mediante índice
       enum:
         - IPCA
         - IGP_M
@@ -276,14 +276,14 @@ components:
     EnumPersonalUpdateIndex:
       type: string
       description: |
-        Índice utilizado na atualização da PMBaC:
+        Índice utilizado en la actualización de la PMBaC:
           1. IPC-FGV
           2. IGP-DI-FGV
           3. IPCA-IBGE
           4. IGPM-FGV
           5. INPC-IBGE
           6. TR
-          7. OUTROS
+          7. OTROS
       enum:
         - IPC-FGV
         - IGP-DI-FGV
@@ -295,7 +295,7 @@ components:
       example: IPC-FGV
     OpenDataMeta:
       type: object
-      description: Meta informações referente à API requisitada.
+      description: Meta informaciones referentes a la API solicitada.
       required:
         - totalRecords
         - totalPages
@@ -303,12 +303,12 @@ components:
         totalRecords:
           type: integer
           format: int32
-          description: Número total de registros no resultado
+          description: Número total de registros en el resultado
           example: 1
         totalPages:
           type: integer
           format: int32
-          description: Número total de páginas no resultado
+          description: Número total de páginas en el resultado
           example: 1
       additionalProperties: false
     OKResponsePersonalInsuranceList:
@@ -319,7 +319,7 @@ components:
         - meta
       properties:
         data:
-          description: Conjunto de informações referente ao produto Seguros Pessoais.
+          description: Conjunto de informaciones referentes al producto Seguros Personales.
           type: array
           minItems: 1
           maxItems: 2147483647
@@ -354,17 +354,17 @@ components:
           minItems: 0
           maxItems: 2147483647
           description: |
-            Lista de textos para complementar informação relativa ao campo type, quando for selecionada a opção 'OUTROS'.
-            Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a opção 'OUTROS'
+            Lista de textos para complementar información relativa al campo type, cuando se selecciona la opción 'OTROS'.
+            Restricción: Campo de llenado obligatorio si 'type' está llenado con la opción 'OTROS'
           items:
             type: string
             maxLength: 100
-          example: [Informações Adicionais]
+          example: [Informaciones Adicionales]
         attributes:
           $ref: '#/components/schemas/PersonalCoverageItemAttributes'
       additionalProperties: false
     PersonalCoverageItemAttributes:
-      description: Informações referente as características da cobertura do seguro.
+      description: Informaciones referentes a las características de la cobertura del seguro.
       type: object
       required:
         - minValue
@@ -389,7 +389,7 @@ components:
         - allowApartPurchase
       properties:
         indemnityPaymentMethods:
-          description: Listagem da forma de pagamento da indenização para cada combinação de modalidade/cobertura do produto.
+          description: Listado de la forma de pago de la indemnización para cada combinación de modalidad/cobertura del producto.
           type: array
           minItems: 0
           maxItems: 2147483647
@@ -401,7 +401,7 @@ components:
               - PRESTACAO_SERVICOS
             example: PAGAMENTO_CAPITAL_SEGURADO_VALOR_MONETARIO
         indemnityPaymentFrequencies:
-          description: Listagem de tipos de frequência de pagamento de indenização para cada combinação de modalidade/cobertura do produto.
+          description: Listado de tipos de frecuencia de pago de indemnización para cada combinación de modalidad/cobertura del producto.
           type: array
           items:
             $ref: '#/components/schemas/EnumPersonalIndemnityPaymentFrequencyType'
@@ -410,7 +410,7 @@ components:
         maxValue:
           $ref: '#/components/schemas/InsurancePensionMaxValue'
         indemnifiablePeriods:
-          description: Listagem de período indenizável para cada combinação de modalidade/cobertura do produto.
+          description: Listado de período indemnizable para cada combinación de modalidad/cobertura del producto.
           type: array
           minItems: 0
           maxItems: 2147483647
@@ -422,7 +422,7 @@ components:
             example: ATE_FIM_CICLO_DETERMINADO
         maximumQtyIndemnifiableInstallments:
           type: integer
-          description: 'Caso o período indenizável seja relacionado a parcelas, listagem de número máximo de parcelas indenizáveis para cada combinação de modalidade/ cobertura do produto.'
+          description: 'Si el período indemnizable está relacionado con parcelas, listado del número máximo de parcelas indemnizables para cada combinación de modalidad/cobertura del producto.'
           minimum: 0
           maximum: 2147483647
           example: 10
@@ -430,20 +430,20 @@ components:
           $ref: '#/components/schemas/PersonalInsuranceGracePeriod'
         differentiatedGracePeriod:
           type: string
-          description: Campo aberto para detalhamento de período de carência diferenciado, se houver.
+          description: Campo abierto para detalle de período de carencia diferenciado, si lo hubiera.
           minLength: 1
           maxLength: 500
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: 90 DIAS
         deductibleDays:
           type: integer
-          description: Listagem de franquia em dias para cada combinação de modalidade/cobertura do produto.
+          description: Listado de deducible en días para cada combinación de modalidad/cobertura del producto.
           minimum: 0
           maximum: 2147483647
           example: 10
         differentiatedDeductibleDays:
           type: integer
-          description: 'Detalhamento da franquia em dias diferentes para cada cobertura que exista alguma especificidade. Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.'
+          description: 'Detalle del deducible en días diferente para cada cobertura que tenga alguna especificidad. Si la aseguradora no tiene esta diferenciación, no devolverá nada en el campo.'
           minimum: 0
           maximum: 2147483647
           example: 15
@@ -452,10 +452,10 @@ components:
           x-regulatory-required:
             - amount
             - currency
-          description: Listagem de franquia em reais para cada combinação de modalidade/cobertura do produto.
+          description: Listado de deducible en reales para cada combinación de modalidad/cobertura del producto.
           properties:
             amount:
-              description: Valor de dedução.
+              description: Valor de deducción.
               type: string
               minLength: 1
               maxLength: 21
@@ -469,10 +469,10 @@ components:
           x-regulatory-required:
             - amount
             - currency
-          description: 'Detalhamento da franquia em reais diferentes para cada cobertura que exista alguma especificidade.<br>Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.'
+          description: 'Detalle del deducible en reales diferente para cada cobertura que tenga alguna especificidad.<br>Si la aseguradora no tiene esta diferenciación, no devolverá nada en el campo.'
           properties:
             amount:
-              description: Campo sem descrição na API em OPIN.
+              description: Campo sin descripción en la API en OPIN.
               type: string
               minLength: 1
               maxLength: 21
@@ -487,7 +487,7 @@ components:
             $ref: '#/components/schemas/EnumExcludedRisks'
         excludedRisksURL:
           type: string
-          description: Campo aberto (possibilidade de incluir URL)
+          description: Campo abierto (posibilidad de incluir URL)
           minLength: 1
           maxLength: 1024
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
@@ -495,7 +495,7 @@ components:
         allowApartPurchase:
           type: boolean
           description: |
-            Indicar se a cobertura pode ser contratada isoladamente ou não:
+            Indicar si la cobertura puede ser contratada aisladamente o no:
               1. true
               2. false
           example: true
@@ -509,7 +509,7 @@ components:
       example: INDENIZACAO_UNICA
     EnumExcludedRisks:
       type: string
-      description: Listagem para indicar quais serão o(s) risco(s) excluído(s) aplicável(is) à(s) cobertura(s).
+      description: Listado para indicar cuáles serán el(los) riesgo(s) excluido(s) aplicable(s) a la(s) cobertura(s).
       enum:
         - ATO_RECONHECIMENTO_PERIGOSO
         - ATO_ILICITO_DOLOSO_PRATICADO_SEGURADO
@@ -526,7 +526,7 @@ components:
       type: string
       description: |
         1. Saldamento
-        2. Benefício Prolongado
+        2. Beneficio Prolongado
       enum:
         - SALDAMENTO
         - BENEFICIO_PROLONGADO
@@ -534,9 +534,9 @@ components:
     EnumPersonalInsuranceIndemnityPaymentMethod:
       type: string
       description: |
-        Modalidade de pagamento da indenização, a considerar os domínios abaixo:
+        Modalidad de pago de la indemnización, considerando los dominios abajo:
           1. Único
-          2. Sob a forma de renda
+          2. Bajo forma de renta
       enum:
         - UNICO
         - SOB_FORMA_RENDA
@@ -544,16 +544,16 @@ components:
     EnumPersonalInsuranceIndemnityPaymentIncome:
       type: string
       description: |
-        Tipo de renda ou pensão, caso modalidade de pagamento de indenização seja sob a forma de renda:
-          1. Certa
-          2. Temporária
-          3. Temporária reversível
-          4. Temporário com mínimo garantido
-          5. Temporária reversível com mínimo garantido
-          6. Vitalícia
-          7. Vitalícia reversível
-          8. Vitalícia com o mínimo garantido
-          9. Vitalícia reversível como mínimo garantido
+        Tipo de renta o pensión, si la modalidad de pago de indemnización es bajo forma de renta:
+          1. Cierta
+          2. Temporal
+          3. Temporal reversible
+          4. Temporal con mínimo garantizado
+          5. Temporal reversible con mínimo garantizado
+          6. Vitalicia
+          7. Vitalicia reversible
+          8. Vitalicia con mínimo garantizado
+          9. Vitalicia reversible con mínimo garantizado
       enum:
         - CERTA
         - TEMPORARIA
@@ -566,7 +566,7 @@ components:
         - VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
       example: CERTA
     PersonalInsurancePremiumPayment:
-      description: Campo sem descrição na API em OPIN.
+      description: Campo sin descripción en la API en OPIN.
       type: object
       x-regulatory-required:
         - paymentMethods
@@ -581,12 +581,12 @@ components:
         paymentMethodAdittionalInfo:
           type: string
           description: |
-            Campo livre para preenchimento das informações adicionais referente ao "paymentMethod". 
+            Campo libre para llenado de las informaciones adicionales referentes al "paymentMethod". 
 
-            [Restrição] Obrigatório quando "paymentMethod" for igual 'OUTROS'.
+            [Restricción] Obligatorio cuando "paymentMethod" sea igual a 'OTROS'.
           maxLength: 144
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          example: Informações Adicionais.
+          example: Informaciones Adicionales.
         frequencies:
           type: array
           minItems: 1
@@ -594,7 +594,7 @@ components:
             $ref: '#/components/schemas/EnumPersonalInsurancePremiumPaymentFrequency'
         contributionTax:
           type: string
-          description: 'Distribuição de frequência relativa aos valores referentes às taxas cobradas, nos termos do Anexo III.'
+          description: 'Distribución de frecuencia relativa a los valores referentes a las tasas cobradas, según el Anexo III.'
           minLength: 1
           maxLength: 500
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
@@ -602,15 +602,15 @@ components:
     EnumPersonalInsurancePremiumPaymentFrequency:
       type: string
       description: |
-        Periodicidade de pagamento do prêmio:
-          1. Diária
-          2. Mensal
+        Periodicidad de pago de la prima:
+          1. Diaria
+          2. Mensual
           3. Única
           4. Anual
           5. Trimestral
           6. Semestral
-          7. Fracionado
-          8. Outra
+          7. Fraccionado
+          8. Otra
       enum:
         - DIARIA
         - MENSAL
@@ -622,7 +622,7 @@ components:
         - OUTRA
       example: DIARIA
     PersonalInsuranceMinimumRequirement:
-      description: Campo sem descrição na API em OPIN.
+      description: Campo sin descripción en la API en OPIN.
       type: object
       required:
         - contractingMinRequirement
@@ -634,14 +634,14 @@ components:
           $ref: '#/components/schemas/EnumContractTypePersonal'
         contractingMinRequirement:
           type: string
-          description: Campo aberto (possibilidade de incluir URL)
+          description: Campo abierto (posibilidad de incluir URL)
           minLength: 1
           maxLength: 1024
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
     PersonalInsuranceGracePeriod:
-      description: Período de Carência.
+      description: Período de Carencia.
       type: object
       x-regulatory-required:
         - amount
@@ -651,7 +651,7 @@ components:
         amount:
           type: integer
           format: int64
-          description: Informar o prazo de carência
+          description: Informar el plazo de carencia
           minLength: 1
           maxLength: 500
           example: 90
@@ -660,15 +660,15 @@ components:
         unit:
           $ref: '#/components/schemas/EnumGracePeriodUnit'
         details:
-          description: Descrições adicionais do período de carência.
+          description: Descripciones adicionales del período de carencia.
           type: string
           minLength: 1
           maxLength: 500
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          example: Descrições adicionais do período de carência
+          example: Descripciones adicionales del período de carencia
       additionalProperties: false
     PersonalInsuranceReclaim:
-      description: Somente informado se Regime Financeiro for igual a Capitalização.
+      description: Solo se informa si el Régimen Financiero es igual a Capitalización.
       type: object
       required:
         - gracePeriod
@@ -676,14 +676,14 @@ components:
         - differenciatedPercentage
       properties:
         table:
-          description: Listagem de percentuais de resgate da PMBaC para cada conjunto de prazo aplicável e para cada combinação de modalidade/cobertura estruturados em regime de capitalização.
+          description: Listado de porcentajes de rescate de la PMBaC para cada conjunto de plazo aplicable y para cada combinación de modalidad/cobertura estructurados en régimen de capitalización.
           type: array
           minItems: 1
           maxItems: 2147483647
           items:
             $ref: '#/components/schemas/PersonalInsuranceReclaimTableItem'
         gracePeriod:
-          description: Período de carência.
+          description: Período de carencia.
           type: object
           x-regulatory-required:
             - amount
@@ -693,35 +693,35 @@ components:
             amount:
               type: integer
               format: int64
-              description: Informar o prazo de carência
+              description: Informar el plazo de carencia
               example: 90
               minimum: 0
               maximum: 2147483647
             unit:
               type: string
               description: |
-                Informar o critério de carência para a cobertura
-                  - Dias 
+                Informar el criterio de carencia para la cobertura
+                  - Días 
                   - Meses
               enum:
                 - DIAS
                 - MESES
         details:
-          description: Descrições adicionais do período de carência.
+          description: Descripciones adicionales del período de carencia.
           type: string
           minLength: 1
           maxLength: 500
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          example: Descrições adicionais do período de carência
+          example: Descripciones adicionales del período de carencia
         differenciatedPercentage:
-          description: Campo aberto (possibilidade de incluir URL)
+          description: Campo abierto (posibilidad de incluir URL)
           type: string
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           minLength: 1
           maxLength: 1024
           example: 'https://openinsurance.com.br/aaa
-            Obs.: Exceção de cobertura ou critério definido acima será descrito aqui na URL
-            Exemplo: Cobertura X: a partir de 25 meses = 100%'
+            Obs.: Excepción de cobertura o criterio definido arriba será descrito aquí en la URL
+            Ejemplo: Cobertura X: a partir de 25 meses = 100%'
       additionalProperties: false
     PersonalInsuranceReclaimTableItem:
       type: object
@@ -735,13 +735,13 @@ components:
         - percentage
       properties:
         initialMonthRange:
-          description: Mês inicial do range.
+          description: Mes inicial del rango.
           type: integer
           minimum: 0
           maximum: 12
           example: 1
         finalMonthRange:
-          description: Mês final do range.
+          description: Mes final del rango.
           type: integer
           minimum: 0
           maximum: 12
@@ -751,12 +751,12 @@ components:
           pattern: '^(\d{1}\.\d{6})$'
           minLength: 8
           maxLength: 9
-          description: Percentual de faixa de resgate.
+          description: Porcentaje de rango de rescate.
           example: '0.019800'
       additionalProperties: false
     EnumInsurancePersonalCoverageTypePersonal:
       type: string
-      description: 'É o conjunto dos riscos cobertos elencados na apólice. (RESOLUÇÃO CNSP Nº 341/2016). Listagem de coberturas incluídas no produto que deve observar a relação discriminada de coberturas, conforme Tabela Tipo de Cobertura '
+      description: 'Es el conjunto de los riesgos cubiertos enumerados en la póliza. (RESOLUCIÓN CNSP Nº 341/2016). Listado de coberturas incluidas en el producto que debe observar la relación discriminada de coberturas, según Tabla Tipo de Cobertura.'
       enum:
         - ADIANTAMENTO_DOENCA_ESTAGIO_TERMINAL
         - AUXILIO_CESTA_BASICA
@@ -811,18 +811,18 @@ components:
     EnumPremiumPaymentMethodTypePersonal:
       type: string
       description: |
-        Meio de pagamento escolhido pelo segurado. A considerar os domínios abaixo:
-          1. Cartão de Crédito
-          2. Cartão de Débito
-          3. Débito em conta corrente
-          4. Débito em conta poupança
-          5. Boleto bancário
+        Medio de pago elegido por el asegurado. Considerando los dominios abajo:
+          1. Tarjeta de Crédito
+          2. Tarjeta de Débito
+          3. Débito en cuenta corriente
+          4. Débito en cuenta de ahorro
+          5. Boleto bancario
           6. PIX
-          7. Consignação em Folha de Pagamento
-          8. Pontos de Programa de Benefício
-          9. Regra de Parceiro
-          10. TED e DOC
-          11. Outros
+          7. Consignación en Nómina
+          8. Puntos de Programa de Beneficio
+          9. Regla de Socio
+          10. TED y DOC
+          11. Otros
       enum:
         - CARTAO_CREDITO
         - CARTAO_DEBITO
@@ -839,8 +839,8 @@ components:
     EnumContractTypePersonal:
       type: string
       description: |
-        A considerar os domínios abaixo:
-          1. Coletivo;
+        Considerando los dominios abajo:
+          1. Colectivo;
           2. Individual
       enum:
         - COLETIVO
@@ -848,7 +848,7 @@ components:
       example: COLETIVO
     PersonalInsuranceSociety:
       type: object
-      description: Objeto que representa a empresa regulada pela SUSEP que oferta produtos definidos em OPIN.
+      description: Objeto que representa la empresa regulada por la SUSEP que ofrece productos definidos en OPIN.
       required:
         - name
         - cnpjNumber
@@ -861,7 +861,7 @@ components:
       properties:
         name:
           type: string
-          description: Nome da Sociedade Seguradora.
+          description: Nombre de la Sociedad Aseguradora.
           minLength: 1
           maxLength: 80
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
@@ -870,14 +870,14 @@ components:
           $ref: '#/components/schemas/CnpjNumber'
         brand:
           type: string
-          description: 'Nome da marca reportada pela sociedade seguradora participante do Open Finance. O conceito a que se refere a marca é em essência uma promessa das sociedades sob ela em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
+          description: 'Nombre de la marca reportada por la sociedad aseguradora participante del Open Finance. El concepto al que se refiere la marca es en esencia una promesa de las sociedades bajo ella de proporcionar una serie específica de atributos, beneficios y servicios uniformes a los clientes.'
           minLength: 1
           maxLength: 80
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Marca
         products:
           type: array
-          description: Lista de produtos de uma empresa.
+          description: Lista de productos de una empresa.
           minItems: 1
           items:
             $ref: '#/components/schemas/Product'
@@ -908,14 +908,14 @@ components:
       properties:
         name:
           type: string
-          description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.'
+          description: 'Nombre comercial del producto, por el cual es identificado en los canales de distribución y atención de la sociedad.'
           minLength: 1
           maxLength: 80
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          example: Produto A
+          example: Producto A
         code:
           type: string
-          description: Código único a ser definido pela sociedade.
+          description: Código único a ser definido por la sociedad.
           minLength: 1
           maxLength: 80
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
@@ -923,9 +923,9 @@ components:
         category:
           type: string
           description: |
-            Indicar a categoria do Produto
+            Indicar la categoría del Producto
               - Tradicional
-              - Microsseguro
+              - Microseguro
           enum:
             - TRADICIONAL
             - MICROSSEGURO
@@ -933,7 +933,7 @@ components:
         modality:
           $ref: '#/components/schemas/EnumProductModality'
         coverages:
-          description: Informações referente a cobertura do seguro.
+          description: Informaciones referentes a la cobertura del seguro.
           type: array
           minItems: 1
           maxItems: 2147483647
@@ -945,7 +945,7 @@ components:
           maxItems: 2147483647
           items:
             type: string
-            description: 'Lista padronizada de tipo de assistências ofertadas vinculadas ao produto. Por exemplo, Funeral, Bicicleta, Assistência PET – Tabela padrão a ser consolidada com retorno das empresas com a relação de assistências, permitindo um campo ‘Outros’ para assistências não contempladas na tabela padronizada.'
+            description: 'Lista estandarizada de tipo de asistencias ofrecidas vinculadas al producto. Por ejemplo, Funeral, Bicicleta, Asistencia PET – Tabla estándar a ser consolidada con retorno de las empresas con la relación de asistencias, permitiendo un campo ‘Otros’ para asistencias no contempladas en la tabla estandarizada.'
             enum:
               - ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA
               - ARQUITETO_VIRTUAL
@@ -1005,16 +1005,16 @@ components:
               - OUTROS
             example: ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA
         assistanceTypesAdditionalInfos:
-          description: Lista a ser preenchido pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência'
+          description: Lista a ser llenada por las participantes cuando haya 'Otros' en el campo 'Tipo de Asistencia'
           type: array
           minItems: 0
           maxItems: 2147483647
           items:
             type: string
-          example: [Informações Adicionais]
+          example: [Informaciones Adicionales]
         additionalServices:
           type: array
-          description: Lista dos serviços adicionais associado ao produto.
+          description: Lista de los servicios adicionales asociados al producto.
           minItems: 0
           maxItems: 2147483647
           items:
@@ -1027,7 +1027,7 @@ components:
             example: SORTEIO
         termsAndConditions:
           type: array
-          description: Termos e condições do produto Seguros.
+          description: Términos y condiciones del producto Seguros.
           minItems: 1
           maxItems: 2147483647
           items:
@@ -1035,7 +1035,7 @@ components:
         globalCapital:
           type: boolean
           description: |
-            A considerar os seguintes domínios:
+            Considerando los siguientes dominios:
               1. true
               2. false
           example: true
@@ -1046,10 +1046,10 @@ components:
           items:
             type: string
             description: |
-              Define o prazo do plano contratado
-              1. Vitalícia
-              2. Temporária - prazo fixo
-              3. Temporária – intermitente
+              Define el plazo del plan contratado
+              1. Vitalicia
+              2. Temporal - plazo fijo
+              3. Temporal - intermitente
             enum:
               - VITALICIA
               - TEMPORARIA_PRAZO_FIXO
@@ -1094,18 +1094,18 @@ components:
         targetAudience:
           type: string
           description: |
-            A considerar os domínios abaixo:
+            Considerando los dominios abajo:
 
-              1. Pessoa Natural
-              2. Pessoa Jurídica
-              3. Ambas (Pessoa Natural e Jurídica)
+              1. Persona Natural
+              2. Persona Jurídica
+              3. Ambas (Persona Natural y Jurídica)
           enum:
             - PESSOA_NATURAL
             - PESSOA_JURIDICA
             - PESSOA_NATURAL_JURIDICA
           example: PESSOA_NATURAL
     PersonalInsurancePortabilityGraceTime:
-      description: Período de carência (Somente informado se Regime Financeiro for igual a Capitalização).
+      description: Período de carencia (Solo se informa si el Régimen Financiero es igual a Capitalización).
       type: object
       x-regulatory-required:
         - amount
@@ -1114,15 +1114,15 @@ components:
         amount:
           type: integer
           format: int64
-          description: Informar o prazo de carência
+          description: Informar el plazo de carencia
           example: 90
           minimum: 0
           maximum: 2147483647
         unit:
           type: string
           description: |
-            Informar o critério de carência para a cobertura
-              - Dias 
+            Informar el criterio de carencia para la cobertura
+              - Días 
               - Meses
           enum:
             - DIAS
@@ -1130,7 +1130,7 @@ components:
       additionalProperties: false
     BenefitRecalculation:
       type: object
-      description: Campo sem descrição na API em OPIN.
+      description: Campo sin descripción en la API en OPIN.
       required:
         - criterias
       x-regulatory-required:
@@ -1139,7 +1139,7 @@ components:
       properties:
         criterias:
           type: array
-          description: Campo sem descrição na API em OPIN.
+          description: Campo sin descripción en la API en OPIN.
           minItems: 0
           maxItems: 2147483647
           items:
@@ -1156,7 +1156,7 @@ components:
       additionalProperties: false
     Links:
       type: object
-      description: Referências para outros recusos da API requisitada.
+      description: Referencias a otros recursos de la API solicitada.
       required:
         - self
       properties:
@@ -1164,36 +1164,36 @@ components:
           type: string
           format: url
           maxLength: 2000
-          description: URI completo que gerou a resposta atual.
+          description: URI completo que generó la respuesta actual.
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         first:
           type: string
           format: url
           maxLength: 2000
-          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
+          description: URI de la primera página que originó esta lista de resultados. Restricción - Obligatorio cuando no es la primera página de la respuesta
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         prev:
           type: string
           format: url
           maxLength: 2000
-          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
+          description: "URI de la página anterior de esta lista de resultados. Restricción - \tObligatorio cuando no es la primera página de la respuesta"
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         next:
           type: string
           format: url
           maxLength: 2000
-          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          description: URI de la próxima página de esta lista de resultados. Restricción - Obligatorio cuando no es la última página de la respuesta
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
         last:
           type: string
           format: url
           maxLength: 2000
-          description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          description: URI de la última página de esta lista de resultados. Restricción - Obligatorio cuando no es la última página de la respuesta
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
       additionalProperties: false
     Meta:
       type: object
-      description: Meta informações referente a API requisitada.
+      description: Meta informaciones referentes a la API solicitada.
       required:
         - totalRecords
         - totalPages
@@ -1202,15 +1202,15 @@ components:
         totalRecords:
           type: integer
           format: int32
-          description: Número total de registros no resultado
+          description: Número total de registros en el resultado
           example: 1
         totalPages:
           type: integer
           format: int32
-          description: Número total de páginas no resultado
+          description: Número total de páginas en el resultado
           example: 1
         requestDateTime:
-          description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+          description: 'Fecha y hora de la consulta, conforme a la especificación RFC-3339, formato UTC.'
           type: string
           maxLength: 20
           format: date-time
@@ -1233,17 +1233,17 @@ components:
               - detail
             properties:
               code:
-                description: Código de erro específico do endpoint
+                description: Código de error específico del endpoint
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               title:
-                description: Título legível por humanos deste erro específico
+                description: Título legible por humanos de este error específico
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               detail:
-                description: Descrição legível por humanos deste erro específico
+                description: Descripción legible por humanos de este error específico
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 2048
@@ -1255,7 +1255,7 @@ components:
     page:
       name: page
       in: query
-      description: Número da página que está sendo requisitada (o valor da primeira página é 1).
+      description: Número de la página que se está solicitando (el valor de la primera página es 1).
       schema:
         type: integer
         default: 1
@@ -1265,7 +1265,7 @@ components:
     pageSize:
       name: page-size
       in: query
-      description: Quantidade total de registros por páginas.
+      description: Cantidad total de registros por página.
       schema:
         type: integer
         default: 25
@@ -1274,43 +1274,43 @@ components:
         maximum: 1000
   responses:
     OKResponsePersonalInsuranceList:
-      description: Dados de seguro(s) pessoais obtidos com sucesso.
+      description: Datos de seguro(s) personal(es) obtenidos con éxito.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/OKResponsePersonalInsuranceList'
     BadRequest:
-      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
+      description: 'La solicitud fue malformada, omitiendo atributos obligatorios, ya sea en el payload o a través de atributos en la URL.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     InternalServerError:
-      description: Ocorreu um erro no gateway da API ou no microsserviço
+      description: Ocurrió un error en el gateway de la API o en el microservicio
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     MethodNotAllowed:
-      description: O consumidor tentou acessar o recurso com um método não suportado
+      description: El consumidor intentó acceder al recurso con un método no soportado
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     NotFound:
-      description: O recurso solicitado não existe ou não foi implementado
+      description: El recurso solicitado no existe o no ha sido implementado
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     TooManyRequests:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite de requisições concorrentes foi atingido.'
+      description: 'La operación fue rechazada, ya que se realizaron demasiadas solicitudes dentro de un período determinado o se alcanzó el límite de solicitudes concurrentes.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
     SiteIsOverloaded:
-      description: 'O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.'
+      description: 'El sitio está sobrecargado y la operación fue rechazada, ya que se alcanzó el límite máximo de TPS global, en este momento.'
       content:
         application/json; charset=utf-8:
           schema:
@@ -1330,29 +1330,30 @@ components:
                     - detail
                   properties:
                     code:
-                      description: Código de erro específico do endpoint
+                      description: Código de error específico del endpoint
                       type: string
                       pattern: '[\w\W\s]*'
                       maxLength: 255
                     title:
-                      description: Título legível por humanos deste erro específico
+                      description: Título legible por humanos de este error específico
                       type: string
                       pattern: '[\w\W\s]*'
                       maxLength: 255
                     detail:
-                      description: Descrição legível por humanos deste erro específico
+                      description: Descripción legible por humanos de este error específico
                       type: string
                       pattern: '[\w\W\s]*'
                       maxLength: 2048
               meta:
                 type: object
-                description: Meta informações referente à API requisitada.
+                description: Meta informaciones referentes a la API solicitada.
                 required:
                   - requestDateTime
                 properties:
                   requestDateTime:
-                    description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+                    description: 'Fecha y hora de la consulta, conforme a la especificación RFC-3339, formato UTC.'
                     type: string
                     maxLength: 20
                     format: date-time
                     example: '2021-05-21T08:30:00Z'
+                    

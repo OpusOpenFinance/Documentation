@@ -15,12 +15,8 @@ alternate_lang:
 
 Este es un ejemplo de archivo JSON de respuesta de la API ***OpenData Invoice Financings***.
 
-Haga clic [**aquí**](open-data-invoice-financings.json){:download="open-data-invoice-financings.json"} para descargar el archivo de ejemplo.
+Haga clic [**aquí**](./anexos/json/es-openData-invoiceFinancings.json){:download="es-openData-invoiceFinancings.json"} para descargar el archivo de ejemplo y verlo [**aquí**](./anexos/json/es-openData-invoiceFinancings.json).
 
 Para los posibles valores de cada clave JSON, consulte la [API asociada][Link-API].
 
-```json
-{% include_relative open-data-invoice-financings.json %}
-```
-
-[Link-API]: ../../../../swagger-ui/index.html?api=open-data-invoice-financings
+[Link-API]: ../../../../../swagger-ui/index.html?api=es-open-data-invoice-financings

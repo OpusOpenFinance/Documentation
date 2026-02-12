@@ -15,12 +15,8 @@ alternate_lang:
 
 Este es un ejemplo de archivo JSON de respuesta de la API ***OpenData Channels***.
 
-Haga clic [**aquí**](open-data-channels.json){:download="open-data-channels.json"} para descargar el archivo de ejemplo.
+Haga clic [**aquí**](./anexos/json/es-openData-channels.json){:download="es-openData-channels.json"} para descargar el archivo de ejemplo y verlo [**aquí**](./anexos/json/es-openData-channels.json).
 
 Para los posibles valores de cada clave JSON consulte la [API asociada][Link-API].
 
-```json
-{% include_relative open-data-channels.json %}
-```
-
-[Link-API]: ../../../../swagger-ui/index.html?api=open-data-channels
+[Link-API]: ../../../../../swagger-ui/index.html?api=es-open-data-channels

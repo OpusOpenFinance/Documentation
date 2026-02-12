@@ -15,12 +15,8 @@ alternate_lang:
 
 Este es un ejemplo de archivo JSON de respuesta de la API ***OpenData Credit Cards***.
 
-Haga clic [**aquí**](open-data-credit-cards.json){:download="open-data-credit-cards.json"} para descargar el archivo de ejemplo.
+Haga clic [**aquí**](./anexos/json/es-openData-creditCards.json){:download="es-openData-creditCards.json"} para descargar el archivo de ejemplo y verlo [**aquí**](./anexos/json/es-openData-creditCards.json).
 
 Para los posibles valores de cada clave JSON consulte la [API asociada][Link-API].
 
-```json
-{% include_relative open-data-credit-cards.json %}
-```
-
-[Link-API]: ../../../../swagger-ui/index.html?api=open-data-credit-cards
+[Link-API]: ../../../../../swagger-ui/index.html?api=es-open-data-credit-cards

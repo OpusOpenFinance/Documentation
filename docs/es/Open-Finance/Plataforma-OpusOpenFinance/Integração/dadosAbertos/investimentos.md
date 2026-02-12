@@ -15,12 +15,8 @@ alternate_lang:
 
 Este es un ejemplo de archivo JSON de respuesta de la API ***OpenData Investments***.
 
-Haga clic [**aquí**](open-data-investments.json){:download="open-data-investments.json"} para descargar el archivo de ejemplo.
+Haga clic [**aquí**](./anexos/json/es-openData-investments.json){:download="es-openData-investments.json"} para descargar el archivo de ejemplo y verlo [**aquí**](./anexos/json/es-openData-investments.json).
 
 Para los posibles valores de cada clave JSON, consulte la [API asociada][Link-API].
 
-```json
-{% include_relative open-data-investments.json %}
-```
-
-[Link-API]: ../../../../swagger-ui/index.html?api=open-data-investments
+[Link-API]: ../../../../../swagger-ui/index.html?api=es-open-data-investments

@@ -15,12 +15,8 @@ alternate_lang:
 
 Este es un ejemplo de archivo JSON de respuesta de la API ***OpenData Pension***.
 
-Haga clic [**aquí**](open-data-pension.json){:download="open-data-pension.json"} para descargar el archivo de ejemplo.
+Haga clic [**aquí**](./anexos/json/es-openData-pension.json){:download="es-openData-pension.json"} para descargar el archivo de ejemplo y verlo [**aquí**](./anexos/json/es-openData-pension.json).
 
 Para los posibles valores de cada clave JSON, consulte la [API asociada][Link-API].
 
-```json
-{% include_relative open-data-pension.json %}
-```
-
-[Link-API]: ../../../../swagger-ui/index.html?api=open-data-pension
+[Link-API]: ../../../../../swagger-ui/index.html?api=es-open-data-pension
