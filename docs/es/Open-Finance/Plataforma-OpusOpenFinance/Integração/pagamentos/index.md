@@ -46,9 +46,9 @@ _Etapa de liquidación del pago:_
 
 ### API de integración
 
-La descripción de la API que debe ser implementada por la _capa de integración de pago_, que es la API _Payment Initiation_, puede encontrarse [**aquí**.][API-pago].
+La descripción de la API que debe ser implementada por la _capa de integración de pago_, que es la API _Payment Initiation_, puede encontrarse [**aquí**][API-pago].
 
-Para descargar el archivo YAML/OAS que contiene la especificación de la API haga clic [**aquí**](../apis/payment-integration-0-1-0.yml){:download="../apis/payment-integration-0-1-0.yml"}.
+Para descargar el archivo YAML/OAS que contiene la especificación de la API haga clic [**aquí**](./anexos/yml/es-paymentIntegration-0.1.0.yml){:download="es-paymentIntegration-0.1.0.yml"}.
 
 ### Escenarios de Pagos a Ser Cúbiertos por la Integración
 
@@ -117,9 +117,9 @@ El campo que define la fecha del pago varía según el tipo de pago (campo `paym
 
 ##### Caso `paymentType` sea `PAYMENT_RECURRING_CONSENT`
 
-| Campo `requestBody.data.date` | Escenario     | Fecha de Pago         |
-| :---------------------------- | :------------ | :-------------------- |
-| Es fecha **actual**           | Instantáneo   | Fecha actual          |
+| Campo `requestBody.data.date` | Escenario     | Fecha de Pago           |
+| :---------------------------- | :------------ | :---------------------- |
+| Es fecha **actual**           | Instantáneo   | Fecha actual            |
 | Es fecha **futura**           | Programado    | `requestBody.data.date` |
 
 #### Cómo Identificar la Forma de Iniciación y el Receptor (creditor)
@@ -129,13 +129,13 @@ La forma de identificación del **receptor (creditor)** varía según el tipo de
 
 La tabla a continuación resume los campos para la identificación de cada escenario:
 
-| Forma de Iniciación | Campos utilizados para identificar el receptor                    |
-| :-----------------  | :---------------------------------------------------------------- |
-|        MANU         | `creditorAccount` (objeto con información bancaria)               |
-|        INIC         | `proxy` (Clave _Pix_)                                               |
-|        DICT         | `proxy` + `creditorAccount`                                       |
+| Forma de Iniciación | Campos utilizados para identificar el receptor                       |
+| :-----------------  | :------------------------------------------------------------------- |
+|        MANU         | `creditorAccount` (objeto con información bancaria)                  |
+|        INIC         | `proxy` (Clave _Pix_)                                                |
+|        DICT         | `proxy` + `creditorAccount`                                          |
 |        QRES         | `proxy` + `creditorAccount` + `qrCode` (String con el QR Code leído) |
-|        QRDN         | `proxy` + `creditorAccount` + `qrCode`                            |
+|        QRDN         | `proxy` + `creditorAccount` + `qrCode`                               |
 
 {:.importante}
 ⚠️ Cuando haya más de una forma de identificación, debe validarse la coherencia entre ellas.
@@ -205,7 +205,7 @@ El valor de la transacción (campo `amount`) debe estar por debajo:
 
 #### Sobre Descubrimiento de Recursos
 
-Preguntas referentes al [descubrimiento de recursos en Opus Open Finance](/es/integração-plugin/consent/readme.md#Discovery-de-recursos-no-Opus-Open-Banking).
+Preguntas referentes al [descubrimiento de recursos en Opus Open Finance](./discoveryRecursos.html).
 
 **¿Qué es un "recurso"?**
 
@@ -245,7 +245,7 @@ Si el campo `debtorAccount` del consentimiento está rellenado con una cuenta v�
 
 **¿Qué debe validarse en la ruta específica para la validación de datos del pago?**
 
-Verificar las [validaciones obligatorias para pagos](/es/integração-plugin/recomendacoes/validacoes-pagamentos/readme.md).
+Verificar las [validaciones obligatorias para pagos](./validacoesPagamentos.html).
 
 #### Sobre Solicitudes de Creación de Pagos
 
@@ -256,15 +256,15 @@ El campo `consent.debtorAccount` también estará siempre rellenado con la infor
 
 **¿Dónde encontrar la fecha del pago para cada escenario o tipo de pago?**
 
-Verificar [cómo identificar la fecha del pago](/es/integração-plugin/recomendacoes/cenarios-pagamentos/readme.md#Como-Identificar-a-Data-de-Efetivação-do-Pagamento).
+Verificar [cómo identificar la fecha del pago](./cenariosPagamentos.html).
 
 **¿El backend de la institución financiera necesita soportar Programaciones Recurrentes?**
 
 No. La **Plataforma Opus Open Finance** realizará una solicitud separada para cada fecha de recurrencia.
 
 Por ejemplo, al recibir una solicitud de programación recurrente por 5 meses, un débito por mes, la plataforma solicitará al backend de la institución financiera 5 programaciones independientes.
-La fecha de cada programación debe determinarse como se describe en [cómo identificar la fecha del pago](/es/integração-plugin/recomendacoes/cenarios-pagamentos/readme.md#Como-Identificar-a-Data-de-Efetivação-do-Pagamento).
+La fecha de cada programación debe determinarse como se describe en [cómo identificar la fecha del pago](./cenariosPagamentos.html).
 
-[App-e-Web]: ./App-e-Web.html
-[Imagen-Capa-Integración]: ./images/Integração-Pagamento.png
-[API-pago]: ../../../../swagger-ui/index.html?api=payment-integration
+[App-e-Web]: ../appEWeb/index.html
+[Imagen-Capa-Integración]: ./anexos/imagens/representacaoCamadaDeIntegracao.png
+[API-pago]: ../../../../../swagger-ui/index.html?api=es-payment-integration

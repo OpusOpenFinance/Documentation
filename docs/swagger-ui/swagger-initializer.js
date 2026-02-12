@@ -117,7 +117,8 @@ window.onload = () => {
     "es-financiamentos": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/es-financings-2-3-0.yml`,
     "es-adiantamentos": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/es-overdraft-2-4-0.yml`,
     "es-direitos-creditorios": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/es-invoiceFinancings-2-3-0.yml`,
-    "es-payment-integration": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/payment-integration-0.1.0.yml`,
+    //
+    "es-payment-integration": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/anexos/yml/es-paymentIntegration-0.1.0.yml`,
     // OAS / Mobile
     "es-oas-receptor": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-dados.yml`,
     "es-oas-itp-pagamentos": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos.yml`,
