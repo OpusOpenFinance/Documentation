@@ -117,14 +117,14 @@ window.onload = () => {
     "es-financiamentos": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/es-financings-2-3-0.yml`,
     "es-adiantamentos": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/es-overdraft-2-4-0.yml`,
     "es-direitos-creditorios": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/es-invoiceFinancings-2-3-0.yml`,
-    //
     "es-payment-integration": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/anexos/yml/es-paymentIntegration-0.1.0.yml`,
-    // OAS / Mobile
+    // App e Web
+    "es-mobile": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/anexos/yml/es-mobileWebapp2as.yml`,
+    //
     "es-oas-receptor": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-dados.yml`,
     "es-oas-itp-pagamentos": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos.yml`,
     "es-oas-itp-pagamentos-automaticos": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos-automaticos.yml`,
     "es-oas-back-dados": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/es-oas-oof-dados.yml`,
-    "es-mobile": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-webapp2as.yml`,
     // Open Data
     "es-open-data-acquiring": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/es-open-acquiringServices.yml`,
     "es-open-data-accounts": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/es-open-accounts.yml`,

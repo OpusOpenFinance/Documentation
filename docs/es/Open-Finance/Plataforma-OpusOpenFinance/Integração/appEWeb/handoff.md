@@ -81,12 +81,12 @@ Schema:
 }
 ```
 
-| Propriedad      | Descripción                                                                                                                            |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `qrCode`         | Valor para generar QR-code a ser mostrado al usuario                                                                                  |
-| `timeoutSeconds` | Tiempo total disponible para la conclusión del consentimiento                                                                               |
-| `typeCode`       | Código alternativo para el cliente escribir en caso de fallo de lectura del QR-Code. Presente solo si habilitado en la instalación        |
-| `tppName`        | Nombre de la institución iniciadora de pago                                                                                          |
+| Propriedad       | Descripción                                                                                                                        |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `qrCode`         | Valor para generar QR-code a ser mostrado al usuario                                                                               |
+| `timeoutSeconds` | Tiempo total disponible para la conclusión del consentimiento                                                                      |
+| `typeCode`       | Código alternativo para el cliente escribir en caso de fallo de lectura del QR-Code. Presente solo si habilitado en la instalación |
+| `tppName`        | Nombre de la institución iniciadora de pago                                                                                        |
 | `tppLogoUrl`     | Logomarca de la institución iniciadora de pago                                                                                     |
 
 ### handoffCompleted
@@ -107,11 +107,11 @@ Schema basado en el `completedCommand` de la interfaz APP2AS:
 }
 ```
 
-| Propriedad                            | Descripción                                                             |
-| -------------------------------------- | --------------------------------------------------------------------- |
-| `tpp.name`                             | Nombre de la institución llamadora (TPP) para mostrar en la pantalla de retorno  |
-| `tpp.logoUrl`                          | URL con el logotipo del TPP para mostrar en la pantalla de retorno            |
-| `completedCommand.redirect.redirectTo` | URL para redireccionamiento tras mostrar la pantalla de retorno al usuario |
+| Propriedad                             | Descripción                                                                     |
+| -------------------------------------- | ------------------------------------------------------------------------------- |
+| `tpp.name`                             | Nombre de la institución llamadora (TPP) para mostrar en la pantalla de retorno |
+| `tpp.logoUrl`                          | URL con el logotipo del TPP para mostrar en la pantalla de retorno              |
+| `completedCommand.redirect.redirectTo` | URL para redireccionamiento tras mostrar la pantalla de retorno al usuario      |
 
 ### handoffError
 
@@ -133,13 +133,13 @@ Schema basado en el `errorCommand` de la interfaz APP2AS:
 }
 ```
 
-| Propriedad                        | Descripción                                                                                                                                                                                                                                  |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `tpp.name`                         | Nombre del TPP para mostrar en la pantalla de retorno.                                                                                                                                                                                              |
-| `tpp.logoUrl`                      | URL con el logotipo del TPP para mostrar en la pantalla de retorno                                                                                                                                                                                 |
+| Propriedad                         | Descripción                                                                |
+| ---------------------------------- | -------------------------------------------------------------------------- |
+| `tpp.name`                         | Nombre del TPP para mostrar en la pantalla de retorno.                     |
+| `tpp.logoUrl`                      | URL con el logotipo del TPP para mostrar en la pantalla de retorno         |
 | `errorCommand.type`                | Tipo do error. Misma `enum` que APP2AS: `CPF_MISMATCH`, `CNPJ_MISMATCH`, `EXPIRED_CONSENT`, `RESOURCE_MUST_CONTAIN_ID`, `GENERIC_ERROR`, `OIDC_ERROR`, `DISCOVERY_ERROR`, `RESOURCE_MUST_CONTAIN_ID_SELECTABLE_PRODUCTS`, `DISCOVERY_TIMEOUT`, `INVALID_STATUS_CONFIRMATION`, `INVALID_ENROLLMENT_INFORMATION` |
-| `errorCommand.message`             | Mensaje de error para mostrar al usuario en la pantalla de retorno                                                                                                                                                                                 |
-| `errorCommand.redirect.redirectTo` | URL para redireccionamiento tras mostrar la pantalla de retorno al usuario                                                                                                                                                                      |
+| `errorCommand.message`             | Mensaje de error para mostrar al usuario en la pantalla de retorno         |
+| `errorCommand.redirect.redirectTo` | URL para redireccionamiento tras mostrar la pantalla de retorno al usuario |
 
 La información `tpp.name`, `tpp.logoUrl`, `errorCommand.message` y `errorCommand.redirect.redirectTo` puede no estar presente en el retorno.
 
@@ -157,10 +157,10 @@ Una aplicación funcional de ejemplo está disponible. Hay una página de ejempl
 
 La aplicación de ejemplo está utilizando la versión *mockada* de la biblioteca que simula 3 escenarios distintos a través de los identificadores listados en la tabla a continuación.
 
-| Identificador            | Escenario                                        |
-| ------------------------ | ---------------------------------------------- |
-| L3YxL21vY2svc3VjY2Vzcw== | Consentimiento efectuado con éxito             |
-| L3YxL21vY2svY3BmLWVycm9y | Error de CPF_MISMATCH                           |
+| Identificador            | Escenario                                            |
+| ------------------------ | ---------------------------------------------------- |
+| L3YxL21vY2svc3VjY2Vzcw== | Consentimiento efectuado con éxito                   |
+| L3YxL21vY2svY3BmLWVycm9y | Error de CPF_MISMATCH                                |
 | L3YxL21vY2svdGltZW91dA== | Tiempo agotado para la conclusión del consentimiento |
 
 Es posible ejecutar la aplicación de ejemplo alojando el directorio `src` en algún servidor web. Para ejecutar localmente sugerimos utilizar el paquete [`http-server`](https://www.npmjs.com/package/http-server) de [Node.js](https://nodejs.org/en/download/):
@@ -172,9 +172,9 @@ npx http-server -p 3030 --cors -c-1
 
 Es posible iniciar los escenarios mockeados a través de las siguientes URLs:
 
-| Escenario      | URL                                                       |
+| Escenario    | URL                                                       |
 | ------------ | --------------------------------------------------------- |
-| Éxito      | <http://lvh.me:3030/sample.html#L3YxL21vY2svc3VjY2Vzcw==> |
+| Éxito        | <http://lvh.me:3030/sample.html#L3YxL21vY2svc3VjY2Vzcw==> |
 | CPF_MISMATCH | <http://lvh.me:3030/sample.html#L3YxL21vY2svY3BmLWVycm9y> |
 | Timeout      | <http://lvh.me:3030/sample.html#L3YxL21vY2svdGltZW91dA==> |
 

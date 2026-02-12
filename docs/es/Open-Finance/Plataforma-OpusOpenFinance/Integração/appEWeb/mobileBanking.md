@@ -47,7 +47,7 @@ La respuesta del `GET` inicial es el primero de una serie de comandos que la apl
 
 El siguiente diagrama de secuencia ilustra de forma resumida el funcionamiento de la interacción entre la aplicación móvil de la institución y el Authorization Server.
 
-![Diagrama de secuencia](images/sequencia-app2as.svg)
+![Diagrama de secuencia](./anexos/imagens/mobileBanking-diagramaSequencia.svg)
 
 ## Open API Specification
 
@@ -55,7 +55,7 @@ Las definiciones de la API REST disponible por el Authorization Server para la a
 
 ## Mock para integración
 
-Para asistir en el desarrollo de la integración está disponible un *mock* en la herramienta [Mockoon](https://mockoon.com/) y definido en este [archivo JSON](./mockoon.json).
+Para asistir en el desarrollo de la integración está disponible un *mock* en la herramienta [Mockoon](https://mockoon.com/) y definido en este [archivo JSON](./anexos/json/mobileBanking/es-mockoon.json).
 
 Varios escenarios están falseados y son accionados a través de las respectivas URLs iniciales:
 
@@ -74,4 +74,4 @@ Varios escenarios están falseados y son accionados a través de las respectivas
 
 Para ejecutar el mock basta importar el JSON en la herramienta *Mockoon* e iniciar el servidor del *environment* "Opus Open Finance Authorization Server Apps API".
 
-[API-Mobile]: ../../../../../../../swagger-ui/index.html?api=Mobile
+[API-Mobile]: ../../../../../swagger-ui/index.html?api=es-mobile

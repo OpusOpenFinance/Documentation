@@ -47,5 +47,5 @@ La gestión del consentimiento representa la funcionalidad que permite al client
 
 En paralelo a la construcción de las pantallas de la aplicación móvil y/o Internet Banking, también es necesario integrar estos componentes a la plataforma. Las siguientes páginas de esta documentación detallan esta integración, así como el funcionamiento de la pantalla de *Handoff*, en caso de que la institución financiera no ofrezca un canal de autoservicio a través de la Web.
 
-[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+ri
+[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil
 [JornadaConsentimiento]: ../../../Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento.html

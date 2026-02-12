@@ -53,6 +53,6 @@ Las definiciones de la API REST proporcionada por el Authorization Server pueden
 
 El diagrama de secuencia a continuación ilustra el funcionamiento entre la aplicación web de la institución y el Authorization Server, abarcando la etapa de autenticación seguida del flujo de generación de consentimiento, tanto para la configuración de uso de las pantallas estándar como uso de las pantallas personalizadas.
 
-![Diagrama de secuencia](images/sequencia-web2as.svg)
+![Diagrama de secuencia](./anexos/imagens/internetBanking-diagramaSequencia.svg)
 
-[API-Mobile]: ../../../../../../../swagger-ui/index.html?api=Mobile
+[API-Mobile]: ../../../../../swagger-ui/index.html?api=es-mobile
