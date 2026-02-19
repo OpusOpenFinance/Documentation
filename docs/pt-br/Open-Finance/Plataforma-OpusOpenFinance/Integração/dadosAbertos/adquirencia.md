@@ -5,9 +5,9 @@ parent: "Dados Abertos"
 nav_order: 10
 lang: "pt-br"
 alternate_lang: 
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Acquiring/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/adquirencia/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Acquiring/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/adquirencia/"
       lang: "es"
 ---
 

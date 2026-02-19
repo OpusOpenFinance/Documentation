@@ -5,9 +5,9 @@ parent: "Integración de la Plataforma"
 nav_order: 1
 lang: "es"
 alternate_lang: 
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integration/OpenData/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/index/"
       lang: "pt-br"
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integration/OpenData/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/index/"
       lang: "en"
 ---
 

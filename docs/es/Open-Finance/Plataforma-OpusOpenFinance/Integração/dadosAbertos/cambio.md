@@ -5,9 +5,9 @@ parent: "Datos Abiertos"
 nav_order: 13
 lang: "es"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Exchange/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/cambio/"
       lang: "pt-br"
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Exchange/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/cambio/"
       lang: "en"
 ---
 

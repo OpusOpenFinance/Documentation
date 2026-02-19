@@ -5,9 +5,9 @@ parent: "Datos Abiertos"
 nav_order: 9
 lang: "es"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Insurance/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/seguros/"
       lang: "pt-br"
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Insurance/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/seguros/"
       lang: "en"
 ---
 

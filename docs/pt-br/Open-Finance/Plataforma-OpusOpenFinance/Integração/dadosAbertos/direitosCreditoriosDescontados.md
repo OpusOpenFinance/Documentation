@@ -5,9 +5,9 @@ parent: "Dados Abertos"
 nav_order: 6
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Invoices/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/direitosCreditoriosDescontados/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Invoices/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/direitosCreditoriosDescontados/"
       lang: "es"
 ---
 

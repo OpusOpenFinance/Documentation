@@ -5,9 +5,9 @@ parent: "Dados Abertos"
 nav_order: 12
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Pension/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/previdencia/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-Pension/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/previdencia/"
       lang: "es"
 ---
 

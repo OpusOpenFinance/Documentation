@@ -5,9 +5,9 @@ parent: "Dados Abertos"
 nav_order: 7
 lang: "pt-br"
 alternate_lang: 
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-CreditCard/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/cartaoCredito/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/DadosAbertos-CreditCard/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/cartaoCredito/"
       lang: "es"
 ---
 

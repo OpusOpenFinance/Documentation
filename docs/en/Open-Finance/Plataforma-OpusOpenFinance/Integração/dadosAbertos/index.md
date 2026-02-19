@@ -5,9 +5,9 @@ parent: "Platform Integration"
 nav_order: 1
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Dados_abertos/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/index/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Dados_abertos/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/index/"
       lang: "es"
 ---
 
@@ -88,32 +88,32 @@ Below are the regulatory APIs related to Open Data and examples of JSON files to
 |Pension                 |[Link][Pension]        |[JSON][Pension-JSON]        |
 |Exchange                |[Link][Exchange]       |[JSON][Exchange-JSON]       |
 
-[Acquiring]: ../../../../swagger-ui/index.html?api=en-open-data-acquiring
-[Accounts]: ../../../../swagger-ui/index.html?api=en-open-data-accounts
-[Capitalization]: ../../../../swagger-ui/index.html?api=en-open-data-capitalization
-[Channels]: ../../../../swagger-ui/index.html?api=en-open-data-channels
-[CreditCard]: ../../../../swagger-ui/index.html?api=en-open-data-credit-cards
-[Exchange]: ../../../../swagger-ui/index.html?api=en-open-data-exchange
-[Financings]: ../../../../swagger-ui/index.html?api=en-open-data-financings
-[Insurance]: ../../../../swagger-ui/index.html?api=en-open-data-insurance
-[Investments]: ../../../../swagger-ui/index.html?api=en-open-data-investments
-[Inv-financings]: ../../../../swagger-ui/index.html?api=en-open-data-invoice-financings
-[Loans]: ../../../../swagger-ui/index.html?api=en-open-data-loans
-[Pension]: ../../../../swagger-ui/index.html?api=en-open-data-pension
-[Unarranged]: ../../../../swagger-ui/index.html?api=en-open-data-unarranged
+[Acquiring]: ../../../../../swagger-ui/index.html?api=en-open-data-acquiring
+[Accounts]: ../../../../../swagger-ui/index.html?api=en-open-data-accounts
+[Capitalization]: ../../../../../swagger-ui/index.html?api=en-open-data-capitalization
+[Channels]: ../../../../../swagger-ui/index.html?api=en-open-data-channels
+[CreditCard]: ../../../../../swagger-ui/index.html?api=en-open-data-credit-cards
+[Exchange]: ../../../../../swagger-ui/index.html?api=en-open-data-exchange
+[Financings]: ../../../../../swagger-ui/index.html?api=en-open-data-financings
+[Insurance]: ../../../../../swagger-ui/index.html?api=en-open-data-insurance
+[Investments]: ../../../../../swagger-ui/index.html?api=en-open-data-investments
+[Inv-financings]: ../../../../../swagger-ui/index.html?api=en-open-data-invoice-financings
+[Loans]: ../../../../../swagger-ui/index.html?api=en-open-data-loans
+[Pension]: ../../../../../swagger-ui/index.html?api=en-open-data-pension
+[Unarranged]: ../../../../../swagger-ui/index.html?api=en-open-data-unarranged
 
-[Channels-JSON]: ../apis-dados-abertos/DadosAbertos-Channels.html
-[Accounts-JSON]: ../apis-dados-abertos/DadosAbertos-Accounts.html
-[Loans-JSON]: ../apis-dados-abertos/DadosAbertos-Loans.html
-[Financings-JSON]: ../apis-dados-abertos/DadosAbertos-Financings.html
-[Unarranged-JSON]: ../apis-dados-abertos/DadosAbertos-Unarranged.html
-[Inv-financings-JSON]: ../apis-dados-abertos/DadosAbertos-Invoice.html
-[CreditCard-JSON]: ../apis-dados-abertos/DadosAbertos-CreditCard.html
-[Investments-JSON]: ../apis-dados-abertos/DadosAbertos-Investments.html
-[Insurance-JSON]: ../apis-dados-abertos/DadosAbertos-Insurance.html
-[Acquiring-JSON]: ../apis-dados-abertos/DadosAbertos-Acquiring.html
-[Capitalization-JSON]: ../apis-dados-abertos/DadosAbertos-Capitalization.html
-[Pension-JSON]: ../apis-dados-abertos/DadosAbertos-Pension.html
-[Exchange-JSON]: ../apis-dados-abertos/DadosAbertos-Exchange.html
+[Channels-JSON]: ./canaisAtendimento.html
+[Accounts-JSON]: ./contas.html
+[Loans-JSON]: ./emprestimos.html
+[Financings-JSON]: ./financiamentos.html
+[Unarranged-JSON]: ./adiantamentoADepositantes.html
+[Inv-financings-JSON]: ./direitosCreditoriosDescontados.html
+[CreditCard-JSON]: ./cartaoCredito.html
+[Investments-JSON]: ./investimentos.html
+[Insurance-JSON]: ./seguros.html
+[Acquiring-JSON]: ./adquirencia.html
+[Capitalization-JSON]: ./capitalizacao.html
+[Pension-JSON]: ./previdencia.html
+[Exchange-JSON]: ./cambio.html
 
-[Perfis-Open-Finance-Brasil]: ../../Open-Finance-Brasil/PerfisOFB/Dados-abertos.html
+[Perfis-Open-Finance-Brasil]: ../../../Open-Finance-Brasil/PerfisOFB//Dados-abertos.html

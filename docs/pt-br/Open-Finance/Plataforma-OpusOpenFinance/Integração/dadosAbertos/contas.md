@@ -5,9 +5,9 @@ parent: "Dados Abertos"
 nav_order: 2
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/dadosAbertos-accounts/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/contas/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/apis-dados-abertos/dadosAbertos-accounts/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/contas/"
       lang: "es"
 ---
 
