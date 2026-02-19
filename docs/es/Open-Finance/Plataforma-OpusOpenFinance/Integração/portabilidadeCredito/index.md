@@ -5,9 +5,9 @@ parent: "Integración de la Plataforma"
 nav_order: 5
 lang: "es"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Portabilidade_Credito/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/portabilidadeCredito/index/"
       lang: "en"
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Portabilidade_Credito/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/portabilidadeCredito/index/"
       lang: "pt-br"
 ---
 
