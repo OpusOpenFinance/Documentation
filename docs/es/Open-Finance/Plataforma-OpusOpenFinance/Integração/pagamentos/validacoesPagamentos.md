@@ -6,9 +6,9 @@ nav_order: 2
 has_children: true
 lang: "es"
 alternate_lang: 
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/integracao-plugin/validacoes-pagamentos/Validacoes-Pagamentos/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/validacoesPagamentos/"
       lang: "en"
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/integracao-plugin/validacoes-pagamentos/Validacoes-Pagamentos/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/validacoesPagamentos/"
       lang: "pt-br"
 ---
 

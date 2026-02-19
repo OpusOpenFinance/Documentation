@@ -6,13 +6,13 @@ nav_order: 2
 has_children: true
 lang: "en"
 alternate_lang: 
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/integracao-plugin/validacoes-pagamentos/Validacoes-Pagamentos/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/validacoesPagamentos/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/integracao-plugin/validacoes-pagamentos/Validacoes-Pagamentos/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/validacoesPagamentos/"
       lang: "es"
 ---
 
-# Mandatory Payment Validations
+## Mandatory Payment Validations
 
 The validations below must be implemented in the specific route for payment data validation.
 

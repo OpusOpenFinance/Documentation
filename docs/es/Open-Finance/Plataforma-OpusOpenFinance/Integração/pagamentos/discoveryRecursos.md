@@ -6,9 +6,9 @@ nav_order: 1
 has_children: true
 lang: "es"
 alternate_lang: 
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/integracao-plugin/consent/Discovery-Recursos/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/discoveryRecursos/"
       lang: "en"
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/integracao-plugin/consent/Discovery-Recursos/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/discoveryRecursos/"
       lang: "pt-br"
 ---
 

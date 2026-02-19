@@ -6,13 +6,13 @@ nav_order: 1
 has_children: true
 lang: "en"
 alternate_lang: 
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/integracao-plugin/consent/Discovery-Recursos/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/discoveryRecursos/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/integracao-plugin/consent/Discovery-Recursos/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/discoveryRecursos/"
       lang: "es"
 ---
 
-# Consent API
+## Consent API
 
 - [Consent API](#consent-api)
   - [Resource Discovery in Opus Open Banking](#resource-discovery-in-opus-open-banking)
@@ -29,7 +29,7 @@ alternate_lang:
     - [Additional Treatments](#additional-treatments)
       - [Account Filtering](#account-filtering)
     - [Multiple Authorisations](#multiple-authorisations)
-      - [Handling PENDING_AUTHORISATION Status](#handling-pending_authorisation-status)
+      - [Handling PENDING_AUTHORISATION](#handling-pending_authorisation)
   - [Permission Groups in Consent Creation](#permission-groups-in-consent-creation)
   - [Approval of Payment Consent Creation](#approval-of-payment-consent-creation)
     - [Temporary Solution for approvePaymentConsentCreation Route](#temporary-solution-for-approvepaymentconsentcreation-route)
@@ -77,7 +77,7 @@ These non-actively selected products are referred to as **non-selectable product
 
 The table below lists all non-selectable products handled by Opus Open Banking:
 
-| Consent Type             | Product                      | Product Type    | Camel Route Name                               |
+| Consent Type             | Product                      | Product Type    | Camel Route Name                                |
 | ------------------------ | ---------------------------- | --------------- | ----------------------------------------------- |
 | Data Sharing             | INVOICE_FINANCING            | Non-selectable  | ```direct:discoverInvoiceFinancings```          |
 | Data Sharing             | FINANCING                    | Non-selectable  | ```direct:discoverFinancings```                 |
@@ -128,7 +128,7 @@ Discovery is always executed in parallel to reduce API response times.
 ### Handling Identifiers
 
 A key concept in Open Banking is  
-[ID formation and stability](https://openbanking-brasil.github.io/areadesenvolvedor/#formacao-e-estabilidade-do-id),  
+[ID formation and stability](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17377493/Forma+o+e+Estabilidade+do+ID),  
 which requires identifiers exchanged in the ecosystem to be **meaningless and non-semantic**.
 
 Opus Open Banking ensures anonymization and uniqueness of identifiers by converting
@@ -151,8 +151,8 @@ Selectable products must follow these schemas:
 
 | Type    | JSON Schema                                                                                                         |
 | ------- | ------------------------------------------------------------------------------------------------------------------- |
-| Request | [discovery-resource-request.json](../schemas/v2/consent/discoveryDataSharing/discovery-resource-request.json)        |
-| Response| [discovery-selectable-resource-response.json](../schemas/v2/consent/discoveryDataSharing/discovery-selectable-resource-response.json) |
+| Request | [discoveryResourceRequest.json](./anexos/json/discoveryRecursos/discoveryDataSharing/en-discoveryResourceRequest.json)        |
+| Response| [discoverySelectableResourceResponse.json](./anexos/json/discoveryRecursos/discoveryDataSharing/en-discoverySelectableResourceResponse.json) |
 
 Example response:
 
@@ -186,7 +186,7 @@ Non-selectable products must follow:
 
 | Type     | JSON Schema                                                                                                              |
 | -------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Request  | [discovery-resource-request.json](../schemas/v2/consent/discoveryDataSharing/discovery-resource-request.json)                               |
+| Request  | [discoveryResourceRequest.json](./anexos/json/discoveryRecursos/discoveryDataSharing/en-discoveryResourceRequest.json)                               |
 | Response | [discovery-nonselectable-resource-response.json](../schemas/v2/consent/discoveryDataSharing/discovery-nonselectable-resource-response.json) |
 
 Example:
@@ -217,7 +217,7 @@ The payment validation connector is implemented in Apache Camel and is responsib
 - QR Code validation (QRND/QRES)
 - Account data validation
 
-The Camel route listens on `direct:validatePaymentData` and an example from [request](../schemas/v3/consent/validatePaymentData/request-example.json).
+The Camel route listens on `direct:validatePaymentData` and an example from [request](./anexos/json/discoveryRecursos/validatePaymentData/en-requestExample.json).
 
 **Important:** From Consent version 4 onward, if multiple errors are detected, the highest-priority error must be returned.
 Priority table: see *Technical Information* in the
@@ -242,13 +242,13 @@ Connector route:
 
 Definitions:
 
-- [request-schema](../schemas/v3/consent/checkAccountHolderStatus/request-schema.json)
-- [response-schema](../schemas/v3/consent/checkAccountHolderStatus/response-schema.json)
+- [request-schema](./anexos/json/discoveryRecursos/checkAccountHolderStatus/en-requestSchema.json)
+- [response-schema](./anexos/json/discoveryRecursos/checkAccountHolderStatus/en-responseSchema.json)
 
 Examples:
 
-- [request-example](../schemas/v3/consent/checkAccountHolderStatus/request-example.json)
-- [response-example](../schemas/v3/consent/checkAccountHolderStatus/response-example.json)
+- [request-example](./anexos/json/discoveryRecursos/checkAccountHolderStatus/en-requestExample.json)
+- [response-example](./anexos/json/discoveryRecursos/checkAccountHolderStatus/en-responseExample.json)
 
 **Observation:**
 
@@ -266,8 +266,8 @@ If the institution wants to validate these data, it must implement the route `di
 
 Definitions:
 
-- [request-schema](../schemas/v3/consent/validateRiskSignals/request-schema.json)
-- [response-schema](../schemas/v3/consent/validateRiskSignals/response-schema.json)
+- [request-schema](./anexos/json/discoveryRecursos/validateRiskSignals/en-requestSchema.json)
+- [response-schema](./anexos/json/discoveryRecursos/validateRiskSignals/en-responseSchema.json)
 
 Scenarios in which implementation would be recommended:
 
@@ -343,8 +343,8 @@ Among the validations that may be performed by the institution are:
 
 The table below lists the integration points used to approve the creation of a consent:
 
-| Consent Type | Camel Route Name                           |
-| ------------- | ------------------------------------------ |
+| Consent Type  | Camel Route Name                              |
+| ------------- | --------------------------------------------- |
 | Payment       | ```direct:approvePaymentConsentCreation_v3``` |
 
 The return values for these integration points must be:
@@ -352,15 +352,15 @@ The return values for these integration points must be:
 - A success message (usually an empty object) when the consent can be created;
 - A business error message, described in the integration schema with an enum value in the *code* field, defining the reason why the consent was denied. This message may also include the optional field *restrictionType*, informing the type of restriction that failed the validation;
 - A generic error message, defined by the schema  
-  [response-error-schema.json](../schemas/v2/common/response-error-schema.json),  
+  [response-error-schema.json](./anexos/json/discoveryRecursos/approvePaymentConsentCreation_v3/en-responseErrorSchema.json),  
   when a technical error prevents the request from being evaluated, such as a network failure or an unavailable system.
 
 The following table corresponds to the Request and Response schemas for the connector:
 
 | Type     | JSON Schema                                                                                                        |
 | -------- | ------------------------------------------------------------------------------------------------------------------ |
-| Request  | [approvePaymentConsent-request.json](../schemas/v3/consent/approvePaymentConsentCreation_v3/request-schema.json)   |
-| Response | [approvePaymentConsent-response.json](../schemas/v3/consent/approvePaymentConsentCreation_v3/response-schema.json) |
+| Request  | [approvePaymentConsent-request.json](./anexos/json/discoveryRecursos/approvePaymentConsentCreation_v3/en-requestSchema.json)   |
+| Response | [approvePaymentConsent-response.json](./anexos/json/discoveryRecursos/approvePaymentConsentCreation_v3/en-responseSchema.json) |
 
 Example Request:
 
@@ -414,7 +414,7 @@ Example Request:
 }
 ```
 
-More examples of request and response for the “approvePaymentConsentCreation" route can be found [here](../schemas/v3/consent/approvePaymentConsentCreation_v3).
+More examples of request and response for the “approvePaymentConsentCreation" route can be found [here](./anexos/json/discoveryRecursos/approvePaymentConsentCreation_v3).
 
 Example of a Dockerfile command used to add the route files
 `approvePaymentConsentCreation`, `approvePaymentConsentCreation_v2` and

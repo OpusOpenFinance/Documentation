@@ -6,9 +6,9 @@ nav_order: 3
 has_children: true
 lang: "pt-br"
 alternate_lang: 
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/CamadaIntegraçãoPagamentos/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/index/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/CamadaIntegraçãoPagamentos/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/index/"
       lang: "es"
 ---
 

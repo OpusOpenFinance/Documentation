@@ -6,9 +6,9 @@ nav_order: 3
 has_children: true
 lang: "pt-br"
 alternate_lang: 
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/integracao-plugin/cenarios-pagamentos/Cenarios-Pagamentos/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/cenariosPagamentos/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/integracao-plugin/cenarios-pagamentos/Cenarios-Pagamentos/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/cenariosPagamentos/"
       lang: "es"
 ---
 

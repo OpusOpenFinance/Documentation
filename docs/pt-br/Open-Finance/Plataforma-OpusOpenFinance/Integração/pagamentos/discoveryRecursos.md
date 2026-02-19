@@ -6,9 +6,9 @@ nav_order: 1
 has_children: true
 lang: "pt-br"
 alternate_lang: 
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/integracao-plugin/consent/Discovery-Recursos/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/discoveryRecursos/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/integracao-plugin/consent/Discovery-Recursos/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/discoveryRecursos/"
       lang: "es"
 ---
 
@@ -224,6 +224,7 @@ schemas:
 | -------- | ------------------------------------------------------------------------------------------------------------------------ |
 | Request  | [discoveryResourceRequest.json](./anexos/json/discoveryRecursos/discoveryDataSharing/discoveryResourceRequest.json)                               |
 | Response | [discovery-nonselectable-resource-response.json](../schemas/v2/consent/discoveryDataSharing/discovery-nonselectable-resource-response.json) |
+<!-- arquivo discovery-nonselectable-resource-response.json não existe na documentação -->
 
 *[DRAFT: O schema do consentimento dentro do request
 está em revisão]*

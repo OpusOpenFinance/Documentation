@@ -5,9 +5,9 @@ parent: "Platform Integration"
 nav_order: 3
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/CamadaIntegraçãoPagamentos/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/index/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Pagamentos/CamadaIntegraçãoPagamentos/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/index/"
       lang: "es"
 ---
 
@@ -47,7 +47,7 @@ _Payment settlement step:_
 
 The description of the API that must be implemented by the _payment integration layer_, known as the _Payment Initiation API_, can be found [**here**][API-pagamento].
 
-To download the YAML/OAS file containing the API specification, click [**here**](../apis/en-payment-integration-0-1-0.yml){:download="../apis/en-payment-integration-0-1-0.yml"}.
+To download the YAML/OAS file containing the API specification, click [**here**](./anexos/yml/en-paymentIntegration-0.1.0.yml){:download="en-payment-integration-0-1-0.yml"}.
 
 ### Payment Scenarios to Be Covered by the Integration
 
@@ -264,9 +264,9 @@ No. The **Opus Open Finance Platform** will send a separate request for each rec
 For example, for a recurring schedule of 5 months (one debit per month), the platform will send 5 separate scheduling requests to the backend.
 The date of each schedule must follow the rules described in [how to identify the payment date][Cenarios-Pagamentos].
 
-[App-e-Web]: ./App-e-Web.html
-[Imagem-Camada-Integração]: ../images/CamadaIntegração.png
-[API-pagamento]: /Documentation/swagger-ui/index.html?api=en-payment-integration
-[Cenarios-Pagamentos]: ./integracao-plugin/cenarios-pagamentos/Cenarios-Pagamentos.html
-[Validacoes-Pagamentos]: ./integracao-plugin/validacoes-pagamentos/Validacoes-Pagamentos.html
-[Discovery-Recursos]: ./integracao-plugin/consent/Discovery-Recursos.html
+[App-e-Web]: ../appEWeb/index.html
+[Imagem-Camada-Integração]: ./anexos/imagens/representacaoCamadaDeIntegracao.png
+[API-pagamento]: ../../../../..//swagger-ui/index.html?api=en-payment-integration
+[Cenarios-Pagamentos]: ./cenariosPagamentos.html
+[Validacoes-Pagamentos]: ./validacoesPagamentos.html
+[Discovery-Recursos]: ./discoveryRecursos.html
