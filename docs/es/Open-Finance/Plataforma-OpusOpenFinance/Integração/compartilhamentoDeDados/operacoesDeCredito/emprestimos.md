@@ -5,9 +5,9 @@ parent: "Operaciones de Crédito"
 nav_order: 1
 lang: "es"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/Empréstimo/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/operacoesDeCredito/emprestimos/"
       lang: "pt-br"
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/Empréstimo/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/operacoesDeCredito/emprestimos/"
       lang: "en"
 ---
 

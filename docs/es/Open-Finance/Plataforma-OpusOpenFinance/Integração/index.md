@@ -6,9 +6,9 @@ nav_order: 4
 has_children: true
 lang: "es"
 alternate_lang: 
-    - path: "/Documentation/docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/OOF-Integração/"
+    - path: "/Documentation/docs/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/index/"
       lang: "pt-br"
-    - path: "/Documentation/docs/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/OOF-Integração/"
+    - path: "/Documentation/docs/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/index/"
       lang: "en"
 ---
 

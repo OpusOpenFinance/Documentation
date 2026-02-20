@@ -5,9 +5,9 @@ parent: "Operações de Crédito"
 nav_order: 4
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/DireitosCreditórios/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/operacoesDeCredito/direitosCreditorios/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/DireitosCreditórios/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/operacoesDeCredito/direitosCreditorios/"
       lang: "es"
 ---
 

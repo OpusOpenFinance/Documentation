@@ -1,0 +1,1238 @@
+openapi: 3.0.0
+info:
+  title: API Exchange - Integration Layer - OPUS Open Finance Brasil
+  description: |
+    Open Finance Brasil Exchange Operations API - Phase 4.
+    API that returns information on Exchange operations carried out in transmitting institutions by their clients,
+    including data such as contracted operation information, operation value in national and foreign currency,
+    operation classification, delivery method, VET and, when applicable, amount to be settled.
+    Change event of the operation will also be shared, if any, with the modified information.
+    No segregation between natural person and legal entity.
+
+    __The scope of sharing includes operations negotiated in the primary market, spot (including cash, prepaid card, debit card) and future (including ACC, ACE or exchange lock).__
+
+    __Operations contracted and made available in the institution's electronic channels must be shared,
+    even in situations where the operation has not yet been registered with the Central Bank.
+    If the contracting event is cancelled in the Exchange System, which means that the operation was cancelled,
+    then this operation is no longer within the scope of exposure. If registration takes place, the operation must be
+    supplemented with the registered operation number and the events that occurred.__
+
+    __Operation linking events are not within the scope of exposure.__
+
+    __Exposure will occur for each exchange operation contracted by the client.__
+  version: 2.0.0-base1.0.0
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+tags:
+  - name: Product List
+    description: Gets the list of Exchange operations held by the customer at the transmitting institution and for which they have given consent.
+  - name: Operation Details
+    description: Gets the data of the Exchange operation identified by operationId.
+  - name: Events
+    description: Gets the data of the events of the Exchange operation identified by operationId.
+paths:
+  /operations:
+    post:
+      tags:
+        - Product List
+      summary: Gets the list of Exchange operations held by the customer at the transmitting institution and for which they have given consent.
+      operationId: exchangesGetOperations
+      description: Gets the list of Exchange operations held by the customer at the transmitting institution and for which they have given consent.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestWithConsentAndRequestMetaAndPagination'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseProductList'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        default:
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+  /find:
+    post:
+      tags:
+        - Operation Details
+      summary: Gets the data of the Exchange operation identified by operationId.
+      operationId: exchangesGetOperationsOperationId
+      description: Gets the data of the Exchange operation identified by operationId. Changes made to the original operation must be represented through events. The original operation is not updated to reflect any change events. Only the `/operationOutstandingBalance` and `/dueDate` fields should be updated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestWithConsentAndRequestMetaAndOperationId'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseOperationDetails'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        default:
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+  /events:
+    post:
+      tags:
+        - Events
+      summary: Gets the data of the events of the Exchange operation identified by operationId.
+      operationId: exchangesGetOperationsOperationIdEvents
+      description: Gets the data of the events of the Exchange operation identified by operationId.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestEvents'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseEvents'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        default:
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+components:
+  schemas:
+    OpenDataMetaOperationId:
+      type: object
+      description: Meta information regarding the requested API.
+      required:
+        - requestDateTime
+      properties:
+        requestDateTime:
+          description: 'Date and time of request according to RFC-3339 specification, UTC time format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+      additionalProperties: false
+    OpenDataMeta:
+      type: object
+      description: Meta information regarding the requested API.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Total number of records in the result
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Total number of pages in the result
+          example: 1
+        requestDateTime:
+          description: 'Date and time of request according to RFC-3339 specification, UTC time format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+      additionalProperties: false
+    OKResponseProductList:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ProductList'
+        meta:
+          $ref: '#/components/schemas/OpenDataMeta'
+      additionalProperties: false
+    OKResponseOperationDetails:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/OperationDetails'
+        meta:
+          $ref: '#/components/schemas/OpenDataMetaOperationId'
+    OKResponseEvents:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/Events'
+        meta:
+          $ref: '#/components/schemas/OpenDataMeta'
+      additionalProperties: false
+    ProductList:
+      type: object
+      description: List of exchange operations
+      required:
+        - brandName
+        - companyCnpj
+        - operationId
+      properties:
+        brandName:
+          type: string
+          description: 'Brand Name reported by the participant in Open Finance. It is recommended to use, whenever possible, the same brand name assigned in the Customer Friendly Server Name (Authorisation Server) directory field. Institution authorized to operate'
+          pattern: '[\w\W\s]*'
+          example: Organização A
+          maxLength: 80
+        companyCnpj:
+          type: string
+          description: 'Full CNPJ number of the institution responsible for Registration - the CNPJ corresponds to the registration number in the National Registry of Legal Entities. Only the CNPJ numbers must be provided, without mask.'
+          maxLength: 14
+          pattern: '^\d{14}$'
+          example: '21128159000166'
+        operationId:
+          $ref: '#/components/schemas/LegacyId'
+      additionalProperties: false
+    OperationDetails:
+      type: object
+      description: Details of the exchange operation.
+      required:
+        - authorizedInstitutionCnpjNumber
+        - authorizedInstitutionName
+        - operationType
+        - operationDate
+        - dueDate
+        - localCurrencyOperationTax
+        - localCurrencyOperationValue
+        - foreignOperationValue
+        - deliveryForeignCurrency
+        - operationCategoryCode
+      properties:
+        authorizedInstitutionCnpjNumber:
+          type: string
+          description: CNPJ of the institution authorized to operate in the exchange market.
+          maxLength: 14
+          pattern: '^\d{14}$'
+          example: '11225860000140'
+        authorizedInstitutionName:
+          type: string
+          description: Name of the Financial Institution in Brazil.
+          maxLength: 250
+          pattern: '[\w\W\s]*'
+          example: AGENCIA CORRETORA
+        intermediaryInstitutionCnpjNumber:
+          type: string
+          description: |
+            CNPJ of the intermediary institution authorized to operate in the exchange market.
+            Mandatory field to send in cases where there is an intermediary institution.
+          maxLength: 14
+          pattern: '^\d{14}$'
+          example: '11225860000140'
+        intermediaryInstitutionName:
+          type: string
+          description: |
+            Name of the intervening broker authorized to operate in the exchange market.
+
+            [Restriction] Mandatory field for participants to fill in when the 'intermediaryInstitutionCnpjNumber' field is informed.
+          maxLength: 250
+          pattern: '[\w\W\s]*'
+          example: AGENCIA CORRETORA
+        operationNumber:
+          type: string
+          description: Operation registration number at Bacen. Must be filled in sharing, after registration in the Exchange System and number available at the transmitter/holder.
+          maxLength: 12
+          pattern: '^\d{12}$'
+          example: '393874649456'
+        operationType:
+          $ref: '#/components/schemas/EnumExchangesOperationType'
+        operationDate:
+          type: string
+          format: date-time
+          description: Date of closing the exchange contract.
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2023-03-07T08:30:00Z'
+        dueDate:
+          type: string
+          format: date
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          description: Date on which the operation (purchase or sale) is scheduled to be settled.
+          maxLength: 10
+          example: "2018-02-15"
+        localCurrencyOperationTax:
+          type: object
+          description: Exchange rate value applied to this contract, in local currency.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 31
+              pattern: '^\d{1,15}\.\d{1,15}$'
+              example: '1.3'
+            currency:
+              type: string
+              description: Currency referring to the monetary value, following the ISO-4217 model.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        localCurrencyOperationValue:
+          type: object
+          description: Value traded in local currency.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 20
+              pattern: '^\d{1,17}\.\d{2}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: Currency referring to the monetary value, following the ISO-4217 model.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        foreignOperationValue:
+          type: object
+          description: Operation value in foreign currency.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 20
+              pattern: '^\d{1,17}\.\d{2}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: Currency referring to the monetary value, following the ISO-4217 model.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: USD
+        operationOutstandingBalance:
+          type: object
+          description: Balance value of the operation to be settled in foreign currency. Mandatory sending object in cases of exchange operations with future settlement.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 20
+              pattern: '^\d{1,17}\.\d{2}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: Currency referring to the monetary value, following the ISO-4217 model.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        vetAmount:
+          type: object
+          description: Represents the cost of an exchange transaction in reais per foreign currency, including the exchange rate, fees and taxes incident on that transaction. Mandatory sending field in spot exchange transactions that reach up to the limit of US\$100,000 or equivalent in other currencies.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 31
+              pattern: '\d{1,15}\.\d{1,15}$'
+              example: '1000.000004'
+            currency:
+              type: string
+              description: Currency referring to the monetary value, following the ISO-4217 model.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        localCurrencyAdvancePercentage:
+          type: string
+          description:  |
+            Percentage of the foreign currency value granted to the customer in advance. e.g. 0.014500.
+
+            The filling must respect the 6 decimal places, even if they are filled with zeros (percentage representation, e.g.: 0.150000. This value represents 15%. The value 1 represents 100%). Mandatory sending fields in the case of exchange operations with future settlement.
+          pattern: '^\d{1}\.\d{1,6}$'
+          maxLength: 8
+          minLength: 3
+          example: '0.12'
+        deliveryForeignCurrency:
+          $ref: '#/components/schemas/EnumExchangesDeliveryForeignCurrency'
+        operationCategoryCode:
+          type: string
+          maxLength: 5
+          pattern: '^\d{5}$'
+          description: Code of the nature of the closing event of the operation. Must respect the nature codes referenced in resolution 277 or Circular 3690, as applicable to the exchange contract.
+          example: '90302'
+      additionalProperties: false
+    Events:
+      type: object
+      description: Details of the events of the exchange operation.
+      required:
+        - eventSequenceNumber
+        - eventType
+        - eventDate
+      properties:
+        eventSequenceNumber:
+          type: string
+          description: Sequence number of the exchange event record at Bacen.
+          maxLength: 12
+          pattern: '^\d{12}$'
+          example: '493874649457'
+        eventType:
+          $ref: '#/components/schemas/EnumExchangesEventType'
+        eventDate:
+          type: string
+          format: date-time
+          description: Date of the event related to the operation.
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2023-03-07T08:30:00Z'
+        dueDate:
+          type: string
+          format: date
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          description: Date on which the operation (purchase or sale), after the event, is scheduled to be settled.
+          maxLength: 10
+          example: "2018-02-15"
+        localCurrencyOperationTax:
+          type: object
+          description: Exchange rate value applied to the operation, in local currency.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 31
+              pattern: '^\d{1,15}\.\d{1,15}$'
+              example: '1.3'
+            currency:
+              type: string
+              description: Currency referring to the monetary value, following the ISO-4217 model.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        localCurrencyOperationValue:
+          type: object
+          description: Value traded in local currency.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 20
+              pattern: '^\d{1,17}\.\d{2}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: Currency referring to the monetary value, following the ISO-4217 model.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        foreignOperationValue:
+          type: object
+          description: Operation value in foreign currency.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 20
+              pattern: '^\d{1,17}\.\d{2}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: Currency referring to the monetary value, following the ISO-4217 model.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: USD
+        operationOutstandingBalance:
+          type: object
+          description: Balance value of the operation to be settled in foreign currency. Mandatory sending object for events created (eventDate) from 04/15/2024 in cases of exchange operations with future settlement.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 20
+              pattern: '^\d{1,17}\.\d{2}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: Currency referring to the monetary value, following the ISO-4217 model.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        vetAmount:
+          type: object
+          description: Represents the cost of an exchange transaction in reais per foreign currency, including the exchange rate, fees and taxes incident on that transaction. Mandatory sending field in spot exchange transactions that reach up to the limit of US\$100,000 or equivalent in other currencies.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 31
+              pattern: '\d{1,15}\.\d{1,15}$'
+              example: '1000.000004'
+            currency:
+              type: string
+              description: Currency referring to the monetary value, following the ISO-4217 model.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        localCurrencyAdvancePercentage:
+          type: string
+          description: |
+            Percentage of the foreign currency value granted to the customer in advance. e.g. 0.014500.
+
+            The filling must respect the 6 decimal places, even if they are filled with zeros (percentage representation, e.g.: 0.150000. This value represents 15%. The value 1 represents 100%). Mandatory sending fields in the case of exchange operations with future settlement.
+          pattern: '^\d{1}\.\d{1,6}$'
+          maxLength: 8
+          minLength: 3
+          example: '0.12'
+        deliveryForeignCurrency:
+          $ref: '#/components/schemas/EnumExchangesDeliveryForeignCurrency'
+        operationCategoryCode:
+          type: string
+          maxLength: 5
+          pattern: '^\d{5}$'
+          description: Code of the nature of the closing event of the operation. Must respect the nature codes referenced in resolution 277 or Circular 3690, as applicable to the exchange contract.
+          example: '90302'
+        foreignPartie:
+          type: object
+          required:
+            - relationshipCode
+            - foreignPartieName
+            - foreignPartieCountryCode
+          description: |
+            List for sending involved party information.
+
+            [Restriction] Optional filling list by participants when:
+            - The `deliveryForeignCurrency` field is equal to ESPECIE_CHEQUES_VIAGEM or CARTAO_PREPAGO.
+            - The `eventType` field is different from "4 - Liquidação de Operação Cambial no Mercado Primário."
+
+            If the institution has the information, it is mandatory to send it. If the information is updated
+            after contracting, it must be sent through events.
+          properties:
+            relationshipCode:
+              type: string
+              maxLength: 2
+              pattern: '^\d{2}$'
+              description: |
+                Relationship code of linkage between the Customer and the Payer/Receiver abroad. Must respect the linkage codes referenced in resolution 277 or Circular 3690, as applicable to the exchange contract.
+              example: '50'
+            foreignPartieName:
+              type: string
+              description: |
+                Name of the payer or receiver abroad.
+              maxLength: 80
+              pattern: '[\w\W\s]*'
+              example: José da Silva
+            foreignPartieCountryCode:
+              type: string
+              description: |
+                Country of the payer or receiver. Country code according to ISO 3166-1 standard.
+              maxLength: 2
+              pattern: '^[A-Z]{2}$'
+              example: ZA
+      additionalProperties: false
+    EnumExchangesOperationType:
+      type: string
+      description: Purchase or sale of foreign currency.
+      enum:
+        - COMPRA # PURCHASE 
+        - VENDA # SALE 
+      example: COMPRA # PURCHASE 
+    EnumExchangesEventType:
+      type: string
+      description: |
+        For the domain field:
+
+        1 - Hiring in the Primary Market.
+        2 - Change of Exchange Operation in the Primary Market.
+        3 - Cancellation of Exchange Operation in the Primary Market.
+        4 - Settlement of Exchange Operation in the Primary Market.
+        5 - Write-off of Amount to Settle of Exchange Operation in the Primary Market.
+        6 - Reinstatement of Write-off of Amount to Settle of Exchange Operation in the Primary Market.
+        9 - Annulment of Exchange Operation in the Primary Market (used, for example, in the annulment of a settlement/cancellation event).
+        Note: Codes follow the messaging layout sent by institutions to the Central Bank.
+
+        The event is related to the type of contracting.
+      enum:
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+        - '5'
+        - '6'
+        - '9'
+      example: '2'
+    EnumExchangesDeliveryForeignCurrency:
+      type: string
+      description: |
+        Form of delivery of foreign currency.
+
+        ```
+        |--------|-------------------------------------------------------------|
+        | Código | ENUM                                                        |
+        |--------|-------------------------------------------------------------|
+        |   10   | CARTA_CREDITO_A_VISTA                                       |
+        |   15   | CARTA_CREDITO_A_PRAZO                                       |
+        |   20   | CONTA_DEPOSITO                                              |
+        |   21   | CONTA_DEPOSITO_MOEDA_ESTRANGEIRA_PAIS                       |
+        |   22   | CONTA_DEPOSITO_EXPORTADOR_MANTIDA_NO_EXTERIOR               |
+        |   23   | CONTA_DEPOSITO_OU_PAGAMENTO_EXPORTADOR_INSTITUICAO_EXTERIOR |
+        |   25   | CONVENIO_PAGAMENTOS_E_CREDITOS_RECIPROCOS                   |
+        |   30   | CHEQUE                                                      |
+        |   50   | ESPECIE_CHEQUES_VIAGEM                                      |
+        |   55   | CARTAO_PREPAGO                                              |
+        |   65   | TELETRANSMISSAO                                             |
+        |   75   | TITULOS_VALORES                                             |
+        |   90   | SIMBOLICA                                                   |
+        |   91   | SEM_MOVIMENTACAO_VALORES                                    |
+        |   99   | DEMAIS                                                      |
+        |   N/A  | OUTRO_NAO_MAPEADO_OFB                                       |
+        |--------|-------------------------------------------------------------|
+        ```
+      enum:
+        - CONTA_DEPOSITO_MOEDA_ESTRANGEIRA_PAIS # DEPOSIT_ACCOUNT_FOREIGN_CURRENCY_COUNTRY 
+        - CONTA_DEPOSITO_OU_PAGAMENTO_EXPORTADOR_INSTITUICAO_EXTERIOR # DEPOSIT_ACCOUNT_OR_PAYMENT_EXPORTER_FOREIGN_INSTITUTION 
+        - ESPECIE_CHEQUES_VIAGEM # CASH_TRAVELERS_CHECKS 
+        - CARTAO_PREPAGO # PREPAID_CARD 
+        - TELETRANSMISSAO # TELETRANSMISSION 
+        - SEM_MOVIMENTACAO_VALORES # WITHOUT_MOVEMENT_OF_FUNDS 
+        - DEMAIS # OTHERS 
+        - CARTA_CREDITO_A_VISTA # SIGHT_LETTER_OF_CREDIT 
+        - CARTA_CREDITO_A_PRAZO # TERM_LETTER_OF_CREDIT 
+        - CONTA_DEPOSITO # DEPOSIT_ACCOUNT 
+        - CHEQUE # CHECK 
+        - TITULOS_VALORES # SECURITIES 
+        - SIMBOLICA # SYMBOLIC 
+        - CONTA_DEPOSITO_EXPORTADOR_MANTIDA_NO_EXTERIOR # EXPORTER_DEPOSIT_ACCOUNT_HELD_ABROAD 
+        - CONVENIO_PAGAMENTOS_E_CREDITOS_RECIPROCOS # AGREEMENT_PAYMENTS_AND_RECIPROCAL_CREDITS 
+        - OUTRO_NAO_MAPEADO_OFB # OTHER_UNMAPPED_OFB 
+      example: CARTA_CREDITO_A_PRAZO # TERM_LETTER_OF_CREDIT 
+    ResponseErrorWithAbleAdditionalProperties:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Specific endpoint error code
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Human-readable title for this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Human-readable description of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          $ref: '#/components/schemas/MetaWithAbleAdditionalProperties'
+    MetaWithAbleAdditionalProperties:
+      type: object
+      description: Meta information regarding the requested API.
+      required:
+        - requestDateTime
+      properties:
+        requestDateTime:
+          description: 'Date and time of request according to RFC-3339 specification, UTC time format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+    ConsentDataSharing:
+      description: Data sharing consent
+      type: object
+      required:
+        - brandId
+        - creationDateTime
+        - tpp
+        - externalId
+        - loggedUser
+        - permissions
+      properties:
+        authExtraData:
+          type: array
+          description: |
+            Array of key and value with additional data coming from the authorizer. These
+            data can be used as resource filters.
+          items:
+            type: object
+            required:
+              - key
+              - value
+            properties:
+              key:
+                type: string
+                example: agencia
+              value:
+                type: string
+                example: '0011'
+        consentOwner:
+          deprecated: true
+          type: array
+          description: |
+            [Deprecated] Array of key and value with the identification data
+            referring to the consent owner.
+          items:
+            type: object
+            required:
+              - key
+              - value
+            properties:
+              key:
+                type: string
+                example: agencia
+              value:
+                type: string
+                example: '0011'
+        brandId:
+          type: string
+          description: Brand identifier reported by the Open Finance participant
+          example: cbanco
+          minLength: 1
+          maxLength: 50
+        creationDateTime:
+          description: |
+            Date and time when the consent was created. A string with date and
+            time as specified by RFC-3339, always using
+            UTC timezone (UTC time format).
+          type: string
+          pattern: |
+            ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+          example: '2021-05-21T08:30:00Z'
+          maxLength: 20
+        tpp:
+          type: object
+          description: Details of the TPP (Third Party Provider) that requested consent
+          additionalProperties: false
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              description: Name of the TPP that requested consent
+              example: GuiaBolsa
+              maxLength: 100
+        externalId:
+          type: string
+          description: Consent identifier used outside the Opus Open Finance platform
+          example: urn:oob-bank:2f710909-4ccd-4998-8679-3d8de00e5ccf
+          maxLength: 100
+        loggedUser:
+          type: object
+          description: |
+            User (natural person) who is logged in at the Data Transmitting
+            Institution.
+          additionalProperties: false
+          required:
+            - document
+          properties:
+            document:
+              type: object
+              description: Official identification document of the user.
+              additionalProperties: false
+              required:
+                - identification
+                - rel
+              properties:
+                identification:
+                  type: string
+                  maxLength: 11
+                  description: Number of the user's official identification document.
+                  example: '11111111111'
+                  pattern: ^\d{11}$
+                rel:
+                  type: string
+                  maxLength: 3
+                  description: Type of the user's official identification document.
+                  example: CPF
+                  pattern: ^[A-Z]{3}$
+        businessDocumentType:
+          type: object
+          description: |
+            User (legal entity) who is logged in at the Data Transmitting
+            Institution.
+
+            [Restriction] Mandatory filling if the user logged in at the Data
+            Transmitting Institution is a CNPJ (legal entity).
+          additionalProperties: false
+          required:
+            - document
+          properties:
+            document:
+              type: object
+              description: Official identification document of the legal entity holder.
+              additionalProperties: false
+              required:
+                - identification
+                - rel
+              properties:
+                identification:
+                  type: string
+                  maxLength: 14
+                  description: |
+                    Number of the official identification document of the legal entity
+                    holder.
+                  example: '11111111111111'
+                  pattern: ^\d{14}$
+                rel:
+                  type: string
+                  maxLength: 4
+                  description: |
+                    Type of the official identification document of the legal entity
+                    holder.
+                  example: CNPJ
+                  pattern: ^[A-Z]{4}$
+        resources:
+          description: |
+            List of resources allowed by the customer
+          type: array
+          items:
+            type: object
+            description: Resources selected by the customer
+            required:
+              - type
+              - resourceLegacyId
+            properties:
+              type:
+                description: Resource type
+                type: string
+                enum:
+                  - ACCOUNT
+                  - CREDIT_CARD_ACCOUNT
+                  - LOAN
+                  - FINANCING
+                  - UNARRANGED_ACCOUNT_OVERDRAFT
+                  - INVOICE_FINANCING
+                  - PAYMENT
+                  - BANK_FIXED_INCOME
+                  - CREDIT_FIXED_INCOME
+                  - VARIABLE_INCOME
+                  - TREASURE_TITLE  # TREASURY_BONDS
+                  - FUND
+                example: PAYMENT
+              resourceLegacyId:
+                $ref: '#/components/schemas/LegacyId'
+              authorizers:
+                deprecated: true
+                description: |
+                  [Deprecated] List of authorizers for the resource for cases of
+                  multiple approval levels. If the resource is selected, all
+                  authorizers must accept the consent that the resource is part of
+                type: array
+                items:
+                  type: object
+                  required:
+                    - cpf
+                    - name
+                  properties:
+                    cpf:
+                      description: Authorizer's CPF
+                      type: string
+                      minLength: 11
+                      maxLength: 11
+                      pattern: ^\d{11}$
+                      example: '11111111111'
+                    name:
+                      description: Authorizer's name
+                      type: string
+                      example: Marco Antonio de Brito
+                minItems: 1
+              hasMultipleAuthorisers:
+                deprecated: true
+                type: boolean
+                example: 'false'
+            additionalProperties: false
+          maxItems: 1000
+        expirationDateTime:
+          description: |
+            Date and time of permission expiration. Mandatory to fill in,
+            reflects the consent validity limit date. A string with
+            date and time as specified by RFC-3339, always using
+            UTC timezone (UTC time format).
+          type: string
+          maxLength: 20
+          pattern: |
+            ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+          example: '2021-05-21T08:30:00Z'
+        permissions:
+          type: array
+          items:
+            description: |
+              Only for data sharing consents. Specifies
+              the types of permissions to access APIs within the scope of Open Finance
+              Brazil - Phase 2, according to the consent blocks provided
+              by the user and necessary to access each API endpoint.
+            type: string
+            enum:
+              - ACCOUNTS_READ
+              - ACCOUNTS_BALANCES_READ
+              - ACCOUNTS_TRANSACTIONS_READ
+              - ACCOUNTS_OVERDRAFT_LIMITS_READ
+              - CREDIT_CARDS_ACCOUNTS_READ
+              - CREDIT_CARDS_ACCOUNTS_BILLS_READ
+              - CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ
+              - CREDIT_CARDS_ACCOUNTS_LIMITS_READ
+              - CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ
+              - CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ
+              - CUSTOMERS_PERSONAL_ADITTIONALINFO_READ
+              - CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ
+              - CUSTOMERS_BUSINESS_ADITTIONALINFO_READ
+              - FINANCINGS_READ
+              - FINANCINGS_SCHEDULED_INSTALMENTS_READ
+              - FINANCINGS_PAYMENTS_READ
+              - FINANCINGS_WARRANTIES_READ
+              - INVOICE_FINANCINGS_READ
+              - INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ
+              - INVOICE_FINANCINGS_PAYMENTS_READ
+              - INVOICE_FINANCINGS_WARRANTIES_READ
+              - LOANS_READ
+              - LOANS_SCHEDULED_INSTALMENTS_READ
+              - LOANS_PAYMENTS_READ
+              - LOANS_WARRANTIES_READ
+              - UNARRANGED_ACCOUNTS_OVERDRAFT_READ
+              - UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ
+              - UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ
+              - UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ
+              - BANK_FIXED_INCOMES_READ
+              - CREDIT_FIXED_INCOMES_READ
+              - FUNDS_READ
+              - VARIABLE_INCOMES_READ
+              - TREASURE_TITLES_READ  # TREASURY_BONDS_READ
+              - EXCHANGES_READ
+              - RESOURCES_READ
+          minItems: 1
+          maxItems: 30
+          example: ACCOUNTS_READ
+      additionalProperties: false
+    RequestMeta:
+      type: object
+      description: Object that contains data referring to the context in which the request was received.
+      required:
+        - correlationId
+        - brandId
+      properties:
+        correlationId:
+          type: string
+          description: UUID that identifies the correlation ID of the request made. It must be propagated to all calls made between systems and logged whenever possible to facilitate error tracing
+          pattern: >-
+            ^(localID:)?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+          example: localID:97623ed1-4732-4bf2-8d4b-ae7aced5443b
+        brandId:
+          type: string
+          description: Brand identifier reported by the Open Finance participant
+          example: cbanco
+          minLength: 1
+          maxLength: 50
+      additionalProperties: false
+    RequestWithConsentAndRequestMetaAndPagination:
+      type: object
+      required:
+        - consent
+        - requestMeta
+      properties:
+        consent:
+          $ref: '#/components/schemas/ConsentDataSharing'
+        requestMeta:
+          $ref: '#/components/schemas/RequestMeta'
+        page:
+          $ref: '#/components/schemas/Page'
+        pageSize:
+          $ref: '#/components/schemas/PageSize'
+        pagination-key:
+          $ref: '#/components/schemas/PaginationKey'
+    RequestWithConsentAndRequestMetaAndOperationId:
+      type: object
+      required:
+        - consent
+        - requestMeta
+        - operationId
+      properties:
+        consent:
+          $ref: '#/components/schemas/ConsentDataSharing'
+        requestMeta:
+          $ref: '#/components/schemas/RequestMeta'
+        operationId:
+          $ref: '#/components/schemas/LegacyId'
+    RequestWithConsentAndRequestMeta:
+      type: object
+      required:
+        - consent
+        - requestMeta
+      properties:
+        consent:
+          $ref: '#/components/schemas/ConsentDataSharing'
+        requestMeta:
+          $ref: '#/components/schemas/RequestMeta'
+    RequestEvents:
+      type: object
+      required:
+        - consent
+        - requestMeta
+        - operationId
+      properties:
+        consent:
+          $ref: '#/components/schemas/ConsentDataSharing'
+        requestMeta:
+          $ref: '#/components/schemas/RequestMeta'
+        operationId:
+          $ref: '#/components/schemas/LegacyId'
+        page:
+          $ref: '#/components/schemas/Page'
+        pageSize:
+          $ref: '#/components/schemas/PageSize'
+        pagination-key:
+          $ref: '#/components/schemas/PaginationKey'
+    LegacyId:
+      description: >-
+        Array of key and value with the resource identification key in the source
+        (legacy) system, allowing compound keys
+      type: array
+      items:
+        type: object
+        required:
+          - key
+          - value
+        properties:
+          key:
+            description: Name of the identifier field in the source system
+            type: string
+            example: internalResourceId
+          value:
+            description: Value of the identifier field in the source system
+            type: string
+            example: '1234'
+        additionalProperties: false
+      minItems: 1
+      maxItems: 10
+    PaginationKey:
+      description: >-
+        Re-call identifier, used to avoid counting calls
+        to the endpoint during pagination.
+      type: string
+      maxLength: 2048
+      pattern: '[\w\W\s]*'
+    Page:
+      description: Page number being requested (the value of the first page is 1).
+      type: integer
+      default: 1
+      minimum: 1
+      maximum: 2147483647
+      format: int32
+    PageSize:
+      description: Total number of records per page.
+      type: integer
+      default: 25
+      minimum: 1
+      format: int32
+      maximum: 1000
+  responses:
+    OKResponseProductList:
+      description: Exchange operations data from the institution successfully obtained.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OKResponseProductList'
+    OKResponseOperationDetails:
+      description: Exchange operations data from the institution successfully obtained.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OKResponseOperationDetails'
+    OKResponseEvents:
+      description: Exchange operations data from the institution successfully obtained.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OKResponseEvents'
+    BadRequestWithAdditionalProperties:
+      description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    ForbiddenWithAdditionalProperties:
+      description: The token has incorrect scope or a security policy has been violated
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    GatewayTimeoutWithAdditionalProperties:
+      description: GATEWAY TIMEOUT - The request was not answered within the established timeout limit
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    InternalServerErrorWithAdditionalProperties:
+      description: An error occurred in the API gateway or microservice
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    LockedWithAdditionalProperties:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    MethodNotAllowedWithAdditionalProperties:
+      description: The consumer tried to access the resource with an unsupported method
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    NotAcceptableWithAdditionalProperties:
+      description: The request contained an Accept header different from the allowed media types or a character set other than UTF-8
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    NotFoundWithAdditionalProperties:
+      description: The requested resource does not exist or has not been implemented
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    TooManyRequestsWithAdditionalProperties:
+      description: 'The operation was refused because too many requests were made within a given period or the global limit of concurrent requests was reached'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    UnauthorizedWithAdditionalProperties:
+      description: Missing/invalid authentication header or invalid token
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    UnprocessableEntityWithAdditionalProperties:
+      description: 'The request syntax is correct, but it was not possible to process the instructions present.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    DefaultWithAdditionalProperties:
+      description: Unexpected error.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    SiteIsOverloadedWithAdditionalProperties:
+      description: 'The site is overloaded and the operation was refused because the global TPS maximum limit was reached at this moment.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+

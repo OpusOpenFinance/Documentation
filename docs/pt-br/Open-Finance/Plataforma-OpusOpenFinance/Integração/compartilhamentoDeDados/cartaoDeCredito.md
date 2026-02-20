@@ -5,9 +5,9 @@ parent: "Compartilhamento de Dados"
 nav_order: 2
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/apis/Cartão-de-Credito/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/cartaoDeCredito/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/apis/Cartão-de-Credito/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/cartaoDeCredito/"
       lang: "es"
 ---
 

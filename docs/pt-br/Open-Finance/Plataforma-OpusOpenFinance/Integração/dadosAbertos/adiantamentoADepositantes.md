@@ -5,7 +5,7 @@ parent: "Dados Abertos"
 nav_order: 5
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/adiantamentoADepositantes/""
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/adiantamentoADepositantes/"
       lang: "en"
     - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/adiantamentoADepositantes/"
       lang: "es"
