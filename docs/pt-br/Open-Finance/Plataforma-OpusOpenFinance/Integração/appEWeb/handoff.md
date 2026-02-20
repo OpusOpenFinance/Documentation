@@ -5,9 +5,9 @@ parent: "App e Web"
 nav_order: 3
 lang: "pt-br"
 alternate_lang: 
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as-handoff/OFB-Handoff/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/handoff/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/app2as-handoff/OFB-Handoff/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/handoff/"
       lang: "es"
 ---
 

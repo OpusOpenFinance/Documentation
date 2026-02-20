@@ -6,9 +6,9 @@ nav_order: 4
 has_children: true
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/App-e-Web/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/index/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/App-e-Web/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/index/"
       lang: "es"
 ---
 

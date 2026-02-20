@@ -5,9 +5,9 @@ parent: "App y Web"
 nav_order: 2
 lang: "es"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/web2as/OOF-Internet-Banking/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/internetBanking/"
       lang: "pt-br"
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/Jornada-de-Ux/consentimento/web2as/OOF-Internet-Banking/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/internetBanking/"
       lang: "en"
 ---
 

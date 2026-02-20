@@ -1,0 +1,129 @@
+type: object
+description: Only for TEF payment consents. Object containing payment data for consent.
+required:
+  - type
+  - currency
+  - amount
+  - creditorAccount
+properties:
+  type:
+    type: string
+    maxLength: 3
+    enum:
+      - TEF
+    example:
+      - TEF
+    description: |
+      This field defines the type of payment that will be initiated after the consent authorization.
+  date:
+    type: string
+    format: date
+    maxLength: 10
+    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+    example:
+      - "2021-01-01"
+    description: |
+      Payment date, according to RFC-3339 specification.
+      Mutually exclusive with the schedule field. This field is mandatory for immediate payment. In this case, the schedule field must not be informed.
+  schedule:
+    type: object
+    description: |
+      Defines the payment schedule. Used only in the payment scheduling feature.
+      Mutually exclusive with the date field. This field is mandatory for scheduling. In this case, the date field must not be informed.
+    properties:
+      single:
+        type: object
+        description: Defines the single scheduling policy.
+        additionalProperties: false
+        required:
+          - date
+        properties:
+          date:
+            type: string
+            format: date
+            maxLength: 10
+            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+            example: '2021-01-01'
+            description: |
+              Defines the target date for payment settlement. The Brasília time zone must be used for creating and reasoning about the data in this field.
+              NOTE: This field must always be at least D+1, i.e., the immediately following date concerning the consent date, considering the Brasília time zone, and at most one calendar year from the consent date, considering the Brasília time zone.
+    required:
+          - single
+    additionalProperties: false
+  currency:
+    type: string
+    maxLength: 3
+    pattern: ^([A-Z]{3})$
+    example:
+      - BRL
+    description: |
+      National currency code according to the ISO-4217 model, i.e., 'BRL'.
+      All monetary values provided are represented in the current currency of Brazil.
+  amount:
+    type: string
+    minLength: 4
+    maxLength: 19
+    pattern: ^((\d{1,16}\.\d{2}))$
+    example:
+      - "100000.12"
+    description: |
+      Transaction amount with 2 decimal places.
+  creditorAccount:
+        type: object
+        description: |
+          Object containing the identification of the beneficiary/recipient's destination account.
+        required:
+          - ispb
+          - number
+          - accountType
+        properties:
+          ispb:
+            type: string
+            minLength: 8
+            maxLength: 8
+            pattern: ^[0-9]{8}$
+            example:
+              - "12345678"
+            description: |
+              Must be filled with the ISPB (Identifier of the Brazilian Payment System) of the SPI (Instant Payment System) participant, numbers only.
+          issuer:
+            type: string
+            maxLength: 4
+            pattern: ^\d{4}$
+            example:
+              - "1774"
+            description: |
+              Issuing branch code of the account without the digit.
+              (Branch is the unit intended for customer service, the general public, and credit union members,
+              in the exercise of the institution's activities, cannot be mobile or temporary).
+              [Restriction] Mandatory for the following account types: CACC (CONTA_DEPOSITO_A_VISTA), SVGS (CONTA_POUPANCA) and SLRY (CONTA_SALARIO).
+          number:
+            type: string
+            minLength: 3
+            maxLength: 20
+            pattern: ^\d{3,20}$
+            example:
+              - "1234567890"
+            description: |
+              Must be filled with the receiving user's account number, with the check digit (if it exists),
+              if there is an alphanumeric value, it must be converted to 0.
+          accountType:
+            type: string
+            maxLength: 4
+            enum:
+              - CACC
+              - SLRY
+              - SVGS
+              - TRAN
+            example:
+              - CACC
+            description: |
+              Types of accounts used for payment via TEF.
+              Traditional modalities provided for by Resolution 4.753, not including linked accounts,
+              accounts for non-residents, foreign currency accounts, and corresponding electronic currency accounts.
+              Descriptions for each ENUM value for the TEF scope.
+              CACC - Current - Checking Account.
+              SLRY - Salary - Salary Account.
+              SVGS - Savings - Savings Account.
+              TRAN - TransactingAccount - Pre-paid Payment Account.
+additionalProperties: false
