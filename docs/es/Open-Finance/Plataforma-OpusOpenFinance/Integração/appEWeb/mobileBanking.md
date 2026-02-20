@@ -28,7 +28,7 @@ La aplicación también puede ser activada durante el flujo *hybrid flow* con *H
 
 De esta forma, tenemos dos patrones de URLs que deben ser interceptadas por la aplicación de la institución, como se ve en la tabla a continuación:
 
-| Origen                       | URL                                                    |
+| Origen                      | URL                                                    |
 | ----------------------------| ------------------------------------------------------ |
 | Mismo dispositivo           | `https://<EV-FQDN-open-banking>/auth/auth`             |
 | Otro dispositivo (*HandOff*)| `https://<EV-FQDN-open-banking>/auth/handoff/{id}`     |

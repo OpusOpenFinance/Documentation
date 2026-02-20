@@ -3,7 +3,7 @@ info:
   title: Consent BackOffice Services
   version: 1.0.0
 security:
-  - jwt: []
+  - jwt: [ ]
 tags:
   - name: General
     description: Opus open banking services
@@ -1624,7 +1624,7 @@ components:
             The allowed characters in the Pix context for the txid field (EMV 62-05) are: lowercase letters, 'a' to 'z'; uppercase letters, 'A' to 'Z'; decimal digits, '0' to '9'.
         document:
           type: object
-          description: Identification document information.
+          description: Information of the identifying document.
           required:
             - identification
             - rel
@@ -1635,14 +1635,14 @@ components:
               minLength: 11
               maxLength: 14
               example: "11111111111111"
-              description: Official identification document number of the natural or legal person holder.
+              description: Official identification document number of the individual or legal entity holder.
             rel:
               type: string
               enum:
                 - CPF
                 - CNPJ
               example: "CNPJ"
-              description: Type of official identification document of the natural or legal person holder.
+              description: Type of official identification document of the individual or legal entity holder.
     EndToEndId:
       type: string
       minLength: 32
@@ -1650,7 +1650,7 @@ components:
       pattern: "^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$"
       example: E9040088820210128000800123873170
       description: |
-        This is a unique identifier, generated at the payment initiating institution and received at the account holding institution, permeating the entire Pix payment journey.
+        It is a unique identifier, generated at the payment initiating institution and received at the account holding institution, permeating the entire Pix payment journey.
 
         [Restriction] The holder must mandatorily return the field with the same value received from the initiator.
     PaymentPix:
@@ -1730,7 +1730,7 @@ components:
           properties:
             document:
               type: object
-              description: Object that consolidates the document data of the user who requested the cancellation.
+              description: Object consolidating the document data of the payer who requested the cancellation.
               required:
                 - identification
                 - rel
@@ -1773,11 +1773,11 @@ components:
 
         Possible values:
 
-        CANCELADO_PENDENCIA - Payment canceled while in PDNG situation
+        CANCELADO_PENDENCIA - Payment canceled while it was in the PDNG status
 
-        CANCELADO_AGENDAMENTO - Payment canceled while in SCHD situation
+        CANCELADO_AGENDAMENTO - Payment canceled while it was in the SCHD status
 
-        CANCELADO_MULTIPLAS_ALCADAS - Payment canceled while in PATC situation
+        CANCELADO_MULTIPLAS_ALCADAS - Payment canceled while it was in the PATC status
     PaymentConsent:
       required:
         - type
@@ -2308,12 +2308,12 @@ components:
       description: |
         Configure daily transactional limit determined by the paying user.
 
-        [Restriction] If the object is sent, at least one of the fields (`quantityLimit` or `transactionLimit`) must be filled.
+        [Restriction] If the object is sent, at least one of the fields (`quantityLimit` or `transactionLimit`) must be filled in.
       properties:
         quantityLimit:
           type: integer
           example: 2
-          description: Limit quantity of transactions allowed to occur during a day.
+          description: Maximum number of transactions allowed to occur during a day.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
@@ -2331,7 +2331,7 @@ components:
         quantityLimit:
           type: integer
           example: 10
-          description: Limit quantity of transactions allowed to occur during a week.
+          description: Maximum number of transactions allowed to occur during a week.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
@@ -2349,7 +2349,7 @@ components:
         quantityLimit:
           type: integer
           example: 30
-          description: Limit quantity of transactions allowed to occur during a month.
+          description: Maximum number of transactions allowed to occur during a month.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
@@ -2367,7 +2367,7 @@ components:
         quantityLimit:
           type: integer
           example: 100
-          description: Limit quantity of transactions allowed to occur during a year.
+          description: Maximum number of transactions allowed to occur during a year.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
@@ -3112,7 +3112,7 @@ components:
             - quantity
           properties:
             dayOfWeek:
-              description: Defines the day of the week planned for settlement occurrences.
+              description: Define o dia da semana planejado para a ocorrência das liquidações.
               type: string
               enum:
                 - MONDAY
@@ -3158,7 +3158,7 @@ components:
             - quantity
           properties:
             dayOfMonth:
-              description: Defines the day of the month planned for settlement occurrences.
+              description: Define o dia do mês planejado para a ocorrência das liquidações.
               type: integer
               minimum: 1
               maximum: 31
@@ -3200,7 +3200,7 @@ components:
             - additionalInformation
           properties:
             dates:
-              description: Defines the days on which settlement occurrences are planned.
+              description: Define os dias em que estão planejadas as ocorrências das liquidações.
               type: array
               maxItems: 60
               minItems: 2
@@ -3329,7 +3329,7 @@ components:
       properties:
         deviceId:
           type: string
-          description: Unique device identifier.
+          description: Identificador único do dispositivo.
         isRootedDevice:
           type: boolean
           description: Indicates if the device is rooted.
@@ -3340,7 +3340,7 @@ components:
         elapsedTimeSinceBoot:
           type: integer
           format: int64
-          description: Time elapsed since the last device boot.
+          description: Tempo decorrido desde a última inicialização do dispositivo.
         osVersion:
           type: string
           description: Device operating system version.
@@ -3349,12 +3349,12 @@ components:
           description: User's time zone offset.
         language:
           type: string
-          description: Language used by the device.
+          description: Idioma usado pelo dispositivo.
         screenDimensions:
           $ref: "#/components/schemas/ScreenDimensions"
         accountTenure:
           type: string
-          description: Time the account has been active.
+          description: Tempo em que a conta está ativa.
         geolocation:
           $ref: "#/components/schemas/Geolocation"
         isCallingProgress:
@@ -3400,23 +3400,23 @@ components:
         latitude:
           type: number
           format: double
-          description: Latitude coordinate of the device location.
+          description: Coordenada de latitude da localização do dispositivo.
         longitude:
           type: number
           format: double
-          description: Longitude coordinate of the device location.
+          description: Coordenada de longitude da localização do dispositivo.
         type:
           type: string
-          description: Type of geolocation data.
+          description: Tipo de dados de geolocalização.
     Integrity:
       type: object
       properties:
         appRecognitionVerdict:
           type: string
-          description: Verdict of the application recognition process.
+          description: Veredito do processo de reconhecimento do aplicativo.
         deviceRecognitionVerdict:
           type: string
-          description: Verdict of the device recognition process.
+          description: Veredito do processo de reconhecimento do dispositivo.
     RequestRevokeOobEnrollmentConsent:
       required:
         - data
@@ -3427,7 +3427,7 @@ components:
             - $ref: "#/components/schemas/EnrollmentDataPatch"
             - nullable: false
         applicationName:
-          description: Client application name
+          description: Nome da aplicação cliente
           type: string
     EnrollmentDataPatch:
       required:
@@ -3792,7 +3792,7 @@ components:
   securitySchemes:
     jwt:
       type: http
-      description: JWT Token
+      description: Token JWT
       scheme: bearer
       bearerFormat: jwt
       

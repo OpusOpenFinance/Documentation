@@ -28,9 +28,9 @@ O aplicativo também pode ser acionado durante fluxo *hybrid flow* com *Handoff*
 
 Desta forma, temos dois padrões de URLs que precisam ser interceptados pelo aplicativo da instituição, como vemos na tabela abaixo:
 
-| Origem                      | URL                                                    |
-| ----------------------------| ------------------------------------------------------ |
-| Mesmo dispositivo           | `https://<EV-FQDN-open-banking>/auth/auth`             |
+| Origem                        | URL                                                    |
+| ------------------------------| ------------------------------------------------------ |
+| Mesmo dispositivo             | `https://<EV-FQDN-open-banking>/auth/auth`             |
 | Outro dispositivo (*HandOff*) | `https://<EV-FQDN-open-banking>/auth/handoff/{id}`     |
 
 ### O que fazer ao interceptar uma URL?
