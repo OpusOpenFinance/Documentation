@@ -166,9 +166,9 @@ selecionável e não-selecionável
 
 Os produtos selecionáveis devem ter seus conectores respeitando os seguintes schemas:
 
-| Tipo     | JSON Schema                                                                                                                           |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| Request  | [discoveryResourceRequest.json](./anexos/json/discoveryRecursos/discoveryDataSharing/discoveryResourceRequest.json)                                     |
+| Tipo     | JSON Schema                                                                                                                               |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Request  | [discoveryResourceRequest.json](./anexos/json/discoveryRecursos/discoveryDataSharing/discoveryResourceRequest.json)                       |
 | Response | [discoverySelectableResourceResponse.json](./anexos/json/discoveryRecursos/discoveryDataSharing/discoverySelectableResourceResponse.json) |
 
 Exemplo de response para um produto selecionável:
@@ -220,10 +220,11 @@ Exemplo de response para um produto selecionável:
 Os produtos não selecionáveis devem ter seus conectores respeitando os seguintes
 schemas:
 
-| Tipo     | JSON Schema                                                                                                              |
-| -------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Request  | [discoveryResourceRequest.json](./anexos/json/discoveryRecursos/discoveryDataSharing/discoveryResourceRequest.json)                               |
+| Tipo     | JSON Schema                                                                                                                                 |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Request  | [discoveryResourceRequest.json](./anexos/json/discoveryRecursos/discoveryDataSharing/discoveryResourceRequest.json)                         |
 | Response | [discovery-nonselectable-resource-response.json](../schemas/v2/consent/discoveryDataSharing/discovery-nonselectable-resource-response.json) |
+
 <!-- arquivo discovery-nonselectable-resource-response.json não existe na documentação -->
 
 *[DRAFT: O schema do consentimento dentro do request
