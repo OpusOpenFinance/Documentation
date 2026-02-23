@@ -58,7 +58,7 @@ Un punto importante a resaltar es que las etapas más laboriosas del proceso de 
 
 - Construcción de las pantallas de la [jornada de consentimiento](../../Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento.html):
   - Para web, aplicación y handoff (si es necesario);
-  - Según la [guía de experiencia del usuario](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio) del *Open Finance Brasil*.
+  - Según la [guía de experiencia del usuario](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil) del *Open Finance Brasil*.
 - Ejecución de pruebas de la jornada de consentimiento;
 - Integración completa de la jornada en los canales de la institución.
 
@@ -66,7 +66,7 @@ Un punto importante a resaltar es que las etapas más laboriosas del proceso de 
 
 ### 5. **Layer de Integración**
 
-- Integración de los sistemas de respaldo de la institución al producto, conforme el [perfil de participación de la institución financiera](../../Open-Finance-Brasil/PerfisOFB/OFB-Perfis.html). Típicamente, [involucra la construcción del *layer de integración*](../Integração/OOF-Integração.html) adaptado a los sistemas de respaldo de la institución.
+- Integración de los sistemas de respaldo de la institución al producto, conforme el [perfil de participación de la institución financiera](../../Open-Finance-Brasil/PerfisOFB/OFB-Perfis.html). Típicamente, [involucra la construcción del *layer de integración*](../Integração/index.html) adaptado a los sistemas de respaldo de la institución.
 - **Nota:** Normalmente, no es necesario adaptar los sistemas de respaldo en sí, sino mapear la forma de extracción de la información referente a cada producto financiero ofrecido por la institución (en el caso del perfil transmisor de datos), o la forma de realizar pagos y consultar el resultado de esas operaciones (en el caso del perfil titular de cuenta). La capa de integración funciona justamente como un adaptador entre los formatos internos de los sistemas de respaldo y aquellos exigidos por el *Open Finance Brasil*.
 
 ---

@@ -4,10 +4,14 @@ title: "Open data"
 parent: "Participation Profiles"
 nav_order: 1
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/Dados-abertos/"
+alternate_lang:
+    - path: /Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/Dados-abertos/"
+      lang: "pt-br"
+    - path: /Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/Dados-abertos/"
+      lang: "es"
 ---
 
-# Open Data
+## Open Data
 
 The Open Data front of Open Finance refers to [Phase 1 of Open Finance](../Ecossistema/OFB-Ecossistema.html). Phase 1 allows participating institutions of Open Finance to publish their data publicly and make it accessible via API so that any request can retrieve this information. The data refers to non-sensitive information from the institutions themselves.
 

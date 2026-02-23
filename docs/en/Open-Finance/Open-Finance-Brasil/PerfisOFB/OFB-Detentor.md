@@ -4,22 +4,26 @@ title: "Account Holder"
 parent: "Participation Profiles"
 nav_order: 3
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Detentor/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Detentor/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Detentor/"
+      lang: "es"
 ---
 
-# Account Holder
+## Account Holder
 
 The participation profile as an **Account Holder** in *Open Finance Brasil* represents the institution that receives payment requests from a **Payment Initiation Service Provider (PISP)**. This profile in the **Opus Open Finance Platform** is responsible for meeting all the regulatory requirements set by the Central Bank.
 
 ---
 
-## Open Finance Ecosystem - Account Holder
+### Open Finance Ecosystem - Account Holder
 
 Account Holders are institutions where customers have checking accounts, savings accounts, and prepaid payment accounts, which can be accessed in the context of *Open Finance Brasil* to process payment initiations. The entities sending the payment requests are institutions certified as *Payment Initiation Service Providers*.
 
 ---
 
-## Payment Methods in Open Finance
+### Payment Methods in Open Finance
 
 Currently, the payment methods foreseen in Open Finance include:
 
@@ -33,22 +37,22 @@ Currently, the payment methods foreseen in Open Finance include:
 
 ---
 
-## Consent Journey
+### Consent Journey
 
 The authorization process to make payments is done by the customer through a **complete consent journey**. More details can be found [here](../JornadaConsentimento/OFB-JornadaConsentimento.html).
 
 ---
 
-## Regulatory Roadmap
+### Regulatory Roadmap
 
-### Available Features
+#### Available Features
 
 - **Instant Pix payment**
 - **Scheduled Pix payment**
 - **Recurring scheduled payments**
 - **Automatic transfers between accounts of the same account holder** (also known as *sweeping accounts* or *smart transfers*)
 
-### Planned Features
+#### Planned Features
 
 - **Batch payments (1:n)**
 - **Payments without redirection** (no redirection to the Account Holder from the user's perspective)
@@ -59,9 +63,9 @@ The [developer portal](https://openfinancebrasil.atlassian.net/wiki/spaces/Draft
 
 ---
 
-## Regulatory APIs
+### Regulatory APIs
 
-### Active APIs
+#### Active APIs
 
 |**Description**                  | **Link to Developer Portal**                                      |
 |----------------------------------|:------------------------------------------------------------------:|
@@ -69,7 +73,7 @@ The [developer portal](https://openfinancebrasil.atlassian.net/wiki/spaces/Draft
 |**Automatic Payment Initiation**  |[Access here](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/198410569/SV+API+-+Pagamentos+Autom+ticos) |
 |**Payment Initiation (No Redirection)** |[Access here](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento) |
 
-## Opus Open Finance Platform
+### Opus Open Finance Platform
 
 To use the **Opus Open Finance Platform** to meet the regulatory requirements of the Account Holder participation profile, the following steps need to be completed:
 

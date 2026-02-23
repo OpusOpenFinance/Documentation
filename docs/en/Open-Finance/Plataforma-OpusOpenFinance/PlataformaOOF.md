@@ -5,7 +5,11 @@ parent: "Opus Open Finance Platform"
 nav_order: 2
 has_children: true
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/PlataformaOOF/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/PlataformaOOF/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/PlataformaOOF/"
+      lang: "es"
 ---
 
 ## Opus Open Finance

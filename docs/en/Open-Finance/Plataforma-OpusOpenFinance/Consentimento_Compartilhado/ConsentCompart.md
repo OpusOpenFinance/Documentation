@@ -4,7 +4,11 @@ title: Shared Consent
 parent: "Opus Open Finance Brazil"
 nav_order: 5
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/ConsentCompart/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/ConsentCompart/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/ConsentCompart/"
+      lang: "es"
 ---
 
 ## Shared Consent

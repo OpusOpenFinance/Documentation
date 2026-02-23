@@ -4,10 +4,14 @@ title: "PISP Onboarding"
 parent: "Payment Initiation Service Provider"
 nav_order: 1
 lang: "en"
-alternate_lang: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OnboardingITP/"
+alternate_lang:
+    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OnboardingITP/"
+      lang: "pt-br"
+    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OnboardingITP/"
+      lang: "es"
 ---
 
-# PISP Onboarding Process
+## PISP Onboarding Process
 
 To become an institution eligible to perform **Payment Initiation Services**, it is necessary to meet a series of prerequisites and requirements organized into 3 major stages:
 
@@ -19,7 +23,7 @@ Upon completion of these stages, the institution will be eligible to perform liv
 
 ---
 
-## Overview of Becoming a Payment Initiation Service Provider
+### Overview of Becoming a Payment Initiation Service Provider
 
 | **Stage**                     | **Description**                                                                                     | **Systems Involved**            | **Notes**                                                                                                                                                                |
 |-------------------------------|-----------------------------------------------------------------------------------------------------|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -31,9 +35,9 @@ Upon completion of these stages, the institution will be eligible to perform liv
 
 ---
 
-## Detailed Breakdown of the Stages
+### Detailed Breakdown of the Stages
 
-### **Stage 1 - Authorization and Regulation**
+#### **Stage 1 - Authorization and Regulation**
 
 The purpose of this documentation is not to go into detail on how to obtain authorization from the Central Bank, which is extremely complex. Therefore, we will focus on the business rules for this stage. If you or your institution are interested in becoming authorized, we can refer you to legal partners who specialize in this area.
 
@@ -45,9 +49,9 @@ In general, Payment Initiation Service authorization is aimed at institutions se
 
 > For the authorization process, it is essential that your compliance department is involved.
 
-### **Stage 2 - Pre-qualification**
+#### **Stage 2 - Pre-qualification**
 
-#### Prerequisites
+##### Prerequisites
 
 Once the institution is authorized to operate as a Payment Initiation Service Provider, it must meet the prerequisites that precede the qualification stage in *Open Finance Brasil*. The prerequisites are divided into 4:
 
@@ -69,7 +73,7 @@ Once the institution is authorized to operate as a Payment Initiation Service Pr
     To do this, your institution needs to express interest to the Central Bank through a Pix adoption form. [The process is described on the Central Bank's official page](https://www.bcb.gov.br/estabilidadefinanceira/participantespix). The table summarizes the main forms.
     The process is divided into three stages for registration within the Pix arrangement:
 
-#### **Stage 1 *PIX*- Registration**
+##### **Stage 1 *PIX*- Registration**
 
 Consists of sending the necessary documents to register the institution in the Pix arrangement:
 
@@ -84,7 +88,7 @@ Consists of sending the necessary documents to register the institution in the P
 
 ---
 
-#### **Stage 2 *PIX*- Qualification**
+##### **Stage 2 *PIX*- Qualification**
 
 This stage refers to the tests that must be performed to be included as a Pix participant. This stage includes several tests, but only those directed at the Payment Initiation Services are mandatory for the institution.
 
@@ -92,13 +96,13 @@ This stage refers to the tests that must be performed to be included as a Pix pa
 
 The mandatory test is the Validation of the Payment Initiation Service. In addition, there are two other tests if your institution offers QR Codes or has access to DICT, these are the QR Code Validation and DICT Tests, respectively.
 
-#### **Stage 3 *PIX*- Restricted Operation Stage**
+##### **Stage 3 *PIX*- Restricted Operation Stage**
 
 For the Payment Initiation Service Provider, no restricted operation is required. Once the registration and qualification stages are completed, your institution will be listed as a Pix participant.
 
 ---
 
-### **Stage 3 - Payment Initiation Service Provider Onboarding**
+#### **Stage 3 - Payment Initiation Service Provider Onboarding**
 
 Finally, we reach the stage fully and exclusively related to the *Open Finance Brasil* ecosystem, known as *Payment Initiation Service Provider Onboarding*. This stage is well described within the *Open Finance Brasil* developer portal with the [Payment Initiation Service Provider onboarding guide](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378706/Guia+de+Onboarding+ITP).
 
@@ -114,11 +118,11 @@ Opus will assist the institution throughout the qualification stage, speeding up
 
 ---
 
-## Access to DICT
+### Access to DICT
 
 Access to DICT is not mandatory, but it limits the types of payment initiation allowed. Without access, only **Pix Manu** is feasible, where the institution already has the account number and agency information of the account holder.
 
-### **Types of Pix Payment Initiation**
+#### **Types of Pix Payment Initiation**
 
 | **Type**       | **Description**                                                                 | **DICT Access Required?** |
 |----------------|:-------------------------------------------------------------------------------:|:--------------------------:|

@@ -1,0 +1,776 @@
+openapi: 3.0.0
+info:
+  title: API OpenData Adiantamento a Depositantes do Open Finance Brasil.
+  description: La API descrita en este documento es referente a las API de Adiantamento a Depositantes de la fase OpenData del Open Finance Brasil.
+  version: 1.0.1
+  license:
+    name: Apache 2.0
+    url: "https://www.apache.org/licenses/LICENSE-2.0"
+tags:
+  - name: Unarranged Account Overdraft
+    description: Adiantamento a depositantes
+paths:
+  /personal-unarranged-account-overdraft:
+    get:
+      tags:
+        - Unarranged Account Overdraft
+      summary: Obtiene la lista de adiantamento a depositantes para Persona Natural.
+      description: Obtiene la lista de adiantamento a depositantes para Persona Natural.
+      operationId: getPersonalUnarrangedAccountOverdraft
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+      responses:
+        '200':
+          description: Lista de adiantamento a depositantes para persona natural obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePersonalUnarrangedAccountOverdraft'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+  /business-unarranged-account-overdraft:
+    get:
+      tags:
+        - Unarranged Account Overdraft
+      summary: Obtiene la lista de adiantamento a depositantes para Persona Jurídica.
+      description: Obtiene la lista de adiantamento a depositantes para Persona Jurídica.
+      operationId: getBusinessUnarrangedAccountOverdraft
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+      responses:
+        '200':
+          description: Lista de adiantamento a depositantes para persona jurídica obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBusinessUnarrangedAccountOverdraft'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+components:
+  schemas:
+    ApplicationRate:
+      type: object
+      required:
+        - interval
+        - indexer
+        - customers
+      x-regulatory-required:
+        - interval
+        - indexer
+        - customers
+      properties:
+        interval:
+          $ref: '#/components/schemas/ApplicationIntervals'
+        indexer:
+          $ref: '#/components/schemas/Indexer'
+        customers:
+          $ref: '#/components/schemas/Customer'
+    Indexer:
+      type: object
+      x-regulatory-required:
+        - rate
+      properties:
+        rate:
+          type: string
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
+          description: |
+            Porcentaje que corresponde a la mediana de la tasa fija cobrada al cliente por la contratación del crédito, en el intervalo informado. Ej: 0.087000 = 8.7%. 
+            En el caso de productos puramente posfijados, las franjas 1, 2, 3 y 4 deben recibir el valor 0.000000 (cero). 
+            En ese caso, el customers/rate deberá representarse con 1.000000, es decir, 100%.
+            El cálculo puede realizarse con hasta 6 decimales. El llenado debe respetar las 6 decimales, incluso si vienen completadas con ceros (representación de porcentaje, p.ej: 0.150000. Este valor representa 15%. El valor 1.000000 representa 100%).
+          example: '0.087000'
+    PriceIntervals:
+      type: string
+      enum:
+        - 1_FAIXA
+        - 2_FAIXA
+        - 3_FAIXA
+        - 4_FAIXA
+      description: |
+        Según Normativa nº 32, BCB, de 2020: La distribución de frecuencia relativa de los valores de tarifas cobradas a los clientes, de que trata el § 2º del art. 3º de la Circular nº 4.015, de 2020, debe basarse en cuatro franjas de igual tamaño, con explicación de los valores sobre la mediana en cada una de esas franjas. Informando: 1ª franja, 2ª franja, 3ª franja y 4ª franja.
+      example: 1_FAIXA
+    ApplicationIntervals:
+      type: string
+      enum:
+        - 1_FAIXA
+        - 2_FAIXA
+        - 3_FAIXA
+        - 4_FAIXA
+      description: |
+        Franjas para el cobro de la tasa efectiva aplicada por la contratación del crédito, en el intervalo informado: 1ª franja, 2ª franja, 3ª franja y 4ª franja. Según Normativa nº32 de 2020: 'La distribución de frecuencia relativa de los valores de tarifas y tasas de interés cobrados a los clientes, de que trata el § 2º del art. 3º de la Circular nº 4.015, de 2020, debe basarse en cuatro franjas de igual tamaño, con explicación de los valores sobre la mediana y el porcentaje de clientes en cada una de esas franjas.
+      example: 4_FAIXA
+    ResponseBusinessUnarrangedAccountOverdraft:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          description: Conjunto de informaciones referentes al producto Adiantamento a Depositantes.
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/BusinessUnarrangedAccountOverdraftData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    BusinessUnarrangedAccountOverdraftData:
+      type: object
+      required:
+        - fees
+        - termsConditions
+      x-regulatory-required:
+        - termsConditions
+      properties:
+        participant:
+          $ref: '#/components/schemas/Participant'
+        fees:
+          $ref: '#/components/schemas/BusinessUnarrangedAccountOverdraftFee'
+        interestRates:
+          type: array
+          maxItems: 20
+          items:
+            $ref: '#/components/schemas/UnarrangedAccountOverdraftRate'
+          minItems: 1
+          description: Lista que contiene el conjunto de informaciones necesarias para demostrar la distribución de frecuencias de las tasas de interés remuneratorias de la Modalidad de crédito
+        termsConditions:
+          type: string
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          maxLength: 2000
+          description: Campo abierto para informar las condiciones contractuales relativas a la Modalidad de Adiantamento a Depositantes para persona natural. Se puede informar la URL referente a la dirección donde constan las condiciones informadas. Dirección electrónica de acceso al canal.
+          example: 'https://empresaa1.com/business_unarranged_account_overdraft'
+    BusinessUnarrangedAccountOverdraftFee:
+      type: object
+      description: Objeto que reúne informaciones de tarifas de servicios.
+      properties:
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnarrangedAccountOverdraftService'
+          minItems: 1
+          maxItems: 31
+          description: Lista de las Tarifas cobradas por Servicios Prioritarios
+    UnarrangedAccountOverdraftService:
+      type: object
+      required:
+        - name
+        - code
+        - chargingTriggerInfo
+        - prices
+        - minimum
+        - maximum
+      x-regulatory-required:
+        - name
+        - code
+        - chargingTriggerInfo
+      properties:
+        name:
+          type: string
+          enum:
+            - CONCESSAO_ADIANTAMENTO_DEPOSITANTE
+          default: CONCESSAO_ADIANTAMENTO_DEPOSITANTE
+          description: 'Nombre de la Tarifa cobrada por Servicio que incide sobre Adiantamento a Depositantes, para persona jurídica.'
+          example: CONCESSAO_ADIANTAMENTO_DEPOSITANTE
+        code:
+          type: string
+          enum:
+            - ADIANT_DEPOSITANTE
+          default: ADIANT_DEPOSITANTE
+          description: 'Sigla de identificación del servicio relacionado a la Modalidad de Adiantamento a Depositantes, para persona jurídica.'
+          example: ADIANT_DEPOSITANTE
+        chargingTriggerInfo:
+          type: string
+          maxLength: 2000
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          description: 'Hecho generador de cobro que incide sobre la Modalidad de Adiantamento a Depositantes informada, para persona jurídica.'
+          example: Exceso en el límite del cheque especial
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Price'
+          minItems: 4
+          maxItems: 4
+          description: lista de las franjas de los valores de tarifas cobradas
+        minimum:
+          $ref: '#/components/schemas/MinimumPrice'
+        maximum:
+          $ref: '#/components/schemas/MaximumPrice'
+      example:
+        name: CONCESSAO_ADIANTAMENTO_DEPOSITANTE
+        code: ADIANT_DEPOSITANTE
+        chargingTriggerInfo: Recopilación de información y evaluación de viabilidad y riesgos para la concesión de crédito en carácter de emergencia para cobertura de saldo deudor en cuenta de depósitos a la vista y de exceso sobre el límite previamente pactado de cheque especial, cobrada como máximo una vez en los últimos treinta días
+        prices:
+          - interval: 1_FAIXA
+            value: "500.00"
+            currency: BRL
+            customers:
+              rate: "0.150000"
+          - interval: 2_FAIXA
+            value: "860.00"
+            currency: BRL
+            customers:
+              rate: "0.350000"
+          - interval: 3_FAIXA
+            value: "1090.40"
+            currency: "BRL"
+            customers:
+              rate: "0.200000"
+          - interval: 4_FAIXA
+            value: "2100.00"
+            currency: BRL
+            customers:
+              rate: "0.300000"
+        minimum:
+          value: "430.00"
+          currency: "BRL"
+        maximum:
+          value: "2200.00"
+          currency: "BRL"
+    UnarrangedAccountOverdraftRate:
+      description: Tarifas cobradas por Servicios ofrecidos
+      type: object
+      required:
+        - referentialRateIndexer
+        - rate
+        - applications
+        - minimumRate
+        - maximumRate
+      x-regulatory-required:
+        - referentialRateIndexer
+        - rate
+        - minimumRate
+        - maximumRate
+      properties:
+        referentialRateIndexer:
+          $ref: '#/components/schemas/ReferentialRateIndexer'
+        rate:
+          type: string
+          description: |
+            Porcentaje que representa el indexador Pos seleccionado. Ej: 100% de la TR = 1.000000 de la TR, 90% de la TR = 0.9000000. 
+            En casos donde no haya indexador, debe seleccionarse Sin Indexador en el campo /referentialRateIndexer y representarse la tasa de 0.000000 (cero). 
+            En caso de que la tasa sea solo Fija, la tasa también deberá ser 0.000000 (cero).
+            El cálculo puede realizarse con hasta 6 decimales. El llenado debe respetar las 6 decimales, incluso si vienen completadas con ceros (representación de porcentaje - Ej: 0.150000 = 15%. El valor 1.000000 representa 100%).
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
+          example: '0.150000'
+        applications:
+          description: Lista de las franjas de cobro de la tasa efectiva de remuneración.
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationRate'
+          minItems: 4
+          maxItems: 4
+        minimumRate:
+          type: string
+          description: |
+            Porcentaje mínimo cobrado (tasa efectiva) en el mes de referencia, para el crédito contratado. El cálculo puede realizarse con hasta 4 decimales. El llenado debe respetar las 4 decimales, incluso si vienen completadas con ceros (representación de porcentaje, p.ej: 0.1500. Este valor representa 15%. El valor 1 representa 100%).
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
+          example: '1.005343'
+        maximumRate:
+          type: string
+          description: |
+            Porcentaje máximo cobrado (tasa efectiva) en el mes de referencia, para el crédito contratado. El cálculo puede realizarse con hasta 4 decimales. El llenado debe respetar las 4 decimales, incluso si vienen completadas con ceros (representación de porcentaje, p.ej: 0.1500. Este valor representa 15%. El valor 1 representa 100%).
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
+          example: '3.005343'
+      example:
+          referentialRateIndexer: "SEM_INDEXADOR_TAXA"
+          rate: "0.650000"
+          applications:
+              - interval: "1_FAIXA"
+                indexer:
+                  rate: "0.018700"
+                customers:
+                  rate: "0.150000"
+              - interval: "2_FAIXA"
+                indexer:
+                 rate: "0.290000"
+                customers:
+                  rate: "0.350000"
+              - interval: "3_FAIXA"
+                indexer:
+                  rate: "0.360000"
+                customers:
+                  rate: "0.200000"
+              - interval: "4_FAIXA"
+                indexer:
+                  rate: "0.799000"
+                customers:
+                  rate: "0.300000"
+          minimumRate: "0.005600"
+          maximumRate: "0.856500"
+    ResponsePersonalUnarrangedAccountOverdraft:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          description: Conjunto de informaciones referentes al producto Adiantamento a Depositantes.
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/PersonalUnarrangedAccountOverdraftData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    PersonalUnarrangedAccountOverdraftData:
+      type: object
+      required:
+        - fees
+        - termsConditions
+      x-regulatory-required:
+        - termsConditions
+      properties:
+        participant:
+          $ref: '#/components/schemas/Participant'
+        fees:
+          $ref: '#/components/schemas/PersonalUnarrangedAccountOverdraftFee'
+        interestRates:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnarrangedAccountOverdraftRate'
+          minItems: 1
+          description: Lista que contiene el conjunto de informaciones necesarias para demostrar la distribución de frecuencias de las tasas de interés remuneratorias de la Modalidad de crédito
+        termsConditions:
+          type: string
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          maxLength: 2000
+          description: Campo abierto para informar las condiciones contractuales relativas a la Modalidad de Adiantamento a Depositantes para persona natural. Se puede informar la URL referente a la dirección donde constan las condiciones informadas. Dirección electrónica de acceso al canal.
+          example: 'https://empresaa1.com/personal_unarranged_account_overdraft'
+    Participant:
+        type: object
+        description: Conjunto de informaciones relativas al participante del Open Finance que ofrece este producto.
+        required:
+          - brand
+          - name
+          - cnpjNumber
+        x-regulatory-required:
+          - brand
+          - name
+          - cnpjNumber
+          - urlComplementaryList
+        properties:
+          brand:
+            type: string
+            pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+            maxLength: 80
+            description: Nombre de la marca reportada por el participante del Open Finance. El concepto al que se refiere la 'marca' es en esencia una promesa de la empresa de proporcionar una serie específica de atributos, beneficios y servicios uniformes a los clientes.
+            example: "Organización A"
+          name:
+            type: string
+            description: Nombre de la Institución, perteneciente a la marca, responsable de la modalidad de Préstamos. p.ej. 'Empresa de la Organización A'.
+            maxLength: 80
+            pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+            example: 'Empresa A1'
+          cnpjNumber:
+            type: string
+            pattern: '^\d{14}$'
+            minLength: 14
+            maxLength: 14
+            description: CNPJ
+            example: "50685362000135"
+          urlComplementaryList:
+            type: string
+            pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+            maxLength: 1024
+            description: |
+              URL del enlace que contendrá la lista complementaria con los nombres y CNPJs agrupados bajo el mismo cnpjNumber. Los contenidos en esta lista tienen las mismas características para productos y servicios. Dirección electrónica de acceso al canal. Será obligatoriamente llenado si existe una lista complementaria con los nombres y CNPJs a ser disponible.
+              Restricción: Será obligatoriamente llenado si existe una lista complementaria con los nombres y CNPJs a ser disponible.
+            example: 'https://empresadaorganizaciona.com/complementarylist'
+    PersonalUnarrangedAccountOverdraftFee:
+      type: object
+      description: Objeto que reúne informaciones de tarifas de servicios.
+      properties:
+        priorityServices:
+          type: array
+          description: Lista de las Tarifas cobradas por Servicios Prioritarios
+          items:
+            $ref: '#/components/schemas/UnarrangedAccountOverdraftService'
+          maxItems: 20
+          minItems: 1
+    Price:
+      type: object
+      required:
+        - interval
+        - value
+        - currency
+        - customers
+      x-regulatory-required:
+        - interval
+        - value
+        - currency
+        - customers
+      properties:
+        interval:
+          $ref: '#/components/schemas/PriceIntervals'
+        value:
+          type: string
+          pattern: '^(\d{1,9}\.\d{2}){1}$'
+          minLength: 4
+          maxLength: 12
+          x-cds-type: AmountString
+          description: |
+            Valor de la mediana de cada franja relativa al servicio ofertado, informado en el período, conforme Res. nº 32 BCB, 2020. p.ej. '45.00' (representa un valor monetario. p.ej: 1547368.92. Este valor, considerando que la moneda sea BRL, significa R$ 1.547.368,92. El único separador presente debe ser el '.' (punto) para indicar el decimal. No debe haber separador de miles).
+          
+            Observación: Para efecto de comparación de tasas de los productos, las instituciones participantes, cuando no cobran tarifas, deben enviar el valor 0.00 señalando que para esa tasa no hay cobro por el servicio.
+          example: '2000.00'
+        currency:
+          $ref:  '#/components/schemas/Currency'
+        customers:
+          $ref: '#/components/schemas/Customer'
+    MinimumPrice:
+      type: object
+      required:
+        - value
+        - currency
+      x-regulatory-required:
+        - value
+        - currency
+      properties:
+        value:
+          type: string
+          pattern: '^(\d{1,9}\.\d{2}){1}$'
+          minLength: 4
+          maxLength: 12
+          x-cds-type: AmountString
+          description: |
+            Valor mínimo apurado para la tarifa de servicios sobre la base de clientes en el mes de referencia.
+
+            Observación: Para efecto de comparación de tasas de los productos, las instituciones participantes, cuando no cobran tarifas, deben enviar el valor 0.00 señalando que para esa tasa no hay cobro por el servicio.
+          example: '1350.00'
+        currency:
+          $ref:  "#/components/schemas/Currency"
+    MaximumPrice:
+      type: object
+      required:
+        - value
+        - currency
+      x-regulatory-required:
+        - value
+        - currency
+      properties:
+        value:
+          type: string
+          pattern: '^(\d{1,9}\.\d{2}){1}$'
+          minLength: 4
+          maxLength: 12
+          x-cds-type: AmountString
+          description: |
+            Valor máximo apurado para la tarifa de servicios sobre la base de clientes en el mes de referencia.
+
+            Observación: Para efecto de comparación de tasas de los productos, las instituciones participantes, cuando no cobran tarifas, deben enviar el valor 0.00 señalando que para esa tasa no hay cobro por el servicio.
+          example: '8800.00'
+        currency:
+          $ref:  "#/components/schemas/Currency"
+    Customer:
+      type: object
+      description: Informaciones relevantes para el cliente.
+      required:
+        - rate
+      x-regulatory-required:
+        - rate
+      properties:
+        rate:
+          type: string
+          description: |
+            Porcentaje de clientes en cada franja.
+          pattern: '^\d{1}\.\d{6}$'
+          example: '0.150000'
+          minLength: 8
+          maxLength: 8
+    Currency:
+      type: string
+      pattern: '^(\w{3}){1}$'
+      minLength: 3
+      maxLength: 3
+      x-cds-type: CurrencyString
+      description: 'Moneda referente al valor mínimo de la Tarifa, según modelo ISO-4217.'
+      example: BRL
+    ReferentialRateIndexer:
+      type: string
+      description: |
+        Tipos de tasas referenciales o indexadores, conforme Anexo 5: Tasa referencial o Indexador (Indx), del Documento 3040
+      enum:
+        - SEM_INDEXADOR_TAXA
+        - PRE_FIXADO
+        - POS_FIXADO_TR_TBF
+        - POS_FIXADO_TJLP
+        - POS_FIXADO_LIBOR
+        - POS_FIXADO_TLP
+        - OUTRAS_TAXAS_POS_FIXADAS
+        - FLUTUANTES_CDI
+        - FLUTUANTES_SELIC
+        - OUTRAS_TAXAS_FLUTUANTES
+        - INDICES_PRECOS_IGPM
+        - INDICES_PRECOS_IPCA
+        - INDICES_PRECOS_IPCC
+        - OUTROS_INDICES_PRECO
+        - CREDITO_RURAL_TCR_PRE
+        - CREDITO_RURAL_TCR_POS
+        - CREDITO_RURAL_TRFC_PRE
+        - CREDITO_RURAL_TRFC_POS
+        - OUTROS_INDEXADORES
+      example: 'SEM_INDEXADOR_TAXA'
+    Links:
+      type: object
+      description: Referencias a otros recursos de la API solicitada.
+      properties:
+        self:
+          type: string
+          format: url
+          minLength: 5
+          maxLength: 2000
+          description: URL de la página actualmente solicitada
+          example: 'https://api.banco.com.br/open-banking/opendata-unarranged/v1/resource'
+        first:
+          type: string
+          format: url
+          minLength: 5
+          maxLength: 2000
+          description: URL de la primera página de registros
+          example: 'https://api.banco.com.br/open-banking/opendata-unarranged/v1/resource'
+        prev:
+          type: string
+          format: url
+          minLength: 5
+          maxLength: 2000
+          description: URL de la página anterior de registros
+          example: 'https://api.banco.com.br/open-banking/opendata-unarranged/v1/resource'
+        next:
+          type: string
+          format: url
+          minLength: 5
+          maxLength: 2000
+          description: URL de la próxima página de registros
+          example: 'https://api.banco.com.br/open-banking/opendata-unarranged/v1/resource'
+        last:
+          type: string
+          format: url
+          minLength: 5
+          maxLength: 2000
+          description: URL de la última página de registros
+          example: 'https://api.banco.com.br/open-banking/opendata-unarranged/v1/resource'
+    Meta:
+      type: object
+      description: Meta informaciones referentes a la API solicitada.
+      properties:
+        totalRecords:
+          type: integer
+          description: Total de registros encontrados
+          example: 1
+        totalPages:
+          type: integer
+          description: Total de páginas para los registros encontrados
+          example: 1
+      required:
+        - totalRecords
+        - totalPages
+    ResponseErrorMetaSingle:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Código de error específico del endpoint
+                type: string
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                maxLength: 255
+              title:
+                description: Título legible por humanos de este error específico
+                type: string
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                maxLength: 255
+              detail:
+                description: Descripción legible por humanos de este error específico
+                type: string
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                maxLength: 2048
+        meta:
+          type: object
+          description: Meta informaciones referentes a la API solicitada.
+          required:
+            - requestDateTime
+          properties:
+            requestDateTime:
+              description: 'Fecha y hora de la consulta, conforme a la especificación RFC-3339, formato UTC.'
+              type: string
+              maxLength: 20
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+    ResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Código de error específico del endpoint
+                type: string
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                maxLength: 255
+              title:
+                description: Título legible por humanos de este error específico
+                type: string
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                maxLength: 255
+              detail:
+                description: Descripción legible por humanos de este error específico
+                type: string
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                maxLength: 2048
+        meta:
+          type: object
+          description: Meta informaciones referentes a la API solicitada.
+          required:
+            - requestDateTime
+          properties:
+            requestDateTime:
+              description: Fecha y hora de la consulta, conforme a la especificación RFC-3339, formato UTC.
+              type: string
+              format: date-time
+              minLength: 20
+              maxLength: 20
+              pattern: '^[2-9]\d{3}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$'
+              example: '2023-10-09T14:10:00Z'
+  securitySchemes:
+    APIKey1:
+      name: API Key
+      type: apiKey
+      in: query
+    APIKey2:
+      name: API Key
+      type: apiKey
+      in: query
+  parameters:
+    page:
+      name: page
+      in: query
+      description: Número de la página que se está solicitando (el valor de la primera página es 1).
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+        maximum: 2147483647
+    pageSize:
+      name: page-size
+      in: query
+      description: Cantidad total de registros por página.
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        minimum: 1
+        maximum: 1000
+  responses:
+    BadRequest:
+      description: La solicitud fue malformada, omitiendo atributos obligatorios, ya sea en el payload o a través de atributos en la URL.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    NotFound:
+      description: El recurso solicitado no existe o no ha sido implementado.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    MethodNotAllowed:
+      description: El consumidor intentó acceder al recurso con un método no soportado.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    TooManyRequests:
+      description: La operación fue rechazada, ya que se realizaron demasiadas solicitudes dentro de un período determinado o se alcanzó el límite global de solicitudes concurrentes.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    InternalServerError:
+      description: Ocurrió un error en el gateway de la API o en el microservicio.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    GatewayTimeout:
+      description: GATEWAY TIMEOUT - La solicitud no fue atendida dentro del tiempo límite establecido.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    SiteIsOverloaded:
+      description: El sitio está sobrecargado y la operación fue rechazada, ya que se alcanzó el límite máximo de TPS global, en este momento.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    Default:
+      description: '\-'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+            
