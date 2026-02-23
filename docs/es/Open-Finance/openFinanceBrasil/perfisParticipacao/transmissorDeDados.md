@@ -5,9 +5,9 @@ parent: "Perfiles de participación"
 nav_order: 2
 lang: "es"
 alternate_lang:
-  - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Transmissor/"
+  - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/transmissorDeDados/"
     lang: "pt-br"
-  - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Transmissor/"
+  - path: "/Documentation/en/Open-Finance/openFinanceBrasil/perfisParticipacao/transmissorDeDados/"
     lang: "en"
 ---
 
@@ -95,9 +95,9 @@ La **Plataforma Opus Open Finance** implementa todas las APIs regulatorias del p
 2. Construir, para la aplicación móvil y Banca por Internet (si aplica), la experiencia de usuario referente a la concesión de consentimientos de intercambio de datos, conforme definido por el regulador del *Open Finance Brasil*. [El guía de experiencia del usuario][GuiaUX] da más detalles sobre el flujo de interacción con el usuario que debe ser implementado.
 3. Construir la [capa de integración][Capa-Integración] con los sistemas de respaldo conforme los productos financieros ofrecidos por la institución a sus clientes.
 
-[Limites-operacionais]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17924220/Limites+operacionais
-[JornadaConsentimiento]: ../JornadaConsentimento/OFB-JornadaConsentimento.html
+[Limites-operacionales]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17924220/Limites+operacionais
+[JornadaConsentimiento]: ../jornadaConsentimento/index.html
 [Portal-Desarrollador]: https://openfinancebrasil.atlassian.net/wiki/spaces/DraftOF/calendars
 [Implantación]: ../../Plataforma-OpusOpenFinance/Implantação/OOF-Implantação.html
-[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio
-[Capa-Integración]: ../../Plataforma-OpusOpenFinance/Integração/CamadaIntegração.html
+[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil
+[Capa-Integración]: ../../Plataforma-OpusOpenFinance/Integração/index.html

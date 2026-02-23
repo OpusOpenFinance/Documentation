@@ -5,9 +5,9 @@ parent: "Open Finance Brasil"
 nav_order: 1
 lang: "es"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/Ecossistema/OFB-Ecossistema/"
+    - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/ecossistema/index/"
       lang: "pt-br"
-    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/Ecossistema/OFB-Ecossistema/"
+    - path: "/Documentation/en/Open-Finance/openFinanceBrasil/ecossistema/index/"
       lang: "en"
 ---
 
@@ -30,7 +30,7 @@ El Open Finance tiene un alcance de implementación en 4 diferentes fases, conoc
 
 Cada fase se describe en detalle en la imagen a continuación:
 
-![Alcance Open Finance](./images/Escopo_OF.png)
+![Alcance Open Finance](./anexos/imagens/es-ecossistema-escopo.png)
 [Fonte: Banco Central](https://openfinancebrasil.org.br/conheca-o-open-finance/)
 
 ---
@@ -39,7 +39,7 @@ Cada fase se describe en detalle en la imagen a continuación:
 
 Para garantizar la implementación del Open Finance, el Banco Central definió una estructura para concretar los objetivos del ecosistema. La estructura está dividida de la siguiente manera:
 
-![Organigrama Open Finance](./images/Organograma_OF.png)
+![Organigrama Open Finance](./anexos/imagens/es-ecossistema-organograma.png)
 
 #### Banco Central
 
@@ -66,7 +66,7 @@ Actúa como enlace principal con el Consejo Deliberativo, informando sobre el pr
 Son responsables de estudios, propuestas técnicas y planes destinados a la implementación y gestión del Open Finance. Incluyen profesionales de empresas de tecnología y académicos. Actualmente, existen ocho GTs:
 
 1. **GT Especificaciones**: Define el alcance de datos e interfaces para productos y servicios.
-2. **GT Experiencia del Cliente**: Desarrolla la Guía de [Experiencia del Usuario](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio).
+2. **GT Experiencia del Cliente**: Desarrolla la Guía de [Experiencia del Usuario](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
 3. **GT Infraestructura**: Gestión de plataformas y herramientas del ecosistema.
 4. **GT Política, Riesgos y Cumplimiento**: Análisis regulatorios y de cumplimiento.
 5. **GT Estructura Definitiva**: Define la naturaleza jurídica y función de la estructura.

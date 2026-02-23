@@ -5,15 +5,15 @@ parent: "Perfiles de participación"
 nav_order: 1
 lang: "es"
 alternate_lang:
-  - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/Dados-abertos/"
+  - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/dadosAbertos/"
     lang: "pt-br"
-  - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/Dados-abertos/"
+  - path: "/Documentation/en/Open-Finance/openFinanceBrasil/perfisParticipacao/dadosAbertos/"
     lang: "en"
 ---
 
 ## Datos abiertos
 
-El frente de datos abiertos de Open Finance se refiere a la [fase 1 de Open Finance](../Ecossistema/OFB-Ecossistema.html). La Fase 1 permite que las instituciones participantes de Open Finance publiquen sus datos de forma pública y accesible mediante API, para que cualquier solicitud pueda recuperar esta información. Los datos se refieren a información no sensible de las propias instituciones.
+El frente de datos abiertos de Open Finance se refiere a la [fase 1 de Open Finance](../ecossistema/index.html). La Fase 1 permite que las instituciones participantes de Open Finance publiquen sus datos de forma pública y accesible mediante API, para que cualquier solicitud pueda recuperar esta información. Los datos se refieren a información no sensible de las propias instituciones.
 
 ### Datos listados
 

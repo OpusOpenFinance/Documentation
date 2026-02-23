@@ -5,9 +5,9 @@ parent: "Open Finance Brasil"
 nav_order: 4
 lang: "es"
 alternate_lang:
-  - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/OFB-Certificações/"
+  - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/certificacoesECertificados/"
     lang: "pt-br"
-  - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/OFB-Certificações/"
+  - path: "/Documentation/en/Open-Finance/openFinanceBrasil/certificacoesECertificados/"
     lang: "en"
 ---
 
@@ -93,11 +93,11 @@ Los certificados digitales se dividen en 4 tipos:
 #### Necesidad de certificados por perfil
 
 | Certificado         | Titular de Cuenta | ITP | Transmisor de Datos | Receptor de Datos |
-|---------------------|:------------------:|:---:|:-------------------:|:-----------------:|
-| Transporte          | Sí                | No  | Sí                 | No               |
-| EV                  | Sí                | No  | Sí                 | No               |
-| Autenticación       | Sí                | Sí  | Sí                 | Sí               |
-| Firma               | Sí                | No  | Sí                 | No               |
+|---------------------|:-----------------:|:---:|:-------------------:|:-----------------:|
+| Transporte          | Sí                | No  | Sí                  | No                |
+| EV                  | Sí                | No  | Sí                  | No                |
+| Autenticación       | Sí                | Sí  | Sí                  | Sí                |
+| Firma               | Sí                | No  | Sí                  | No                |
 
 #### Autoridades certificadoras aprobadas por el *Open Finance Brasil*
 

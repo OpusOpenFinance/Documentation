@@ -21,7 +21,7 @@ window.onload = () => {
     "oas-itp-pagamentos": `${base}/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentos.yml`,
     "oas-itp-pagamentos-automaticos": `${base}/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentosAutomaticos.yml`,
     "oas-back-dados": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-oof-dados.yml`,
-    "oas-pagamentos-jsr": `${base}/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasPagamentosSemRedirecionamento.yaml`,
+    "oas-pagamentos-jsr": `${base}/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasPagamentosJSR.yaml`,
     // Compartilhamento de Dados
     "cambio": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/exchange-1-0-0.yml`,
     "dados-cadastrais": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/customers-2-2-0.yml`,
@@ -77,6 +77,12 @@ window.onload = () => {
     // =====================================================
     // EN
     // =====================================================
+    // Open Finance Brasil
+    // Perfis de Participação
+    "en-oas-receptor": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-dados.yml`,
+    "en-oas-itp-pagamentos": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos.yml`,
+    "en-oas-itp-pagamentos-automaticos": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos-automaticos.yml`,
+    "en-oas-back-dados": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/en-oas-oof-dados.yml`,
     // Compartilhamento de Dados
     "en-dados-cadastrais": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/en-customers-2-2-0.yml`,
     "en-cartao-de-credito": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/en-creditCards-2-3-1.yml`,
@@ -97,11 +103,6 @@ window.onload = () => {
     "en-direitos-creditorios": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/en-invoiceFinancings-2-3-0.yml`,
     // App e web
     "en-mobile": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/anexos/yml/en-mobileWebapp2as.yml`,
-    //
-    "en-oas-receptor": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-dados.yml`,
-    "en-oas-itp-pagamentos": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos.yml`,
-    "en-oas-itp-pagamentos-automaticos": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos-automaticos.yml`,
-    "en-oas-back-dados": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/en-oas-oof-dados.yml`,
     // Dados Abertos
     "en-open-data-acquiring": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/en-openData-acquiringServices.yml`,
     "en-open-data-accounts": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/en-openData-accounts.yml`,
@@ -137,6 +138,13 @@ window.onload = () => {
     // =====================================================
     // ES
     // =====================================================
+    // Open Finance Brasil
+    // Perfis de Participação
+    "es-oas-receptor": `${base}/es/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/es-oasOpusTPPDados.yml`,
+    "es-oas-itp-pagamentos": `${base}/es/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/es-oasOpusTPPPagamentos.yml`,
+    "es-oas-itp-pagamentos-automaticos": `${base}/es/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/es-oasOpusTPPPagamentosAutomaticos.yml`,
+    "es-oas-back-dados": `${base}/es/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/es-oasOOFDados.yml`,
+    "es-oas-pagamentos-jsr": `${base}/es/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/es-oasPagamentosJSR.yaml`,
     // Compartilhamento de Dados
     "es-dados-cadastrais": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/es-customers-2-2-0.yml`,
     "es-cartao-de-credito": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/es-creditCards-2-3-1.yml`,
@@ -157,11 +165,6 @@ window.onload = () => {
     "es-payment-integration": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/anexos/yml/es-paymentIntegration-0.1.0.yml`,
     // App e Web
     "es-mobile": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/anexos/yml/es-mobileWebapp2as.yml`,
-    //
-    "es-oas-receptor": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-dados.yml`,
-    "es-oas-itp-pagamentos": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos.yml`,
-    "es-oas-itp-pagamentos-automaticos": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos-automaticos.yml`,
-    "es-oas-back-dados": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/apis/es-oas-oof-dados.yml`,
     // Dados Abertos
     "es-open-data-acquiring": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/es-open-data-acquiringServices.yml`,
     "es-open-data-accounts": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/es-open-data-accounts.yml`,

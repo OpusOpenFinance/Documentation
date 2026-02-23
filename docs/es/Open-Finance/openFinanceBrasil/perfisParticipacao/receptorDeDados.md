@@ -5,9 +5,9 @@ parent: "Perfiles de participación"
 nav_order: 4
 lang: "es"
 alternate_lang:
-  - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Receptor/"
+  - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/receptorDeDados/"
     lang: "pt-br"
-  - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Receptor/"
+  - path: "/Documentation/en/Open-Finance/openFinanceBrasil/perfisParticipacao/receptorDeDados/"
     lang: "en"
 ---
 
@@ -61,7 +61,7 @@ Cuando ocurre un intercambio, el ecosistema está preparado para proporcionar la
 
 ### Jornada de Consentimiento
 
-El proceso de autorización para el intercambio de datos sigue una **jornada completa de consentimiento**. Para más información, haga clic [aquí](../JornadaConsentimento/OFB-JornadaConsentimento.html).
+El proceso de autorización para el intercambio de datos sigue una **jornada completa de consentimiento**. Para más información, haga clic [aquí](../jornadaConsentimento/index.html).
 
 > Además, el [diagrama de secuencia][DiagramaSecuencia] ilustra el flujo de consentimiento de acuerdo con cada [API ofrecida por el módulo de recepción][API-Recepción].
 
@@ -69,7 +69,7 @@ El proceso de autorización para el intercambio de datos sigue una **jornada com
 
 ### Certificación obligatoria
 
-Para que una institución se convierta en Receptor de Datos, es necesario pasar por las pruebas de la certificación OpenID RP - *Relying parties*. Más detalles sobre la certificación pueden ser encontrados [aquí](../OFB-Certificações.html).
+Para que una institución se convierta en Receptor de Datos, es necesario pasar por las pruebas de la certificación OpenID RP - *Relying parties*. Más detalles sobre la certificación pueden ser encontrados [aquí](../certificacoesECertificados.html).
 
 ---
 
@@ -87,6 +87,6 @@ Para iniciar el uso del software, existen algunos pre-requisitos:
 > - La API del módulo de recepción de datos puede ser [encontrada aquí][API-Recepción].
 > - Para evaluar la guía de experiencia del usuario, [haga clic aquí][GuiaUX].
 
-[DiagramaSecuencia]: ../../Plataforma-OpusOpenFinance/Receptor_de_Dados/images/consent-sequence.png
-[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+ri
-[API-Recepción]: ../../../../swagger-ui/index.html?api=OAS-Receptor
+[DiagramaSecuencia]: ./anexos/imagens/es-itp-consentSequence.png
+[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil
+[API-Recepción]: ../../../../swagger-ui/index.html?api=es-oas-receptor

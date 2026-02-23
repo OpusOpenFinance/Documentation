@@ -6,9 +6,9 @@ nav_order: 2
 has_children: true
 lang: "es"
 alternate_lang:
-  - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+  - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/index/"
     lang: "pt-br"
-  - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+  - path: "/Documentation/en/OOpen-Finance/openFinanceBrasil/perfisParticipacao/index/"
     lang: "en"
 ---
 
@@ -45,10 +45,10 @@ El término **TPP** (Third-Party Provider) es utilizado para representar ambas l
 
 Los perfiles de actuación pueden ser comprendidos según la tabla abajo:
 
-| **Ecosistema** | **Cliente (TPP - parte activa)** | **Servidor (parte pasiva)** |
-|-----------------|---------------------------------|-----------------------------|
-| **Datos**       | Receptor de Datos               | Transmisor de Datos         |
-| **Pagos**       | ITP                             | Titular de Cuenta           |
+| **Ecosistema**  | **Cliente (TPP - parte activa)** | **Servidor (parte pasiva)** |
+|-----------------|----------------------------------|-----------------------------|
+| **Datos**       | Receptor de Datos                | Transmisor de Datos         |
+| **Pagos**       | ITP                              | Titular de Cuenta           |
 
 ---
 
@@ -56,4 +56,4 @@ Los perfiles de actuación pueden ser comprendidos según la tabla abajo:
 
 La Plataforma Opus Open Finance ofrece una solución completa para atender a los requisitos necesarios para todos los perfiles de participación del *Open Finance Brasil*.
 
-[Imagen de los perfiles de participación]: ./images/Perfis_OF.png
+[Imagen de los perfiles de participación]: ./anexos/imagens/es-index-perfis.png

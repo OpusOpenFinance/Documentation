@@ -5,9 +5,9 @@ parent: "Perfiles de participación"
 nav_order: 3
 lang: "es"
 alternate_lang:
-  - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Detentor/"
+  - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/detentorDeContas/"
     lang: "pt-br"
-  - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Detentor/"
+  - path: "/Documentation/en/Open-Finance/openFinanceBrasil/perfisParticipacao/detentorDeContas/"
     lang: "en"
 ---
 
@@ -39,7 +39,7 @@ Actualmente, los medios de pago previstos en Open Finance incluyen:
 
 ### Jornada de Consentimiento
 
-El proceso de autorización para efectuar pagos es llevado a cabo por el cliente a través de una **jornada completa de consentimiento**. Más detalles pueden ser encontrados [aquí](../JornadaConsentimento/OFB-JornadaConsentimento.html).
+El proceso de autorización para efectuar pagos es llevado a cabo por el cliente a través de una **jornada completa de consentimiento**. Más detalles pueden ser encontrados [aquí](../jornadaConsentimento/index.html).
 
 ---
 
@@ -67,10 +67,10 @@ El [portal del desarrollador](https://openfinancebrasil.atlassian.net/wiki/space
 
 #### APIs Vigentes
 
-|**Descripción**                     | **Enlace al Portal del Desarrollador**                           |
-|------------------------------------|:----------------------------------------------------------------:|
-|**Iniciación de Pago**              |[Acceder aquí](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/SV+API+-+Pagamentos) |
-|**Iniciación de Pagos Automáticos** |[Acceder aquí](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/198410569/SV+API+-+Pagamentos+Autom+ticos) |
+|**Descripción**                     | **Enlace al Portal del Desarrollador**                                                                                         |
+|------------------------------------|:------------------------------------------------------------------------------------------------------------------------------:|
+|**Iniciación de Pago**              |[Acceder aquí](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/SV+API+-+Pagamentos)                       |
+|**Iniciación de Pagos Automáticos** |[Acceder aquí](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/198410569/SV+API+-+Pagamentos+Autom+ticos)          |
 |**Iniciación de Pago**              |[Acceder aquí](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento) |
 
 ### Plataforma Opus Open Finance
@@ -78,5 +78,5 @@ El [portal del desarrollador](https://openfinancebrasil.atlassian.net/wiki/space
 Para utilizar la **Plataforma Opus Open Finance** para cumplir con las exigencias regulatorias del perfil de participación Titular de Cuenta, es necesario completar las siguientes etapas:
 
 1. Completar el proceso de [implantación](../../Plataforma-OpusOpenFinance/Implantação/OOF-Implantação.html).
-2. Construir la experiencia del usuario para aplicación y Banca por Internet (si aplica). [La guía de experiencia del usuario](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio) presenta los detalles del flujo de interacción con el usuario final que los canales digitales de atención deben implementar para cumplir con las normas regulatorias.
+2. Construir la experiencia del usuario para aplicación y Banca por Internet (si aplica). El [guía de experiencia del usuario](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil) presenta los detalles del flujo de interacción con el usuario final que los canales digitales de atención deben implementar para cumplir con las normas regulatorias.
 3. Construir la capa de integración con los sistemas de respaldo de pagos.

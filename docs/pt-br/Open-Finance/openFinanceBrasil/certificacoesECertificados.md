@@ -93,7 +93,7 @@ Os certificados digitais são divididos em 4 tipos:
 #### Necessidade de certificados por perfil
 
 | Certificado         | Detentora de Conta | ITP | Transmissora de Dados | Receptora de Dados |
-|---------------------|:--------------------:|:-----:|:-----------------------:|:--------------------:|
+|---------------------|:------------------:|:---:|:---------------------:|:------------------:|
 | Transporte          | Sim                | Não | Sim                   | Não                |
 | EV                  | Sim                | Não | Sim                   | Não                |
 | Autenticação        | Sim                | Sim | Sim                   | Sim                |

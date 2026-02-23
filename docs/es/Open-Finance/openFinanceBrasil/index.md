@@ -6,9 +6,9 @@ nav_order: 2
 has_children: true
 lang: "es"
 alternate_lang:
-  - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/OpenFinanceBrasil/"
+  - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/index/"
     lang: "pt-br"
-  - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/OpenFinanceBrasil/"
+  - path: "/Documentation/en/Open-Finance/openFinanceBrasil/index/"
     lang: "en"
 ---
 
