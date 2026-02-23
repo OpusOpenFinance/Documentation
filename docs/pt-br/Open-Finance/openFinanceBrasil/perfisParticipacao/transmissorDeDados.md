@@ -5,9 +5,9 @@ parent: "Perfis de participação"
 nav_order: 2
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Transmissor/"
+    - path: "/Documentation/en/Open-Finance/openFinanceBrasil/perfisParticipacao/transmissorDeDados/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Transmissor/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/perfisParticipacao/transmissorDeDados/"
       lang: "es"
 ---
 
@@ -96,8 +96,8 @@ A **Plataforma Opus Open Finance** implementa todas as APIs regulatórias do per
 3. Construir a [camada de integração][Camada-Integração] com os sistemas de retaguarda conforme os produtos financeiros oferecidos pela instituição para seus clientes.
 
 [Limites-operacionais]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17924220/Limites+operacionais
-[JornadaConsentimento]: ../JornadaConsentimento/OFB-JornadaConsentimento.html
+[JornadaConsentimento]: ../jornadaConsentimento/index.html
 [Portal-Desenvolvedor]: https://openfinancebrasil.atlassian.net/wiki/spaces/DraftOF/calendars
 [Implantação]: ../../Plataforma-OpusOpenFinance/Implantação/OOF-Implantação.html
-[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio
-[Camada-Integração]: ../../Plataforma-OpusOpenFinance/Integração/CamadaIntegração.html
+[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil
+[Camada-Integração]: ../../Plataforma-OpusOpenFinance/Integração/index.html
