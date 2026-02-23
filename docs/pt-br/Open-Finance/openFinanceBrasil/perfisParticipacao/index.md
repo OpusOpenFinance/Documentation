@@ -6,9 +6,9 @@ nav_order: 2
 has_children: true
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+    - path: "/Documentation/en/Open-Finance/openFinanceBrasil/perfisParticipacao/index/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/perfisParticipacao/index/"
       lang: "es"
 ---
 
@@ -56,4 +56,4 @@ Os perfis de atuação podem ser entendidos conforme a tabela abaixo:
 
 A Plataforma Opus Open Finance oferece uma solução completa para atender aos requisitos necessários a todos os perfis de participação do *Open Finance Brasil*.
 
-[Imagem dos perfis de participação]: ./images/Perfis_OF.png
+[Imagem dos perfis de participação]: ./anexos/imagens/index-perfis.png

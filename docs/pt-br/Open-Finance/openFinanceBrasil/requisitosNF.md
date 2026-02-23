@@ -5,9 +5,9 @@ parent: "Open Finance Brasil"
 nav_order: 6
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/OFB-RequisitosNF/"
+    - path: "/Documentation/en/Open-Finance/openFinanceBrasil/requisitosNF/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/OFB-RequisitosNF/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/requisitosNF/"
       lang: "es"
 ---
 

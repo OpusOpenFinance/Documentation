@@ -15,6 +15,13 @@ window.onload = () => {
     // =====================================================
     // PT-BR
     // =====================================================
+    // Open Finance Brasil
+    // Perfis de Participação
+    "oas-receptor": `${base}/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPDados.yml`,
+    "oas-itp-pagamentos": `${base}/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentos.yml`,
+    "oas-itp-pagamentos-automaticos": `${base}/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentosAutomaticos.yml`,
+    "oas-back-dados": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-oof-dados.yml`,
+    "oas-pagamentos-jsr": `${base}/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasPagamentosSemRedirecionamento.yaml`,
     // Compartilhamento de Dados
     "cambio": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/exchange-1-0-0.yml`,
     "dados-cadastrais": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/customers-2-2-0.yml`,
@@ -35,11 +42,6 @@ window.onload = () => {
     "payment-integration": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/anexos/yml/paymentIntegration-0.1.0.yml`,
     // App e web
     "mobile": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/anexos/yml/mobileWebapp2as.yml`,
-    //
-    "oas-receptor": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-dados.yml`,
-    "oas-itp-pagamentos": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos.yml`,
-    "oas-itp-pagamentos-automaticos": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos-automaticos.yml`,
-    "oas-back-dados": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-oof-dados.yml`,
     // Dados Abertos
     "open-data-acquiring": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-acquiringServices.yml`,
     "open-data-accounts": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-accounts.yml`,

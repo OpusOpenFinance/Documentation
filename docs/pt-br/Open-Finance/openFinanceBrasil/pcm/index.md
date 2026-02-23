@@ -5,9 +5,9 @@ parent: "Open Finance Brasil"
 nav_order: 5
 lang: "pt-br"
 alternate_lang: 
-    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PCM/OFB-PCM/"
+    - path: "/Documentation/en/Open-Finance/openFinanceBrasil/pcm/index/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PCM/OFB-PCM/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/pcm/index/"
       lang: "es"
 ---
 
@@ -30,7 +30,7 @@ Ambas as instituições envolvidas em qualquer operação devem enviar essas inf
 
 A Plataforma Opus Open Finance possui um módulo que roda como um serviço independente que gerencia todo o processo de coleta e envio das chamadas para a PCM, garantindo conformidade regulatória sem que você precise se preocupar.
 
-![PCM](./images/Pcm.png)
+![PCM](./anexos/imagens/pcm.png)
 
 ## Mais Informações
 

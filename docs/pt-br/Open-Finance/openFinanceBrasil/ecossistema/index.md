@@ -5,9 +5,9 @@ parent: "Open Finance Brasil"
 nav_order: 1
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/Ecossistema/OFB-Ecossistema/"
+    - path: "/Documentation/en//Open-Finance/openFinanceBrasil/ecossistema/index/"
       lang: "en" 
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/Ecossistema/OFB-Ecossistema/"
+    - path: "/Documentation/es//Open-Finance/openFinanceBrasil/ecossistema/index/"
       lang: "es"
 ---
 
@@ -30,7 +30,7 @@ O Open Finance tem um escopo de implementação em 4 diferentes fases, conhecida
 
 Cada fase é descrita em detalhes na imagem abaixo:
 
-![Escopo Open Finance](./images/Escopo_OF.png)
+![Escopo Open Finance](./anexos/imagens/ecossistema-escopo.png)
 [Fonte: Banco Central](https://openfinancebrasil.org.br/conheca-o-open-finance/)
 
 ---
@@ -39,7 +39,7 @@ Cada fase é descrita em detalhes na imagem abaixo:
 
 Para garantir a implementação do Open Finance, o Banco Central definiu uma estrutura para concretizar os objetivos do ecossistema. A estrutura está dividida da seguinte forma:
 
-![Organograma Open Finance](./images/Organograma_OF.png)
+![Organograma Open Finance](./anexos/imagens/ecossistema-organograma.png)
 
 #### Banco Central
 
@@ -66,7 +66,7 @@ Atua como elo principal com o Conselho Deliberativo, informando sobre o andament
 São responsáveis por estudos, propostas técnicas e planos voltados para a implementação e gestão do Open Finance. Incluem profissionais de empresas de tecnologia e acadêmicos. Atualmente, existem oito GTs:
 
 1. **GT Especificações**: Define escopo de dados e interfaces para produtos e serviços.
-2. **GT Experiência do Cliente**: Desenvolve o Guia de [Experiência do Usuário](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio).
+2. **GT Experiência do Cliente**: Desenvolve o [Guia de Experiência do Usuário](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
 3. **GT Infraestrutura**: Gestão de plataformas e ferramentas do ecossistema.
 4. **GT Política, Riscos e Compliance**: Análises regulatórias e de conformidade.
 5. **GT Estrutura Definitiva**: Define natureza jurídica e função da estrutura.

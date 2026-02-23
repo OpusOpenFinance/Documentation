@@ -5,9 +5,9 @@ parent: "Open Finance Brasil"
 nav_order: 3
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento/"
+    - path: "/Documentation/en/Open-Finance/openFinanceBrasil/jornadaConsentimento/index/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/jornadaConsentimento/index/"
       lang: "es"
 ---
 
@@ -21,7 +21,7 @@ O **consentimento** é o termo usado para demonstrar que o usuário cliente da i
 
 ### Jornada de Consentimento para Compartilhamento de Dados
 
-![Jornada de dados](./images/jornada_dados.png)  
+![Jornada de dados](./anexos/imagens/jornada-dados.png)  
 Fonte: Banco Central
 
 1. O usuário acessa o ambiente da **Receptora de Dados** e requisita o início de um novo compartilhamento via Open Finance;
@@ -34,8 +34,8 @@ Fonte: Banco Central
 
 ### Jornada de Consentimento para Pagamentos
 
-![Jornada de dados](./images/jornada_pgtos.png)
-Fonte: Banco Central
+![Jornada de dados](./anexos/imagens/jornada-pagamentos.png)
+[Fonte: Banco Central](https://openfinancebrasil.org.br/conheca-o-open-finance/)
 
 1. O usuário acessa o ambiente do **Iniciador de Pagamento (ITP)** e solicita a iniciação de um novo pagamento via Open Finance;
 2. Após realizar a solicitação e escolher a **Detentora de Conta**, o usuário é redirecionado automaticamente para o ambiente da Detentora;
@@ -55,6 +55,6 @@ Embora sejam similares, as jornadas possuem particularidades devido às suas fin
 |-------------------------|-----------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
 | **Tempo do Consentimento** | Definido pelo usuário durante a jornada, variando de 1 a 12 meses ou tempo indeterminado.    | Consentimento utilizado uma única vez, consumido imediatamente após o pagamento.      |
 | **Valor do Pagamento**    | Não se aplica.                                                                              | Definido pelo ITP e exibido ao usuário durante a confirmação do consentimento.        |
-| **Variações no Consentimento** | Depende das informações dos produtos que o usuário deseja compartilhar ([veja os possíveis produtos aqui](../PerfisOFB/OOF-Transmissor.html)). | Depende do tipo de pagamento selecionado [(confira o roadmap aqui)](../PerfisOFB/OFB-Detentor.html).              |
+| **Variações no Consentimento** | Depende das informações dos produtos que o usuário deseja compartilhar ([veja os possíveis produtos aqui](../perfisParticipacao/transmissorDeDados.html)). | Depende do tipo de pagamento selecionado [(confira o roadmap aqui)](../perfisParticipacao/detentorDeConta.html).              |
 
-Para mais informações sobre a jornada de experiência do usuário definida pelo regulador, [clique aqui](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio).
+Para mais informações sobre a jornada de experiência do usuário definida pelo regulador, [clique aqui](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).

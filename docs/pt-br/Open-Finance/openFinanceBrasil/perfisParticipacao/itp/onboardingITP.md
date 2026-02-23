@@ -5,9 +5,9 @@ parent: "ITP"
 nav_order: 1
 lang: "pt-br"
 alternate_lang: 
-    - path: "/Documentation/en/Open-Finance/Open-Finance-Brasil/PerfisOFB/OnboardingITP/"
+    - path: "/Documentation/en/Open-Finance/openFinanceBrasil/perfisParticipacao/itp/onboardingITP/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OnboardingITP/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/perfisParticipacao/itp/onboardingITP/"
       lang: "es"
 ---
 
@@ -31,7 +31,7 @@ Ao concluir essas etapas, a instituição estará apta a realizar pagamentos em 
 | **2 - Pré-homologatória**      | Cumprir pré-requisitos relacionados ao Pix e ao Open Finance.                                    | Pix e Open Finance                 | Inclui certificações, publicações no Portal do Cidadão e no PDF de participantes Pix.                                                                                       |
 | **3 - Homologatória**          | Processo de onboarding no Open Finance para validação final.                                     | Open Finance                       | Realização de testes em produção e aprovação mínima exigida para operação no ecossistema.                                                                                   |
 
-![Etapas para se tornar ITP](./images/etapas.png)
+![Etapas para se tornar ITP](../anexos/imagens/itp-etapas.png)
 
 ---
 
@@ -55,7 +55,7 @@ Em geral, a autorização do ITP é focada para instituições que procuram uma 
 
 Assim que a instituição já está autorizada para funcionar como ITP, é necessário estar segundo os pré-requisitos que antecedem a etapa homologatória do ITP no Open Finance. Os pré-requisitos são divididos em 4:
 
-1. [**Certificação OpenID RP**](../OFB-Certificações.html):
+1. [**Certificação OpenID RP**](../../certificacoesECertificados.html):
    - Deve estar publicada no [site oficial da OpenID](https://openid.net/certification/#FAPI_RPs).
    - A Opus pode ajudar a concluir o processo em poucas semanas.
 
@@ -66,7 +66,7 @@ Assim que a instituição já está autorizada para funcionar como ITP, é neces
    > Na implantação do produto, a Opus conduz todo o processo de configuração do diretório, para você não se preocupar.
 
 3. **Certificação e publicação de APIs Payment** (se a instituição também for Detentora de Conta):
-    Para o caso de a instituição ser participantes do Open Finance como Detentora de Conta também, é necessário estar de acordo com toda a regulação desse perfil antes mesmo de poder começar a homologação como ITP. O perfil de Detentora de Conta exige a publicação da [certificação OpenID OP](../OFB-Certificações.html) e que suas APIs estejam devidamente publicadas.
+    Para o caso de a instituição ser participantes do Open Finance como Detentora de Conta também, é necessário estar de acordo com toda a regulação desse perfil antes mesmo de poder começar a homologação como ITP. O perfil de Detentora de Conta exige a publicação da [certificação OpenID OP](../../certificacoesECertificados.html) e que suas APIs estejam devidamente publicadas.
 
 4. **Publicação no PDF de participantes do Pix**:
     Pode-se dizer que esse pré-requisito é o caminho crítico, pois é o mais longo e está vinculado ao arranjo Pix. [O PDF do Pix](https://www.bcb.gov.br/estabilidadefinanceira/participantespix) (acesso à direita) é uma lista com todas as instituições participantes do Pix e, para ser homologado como ITP, é necessário que a sua instituição esteja presente nela listado na coluna Iniciação de Transação de Pagamento.
@@ -79,9 +79,9 @@ Consiste no envio de documentos necessários para cadastrar a instituição no a
 
 | **Modalidade da Instituição**        | **Formulário 1** | **Formulário 2** | **Formulário 3** |
 |--------------------------------------|------------------|------------------|------------------|
-| **Iniciador sem acesso ao DICT**     | [#1](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formulario_adesao-Iniciadores.docx)               | [#2](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formulario_produtos_e_servicos-Iniciador.docx)              | [#3](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Adesao_Questionarios/Questionario_autoavaliacao_seguranca-Iniciador-Sem_acesso_DICT.docx)               |
-| **Iniciador com acesso indireto ao DICT** | [#1](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formulario_adesao-Iniciadores.docx)               | [#2](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formulario_produtos_e_servicos-Iniciador.docx)               | [#3](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Adesao_Questionarios/Questionario_autoavaliacao_seguranca-Iniciador-Com_Acesso_indireto_DICT.docx)               |
-| **Iniciador com acesso direto ao DICT**  | [#1](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formulario_adesao-Iniciadores.docx)               | [#2](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formulario_produtos_e_servicos-Iniciador.docx)               | [#3](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Adesao_Questionarios/Questionario_autoavaliacao_seguranca-Iniciador-Com_Acesso_direto_DICT.docx)               |
+| **Iniciador sem acesso ao DICT**     | [#1](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formularios_Adesao/Formulario_adesao_e_atualizacao_Iniciador.docx)               | [#2](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formularios_Adesao/Formulario_produtos_e_servicos_Iniciador.docx)              | [#3](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Adesao_Questionarios/Questionario_Iniciador_sem_acesso.docx)               |
+| **Iniciador com acesso indireto ao DICT** | [#1](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formularios_Adesao/Formulario_adesao_e_atualizacao_Iniciador.docx)               | [#2](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formularios_Adesao/Formulario_produtos_e_servicos_Iniciador.docx)               | [#3](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Adesao_Questionarios/Questionario_Iniciador_acesso_indireto.docx)               |
+| **Iniciador com acesso direto ao DICT**  | [#1](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formularios_Adesao/Formulario_adesao_e_atualizacao_Iniciador.docx)               | [#2](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formularios_Adesao/Formulario_produtos_e_servicos_Iniciador.docx)               | [#3](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Adesao_Questionarios/Questionario_Iniciador_acesso_direto.docx)               |
 
 - **Envio:** Os formulários devem ser enviados para **<pix-operacional@bcb.gov.br>**.
 - **Assinatura:** É necessário que os documentos sejam assinados por um estatutário da instituição.
@@ -92,7 +92,7 @@ Consiste no envio de documentos necessários para cadastrar a instituição no a
 
 É a etapa referente aos testes que devem ser executados para ser incluído como participante Pix. Essa etapa possui vários testes, todavia é necessário fazer apenas aqueles que são direcionados para o Iniciador de Transação de Pagamentos, caso os demais sejam facultativos para a instituição.
 
-![Testes Pix](./images/etapas_pix.png)
+![Testes Pix](../anexos/imagens/itp-etapasPix.png)
 
 O teste obrigatório é apenas a Validação da prestação de serviço de iniciação de pagamento. Além dele, existem outros dois, caso sua instituição ofereça QR Code ou tenha acesso ao DICT, os testes são Validação de QR Codes e Testes DICT, respectivamente.
 
@@ -104,7 +104,7 @@ Para Iniciador, não há necessidade de operação restrita. Uma vez que a etapa
 
 #### **Etapa 3 - Onboarding ITP**
 
-Por fim, chega-se na parte 100% relacionada ao ecossistema de Open Finance, conhecido por Onboarding ITP. Essa etapa está muito bem descrita dentro do portal do desenvolvedor com o [guia de onboarding ITP](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378706/Guia+de+Onboarding+ITP).
+Por fim, chega-se na parte 100% relacionada ao ecossistema de Open Finance, conhecido por Onboarding ITP. Essa etapa está muito bem descrita dentro do portal do desenvolvedor com o [guia de onboarding ITP](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1210318906/Onboarding+de+Iniciadores+de+Transa+es+de+Pagamentos+ITPs).
 
 Em suma, a nova Iniciadora terá que realizar 6 pagamentos em produção e obter 4 sucessos dentro desses 6. Isso é o suficiente para a instituição estar apta para iniciar sua operação em produção. Dos 6 testes, sua instituição pode escolher quem serão as 6 Detentoras de Conta para fazer os pagamentos.
 
@@ -124,12 +124,12 @@ O acesso ao DICT não é obrigatório, mas limita os tipos de iniciação de pag
 
 #### **Tipos de Iniciação de Pagamento Pix**
 
-| **Tipo**       | **Descrição**                                                                 | **Necessário Acesso ao DICT?** |
-|----------------|:-------------------------------------------------------------------------------:|:--------------------------------:|
-| **Manu**       | Inserção manual de dados da conta transacional.                              | Não                            |
-| **DICT**       | Inserção manual de chave Pix.                                                | Sim                            |
-| **QRDN**       | QR Code dinâmico.                                                            | Sim                            |
-| **QRES**       | QR Code estático.                                                            | Sim                            |
-| **INIC**       | Beneficiário previamente conhecido pelo Iniciador.                           | Não                            |
+| **Tipo**       | **Descrição**                                        | **Necessário Acesso ao DICT?** |
+|----------------|:----------------------------------------------------:|:------------------------------:|
+| **Manu**       | Inserção manual de dados da conta transacional.      | Não                            |
+| **DICT**       | Inserção manual de chave Pix.                        | Sim                            |
+| **QRDN**       | QR Code dinâmico.                                    | Sim                            |
+| **QRES**       | QR Code estático.                                    | Sim                            |
+| **INIC**       | Beneficiário previamente conhecido pelo Iniciador.   | Não                            |
 
 Se sua instituição deseja ter acesso ao DICT, a Opus pode indicar fornecedores que oferecem o serviço **DICT-as-a-Service**.
