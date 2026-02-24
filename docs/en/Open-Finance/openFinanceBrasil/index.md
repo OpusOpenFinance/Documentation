@@ -2,13 +2,13 @@
 layout: default
 title: "Open Finance Brazil"
 parent: "Opus Open Finance Platform"
-nav_order: 2
+nav_order: 1
 has_children: true
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/OpenFinanceBrasil/"
+    - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/index/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/OpenFinanceBrasil/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/index/"
       lang: "es"
 ---
 

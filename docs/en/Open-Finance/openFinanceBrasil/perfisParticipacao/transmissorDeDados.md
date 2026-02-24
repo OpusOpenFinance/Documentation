@@ -5,9 +5,9 @@ parent: "Participation Profiles"
 nav_order: 2
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Transmissor/"
+    - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/transmissorDeDados/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Transmissor/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/perfisParticipacao/transmissorDeDados/"
       lang: "es"
 ---
 
@@ -96,8 +96,8 @@ The **Opus Open Finance Platform** implements all the regulatory APIs for the da
 3. Build the [integration layer][Integration-Layer] with backend systems according to the financial products offered by the institution to its clients.
 
 [Operational-Limits]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17924220/Limites+operacionais
-[ConsentJourney]: ../JornadaConsentimento/OFB-JornadaConsentimento.html
+[ConsentJourney]: ../jornadaConsentimento/index.html
 [DeveloperPortal]: https://openfinancebrasil.atlassian.net/wiki/spaces/DraftOF/calendars
 [Deployment]: ../../Plataforma-OpusOpenFinance/Implantação/OOF-Implantação.html
-[UserExperienceGuide]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio
-[Integration-Layer]: ../../Plataforma-OpusOpenFinance/Integração/CamadaIntegração.html
+[UserExperienceGuide]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil
+[Integration-Layer]: ../../Plataforma-OpusOpenFinance/Integração/index.html

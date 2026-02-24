@@ -5,9 +5,9 @@ parent: "Participation Profiles"
 nav_order: 3
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Detentor/"
+    - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/detentorDeContas/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Detentor/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/perfisParticipacao/detentorDeContas/"
       lang: "es"
 ---
 
@@ -39,7 +39,7 @@ Currently, the payment methods foreseen in Open Finance include:
 
 ### Consent Journey
 
-The authorization process to make payments is done by the customer through a **complete consent journey**. More details can be found [here](../JornadaConsentimento/OFB-JornadaConsentimento.html).
+The authorization process to make payments is done by the customer through a **complete consent journey**. More details can be found [here](../jornadaConsentimento/index.html).
 
 ---
 
@@ -78,5 +78,5 @@ The [developer portal](https://openfinancebrasil.atlassian.net/wiki/spaces/Draft
 To use the **Opus Open Finance Platform** to meet the regulatory requirements of the Account Holder participation profile, the following steps need to be completed:
 
 1. Complete the [deployment process](../../Plataforma-OpusOpenFinance/Implantação/OOF-Implantação.html).
-2. Build the user experience for the app and Internet Banking (if applicable). [The user experience guide](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio) presents the details of the interaction flow with the end user that the digital service channels must implement to comply with regulatory standards.
+2. Build the user experience for the app and Internet Banking (if applicable). [The user experience guide](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil) presents the details of the interaction flow with the end user that the digital service channels must implement to comply with regulatory standards.
 3. Build the integration layer with the backend payment systems.

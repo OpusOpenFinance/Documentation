@@ -79,10 +79,11 @@ window.onload = () => {
     // =====================================================
     // Open Finance Brasil
     // Perfis de Participação
-    "en-oas-receptor": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-dados.yml`,
-    "en-oas-itp-pagamentos": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos.yml`,
-    "en-oas-itp-pagamentos-automaticos": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-opustpp-pagamentos-automaticos.yml`,
-    "en-oas-back-dados": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/apis/en-oas-oof-dados.yml`,
+    "en-oas-receptor": `${base}/en/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/en-oasOpusTPPDados.yml`,
+    "en-oas-itp-pagamentos": `${base}/en/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/en-oasOpusTPPPagamentos.yml`,
+    "en-oas-itp-pagamentos-automaticos": `${base}/en/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/en-oasOpusTPPPagamentosAutomaticos.yml`,
+    "en-oas-back-dados": `${base}/en/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/en-oasOOFDados.yml`,
+    "en-oas-pagamentos-jsr": `${base}/en/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/en-oasPagamentosJSR.yaml`,
     // Compartilhamento de Dados
     "en-dados-cadastrais": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/en-customers-2-2-0.yml`,
     "en-cartao-de-credito": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/en-creditCards-2-3-1.yml`,

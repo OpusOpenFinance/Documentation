@@ -6,9 +6,9 @@ nav_order: 5
 has_children: true
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-ITP/"
+    - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/itp/index/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-ITP/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/perfisParticipacao/itp/index/"
       lang: "es"
 ---
 
@@ -66,13 +66,14 @@ To start using the software, there are some prerequisites:
 4. Complete the entire [Payment Initiation Service Provider onboarding process][OnboardingITP]
 
 {: .highlight}
-The Payment Initiation module of **Opus Open Finance Platform** is self-contained and *does not* demand to build an integration layer. It runs autonomously, providing APIs that isolate the specific details of *Open Finance Brasil* authentication and security protocols and facilitate the construction of applications. The description of these APIs can be found [here (payments)][API-pagamentos] e [here (automatic payments)][API-pagamentos-automáticos].  
+The Payment Initiation module of **Opus Open Finance Platform** is self-contained and *does not* demand to build an integration layer. It runs autonomously, providing APIs that isolate the specific details of *Open Finance Brasil* authentication and security protocols and facilitate the construction of applications. The description of these APIs can be found [here (payments)][API-pagamentos], [here (automatic payments)][API-pagamentos-automáticos] and [here (payments without redirection)][API-pagamentos-jsr].  
 
-[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+ri
-[API-pagamentos]: ../../../../swagger-ui/index.html?en-api=en-OAS-ITP-pagamentos
-[API-pagamentos-automáticos]: ../../../../swagger-ui/index.html?en-api=en-OAS-ITP-pagamentos-automaticos
-[OnboardingITP]: ../PerfisOFB/OnboardingITP.html
-[Setup]: ../../Plataforma-OpusOpenFinance/Implantação/OOF-Implantação.html
+[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil
 [Dev-Portal]: https://openfinancebrasil.atlassian.net/wiki/spaces/DraftOF/calendars
-[Sequence-Diagram]: ../../Plataforma-OpusOpenFinance/ITP/images/consent-sequence.png
-[Consent-Journey]: ../JornadaConsentimento/OFB-JornadaConsentimento.html
+[Sequence-Diagram]: ../anexos/imagens/en-itp-consentSequence.png
+[OnboardingITP]: ./onboardingITP.html
+[Setup]: ../../../Plataforma-OpusOpenFinance/Implantação/OOF-Implantação.html
+[Consent-Journey]: ../../jornadaConsentimento/index.html
+[API-pagamentos-jsr]: ../../../../../swagger-ui/index.html?api=en-oas-pagamentos-jsr
+[API-pagamentos]: ../../../../../swagger-ui/index.html?api=en-oas-itp-pagamentos
+[API-pagamentos-automáticos]: ../../../../../swagger-ui/index.html?api=en-oas-itp-pagamentos-automaticos

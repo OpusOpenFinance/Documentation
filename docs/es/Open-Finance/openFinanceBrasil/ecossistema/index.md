@@ -66,7 +66,7 @@ Actúa como enlace principal con el Consejo Deliberativo, informando sobre el pr
 Son responsables de estudios, propuestas técnicas y planes destinados a la implementación y gestión del Open Finance. Incluyen profesionales de empresas de tecnología y académicos. Actualmente, existen ocho GTs:
 
 1. **GT Especificaciones**: Define el alcance de datos e interfaces para productos y servicios.
-2. **GT Experiencia del Cliente**: Desarrolla la Guía de [Experiencia del Usuario](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
+2. **GT Experiencia del Cliente**: Desarrolla la [Guía de Experiencia del Usuario](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
 3. **GT Infraestructura**: Gestión de plataformas y herramientas del ecosistema.
 4. **GT Política, Riesgos y Cumplimiento**: Análisis regulatorios y de cumplimiento.
 5. **GT Estructura Definitiva**: Define la naturaleza jurídica y función de la estructura.

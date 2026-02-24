@@ -5,13 +5,13 @@ parent: "Open Finance Brazil"
 nav_order: 6
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/OFB-RequisitosNF/"
+    - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/requisitosNF/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/OFB-RequisitosNF/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/requisitosNF/"
       lang: "es"
 ---
 
-# Non-functional Requirements
+## Non-functional Requirements
 
 To ensure the efficiency of the Open Finance ecosystem, non-functional requirements have been defined that must be met by participating institutions. These requirements aim to ensure quality, performance, and reliability within the ecosystem.
 

@@ -5,9 +5,9 @@ parent: "Payment Initiation Service Provider"
 nav_order: 1
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OnboardingITP/"
+    - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/itp/onboardingITP/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OnboardingITP/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/perfisParticipacao/itp/onboardingITP/"
       lang: "es"
 ---
 
@@ -25,13 +25,13 @@ Upon completion of these stages, the institution will be eligible to perform liv
 
 ### Overview of Becoming a Payment Initiation Service Provider
 
-| **Stage**                     | **Description**                                                                                     | **Systems Involved**            | **Notes**                                                                                                                                                                |
-|-------------------------------|-----------------------------------------------------------------------------------------------------|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **1 - Authorization and Regulation** | Compliance and legal procedures                                                                         | Central Bank                    | The institution must be authorized by the Central Bank to operate as a Payment Institution.                                                                            |
-| **2 - Pre-qualification**      | Fulfill prerequisites related to Pix and Open Finance.                                               | Pix and Open Finance             | Includes certifications, publications on the Citizen Portal, and Pix participant PDF.                                                                                  |
-| **3 - Qualification**          | Open Finance onboarding process for final validation.                                                 | Open Finance                    | Perform tests in production and meet the minimum approval requirements for operation in the ecosystem.                                                                |
+| **Stage**                            | **Description**                                        | **Systems Involved**  | **Notes**                  |
+|--------------------------------------|--------------------------------------------------------|-----------------------|----------------------------|
+| **1 - Authorization and Regulation** | Compliance and legal procedures                        | Central Bank          | The institution must be authorized by the Central Bank to operate as a Payment Institution. |
+| **2 - Pre-qualification**            | Fulfill prerequisites related to Pix and Open Finance. | Pix and Open Finance  | Includes certifications, publications on the Citizen Portal, and Pix participant PDF. |
+| **3 - Qualification**                | Open Finance onboarding process for final validation.  | Open Finance          | Perform tests in production and meet the minimum approval requirements for operation in the ecosystem. |
 
-![Steps to become a Payment Initiation Service Provider](./images/etapas.png)
+![Steps to become a Payment Initiation Service Provider](../anexos/imagens/en-itp-etapas.png)
 
 ---
 
@@ -55,7 +55,7 @@ In general, Payment Initiation Service authorization is aimed at institutions se
 
 Once the institution is authorized to operate as a Payment Initiation Service Provider, it must meet the prerequisites that precede the qualification stage in *Open Finance Brasil*. The prerequisites are divided into 4:
 
-1. [**OpenID RP Certification**](../OFB-Certificações.html):
+1. [**OpenID RP Certification**](../../certificacoesECertificados.html):
    - Must be published on the [official OpenID website](https://openid.net/certification/#FAPI_RPs).
    - Opus can assist in completing the process in just a few weeks.
 
@@ -66,7 +66,7 @@ Once the institution is authorized to operate as a Payment Initiation Service Pr
    > During the product implementation, Opus handles the entire directory configuration process so you don’t have to worry about it.
 
 3. **Payment API Certification and Publication** (if the institution is also an Account Holder):
-    If the institution also participates in *Open Finance Brasil* as an Account Holder, it must comply with all regulations for this profile before starting the Payment Initiation Service Provider qualification process. The Account Holder profile requires the publication of the [OpenID OP certification](../OFB-Certificações.html) and proper publication of its APIs.
+    If the institution also participates in *Open Finance Brasil* as an Account Holder, it must comply with all regulations for this profile before starting the Payment Initiation Service Provider qualification process. The Account Holder profile requires the publication of the [OpenID OP certification](../../certificacoesECertificados.html) and proper publication of its APIs.
 
 4. **Publication in the Pix Participant PDF**:
     This prerequisite is critical, as it is the longest and is related to the Pix arrangement. [Pix PDF](https://www.bcb.gov.br/estabilidadefinanceira/participantespix) (access on the right) is a list of all Pix participants, and to be qualified as a Payment Initiation Service Provider, your institution must be listed in the "Payment Transaction Initiation" column of this document.
@@ -79,9 +79,9 @@ Consists of sending the necessary documents to register the institution in the P
 
 | **Institution Type**              | **Form 1**  | **Form 2**  | **Form 3** |
 |-----------------------------------|-------------|-------------|------------|
-| **PISP without access to DICT**      | [#1](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formulario_adesao-Iniciadores.docx) | [#2](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formulario_produtos_e_servicos-Iniciador.docx) | [#3](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Adesao_Questionarios/Questionario_autoavaliacao_seguranca-Iniciador-Sem_acesso_DICT.docx) |
-| **PISP with indirect access to DICT**      | [#1](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formulario_adesao-Iniciadores.docx) | [#2](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formulario_produtos_e_servicos-Iniciador.docx) | [#3](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Adesao_Questionarios/Questionario_autoavaliacao_seguranca-Iniciador-Com_Acesso_indireto_DICT.docx) |
-| **PISP with direct access to DICT**      | [#1](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formulario_adesao-Iniciadores.docx) | [#2](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formulario_produtos_e_servicos-Iniciador.docx) | [#3](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Adesao_Questionarios/Questionario_autoavaliacao_seguranca-Iniciador-Com_Acesso_direto_DICT.docx) |
+| **PISP without access to DICT**      | [#1](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formularios_Adesao/Formulario_adesao_e_atualizacao_Iniciador.docx) | [#2](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formularios_Adesao/Formulario_produtos_e_servicos_Iniciador.docx) | [#3](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Adesao_Questionarios/Questionario_Iniciador_sem_acesso.docx) |
+| **PISP with indirect access to DICT**      | [#1](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formularios_Adesao/Formulario_adesao_e_atualizacao_Iniciador.docx) | [#2](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formularios_Adesao/Formulario_produtos_e_servicos_Iniciador.docx) | [#3](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Adesao_Questionarios/Questionario_Iniciador_acesso_indireto.docx) |
+| **PISP with direct access to DICT**      | [#1](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formularios_Adesao/Formulario_adesao_e_atualizacao_Iniciador.docx) | [#2](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Formularios_Adesao/Formulario_produtos_e_servicos_Iniciador.docx) | [#3](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Adesao_Questionarios/Questionario_Iniciador_acesso_direto.docx) |
 
 - **Submission:** Forms must be sent to **<pix-operacional@bcb.gov.br>**.
 - **Signature:** The documents must be signed by a statutory representative of the institution.
@@ -92,7 +92,7 @@ Consists of sending the necessary documents to register the institution in the P
 
 This stage refers to the tests that must be performed to be included as a Pix participant. This stage includes several tests, but only those directed at the Payment Initiation Services are mandatory for the institution.
 
-![Pix Tests](./images/etapas_pix.png)
+![Pix Tests](../anexos/imagens/en-itp-etapasPix.png)
 
 The mandatory test is the Validation of the Payment Initiation Service. In addition, there are two other tests if your institution offers QR Codes or has access to DICT, these are the QR Code Validation and DICT Tests, respectively.
 
@@ -104,7 +104,7 @@ For the Payment Initiation Service Provider, no restricted operation is required
 
 #### **Stage 3 - Payment Initiation Service Provider Onboarding**
 
-Finally, we reach the stage fully and exclusively related to the *Open Finance Brasil* ecosystem, known as *Payment Initiation Service Provider Onboarding*. This stage is well described within the *Open Finance Brasil* developer portal with the [Payment Initiation Service Provider onboarding guide](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378706/Guia+de+Onboarding+ITP).
+Finally, we reach the stage fully and exclusively related to the *Open Finance Brasil* ecosystem, known as *Payment Initiation Service Provider Onboarding*. This stage is well described within the *Open Finance Brasil* developer portal with the [Payment Initiation Service Provider onboarding guide](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1210318906/Onboarding+de+Iniciadores+de+Transa+es+de+Pagamentos+ITPs).
 
 In short, the new Payment Initiation Service Provider will need to perform 6 live payments and obtain 4 successes out of these 6. This is enough for the institution to begin its live operations. From the 6 tests, your institution can choose which 6 Account Holders to make payments with.
 
@@ -125,11 +125,11 @@ Access to DICT is not mandatory, but it limits the types of payment initiation a
 #### **Types of Pix Payment Initiation**
 
 | **Type**       | **Description**                                                                 | **DICT Access Required?** |
-|----------------|:-------------------------------------------------------------------------------:|:--------------------------:|
-| **Manu**       | Manual entry of transactional account data.                                    | No                        |
-| **DICT**       | Manual entry of Pix key.                                                       | Yes                       |
-| **QRDN**       | Dynamic QR Code.                                                               | Yes                       |
-| **QRES**       | Static QR Code.                                                                | Yes                       |
+|----------------|:-------------------------------------------------------------------------------:|:-------------------------:|
+| **Manu**       | Manual entry of transactional account data.                                     | No                        |
+| **DICT**       | Manual entry of Pix key.                                                        | Yes                       |
+| **QRDN**       | Dynamic QR Code.                                                                | Yes                       |
+| **QRES**       | Static QR Code.                                                                 | Yes                       |
 | **INIC**       | Beneficiary previously known by the Initiator.                                  | No                        |
 
 If your institution wishes to have access to Pix's DICT, Opus can recommend suppliers offering **DICT-as-a-Service**.

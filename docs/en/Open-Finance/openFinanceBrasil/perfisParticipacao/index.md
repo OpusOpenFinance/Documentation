@@ -6,9 +6,9 @@ nav_order: 2
 has_children: true
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+    - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/index/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PerfisOFB/OFB-Perfis/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/perfisParticipacao/index/"
       lang: "es"
 ---
 
@@ -56,4 +56,4 @@ The roles can be understood according to the table below:
 
 The Opus Open Finance Platform provides a complete solution to meet the necessary requirements for all participation profiles in *Open Finance Brasil*.
 
-[Participation Profiles Image]: ./images/Perfis_OF.png
+[Participation Profiles Image]: ./anexos/imagens/en-index-perfis.png

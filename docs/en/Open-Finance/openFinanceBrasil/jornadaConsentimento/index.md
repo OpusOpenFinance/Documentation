@@ -5,9 +5,9 @@ parent: "Open Finance Brazil"
 nav_order: 3
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento/"
+    - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/jornadaConsentimento/index/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/JornadaConsentimento/OFB-JornadaConsentimento/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/jornadaConsentimento/index/"
       lang: "es"
 ---
 
@@ -21,6 +21,9 @@ In Open Finance, any operation can only be performed — whether it is data shar
 
 ### Consent Journey for Data Sharing
 
+![Data Journey](./anexos/imagens/en-jornada-dados.png)  
+[Source: Banco Central](https://openfinancebrasil.org.br/conheca-o-open-finance/)
+
 1. The user accesses the **Data Receiver's** environment and requests the initiation of a new data sharing via Open Finance.
 2. After making the request and choosing the **Data Transmitter**, the user is automatically redirected to the Transmitter's environment.
 3. In the Transmitter's environment, the user authenticates using biometrics or registered credentials to access their account.
@@ -30,6 +33,9 @@ In Open Finance, any operation can only be performed — whether it is data shar
 ---
 
 ### Consent Journey for Payments
+
+![Payments Journey](./anexos/imagens/en-jornada-pagamentos.png)
+[Source: Banco Central](https://openfinancebrasil.org.br/conheca-o-open-finance/)
 
 1. The user accesses the **Payment Initiator Service Provider (PISP)** environment and requests the initiation of a new payment via Open Finance.
 2. After making the request and choosing the **Account Holder**, the user is automatically redirected to the Account Holder's environment.
@@ -47,8 +53,8 @@ Although similar, the journeys have particularities due to their distinct purpos
 
 | **Aspect**                | **Data**                                                                                     | **Payments**                                                                        |
 |---------------------------|----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
-| **Consent Duration**       | Defined by the user during the journey, ranging from 1 to 12 months or indefinite time.     | Consent is used once, consumed immediately after the payment.                        |
-| **Payment Amount**         | Does not apply.                                                                               | Defined by the ITP and displayed to the user during consent confirmation.            |
-| **Variations in Consent**  | Depends on the information of the products the user wants to share ([see possible products here](../PerfisOFB/OOF-Transmissor.html)). | Depends on the type of payment selected [(check the roadmap here)](../PerfisOFB/OFB-Detentor.html). |
+| **Consent Duration**      | Defined by the user during the journey, ranging from 1 to 12 months or indefinite time.     | Consent is used once, consumed immediately after the payment.                        |
+| **Payment Amount**        | Does not apply.                                                                               | Defined by the ITP and displayed to the user during consent confirmation.            |
+| **Variations in Consent** | Depends on the information of the products the user wants to share ([see possible products here](../perfisParticipacao/transmissorDeDados.html)). | Depends on the type of payment selected [(check the roadmap here)](../perfisParticipacao/detentorDeContas.html). |
 
-For more information on the user experience journey defined by the regulator, [click here](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio).
+For more information on the user experience journey defined by the regulator, [click here](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).

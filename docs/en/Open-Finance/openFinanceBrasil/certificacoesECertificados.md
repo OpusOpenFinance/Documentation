@@ -5,9 +5,9 @@ parent: "Open Finance Brazil"
 nav_order: 4
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/OFB-Certificações/"
+    - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/certificacoesECertificados/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/OFB-Certificações/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/certificacoesECertificados/"
       lang: "es"
 ---
 

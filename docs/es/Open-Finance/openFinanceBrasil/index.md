@@ -2,7 +2,7 @@
 layout: default
 title: "Open Finance Brasil"
 parent: "Plataforma Opus Open Finance"
-nav_order: 2
+nav_order: 1
 has_children: true
 lang: "es"
 alternate_lang:

@@ -5,9 +5,9 @@ parent: "Open Finance Brazil"
 nav_order: 5
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Open-Finance-Brasil/PCM/OFB-PCM/"
+    - path: "/Documentation/pt-br/Open-Finance/openFinanceBrasil/pcm/index/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Open-Finance-Brasil/PCM/OFB-PCM/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/pcm/index/"
       lang: "es"
 ---
 
@@ -32,7 +32,7 @@ Both institutions involved in any operation must send this information to the MC
 
 The Opus Open Finance Platform has a module that runs as an independent service, managing the entire process of collecting and sending the calls to the MCP, ensuring regulatory compliance without the need for you to worry about it.
 
-![MCP](./images/Pcm.png)
+![MCP](./anexos/imagens/pcm.png)
 
 ## More Information
 

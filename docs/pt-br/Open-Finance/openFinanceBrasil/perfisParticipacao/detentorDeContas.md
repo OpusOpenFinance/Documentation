@@ -5,9 +5,9 @@ parent: "Perfis de participação"
 nav_order: 3
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/openFinanceBrasil/perfisParticipacao/detentorDeConta/"
+    - path: "/Documentation/en/Open-Finance/openFinanceBrasil/perfisParticipacao/detentorDeContas/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/perfisParticipacao/detentorDeConta/"
+    - path: "/Documentation/es/Open-Finance/openFinanceBrasil/perfisParticipacao/detentorDeContas/"
       lang: "es"
 ---
 

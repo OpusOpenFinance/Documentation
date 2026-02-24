@@ -22,7 +22,7 @@ El **consentimiento** es el término utilizado para demostrar que el usuario cli
 ### Jornada de Consentimiento para Compartir Datos
 
 ![Jornada de datos](.//anexos/imagens/es-jornada-dados.png)  
-Fuente: Banco Central
+[Fuente: Banco Central](https://openfinancebrasil.org.br/conheca-o-open-finance/)
 
 1. El usuario accede al entorno del **Receptor de Datos** y solicita el inicio de un nuevo intercambio vía Open Finance;
 2. Tras realizar la solicitud y elegir al **Transmisor de Datos**, el usuario es redirigido automáticamente al entorno del Transmisor;
@@ -35,7 +35,7 @@ Fuente: Banco Central
 ### Jornada de Consentimiento para Pagos
 
 ![Jornada de pagos](./anexos/imagens/es-jornada-pagamentos.png)
-Fuente: Banco Central
+[Fuente: Banco Central](https://openfinancebrasil.org.br/conheca-o-open-finance/)
 
 1. El usuario accede al entorno del **Iniciador de Pago (ITP)** y solicita la iniciación de un nuevo pago vía Open Finance;
 2. Tras realizar la solicitud y elegir al **Titular de Cuenta**, el usuario es redirigido automáticamente al entorno del Titular;
