@@ -1,0 +1,2833 @@
+openapi: 3.0.0
+info:
+  title: oofc-core
+  description: |-
+    Opus Open Client - Consent management core
+
+    # (Reception Requests for) Registration and Transactional Data
+
+    For more information on the consent creation flow, consult the Opus Open Finance Platform documentation.
+  version: 1.0.0
+tags:
+  - name: Opus Open Finance
+    description: |-
+      Consent management endpoints
+  - name: Resources
+    description: |-
+      Endpoints for listing resources linked to the consent. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Resources](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369706/API+-+Resources)).
+  - name: Registration Data
+    description: |-
+      Endpoints for querying customer registration data. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Customers](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17370003/API+-+Dados+Cadastrais)).
+  - name: Credit Cards
+    description: |-
+      Endpoints for querying post-paid account data (credit cards). The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Credit-cards-account](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17370864/API+-+Cart+o+de+Cr+dito)).
+  - name: Accounts
+    description: |-
+      Endpoints for querying account data. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Accounts](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17371726/API+-+Contas)).
+  - name: Loans
+    description: |-
+      Endpoints for querying loan data. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Loans](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17372520/API+-+Opera+es+de+Cr+dito+-+Empr+stimos)).
+  - name: Financings
+    description: |-
+      Endpoints for querying financing data. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Financings](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17373362/API+-+Opera+es+de+Cr+dito+-+Financiamento)).
+  - name: Overdrafts
+    description: |-
+      Endpoints for querying unarranged accounts overdraft data. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Unarranged-accounts-overdraft](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17374226/API+-+Opera+es+de+Cr+dito+-+Adiantamento+a+Depositantes)).
+  - name: Invoice Financings
+    description: |-
+      Endpoints for querying discounted receivables data. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Invoice-financings](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375055/API+-+Opera+es+de+Cr+dito+-+Direitos+Credit+rios+Descontados)).
+  - name: Investments - Bank Fixed Income
+    description: |-
+      Endpoints for querying bank fixed income data. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Bank-fixed-incomes](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/75006394/API+-+Investimentos+-+Renda+Fixa+Banc+ria)).
+  - name: Investments - Credit Fixed Income
+    description: |-
+      Endpoints for querying credit fixed income data. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Credit-fixed-incomes](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/75005953/API+-+Investimentos+-+Renda+Fixa+Cr+dito)).
+  - name: Investments - Variable Income
+    description: |-
+      Endpoints for querying variable income data. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Variable-incomes](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/82378753/API+-+Investimentos+-+Renda+Vari+vel)).
+  - name: Investments - Treasury Titles
+    description: |-
+      Endpoints for querying direct treasury titles data. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Treasure-titles](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/86605826/API+-+Investimentos+-+T+tulos+do+Tesouro+Direto)).
+  - name: Investments - Investment Funds
+    description: |-
+      Endpoints for querying investment funds data. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Funds](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/89784321/API+-+Investimentos+-+Fundos+de+Investimento)).
+  - name: Deeplinks
+    description: |-
+      Endpoints for obtaining iOS Universal Links and Android App Links settings so that the recipient institution's application can intercept URLs.
+servers:
+  - url: https://open-finance-core.instituicao.com.br
+paths:
+  /.well-known/assetlinks.json:
+    get:
+      tags:
+        - Deeplinks
+      operationId: oofcDeeplinksGetAssetLinks
+      description: Method to obtain the content of the assetlinks.json file
+      summary: Get Android App Links configuration file
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetLinks'
+  /.well-known/apple-app-site-association:
+    get:
+      tags:
+        - Deeplinks
+      operationId: oofcDeeplinksGetAppleAppSiteAssociation
+      description: Method to obtain the content of the apple-app-site-association file
+      summary: Get Apple App Site Association configuration file
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppleAppSiteAssociation'
+  /opus-open-finance/consents/v1/consents:
+    post:
+      tags:
+        - Opus Open Finance
+      operationId: oofcConsentsPostConsents
+      description: Method to create a new consent request.
+      summary: Create new consent request.
+      externalDocs:
+        description: Open Finance - Consent API
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369335/API+-+Consentimento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConsentRequest'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateConsentResponse'
+        default:
+          description: Error sent by the transmitter, following the standard defined by BACEN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /opus-open-finance/consents/v1/consents/{consentId}/authorisation-retry:
+    post:
+      tags:
+        - Opus Open Finance
+      operationId: oofcConsentsPostConsentsConsentIdAuthorisationRetry
+      description: Method to generate a new authorization URL for the consent identified by consentId
+      summary: Generate new authorization URL for the consent identified by consentId.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetryConsentRequest'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/consentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetryConsentResponse'
+  /opus-open-finance/consents/v1/consents/{consentId}/extends:
+    post:
+      tags:
+        - Opus Open Finance
+      operationId: oofcConsentsPostConsentsConsentIdExtends
+      description: Method to extend the consent period
+      summary: Renew an existing consent by consentId.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConsentExtends'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/consentId'
+        - $ref: '#/components/parameters/customerUserAgent'
+        - $ref: '#/components/parameters/fapiCustomerIpAddress'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseConsentExtends'
+    get:
+      tags:
+        - Opus Open Finance
+      operationId: oofcConsentsGetConsentsConsentIdExtends
+      description: Method to obtain details of extensions for the consent identified by consentId.
+      summary: Get details of extensions made to the consent identified by consentId.
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/consentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseConsentReadExtends'
+  /opus-open-finance/consents/v1/consents/{consentId}:
+    get:
+      tags:
+        - Opus Open Finance
+      operationId: oofcConsentsGetConsentsConsentId
+      description: Method to detail a consent identified by consentId
+      summary: Get details of the consent identified by consentId.
+      externalDocs:
+        description: Open Finance - Consent API
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369335/API+-+Consentimento
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/consentId'
+      responses:
+        '200':
+          description: Consent successfully queried.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConsentResponse'
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Error sent by the transmitter, following the standard defined by BACEN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+    delete:
+      tags:
+        - Opus Open Finance
+      operationId: oofcConsentsDeleteConsentsConsentId
+      description: Method to delete / revoke the consent identified by consentId
+      summary: Delete / Revoke the consent identified by consentId.
+      externalDocs:
+        description: Open Finance - Consent API
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369335/API+-+Consentimento
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/consentId'
+      responses:
+        '204':
+          description: Consent successfully revoked.
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Error sent by the transmitter, following the standard defined by BACEN
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /opus-open-finance/participants:
+    get:
+      tags:
+        - Opus Open Finance
+      operationId: oofcGetParticipants
+      description: Method to obtain participants registered in the directory
+      summary: Details of participants registered in the directory, identifying their APIs
+      externalDocs:
+        description: Open Finance - Regulatory functions for OpenID and OAuth 2.0 mappings
+        url: https://openbanking-brasil.github.io/specs-seguranca/open-banking-brasil-dynamic-client-registration-1_ID2-ptbr.html#section-7.2
+      parameters:
+       - in: query
+         name: role
+         schema:
+           type: string
+         description: Filters OrgDomainRoleClaims containing the informed role. Role types are subject to change, check in the described externalDocs.
+       - in: query
+         name: familyType
+         schema:
+           type: string
+         description: Filters ApiResources containing the informed familyType
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParticipantsResponse'
+        '502':
+          description: Error in Opus Open Client when communicating with the BACEN participants API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the BACEN participants API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /opus-open-finance/dcm:
+    get:
+      operationId: oofcGetDcm
+      description: Method to obtain DCM data for all brand clients of the application.
+      tags:
+        - Opus Open Finance
+      summary: Details of DCM status for brand clients.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DcmData'
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the BACEN participants API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+    put:
+      operationId: oofcPutDcm
+      description: Method to update DCM data for all brand clients of the application.
+      tags:
+        - Opus Open Finance
+      summary: Update DCM data for brand clients.
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutDcmRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DcmData'
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the BACEN participants API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /opus-open-finance/authorization-result:
+    post:
+      tags:
+        - Opus Open Finance
+      operationId: oofcAppToAppAuthorizationResult
+      description: Method used in the App-To-App flow to exchange the authorization code returned for tokens or to handle any authorization errors.
+      summary: Send OIDC flow result to Opus TPP.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppToAppAuthorizationResultRequest'
+      responses:
+        '204':
+          description: Success in the authorization process
+        '422':
+          description: Error in the authorization process
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppToAppAuthorizationErrorResponse'
+  /proxy/open-banking/resources/v2/resources:
+    get:
+      tags:
+        - Resources
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: Proxy method to obtain the list of resources maintained by the customer at the transmitting institution and for which they have provided consent.
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/customers/v2/personal/identifications:
+    get:
+      tags:
+        - Registration Data
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the identification records of the natural person maintained at the transmitting institution.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/customers/v2/business/identifications:
+    get:
+      tags:
+        - Registration Data
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the identification records of the legal entity maintained at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/customers/v2/personal/qualifications:
+    get:
+      tags:
+        - Registration Data
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the qualification records of the natural person maintained at the transmitting institution.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/customers/v2/business/qualifications:
+    get:
+      tags:
+        - Registration Data
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the qualification records of the legal entity maintained at the transmitting institution.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/customers/v2/personal/financial-relations:
+    get:
+      tags:
+        - Registration Data
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain records of relationships with the financial institution and representatives of the natural person maintained at the transmitting institution.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/customers/v2/business/financial-relations:
+    get:
+      tags:
+        - Registration Data
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain records of relationships with the financial institution and representatives of the legal entity maintained at the transmitting institution.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/credit-cards-accounts/v2/accounts:
+    get:
+      tags:
+        - Credit Cards
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the list of post-paid payment accounts maintained by the customer at the transmitting institution and for which they have provided consent'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/credit-cards-accounts/v2/accounts/{creditCardAccountId}:
+    get:
+      tags:
+        - Credit Cards
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/creditCardAccountId'
+      description: 'Proxy method to obtain identification data for the post-paid payment account identified by creditCardAccountId maintained by the customer at the transmitting institution.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/credit-cards-accounts/v2/accounts/{creditCardAccountId}/limits:
+    get:
+      tags:
+        - Credit Cards
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/creditCardAccountId'
+      description: 'Proxy method to obtain the limits of the post-paid payment account identified by creditCardAccountId maintained by the customer at the transmitting institution.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/credit-cards-accounts/v2/accounts/{creditCardAccountId}/transactions:
+    get:
+      tags:
+        - Credit Cards
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/creditCardAccountId'
+      description: |-
+        Proxy method to obtain the list of transactions for the post-paid payment account identified by creditCardAccountId maintained by the customer at the transmitting institution.
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/credit-cards-accounts/v2/accounts/{creditCardAccountId}/transactions-current:
+    get:
+      tags:
+        - Credit Cards
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/creditCardAccountId'
+      description: |-
+        Proxy method to obtain the list of recent transactions (last 7 days) for the post-paid payment account identified by creditCardAccountId maintained by the customer at the transmitting institution.
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/credit-cards-accounts/v2/accounts/{creditCardAccountId}/bills:
+    get:
+      tags:
+        - Credit Cards
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/creditCardAccountId'
+      description: |
+        Proxy method to obtain the list of bills for the post-paid payment account identified by creditCardAccountId maintained by the customer at the transmitting institution.\
+        Only a closed bill should be informed.\
+        Any payment should be counted towards the last closed bill.
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/credit-cards-accounts/v2/accounts/{creditCardAccountId}/bills/{billId}/transactions:
+    get:
+      tags:
+        - Credit Cards
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/creditCardAccountId'
+        - name: billId
+          description: Information that identifies the bill
+          in: path
+          schema:
+            type: string
+          required: true
+      description: |
+        Proxy method to obtain the list of transactions for the post-paid payment account identified by creditCardAccountId and billId maintained by the customer at the transmitting institution.
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/accounts/v1/accounts:
+    get:
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the list of current, savings and prepaid payment accounts maintained by the customer at the transmitting institution and for which they have provided consent.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/accounts/v2/accounts:
+    get:
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the list of current, savings and prepaid payment accounts maintained by the customer at the transmitting institution and for which they have provided consent.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/accounts/v2/accounts/{accountId}:
+    get:
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/accountId'
+      description: 'Proxy method to obtain identification data for the current, savings or prepaid payment account identified by accountId maintained by the customer at the transmitting institution.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/accounts/v2/accounts/{accountId}/balances:
+    get:
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/accountId'
+      description: 'Proxy method to obtain the balances of the current, savings or prepaid payment account identified by accountId maintained by the customer at the transmitting institution.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/accounts/v2/accounts/{accountId}/transactions:
+    get:
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/accountId'
+      description: 'Proxy method to obtain the list of transactions for the current, savings or prepaid payment account identified by accountId maintained by the customer at the transmitting institution.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/accounts/v2/accounts/{accountId}/transactions-current:
+    get:
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/accountId'
+      description: 'Proxy method to obtain the list of recent transactions (last 7 days) for the current, savings or prepaid payment account identified by accountId maintained by the customer at the transmitting institution.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/accounts/v2/accounts/{accountId}/overdraft-limits:
+    get:
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/accountId'
+      description: 'Proxy method to obtain the limits of the current, savings or prepaid payment account identified by accountId maintained by the customer at the transmitting institution.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/loans/v2/contracts:
+    get:
+      tags:
+        - Loans
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the list of loan contracts maintained by the customer at the transmitting institution and for which they have provided consent'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/loans/v2/contracts/{contractId}:
+    get:
+      tags:
+        - Loans
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain data for the loan contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/loans/v2/contracts/{contractId}/warranties:
+    get:
+      tags:
+        - Loans
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain the list of guarantees linked to the loan contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/loans/v2/contracts/{contractId}/payments:
+    get:
+      tags:
+        - Loans
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain payment data for the loan contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/loans/v2/contracts/{contractId}/scheduled-instalments:
+    get:
+      tags:
+        - Loans
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain the installment schedule data for the loan contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/financings/v2/contracts:
+     get:
+      tags:
+        - Financings
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the list of financing contracts maintained by the customer at the transmitting institution and for which they have provided consent'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/financings/v2/contracts/{contractId}:
+     get:
+      tags:
+        - Financings
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain data for the financing contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/financings/v2/contracts/{contractId}/warranties:
+     get:
+      tags:
+        - Financings
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain the list of guarantees linked to the financing contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/financings/v2/contracts/{contractId}/payments:
+     get:
+      tags:
+        - Financings
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain payment data for the financing contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/financings/v2/contracts/{contractId}/scheduled-instalments:
+     get:
+      tags:
+        - Financings
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain the installment schedule data for the financing contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/unarranged-accounts-overdraft/v2/contracts:
+     get:
+      tags:
+        - Overdrafts
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the list of unarranged accounts overdraft contracts maintained by the customer at the transmitting institution and for which they have provided consent.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/unarranged-accounts-overdraft/v2/contracts/{contractId}:
+     get:
+      tags:
+        - Overdrafts
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain data for the unarranged accounts overdraft contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/unarranged-accounts-overdraft/v2/contracts/{contractId}/warranties:
+     get:
+      tags:
+        - Overdrafts
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain the list of guarantees linked to the unarranged accounts overdraft contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/unarranged-accounts-overdraft/v2/contracts/{contractId}/payments:
+     get:
+      tags:
+        - Overdrafts
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain payment data for the unarranged accounts overdraft contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/unarranged-accounts-overdraft/v2/contracts/{contractId}/scheduled-instalments:
+     get:
+      tags:
+        - Overdrafts
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain the installment schedule data for the unarranged accounts overdraft contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/invoice-financings/v2/contracts:
+     get:
+      tags:
+        - Invoice Financings
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the list of invoice financing contracts maintained by the customer at the transmitting institution and for which they have provided consent.'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/invoice-financings/v2/contracts/{contractId}:
+     get:
+      tags:
+        - Invoice Financings
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain data for the invoice financing contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/invoice-financings/v2/contracts/{contractId}/warranties:
+     get:
+      tags:
+        - Invoice Financings
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain the list of guarantees linked to the invoice financing contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/invoice-financings/v2/contracts/{contractId}/payments:
+     get:
+      tags:
+        - Invoice Financings
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain payment data for the invoice financing contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/invoice-financings/v2/contracts/{contractId}/scheduled-instalments:
+     get:
+      tags:
+        - Invoice Financings
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/contractId'
+      description: 'Proxy method to obtain the installment schedule data for the invoice financing contract identified by contractId maintained by the customer at the transmitting institution'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/bank-fixed-incomes/v1/investments:
+     get:
+      tags:
+        - Investments - Bank Fixed Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the list of Bank Fixed Income operations maintained by the customer at the transmitting institution and for which they have provided consent'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/bank-fixed-incomes/v1/investments/{investmentId}:
+     get:
+      tags:
+        - Investments - Bank Fixed Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain data for the Bank Fixed Income operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/bank-fixed-incomes/v1/investments/{investmentId}/balances:
+     get:
+      tags:
+        - Investments - Bank Fixed Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the position of the Bank Fixed Income operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/bank-fixed-incomes/v1/investments/{investmentId}/transactions:
+     get:
+      tags:
+        - Investments - Bank Fixed Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the historical movements (last 12 months) of the Bank Fixed Income operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/bank-fixed-incomes/v1/investments/{investmentId}/transactions-current:
+     get:
+      tags:
+        - Investments - Bank Fixed Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the recent movements of the Bank Fixed Income operation identified by investmentId. The period to be considered for presenting movements will be up to 7 days - 7 days prior to the query, including the query day (D-6)'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/credit-fixed-incomes/v1/investments:
+     get:
+      tags:
+        - Investments - Credit Fixed Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the list of Credit Fixed Income operations maintained by the customer at the transmitting institution and for which they have provided consent'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/credit-fixed-incomes/v1/investments/{investmentId}:
+     get:
+      tags:
+        - Investments - Credit Fixed Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain data for the Credit Fixed Income operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/credit-fixed-incomes/v1/investments/{investmentId}/balances:
+     get:
+      tags:
+        - Investments - Credit Fixed Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the position of the Credit Fixed Income operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/credit-fixed-incomes/v1/investments/{investmentId}/transactions:
+     get:
+      tags:
+        - Investments - Credit Fixed Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the historical movements (last 12 months) of the Credit Fixed Income operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/credit-fixed-incomes/v1/investments/{investmentId}/transactions-current:
+     get:
+      tags:
+        - Investments - Credit Fixed Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the recent movements of the Credit Fixed Income operation identified by investmentId. The period to be considered for presenting movements will be up to 7 days - 7 days prior to the query, including the query day (D-6)'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/variable-incomes/v1/investments:
+     get:
+      tags:
+        - Investments - Variable Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the list of Variable Income operations maintained by the customer at the transmitting institution and for which they have provided consent'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/variable-incomes/v1/investments/{investmentId}:
+     get:
+      tags:
+        - Investments - Variable Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain data for the Variable Income operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/variable-incomes/v1/investments/{investmentId}/balances:
+     get:
+      tags:
+        - Investments - Variable Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the position of the Variable Income operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/variable-incomes/v1/investments/{investmentId}/transactions:
+     get:
+      tags:
+        - Investments - Variable Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the historical movements (last 12 months) of the Variable Income operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/variable-incomes/v1/investments/{investmentId}/transactions-current:
+     get:
+      tags:
+        - Investments - Variable Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the recent movements of the Variable Income operation identified by investmentId. The period to be considered for presenting movements will be up to 7 days - 7 days prior to the query, including the query day (D-6)'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/variable-incomes/v1/broker-notes/{brokerNoteId}:
+     get:
+      tags:
+        - Investments - Variable Income
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/brokerNoteId'
+      description: 'Proxy method to obtain information from the trading note identified in asset purchase and sale movements on the stock exchange. The brokerNoteId is sent in asset purchase or sale movements and must be passed as an input parameter in the "Trading Note" endpoint. As content of the brokerNoteId field, it is expected that the transmitter generates a unique, immutable identifier for each natural number of the trading note'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/treasure-titles/v1/investments:
+     get:
+      tags:
+        - Investments - Treasury Titles
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the list of Treasury Title operations maintained by the customer at the transmitting institution and for which they have provided consent'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/treasure-titles/v1/investments/{investmentId}:
+     get:
+      tags:
+        - Investments - Treasury Titles
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain data for the Treasury Title operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/treasure-titles/v1/investments/{investmentId}/balances:
+     get:
+      tags:
+        - Investments - Treasury Titles
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the position of the Treasury Title operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/treasure-titles/v1/investments/{investmentId}/transactions:
+     get:
+      tags:
+        - Investments - Treasury Titles
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the operation movements (last 12 months) of the Treasury Title operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/treasure-titles/v1/investments/{investmentId}/transactions-current:
+     get:
+      tags:
+        - Investments - Treasury Titles
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the recent movements of the Treasury Title operation identified by investmentId. The period to be considered for presenting movements will be up to 7 days - 7 days prior to the query, including the query day (D-6)'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/funds/v1/investments:
+     get:
+      tags:
+        - Investments - Investment Funds
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to obtain the list of Investment Fund operations maintained by the customer at the transmitting institution and for which they have provided consent'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/funds/v1/investments/{investmentId}:
+     get:
+      tags:
+        - Investments - Investment Funds
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain data for the Investment Fund operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/funds/v1/investments/{investmentId}/balances:
+     get:
+      tags:
+        - Investments - Investment Funds
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the position of the Investment Fund operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/funds/v1/investments/{investmentId}/transactions:
+     get:
+      tags:
+        - Investments - Investment Funds
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the historical movements (last 12 months) of the Investment Fund operation identified by investmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/funds/v1/investments/{investmentId}/transactions-current:
+     get:
+      tags:
+        - Investments - Investment Funds
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - $ref: '#/components/parameters/investmentId'
+      description: 'Proxy method to obtain the recent movements of the Investment Fund operation identified by investmentId. The period to be considered for presenting movements will be up to 7 days - 7 days prior to the query, including the query day (D-6)'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the transmitter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+components:
+  schemas:
+    DcmData:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DcmStatus'
+    DcmStatus:
+      type: object
+      required:
+        - brandId
+        - dcmVersion
+        - dcmDate
+      properties:
+        brandId:
+          type: string
+          maxLength: 40
+          example: a9e62501-0b91-4af9-837d-c2d210736f28
+        dcmVersion:
+          type: string
+          maxLength: 20
+          example: '2.0'
+        dcmDate:
+          description: 'Date and time of DCM execution for the indicated version, according to RFC-3339 specification, UTC format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2023-07-07T09:30:00Z'
+        status:
+          type: string
+          maxLength: 20
+          example: 'success'
+    PutDcmRequest:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - version
+          properties:
+            version:
+              type: string
+              description: Version string
+              example: '1'
+    AssetLinks:
+      type: array
+      items:
+        type: object
+        properties:
+          relation:
+            type: array
+            items:
+              type: string
+              example: 'delegate_permission/common.handle_all_urls'
+          target:
+            type: object
+            properties:
+              namespace:
+                type: string
+                example: 'android_app'
+              package_name:
+                type: string
+                example: 'example.com'
+              sha256_cert_fingerprints:
+                type: array
+                items:
+                  type: string
+                  example: 'A1:22:30:35:08:85:CC:4D:B6:A6:6C:02:4C:9F:3C:FE:07:CA:39:4C:66:30:C0:1F:00:FA:43:BE:3E:8E:94:3D'
+    AppleAppSiteAssociation:
+      type: object
+      properties:
+        applinks:
+          type: object
+          properties:
+            apps:
+              type: array
+              items:
+                type: object
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  appID:
+                    type: string
+                    example: 'app.native.example'
+                  paths:
+                    type: array
+                    items:
+                      type: string
+                      example: '/auth/handoff/*'
+                  appIDs:
+                    type: array
+                    items:
+                      type: string
+                      example: 'app.native.example'
+                  components:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        /:
+                          type: string
+                          example: '/auth/auth'
+    AppToAppAuthorizationResultRequest:
+      type: object
+      properties:
+        data:
+          type: string
+          example: 'code=LxSevzQNevQJM0yx4dhPo4oJHdYhAHG808ssYF2OlzC&id_token=eyJhbGciOiJQUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVKU01fbW1UMV9qTTVieTM5aEttR01BSWNTM2lzQ3BPSlB5NVdnUmY3RUUifQ.eyJzdWIiOiJPRkMtNDkzOGI1ODIzZWQzNjMxNmQyZTVjYzY5M2YxNzljMTJjNTE0MjNlYTQ0NzJiYjgyZWI5YWYzNTE0NjEyYmI2MSIsImF1dGhfdGltZSI6MTY5NTY3NjE2MCwiYWNyIjoidXJuOmJyYXNpbDpvcGVuYmFua2luZzpsb2EyIiwibm9uY2UiOiIzNjE2YzM3NWFjMDZlODBjMTk3MjljMTkwOGEzYjkxMGQ3ODVlYzViZTkxOTZhN2YyZjllZjhmNDI1YmVlNWMxIiwiY19oYXNoIjoiRUVMd2FoU1FQUGt2WEZWZzJOZnRHUSIsInNfaGFzaCI6IndPN1hZbFB1c1FZMGtwOG1Ucmw3WVEiLCJhdWQiOiI1aUtkV3JCdlhFRjJHNWgwZ1RaMkMiLCJleHAiOjE2OTU2NzcwNjAsImlhdCI6MTY5NTY3NjE2MCwiaXNzIjoiaHR0cHM6Ly9vYmIucWEub29iLm9wdXMtc29mdHdhcmUuY29tLmJyLyJ9.SNBN_Buh_Y0iLuJGP4bgSHYnSKC_g76R0CpWEVRJua788RNoJpAzhAm6Ah6vOb2nD-H4Yq2MAjRy_Fkh7ruziBaJ4ebDexxQ2GAocBgrmQ2JwI-Q-1D4Xm1WuSS6OSm04Kk0CiV8MylidwxF_4XS40uWqxTJQcgG8dP4NC9-ty8S6a-6oGs0MekjOqm9mU0aFDwS8fRGZ8TU-8AT15hiMQ9sXsgNlfrci0MQi9Jb6t9o4c93mKCLhGypYswjs1MjVoXD3K6btZ2NSZYBQROtTK_tl9HkvW1uRVhNVZjzwDs1DJrvZpLP48es8YPxFtYAAKsuwiB8bza58MYKvvW81A&state=dXJuOmFtYXppbmdiYW5rOjdlOWYxMDhmLWE3MDktNDBlNi1iMzQ2LTNjNGZiMzBjNjcyNnwx'
+    AppToAppAuthorizationErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: 'access_denied'
+        error_description:
+          type: string
+          example: 'Error in user authentication'
+    ParticipantsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Participants'
+    Participants:
+      type: object
+      required:
+        - OpenIDDiscoveryDocument
+        - CustomerFriendlyName
+        - CustomerFriendlyLogoUri
+        - Organisations
+        - AuthorisationServerIds
+        - ApiResources
+      properties:
+        OpenIDDiscoveryDocument:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: Discovery URI of the transmitter's Authorisation Server
+          example: 'https://open-finance.transmissora.com.br/.well-known/openid-configuration'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        CustomerFriendlyName:
+          type: string
+          maxLength: 255
+          example: 'Transmissora Open Finance'
+        CustomerFriendlyLogoUri:
+          type: string
+          format: uri
+          maxLength: 2000
+          example: 'https://cdn.raidiam.io/directory-ui/brand/obbrazil/0.2.0.112/favicon.svg'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        CustomerFriendlyDescription:
+          type: string
+          maxLength: 255
+          example: "Description of the Open Finance transmitter"
+        Organisations:
+          type: array
+          minLength: 1
+          items:
+            required:
+              - OrganisationId
+              - RegistrationNumber
+            properties:
+              OrganisationId:
+                type: string
+                description: Unique organization identifier
+                minLength: 1
+                maxLength: 40
+                example: 'ce31b1e1-71c5-4918-ba5b-3e8f6401c71f'
+              RegisteredName:
+                type: string
+                maxLength: 256
+                example: 'Transmissora S.A.'
+              RegistrationNumber:
+                type: string
+                maxLength: 256
+                example: '60663556000104'
+              ParentOrganisationReference:
+                type: string
+                maxLength: 65535
+                example: '60701190000104'
+        OrgDomainRoleClaims:
+          type: array
+          minLength: 1
+          items:
+            required:
+              - Status
+              - role
+            properties:
+                Status:
+                  type: string
+                  example: Active
+                role:
+                  $ref: '#/components/schemas/EnumRole'
+        AuthorisationServerIds:
+          type: array
+          items:
+            type: string
+            maxLength: 40
+            example: a9e62501-0b91-4af9-837d-c2d210736f28
+        ApiResources:
+          type: array
+          items:
+            properties:
+              ApiFamilyType:
+                type: string
+                minLength: 1
+                maxLength: 40
+                example: payments-consents
+              ApiVersion:
+                type: number
+                example: 1
+    Meta:
+      type: object
+      description: Meta information regarding the requested API.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Total number of records in the result
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Total number of pages in the result
+          example: 1
+        requestDateTime:
+          description: 'Consultation date and time, according to RFC-3339 specification, UTC format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+      additionalProperties: false
+    GetConsentResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - consentId
+            - consent
+          properties:
+            consentId:
+              description: |
+                The consentId is the unique identifier of the consent and must be a URN - Uniform Resource Name.
+                A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+                Identifier - URI - that is assigned under the URI scheme "urn" and a specific URN namespace, with the intention that the URN
+                be a persistent and location-independent resource identifier.
+                Considering the string urn:bancoex:C1DD33123 as an example for consentId we have:
+                - the namespace (urn)
+                - the identifier associated with the transmitting institution's namespace (bancoex)
+                - the specific identifier within the namespace (C1DD33123).
+                More detailed information about namespace construction can be found in [RFC8141](https://tools.ietf.org/html/rfc8141).
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              example: 'urn:bancoex:C1DD33123'
+            consent:
+              type: object
+              description: Consent object returned by the transmitter according to the standard defined by BACEN - https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369335/API+-+Consentimento
+    RetryConsentRequest:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - callbackApplicationUri
+          properties:
+            callbackApplicationUri:
+                type: string
+                format: uri
+                maxLength: 2000
+                description: Callback URI of the application after the authentication process
+                example: 'https://aplicativo.instituicao.com.br'
+                pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    CreateConsentRequest:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - callbackApplicationUri
+            - permissions
+            - loggedUser
+          properties:
+            callbackApplicationUri:
+              type: string
+              format: uri
+              maxLength: 2000
+              description: Callback URI of the application after the authentication process
+              example: 'https://aplicativo.instituicao.com.br'
+              pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+            loggedUser:
+              $ref: '#/components/schemas/LoggedUser'
+            businessEntity:
+              $ref: '#/components/schemas/BusinessEntity'
+            permissions:
+              type: array
+              items:
+                description: 'Specifies the types of access permissions to APIs within the scope of Open Finance Brasil - Phase 2, according to the consent blocks provided by the user and necessary for accessing each API endpoint.'
+                type: string
+                enum:
+                  - ACCOUNTS_READ
+                  - ACCOUNTS_BALANCES_READ
+                  - ACCOUNTS_TRANSACTIONS_READ
+                  - ACCOUNTS_OVERDRAFT_LIMITS_READ
+                  - CREDIT_CARDS_ACCOUNTS_READ
+                  - CREDIT_CARDS_ACCOUNTS_BILLS_READ
+                  - CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ
+                  - CREDIT_CARDS_ACCOUNTS_LIMITS_READ
+                  - CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ
+                  - CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ
+                  - CUSTOMERS_PERSONAL_ADITTIONALINFO_READ
+                  - CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ
+                  - CUSTOMERS_BUSINESS_ADITTIONALINFO_READ
+                  - FINANCINGS_READ
+                  - FINANCINGS_SCHEDULED_INSTALMENTS_READ
+                  - FINANCINGS_PAYMENTS_READ
+                  - FINANCINGS_WARRANTIES_READ
+                  - INVOICE_FINANCINGS_READ
+                  - INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ
+                  - INVOICE_FINANCINGS_PAYMENTS_READ
+                  - INVOICE_FINANCINGS_WARRANTIES_READ
+                  - LOANS_READ
+                  - LOANS_SCHEDULED_INSTALMENTS_READ
+                  - LOANS_PAYMENTS_READ
+                  - LOANS_WARRANTIES_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ
+                  - RESOURCES_READ
+              minItems: 1
+              maxItems: 30
+              example:
+                - ACCOUNTS_READ
+                - ACCOUNTS_OVERDRAFT_LIMITS_READ
+                - RESOURCES_READ
+            expirationDateTime:
+              description: 'Expiration date and time of the permission. Mandatory field, reflects the consent expiration date. A string with date and time according to RFC-3339 specification, always using UTC timezone (UTC time format).'
+              type: string
+              maxLength: 20
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+          additionalProperties: false
+      additionalProperties: false
+    RetryConsentResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - redirectUrl
+            - consentId
+            - consent
+          properties:
+            redirectUrl:
+              type: string
+              format: uri
+              maxLength: 2000
+              description: Redirect URI to the transmitter's authorisation Server to request consent approval
+              example: 'https://authorisation-server.transmissora.com.br/'
+              pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+            consentId:
+              description: |
+                The consentId is the unique identifier of the consent and must be a URN - Uniform Resource Name.
+                A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+                Identifier - URI - that is assigned under the URI scheme "urn" and a specific URN namespace, with the intention that the URN
+                be a persistent and location-independent resource identifier.
+                Considering the string urn:bancoex:C1DD33123 as an example for consentId we have:
+                - the namespace (urn)
+                - the identifier associated with the transmitting institution's namespace (bancoex)
+                - the specific identifier within the namespace (C1DD33123).
+                More detailed information about namespace construction can be found in [RFC8141](https://tools.ietf.org/html/rfc8141).
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              example: 'urn:bancoex:C1DD33123'
+            consent:
+              type: object
+              description: Consent object returned by the transmitter according to the standard defined by BACEN - https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369335/API+-+Consentimento
+    CreateConsentResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - redirectUrl
+            - consentId
+            - consent
+          properties:
+            redirectUrl:
+              type: string
+              format: uri
+              maxLength: 2000
+              description: Redirect URI to the transmitter's authorisation Server to request consent approval
+              example: 'https://authorisation-server.transmissora.com.br/'
+              pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+            consentId:
+              description: |
+                The consentId is the unique identifier of the consent and must be a URN - Uniform Resource Name.
+                A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+                Identifier - URI - that is assigned under the URI scheme "urn" and a specific URN namespace, with the intention that the URN
+                be a persistent and location-independent resource identifier.
+                Considering the string urn:bancoex:C1DD33123 as an example for consentId we have:
+                - the namespace (urn)
+                - the identifier associated with the transmitting institution's namespace (bancoex)
+                - the specific identifier within the namespace (C1DD33123).
+                More detailed information about namespace construction can be found in [RFC8141](https://tools.ietf.org/html/rfc8141).
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              example: 'urn:bancoex:C1DD33123'
+            consent:
+              type: object
+              description: Consent object returned by the transmitter according to the standard defined by BACEN - https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369335/API+-+Consentimento
+    ResponseConsentReadExtends:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - consentId
+            - consent
+          properties:
+            consentId:
+              description: |
+                The consentId is the unique identifier of the consent and must be a URN - Uniform Resource Name.  
+                A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource 
+                Identifier - URI - that is assigned under the URI scheme "urn" and a specific URN namespace, with the intention that the URN 
+                be a persistent and location-independent resource identifier.  
+                Considering the string urn:bancoex:C1DD33123 as an example for consentId we have:
+                - the namespace (urn)
+                - the identifier associated with the transmitting institution's namespace (bancoex) 
+                - the specific identifier within the namespace (C1DD33123).  
+                More detailed information about namespace construction can be found in [RFC8141](https://tools.ietf.org/html/rfc8141).  
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              example: 'urn:bancoex:C1DD33123'
+            consent:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - loggedUser
+                      - requestDateTime
+                    properties:
+                      expirationDateTime:
+                        description: 'Consent expiration date and time, according to RFC-3339 specification, UTC format.'
+                        type: string
+                        maxLength: 20
+                        format: date-time
+                        example: '2021-05-21T08:30:00Z'
+                      loggedUser:
+                        $ref: '#/components/schemas/LoggedUser'
+                      requestDateTime:
+                        description: 'Consultation date and time, according to RFC-3339 specification, UTC format.'
+                        type: string
+                        maxLength: 20
+                        format: date-time
+                        example: '2021-05-21T08:30:00Z'
+    ResponseConsentExtends:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - consentId
+            - consent
+          properties:
+            consentId:
+              description: |
+                The consentId is the unique identifier of the consent and must be a URN - Uniform Resource Name.  
+                A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource 
+                Identifier - URI - that is assigned under the URI scheme "urn" and a specific URN namespace, with the intention that the URN 
+                be a persistent and location-independent resource identifier.  
+                Considering the string urn:bancoex:C1DD33123 as an example for consentId we have:
+                - the namespace (urn)
+                - the identifier associated with the transmitting institution's namespace (bancoex) 
+                - the specific identifier within the namespace (C1DD33123).  
+                More detailed information about namespace construction can be found in [RFC8141](https://tools.ietf.org/html/rfc8141).  
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              example: 'urn:bancoex:C1DD33123'
+            consent:
+              type: object
+              description: Consent object returned by the transmitter according to the standard defined by BACEN - https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369335/API+-+Consentimento
+    CreateConsentExtends:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - loggedUser
+          properties:
+            expirationDateTime:
+              description: Expiration date and time of the permission. Mandatory field, reflects the consent expiration date. A string with date and time according to RFC-3339 specification, always using UTC timezone (UTC time format). For consents with indefinite term, fill with value '2300-01-01T00:00:00Z'. This value must be reflected in the expirationDateTime of the related consent.
+              type: string
+              format: date-time
+              pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
+              maxLength: 20
+              example: '2021-05-21T08:30:00Z'
+            loggedUser:
+              $ref: '#/components/schemas/LoggedUser'
+            businessEntity:
+              $ref: '#/components/schemas/BusinessEntity'
+    LoggedUser:
+      type: object
+      description: User (natural person) who is logged into the receiving institution and who will initiate the consent process for data sharing.
+      additionalProperties: false
+      required:
+        - document
+      properties:
+        document:
+          type: object
+          additionalProperties: false
+          required:
+            - identification
+            - rel
+          properties:
+            identification:
+              type: string
+              maxLength: 11
+              description: Number of the user's official identification document.
+              example: '11111111111'
+              pattern: '^\d{11}$'
+            rel:
+              type: string
+              maxLength: 3
+              description: Type of the user's official identification document.
+              example: CPF
+              pattern: '^[A-Z]{3}$'
+    BusinessEntity:
+      type: object
+      description: 'Holder, legal entity to whom the data subject to sharing refers.'
+      additionalProperties: false
+      required:
+        - document
+      properties:
+        document:
+          type: object
+          additionalProperties: false
+          required:
+            - identification
+            - rel
+          properties:
+            identification:
+              type: string
+              maxLength: 14
+              description: Number of the legal entity holder's official identification document.
+              example: '11111111111111'
+              pattern: '^\d{14}$'
+            rel:
+              type: string
+              maxLength: 4
+              description: Type of the legal entity holder's official identification document.
+              example: CNPJ
+              pattern: '^[A-Z]{4}$'
+    UUID:
+      format: uuid
+      pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+      type: string
+      example: '556392bd-b4c2-4cc0-9abe-f2c77a5c5d8f'
+    EnumRole:
+      type: string
+      maxLength: 5
+      enum:
+        - DADOS
+        - PAGTO
+        - CONTA
+        - CCORR
+      example: CONTA
+      description: |
+        Regulatory role of the institution. Role types are subject to change.
+    ResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Endpoint-specific error code
+                type: string
+                pattern: '[\w\W\s]*'
+                example: '4XX'
+                maxLength: 255
+              title:
+                description: Human-readable title for this specific error
+                type: string
+                example: 'Human-readable title for this specific error'
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Human-readable description for this specific error
+                type: string
+                example: 'Human-readable description for this specific error'
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+            additionalProperties: false
+        meta:
+          $ref: '#/components/schemas/Meta'
+      additionalProperties: false
+  parameters:
+    applicationId:
+      name: x-application-id
+      in: header
+      required: true
+      description: Identifier of the application making the request
+      schema:
+        $ref: '#/components/schemas/UUID'
+    customerUserAgent:
+      name: x-customer-user-agent
+      in: header
+      required: true
+      description: Indicates the user-agent that the user is using.
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    fapiCustomerIpAddress:
+      name: x-fapi-customer-ip-address
+      in: header
+      required: true
+      description: The user's IP address if currently logged in with the recipient.
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+    authorisationServerId:
+      name: x-authorisation-server-id
+      required: true
+      description: Identifier of the consent transmitter's Authorisation Server, obtained by querying the participant list
+      in: header
+      schema:
+        $ref: '#/components/schemas/UUID'
+    headerConsentId:
+      name: x-consent-id
+      required: true
+      in: header
+      description: Identifier of the consent to be used in this operation, obtained in the response to its creation
+      schema:
+        type: string
+        pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+        maxLength: 256
+      example: 'urn:bancox:f865cd66-392a-420b-9ff0-1b6d7cc60ee0'
+    consentId:
+      name: consentId
+      required: true
+      in: path
+      description: |
+        The consentId is the unique identifier of the consent and must be a URN - Uniform Resource Name.
+        A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+        Identifier - URI - that is assigned under the URI scheme "urn" and a specific URN namespace, with the intention that the URN
+        be a persistent and location-independent resource identifier.
+        Considering the string urn:prudential:C1DD93123 as an example for consentId we have:
+        - the namespace (urn)
+        - the identifier associated with the transmitting institution's namespace (bancox)
+        - the specific identifier within the namespace (f865cd66-392a-420b-9ff0-1b6d7cc60ee0).
+        More detailed information about namespace construction can be found in [RFC8141](https://tools.ietf.org/html/rfc8141).
+      schema:
+        type: string
+        pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+        maxLength: 256
+      example: 'urn:bancox:f865cd66-392a-420b-9ff0-1b6d7cc60ee0'
+    creditCardAccountId:
+      name: creditCardAccountId
+      description: 'Uniquely identifies the customer''s post-paid payment account, maintaining immutability rules within the transmitting institution'
+      in: path
+      schema:
+        type: string
+      required: true
+    accountId:
+      name: accountId
+      description: 'Identifier of the current, savings or prepaid payment account.'
+      in: path
+      schema:
+        type: string
+      required: true
+    contractId:
+      name: contractId
+      description: 'Contract identifier for all types of credit operations.'
+      in: path
+      schema:
+        type: string
+      required: true
+    investmentId:
+      name: investmentId
+      description: 'Uniquely identifies the customer''s relationship with the product, maintaining immutability rules within the transmitting institution'
+      in: path
+      schema:
+        type: string
+      required: true
+    brokerNoteId:
+      name: brokerNoteId
+      description: 'Uniquely identifies the customer''s relationship with the product, maintaining immutability rules within the transmitting institution'
+      in: path
+      schema:
+        type: string
+      required: true
+      
