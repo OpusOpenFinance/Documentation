@@ -5,9 +5,9 @@ parent: "Opus Open Finance"
 nav_order: 5
 lang: "pt-br"
 alternate_lang:
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/ConsentCompart/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/consentimentoCompartilhado/index/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/ConsentCompart/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/consentimentoCompartilhado/index/"
       lang: "es"
 ---
 
@@ -17,9 +17,9 @@ A solução de **consentimento compartilhado** no contexto do Open Finance refer
 
 Nossa solução foi desenvolvida para facilitar a adesão ao Open Finance Brasil, atendendo às exigências regulatórias de forma eficiente. Aqui, você encontrará guias que explicam, de maneira simples, os benefícios de usar nossa solução e o que é necessário ser desenvolvido por sua equipe.
 
-![Jornada da Experiência de Compartilhamento de Dados, Pagamentos e Vínculos](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/images/Diagrama-Webview-Transmissao.png)
+![Jornada da Experiência de Compartilhamento de Dados, Pagamentos e Vínculos](./anexos/imagens/index-diagramaWebviewTransmissao.png)
 
-![Jornada de Recepção de Dados](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/images/Diagrama-Webview-Recepcao.png)
+![Jornada de Recepção de Dados](./anexos/imagens/index-diagramaWebviewRecepcao.png)
 
 ---
 

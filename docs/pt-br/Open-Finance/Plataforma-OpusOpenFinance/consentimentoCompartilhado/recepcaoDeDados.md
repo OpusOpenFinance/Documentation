@@ -5,9 +5,9 @@ parent: "Consentimento Compartilhado"
 nav_order: 3
 lang: "pt-br"
 alternate_lang: 
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Recepção/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/consentimentoCompartilhado/recepcaoDeDados/"
       lang: "en"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Recepção/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/consentimentoCompartilhado/recepcaoDeDados/"
       lang: "es"
 ---
 
@@ -51,7 +51,7 @@ Nosso objetivo é assegurar que, ao longo de toda a jornada de Open Finance, os 
 
 ### Telas de Solicitação e Efetivação de Consentimento
 
-**Observação:** As telas apresentadas nesta seção estão contidas no [Guia de Experiência do Usuário](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio), Item 02 (Compartilhamento de dados) -> 2.1: Jornada Básica, composta pelas etapas:
+**Observação:** As telas apresentadas nesta seção estão contidas no [Guia de Experiência do Usuário](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil), Item 02 (Compartilhamento de dados) -> 2.1: Jornada Básica, composta pelas etapas:
 
 - 1: Consentimento Instituição Receptora;
 - 2: Redirecionamento Instituição Receptora para Instituição Transmissora;
@@ -61,19 +61,19 @@ Nosso objetivo é assegurar que, ao longo de toda a jornada de Open Finance, os 
 
 O usuário pode selecionar a instituição de origem e revisar as informações do consentimento de Recepção de dados de dados, disparando o redirecionamento para a Instituição Transmissora. A tela mostra os dados autorizados e as finalidades.
 
-![Tela de Solicitação do Consentimento](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela1-SolicitConsent.png)
+![Tela de Solicitação do Consentimento](./anexos/imagens/recepcaoDeDados/tela1SolicitConsent.png)
 
 #### Tela 2: Redirecionamento para a Instituição Transmissora
 
 Informa ao usuário seu redirecionamento da Instituição Receptora (onde o processo foi iniciado) para a Instituição Transmissora. Lá, ele deve autenticar-se e aceitar o consentimento.
 
-![Tela de Redirecionamento para a Instituição Transmissora](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela2-Redirect.png)
+![Tela de Redirecionamento para a Instituição Transmissora](./anexos/imagens/recepcaoDeDados/tela2Redirect.png)
 
 #### Tela 3: Efetivação da Solicitação
 
 Após o consentimento ser aceito na Instituição Transmissora, o usuário é redirecionado novamente para a Instituição Receptora dos dados, exibindo as informações do consentimento efetivado.
 
-![Tela de Efetivação da Solicitação](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela3-EfetivSoluc.png)
+![Tela de Efetivação da Solicitação](./anexos/imagens/recepcaoDeDados/tela3EfetivSoluc.png)
 
 ---
 
@@ -91,7 +91,7 @@ Os dados necessários das marcas são:
 
 | Campo                    | Descrição                                                       | Responsável         | Exemplo                    |
 |:------------------------:|:---------------------------------------------------------------:|:-------------------:|:--------------------------:|
-| brandId                  | CNPJ da marca                                                   | Instituição Cliente | *28811839000129*             |
+| brandId                  | CNPJ da marca                                                   | Instituição Cliente | *28811839000129*           |
 | authorisationServerUrl   | Endereço base da instalação do OOB da marca                     | Instituição Cliente | *https://authorization-server.com.br* |
 | URL de callback          | Url padrão onde a marca será chamada quando o fluxo sair da Instituição Transmissora e voltar para ela | Instituição Cliente | *https://shared-consent.instituicao-cliente.tech/marca/callback* |
 | URL de fim de fluxo      | Url para qual o usuário será redirecionado em caso de sessão expirada ou erros. A marca pode redirecionar o usuário para a home ou interceptar a URL e realizar alguma tratativa de erro, como fechar o app.                    | Marca               | *https://marca.com.br/home* |
@@ -125,14 +125,14 @@ O JWT deve conter as seguintes claims:
 
 | Claim        | Descrição                                                                         | Obrigatoriedade | Detalhes                         |
 |:------------:|:---------------------------------------------------------------------------------:|:---------------:|:--------------------------------:|
-| jti          | Identificador único do token                                                      | Obrigatório     |                                  |
+| jti          | Identificador único do token                                                      | Obrigatório     | --                               |
 | iat          | Data de emissão do token no formato unix epoch                                    | Obrigatório     | O emissor deve ter seu relógio sincronizado, dado que essa claim será usada para calcular a expiração do token |
-| brandId      | O identificador da marca a qual a autenticação pertence                           | Obrigatório     |                                  |
-| name         | Nome do cliente autenticado                                                       | Obrigatório     |                                  |
-| companyName  | Razão Social do CNPJ                                                              | Obrigatório apenas para cliente PJ |               |
-| cpf          | CPF do cliente autenticado                                                        | Obrigatório     |                                  |
-| cnpj         | CNPJ do cliente autenticado                                                       | Obrigatório apenas para cliente PJ |               |
-| accountIds   | Lista de contas a serem filtradas pelo conector                                   |                 |                                  |
+| brandId      | O identificador da marca a qual a autenticação pertence                           | Obrigatório     | --                               |
+| name         | Nome do cliente autenticado                                                       | Obrigatório     | --                               |
+| companyName  | Razão Social do CNPJ                                                              | Obrigatório apenas para cliente PJ | --            |
+| cpf          | CPF do cliente autenticado                                                        | Obrigatório     | --                               |
+| cnpj         | CNPJ do cliente autenticado                                                       | Obrigatório apenas para cliente PJ | --            |
+| accountIds   | Lista de contas a serem filtradas pelo conector                                   | --              | --                               |
 
 Exemplo:
 
