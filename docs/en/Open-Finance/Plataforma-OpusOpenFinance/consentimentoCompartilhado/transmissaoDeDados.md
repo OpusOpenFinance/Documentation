@@ -5,9 +5,9 @@ parent: "Shared Consent"
 nav_order: 2
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Transmissão/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/consentimentoCompartilhado/transmissaoDeDados/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Transmissão/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/consentimentoCompartilhado/transmissaoDeDados/"
       lang: "es"
 ---
 
@@ -61,7 +61,7 @@ After user authentication, they will have access to the described screens:
 
 ### Consent Acceptance Screens
 
-**Note:** The screens presented in this section are contained in the User Experience Guide, Item 02 (Data Sharing), Item 03 (Payment Initiation), Item 04 (Alternative Payment Initiation Journeys – Non-Redirected Journey – Step 3). More details in the [link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio).
+**Note:** The screens presented in this section are contained in the User Experience Guide, Item 02 (Data Sharing), Item 03 (Payment Initiation), Item 04 (Alternative Payment Initiation Journeys – Non-Redirected Journey – Step 3). More details in [the link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
 
 These screens are associated with the user's identity confirmation and consent process, ensuring that the client has control over their permissions in Open Finance. Below are the screens that are part of this stage:
 
@@ -69,19 +69,19 @@ These screens are associated with the user's identity confirmation and consent p
 
 - The user can review the data sharing, payments, and account linkages consent before finalizing the process. The screen shows authorized data and purposes.
 
-![Consent Review Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela1-RevisaoConsent.png)
+![Consent Review Screen](./anexos/imagens/transmissaoDeDados/en-tela1RevisaoConsent.png)
 
 #### Screen 2: Consent Confirmation
 
 - Notifies the user of the information collected in the previous step, detailing the permissions granted and providing a summary of what is being authorized.
 
-![Consent Confirmation Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela2-ConfirmConsent.png)
+![Consent Confirmation Screen](./anexos/imagens/transmissaoDeDados/en-tela2ConfirmConsent.png)
 
 #### Screen 3: Handoff
 
 Informs the user that their journey should continue through the client app, presenting a QR Code to be scanned by the mobile camera. This screen will only be displayed for clients who only have the app option without internet banking.
 
-![Handoff Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela3-Handoff.png)
+![Handoff Screen](./anexos/imagens/transmissaoDeDados/en-tela3Handoff.png)
 
 These screens were designed to provide a secure and friendly experience where the user has full control over their permissions and linkages in Open Finance.
 
@@ -160,7 +160,7 @@ Another case that needs URL interception handling is the redirect return to the 
 
 Below is an implementation example in Kotlin:
 
-![Implementation in Kotlin](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/ImplementacaoKotlin.png)
+![Implementation in Kotlin](./anexos/imagens/transmissaoDeDados/en-implementacaoKotlin.png)
 
 #### App Implementation Checklist
 
@@ -273,18 +273,18 @@ eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKj
 
 The JWT must contain the following claims:
 
-| Claim            | Description                                               | Requirement | Details                                          |
-|:----------------:|:-------------------------------------------------------:|:---------------:|:-------------------------------------------------:|
-| jti              | Unique token identifier                            | Mandatory     |                                                   |
-| iat              | Token issuance date in unix epoch format          | Mandatory     | The issuer's clock must be synchronized as this claim will be used to calculate token expiry |
-| authenticationId | The ID sent in the authentication page POST      | Mandatory only for consent authentications |            |
-| brandId          | The identifier of the brand to which the authentication belongs | Mandatory     |                                                   |
-| name             | Name of the authenticated client                             |                 |                                                   |
-| cpf              |  CPF of the authenticated client                              | Mandatory     |                                                   |
-| cnpj             | CNPJ of the authenticated client                             | Mandatory only for legal entity clients |                                |
-| refused          | Boolean indicating whether the authentication was refused by the brand. Defaults to false if not sent |                                     |                                                   |
-| deviceId         | Device identifier                            |                 |                                                   |
-| accountIds       | List of accounts to be filtered by the connector         |                 |                                                   |
+| Claim | Description | Requirement | Details |
+|:-----:|:-----------:|:---------------:|:-------:|
+| jti | Unique token identifier | Mandatory | -- |
+| iat | Token issuance date in unix epoch format | Mandatory | The issuer's clock must be synchronized as this claim will be used to calculate token expiry |
+| authenticationId | The ID sent in the authentication page POST | Mandatory only for consent authentications | -- |
+| brandId | The identifier of the brand to which the authentication belongs | Mandatory | -- |
+| name | Name of the authenticated client | -- | |
+| cpf | CPF of the authenticated client | Mandatory | -- |
+| cnpj | CNPJ of the authenticated client | Mandatory only for legal entity clients | -- |
+| refused | Boolean indicating whether the authentication was refused by the brand. Defaults to false if not sent | -- | -- |
+| deviceId | Device identifier | -- | -- |
+| accountIds | List of accounts to be filtered by the connector | -- | -- |
 
 In addition to these, other claims required for the transaction password screen can be added, provided they are within the "*customClaims*" object.
 

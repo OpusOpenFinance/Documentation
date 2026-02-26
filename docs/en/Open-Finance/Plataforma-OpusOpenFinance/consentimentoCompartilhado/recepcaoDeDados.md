@@ -5,9 +5,9 @@ parent: "Shared Consent"
 nav_order: 3
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Recepção/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/consentimentoCompartilhado/recepcaoDeDados/"
       lang: "pt-br"
-    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Recepção/"
+    - path: "/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/consentimentoCompartilhado/recepcaoDeDados/"
       lang: "es"
 ---
 
@@ -55,7 +55,7 @@ This guide contains descriptions of the developed screens, organized into:
 
 ### Data Reception Consent Request and Effectuation Screens
 
-**Note:** The screens presented in this section are contained in the [User Experience Guide](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio), Item 02 (Compartilhamento de dados) -> 2.1: Jornada Básica, composed of the stages:
+**Note:** The screens presented in this section are contained in the [User Experience Guide](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil), Item 02 (Compartilhamento de dados) -> 2.1: Jornada Básica, composed of the stages:
 
 - 1: Consentimento Instituição Receptora (Receiving Institution Consent);
 - 2: Redirecionamento Instituição Receptora para Instituição Transmissora (Redirection from Receiving to Transmitting Institution);
@@ -65,19 +65,19 @@ This guide contains descriptions of the developed screens, organized into:
 
 The user can select the origin institution and review the Data Reception consent information, triggering the redirection to the Transmitting Institution. The screen shows authorized data and purposes.
 
-![Consent Request Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela1-SolicitConsent.png)
+![Consent Request Screen](./anexos/imagens/recepcaoDeDados/en-tela1SolicitConsent.png)
 
 #### Screen 2: Redirection to Transmitting Institution
 
 Informs the user about the redirection from the Receiving Institution (where the process was initiated) to the Transmitting Institution. There, the user must authenticate and accept the consent.
 
-![Redirection to Transmitting Institution Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela2-Redirect.png)
+![Redirection to Transmitting Institution Screen](./anexos/imagens/recepcaoDeDados/en-tela2Redirect.png)
 
 #### Screen 3: Request Effectuation
 
 After the consent is accepted at the Transmitting Institution, the user is redirected again to the Receiving Institution, displaying the information of the effectuated consent.
 
-![Request Effectuation Screen](/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela3-EfetivSoluc.png)
+![Request Effectuation Screen](./anexos/imagens/recepcaoDeDados/en-tela3EfetivSoluc.png)
 
 ---
 
@@ -127,16 +127,16 @@ This pair of signature keys is the responsibility of the Client Institution, whi
 
 The JWT must contain the following claims:
 
-| Claim        | Description                                                                         | Requirement | Details                         |
-|:------------:|:---------------------------------------------------------------------------------:|:---------------:|:--------------------------------:|
-| jti          | Unique token identifier                                                      | Mandatory     |                                  |
-| iat          | Token issuance date in unix epoch format                                    | Mandatory     | The issuer's clock must be synchronized as this claim will be used to calculate token expiry |
-| brandId      | Identifier of the brand to which the authentication belongs                           | Mandatory     |                                  |
-| name         | Name of the authenticated client                                                       | Mandatory     |                                  |
-| companyName  | Corporate Name of the CNPJ                                                              | Mandatory only for legal entity clients |               |
-| cpf          | CPF of the authenticated client                                                        | Mandatory     |                                  |
-| cnpj         | CNPJ of the authenticated client                                                       | Mandatory only for legal entity clients |               |
-| accountIds   | List of accounts to be filtered by the connector                                   |                 |                                  |
+| Claim | Description | Requirement     | Details |
+|:-----:|:-----------:|:---------------:|:-------:|
+| jti | Unique token identifier | Mandatory | -- |
+| iat | Token issuance date in unix epoch format | Mandatory | The issuer's clock must be synchronized as this claim will be used to calculate token expiry |
+| brandId | Identifier of the brand to which the authentication belongs | Mandatory | -- |
+| name | Name of the authenticated client | Mandatory | -- |
+| companyName | Corporate Name of the CNPJ | Mandatory only for legal entity clients | -- |
+| cpf | CPF of the authenticated client | Mandatory | -- |
+| cnpj | CNPJ of the authenticated client | Mandatory only for legal entity clients | |
+| accountIds | List of accounts to be filtered by the connector | -- | -- |
 
 Example:
 
@@ -269,4 +269,4 @@ Content-Length: *
 eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKjFAmJ2bVDOqyCdFO1Q_bwKZ1qAcvF8AhVdg424QjTDdVeP0iBANQKvMc0p2IIEnumDL-... 
 ```
 
-Como resposta a marca deve receber uma URL para qual deve redirecionar o cliente.
+In response, the brand should receive a URL to which it should redirect the customer.
