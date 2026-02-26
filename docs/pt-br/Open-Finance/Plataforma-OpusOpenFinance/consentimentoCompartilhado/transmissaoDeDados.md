@@ -61,7 +61,7 @@ Após a autenticação do usuário, este terá acesso as telas descritas:
 
 ### Telas de Aceite de Consentimento
 
-**Observação:** As telas apresentadas nesta seção estão contidas no Guia de Experiência do Usuário, Item 02 (Compartilhamento de dados), Item 03 (Iniciação de pagamentos), Item 04 (Jornadas alternativas de iniciação de pagamento – Jornada sem Redirecionamento – Etapa 3). Mais detalhes no [link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
+**Observação:** As telas apresentadas nesta seção estão contidas no Guia de Experiência do Usuário, Item 02 (Compartilhamento de dados), Item 03 (Iniciação de pagamentos), Item 04 (Jornadas alternativas de iniciação de pagamento – Jornada sem Redirecionamento – Etapa 3). Mais detalhes [no link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
 
 Essas telas estão associadas ao processo de confirmação de identidade do usuário e de consentimento, garantindo que o cliente tenha controle sobre suas permissões no Open Finance. Abaixo estão as telas que fazem parte dessa etapa:
 
@@ -272,18 +272,18 @@ eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKj
 
 O JWT deve conter as seguintes *claims*:
 
-| Claim            | Descrição                                               | Obrigatoriedade | Detalhes                                          |
-|:----------------:|:-------------------------------------------------------:|:---------------:|:-------------------------------------------------:|
-| jti              | Identificador único do token                            | Obrigatório     | --                                                |
-| iat              | Data de emissão do token no formato unix epoch          | Obrigatório     | O emissor deve ter seu relógio sincronizado, dado que essa claim será usada para calcular a expiração do token |
-| authenticationId | O id enviado no POST para a página de autenticação      | Obrigatório apenas para autenticação de consentimentos | --         |
-| brandId          | O identificador da marca a qual a autenticação pertence | Obrigatório     | --                                                |
-| name             | Nome do cliente autenticado                             | --              | --                                                |
-| cpf              | CPF do cliente autenticado                              | Obrigatório     | --                                                |
-| cnpj             | CNPJ do cliente autenticado                             | Obrigatório apenas para cliente PJ | --                             |
-| refused          | Variável booleana que indica se a autenticação foi recusada pela marca. Ela também serve para casos negativos como a senha ou usuário incorreto. Será considerado o valor padrão false se não for enviada | --                                  | --                                                |
-| deviceId         | Identificador do dispositivo                            | --              | --                                                |
-| accountIds       | Lista de contas a serem filtradas pelo conector         | --              | --                                                |
+| Claim | Descrição | Obrigatoriedade | Detalhes |
+| :---: | :-------: | :-------------: | :------: |
+| jti | Identificador único do token | Obrigatório | -- |
+| iat | Data de emissão do token no formato unix epoch | Obrigatório | O emissor deve ter seu relógio sincronizado, dado que essa claim será usada para calcular a expiração do token |
+| authenticationId | O id enviado no POST para a página de autenticação | Obrigatório apenas para autenticação de consentimentos | -- |
+| brandId | O identificador da marca a qual a autenticação pertence | Obrigatório | -- |
+| name | Nome do cliente autenticado | -- | -- |
+| cpf | CPF do cliente autenticado | Obrigatório | -- |
+| cnpj | CNPJ do cliente autenticado | Obrigatório apenas para cliente PJ | -- |
+| refused | Variável booleana que indica se a autenticação foi recusada pela marca. Ela também serve para casos negativos como a senha ou usuário incorreto. Será considerado o valor padrão false se não for enviada | -- | -- |
+| deviceId | Identificador do dispositivo | -- | -- |
+| accountIds | Lista de contas a serem filtradas pelo conector | -- | -- |
 
 Além dessas informações, também é permitido adicionar outras claims que sejam necessárias para a tela de senha de transação, contanto que elas estejam dentro do objeto “*customClaims*”.
 

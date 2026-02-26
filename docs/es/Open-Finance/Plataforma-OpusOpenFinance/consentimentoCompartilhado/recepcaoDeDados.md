@@ -5,9 +5,9 @@ parent: "Consentimiento Compartido"
 nav_order: 3
 lang: "es"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Recepção/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/consentimentoCompartilhado/recepcaoDeDados/"
       lang: "pt-br"
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Recepção/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/consentimentoCompartilhado/recepcaoDeDados/"
       lang: "en"
 ---
 
@@ -17,7 +17,7 @@ Nuestra solución de consentimiento compartido fue desarrollada para facilitar l
 
 ---
 
-## Ítems resueltos por nuestra solución
+## Elementos resueltos por nuestra solución
 
 Aquí están los principales elementos que nuestra solución ofrece:
 
@@ -51,7 +51,7 @@ Nuestro objetivo es asegurar que, a lo largo de toda la jornada de Open Finance,
 
 ### Pantallas de Solicitud y Efectivización de Consentimiento
 
-**Observación:** Las pantallas presentadas en esta sección están contenidas en la [Guía de Experiencia del Usuario](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio), Ítem 02 (Compartilhamento de dados) -> 2.1: Jornada Básica, compuesta por las etapas:
+**Observación:** Las pantallas presentadas en esta sección están contenidas en la [Guía de Experiencia del Usuario](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil), Ítem 02 (Compartilhamento de dados) -> 2.1: Jornada Básica, compuesta por las etapas:
 
 - 1: Consentimiento Institución Receptora;
 - 2: Redirección Institución Receptora a Institución Transmisora;
@@ -61,19 +61,19 @@ Nuestro objetivo es asegurar que, a lo largo de toda la jornada de Open Finance,
 
 El usuario puede seleccionar la institución de origen y revisar la información del consentimiento de recepción de datos, disparando la redirección a la Institución Transmisora. La pantalla muestra los datos autorizados y las finalidades.
 
-![Pantalla de Solicitud del Consentimiento](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela1-SolicitConsent.png)
+![Pantalla de Solicitud del Consentimiento](./anexos/imagens/recepcaoDeDados/es-tela1SolicitConsent.png)
 
 #### Pantalla 2: Redirección a la Institución Transmisora
 
 Informa al usuario sobre su redirección de la Institución Receptora (donde el proceso fue iniciado) a la Institución Transmisora. Allí, debe autenticarse y aceptar el consentimiento.
 
-![Pantalla de Redirección a la Institución Transmisora](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela2-Redirect.png)
+![Pantalla de Redirección a la Institución Transmisora](./anexos/imagens/recepcaoDeDados/es-tela2Redirect.png)
 
 #### Pantalla 3: Efectivización de la Solicitud
 
 Después de que el consentimiento sea aceptado en la Institución Transmisora, el usuario es redirigido nuevamente a la Institución Receptora de los datos, mostrando la información del consentimiento efectivado.
 
-![Pantalla de Efectivización de la Solicitud](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/RecepcaoDeDados/images/Tela3-EfetivSoluc.png)
+![Pantalla de Efectivización de la Solicitud](./anexos/imagens/recepcaoDeDados/es-tela3EfetivSoluc.png)
 
 ---
 
@@ -89,15 +89,15 @@ Además, se necesitarán claves de firma y cifrado para el flujo seguro de comun
 
 Los datos necesarios de las marcas son:
 
-| Campo                    | Descripción                                                    | Responsable         | Ejemplo                    |
-|:------------------------:|:--------------------------------------------------------------:|:-------------------:|:--------------------------:|
-| brandId                  | CNPJ de la marca                                               | Institución Cliente | *28811839000129*             |
-| authorisationServerUrl   | Dirección base de la instalación del OOB de la marca           | Institución Cliente | *https://authorization-server.com.br* |
-| URL de callback          | URL predeterminada donde la marca será llamada cuando el flujo salga de la Institución Transmisora y vuelva a ella | Institución Cliente | *https://shared-consent.instituicao-cliente.tech/marca/callback* |
-| URL de fin de flujo      | URL a la que el usuario será redirigido en caso de sesión expirada o errores. La marca puede redirigir al usuario a la página de inicio o interceptar la URL y realizar alguna acción de error, como cerrar la app.                    | Marca               | *https://marca.com.br/home* |
-| isAppOnly                | Booleano que indica si la marca solo tiene aplicación          | Marca               | false                      |
-| assetLinksUrl            | URL pública con el contenido de assetlinks.json                | Marca               | *https://marca.com.br/assentlinks* |
-| appleAppSiteUrl          | URL pública con el contenido de apple-app-site-association     | Marca               | *https://marca.com.br/appleappsite* |
+| Campo | Descripción | Responsable | Ejemplo |
+| :---: | :---------: | :---------: | :-----: |
+| brandId | CNPJ de la marca | Institución Cliente | *28811839000129* |
+| authorisationServerUrl | Dirección base de la instalación del OOB de la marca | Institución Cliente | *https://authorization-server.com.br* |
+| URL de callback | URL predeterminada donde la marca será llamada cuando el flujo salga de la Institución Transmisora y vuelva a ella | Institución Cliente | *https://shared-consent.instituicao-cliente.tech/marca/callback* |
+| URL de fin de flujo | URL a la que el usuario será redirigido en caso de sesión expirada o errores. La marca puede redirigir al usuario a la página de inicio o interceptar la URL y realizar alguna acción de error, como cerrar la app. | Marca | *https://marca.com.br/home* |
+| isAppOnly | Booleano que indica si la marca solo tiene aplicación | Marca | false |
+| assetLinksUrl | URL pública con el contenido de assetlinks.json | Marca | *https://marca.com.br/assentlinks* |
+| appleAppSiteUrl | URL pública con el contenido de apple-app-site-association | Marca | *https://marca.com.br/appleappsite* |
 
 #### Claves
 
@@ -123,16 +123,16 @@ Ese par de claves de firma está bajo la responsabilidad de la Institución Clie
 
 El JWT debe contener las siguientes claims (afirmaciones):
 
-| Claim        | Descripción                                                                         | Obligatorio | Detalles                         |
-|:------------:|:---------------------------------------------------------------------------------:|:---------------:|:--------------------------------:|
-| jti          | Identificador único del token                                                      | Obligatorio     |                                  |
-| iat          | Fecha de emisión del token en formato unix epoch                                    | Obligatorio     | El emisor debe tener su reloj sincronizado, dado que esta claim será usada para calcular la expiración del token |
-| brandId      | 	El identificador de la marca a la cual la autenticación pertenece                           | Obligatorio     |                                  |
-| name         | Nombre del cliente autenticado                                                       | Obligatorio     |                                  |
-| companyName  | Razón Social del CNPJ                                                              | Obligatorio solo para cliente PJ |               |
-| cpf          | CPF del cliente autenticado                                                        | Obligatorio     |                                  |
-| cnpj         | CNPJ del cliente autenticado                                                       | Obligatorio solo para cliente PJ |               |
-| accountIds   | Lista de cuentas a ser filtradas por el conector                                   |                 |                                  |
+| Claim | Descripción | Obligatorio | Detalles |
+| :---: | :---------: | :---------: | :------: |
+| jti | Identificador único del token | Obligatorio | -- |
+| iat | Fecha de emisión del token en formato unix epoch | Obligatorio | El emisor debe tener su reloj sincronizado, dado que esta claim será usada para calcular la expiración del token |
+| brandId | El identificador de la marca a la cual la autenticación pertenece | Obligatorio | -- |
+| name | Nombre del cliente autenticado | Obligatorio | -- |
+| companyName | Razón Social del CNPJ | Obligatorio solo para cliente PJ | -- |
+| cpf | CPF del cliente autenticado | Obligatorio | -- |
+| cnpj | CNPJ del cliente autenticado | Obligatorio solo para cliente PJ | -- |
+| accountIds | Lista de cuentas a ser filtradas por el conector | -- | -- |
 
 Ejemplo:
 

@@ -93,15 +93,15 @@ Additionally, signature and encryption keys will be required for secure communic
 
 The necessary data for brands are:
 
-| Field                   | Description                                                 | Responsible          | Example                                          |
-|:-----------------------:|:-----------------------------------------------------------:|:--------------------:|:------------------------------------------------:|
-| brandId                 | Brand CNPJ                                                 | Client Institution   | *28811839000129*                                 |
-| authorisationServerUrl  | Base address of the brand's OOB installation               | Client Institution   | *https://authorization-server.com*            |
-| Callback URL            | Default URL where the brand will be called when the flow exits the Transmitting Institution and returns to it | Client Institution | *https://shared-consent.institution.tech/brand/callback* |
-| End of Flow URL         | URL to which the user will be redirected in case of expired session or errors. The brand can redirect the user to the homepage or intercept the URL and handle an error, like closing the app. | Brand                | *https://brand.com/home*                     |
-| isAppOnly               | Boolean indicating if the brand only has an app            | Brand                | false                                             |
-| assetLinksUrl           | Public URL with the content of assetlinks.json             | Brand                | *https://brand.com/assentlinks*               |
-| appleAppSiteUrl         | Public URL with the content of apple-app-site-association  | Brand                | *https://brand.com/appleappsite*              |
+| Field | Description | Responsible | Example |
+| :---: | :---------: | :---------: | :-----: |
+| brandId | Brand CNPJ | Client Institution | *28811839000129* |
+| authorisationServerUrl | Base address of the brand's OOB installation | Client Institution | *https://authorization-server.com* |
+| Callback URL | Default URL where the brand will be called when the flow exits the Transmitting Institution and returns to it | Client Institution | *https://shared-consent.institution.tech/brand/callback* |
+| End of Flow URL | URL to which the user will be redirected in case of expired session or errors. The brand can redirect the user to the homepage or intercept the URL and handle an error, like closing the app. | Brand | *https://brand.com/home* |
+| isAppOnly | Boolean indicating if the brand only has an app | Brand | false |
+| assetLinksUrl | Public URL with the content of assetlinks.json | Brand | *https://brand.com/assentlinks* |
+| appleAppSiteUrl | Public URL with the content of apple-app-site-association | Brand | *https://brand.com/appleappsite* |
 
 #### Keys
 
@@ -127,8 +127,8 @@ This pair of signature keys is the responsibility of the Client Institution, whi
 
 The JWT must contain the following claims:
 
-| Claim | Description | Requirement     | Details |
-|:-----:|:-----------:|:---------------:|:-------:|
+| Claim | Description | Requirement | Details |
+| :---: | :---------: | :---------: | :-----: |
 | jti | Unique token identifier | Mandatory | -- |
 | iat | Token issuance date in unix epoch format | Mandatory | The issuer's clock must be synchronized as this claim will be used to calculate token expiry |
 | brandId | Identifier of the brand to which the authentication belongs | Mandatory | -- |

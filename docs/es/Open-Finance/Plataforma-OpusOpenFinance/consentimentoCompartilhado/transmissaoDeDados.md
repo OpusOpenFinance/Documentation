@@ -5,9 +5,9 @@ parent: "Consentimiento Compartido"
 nav_order: 2
 lang: "es"
 alternate_lang:
-    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Transmissão/"
+    - path: "/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/consentimentoCompartilhado/transmissaoDeDados/"
       lang: "pt-br"
-    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/Consentimento-Compartilhado/Transmissão/"
+    - path: "/Documentation/en/Open-Finance/Plataforma-OpusOpenFinance/consentimentoCompartilhado/transmissaoDeDados/"
       lang: "en"
 ---
 
@@ -61,7 +61,7 @@ Tras la autenticación del usuario, este tendrá acceso a las pantallas descrita
 
 ### Pantallas de Aceptación de Consentimiento
 
-**Observación:** Las pantallas presentadas en esta sección están contenidas en la Guía de Experiencia del Usuario, Ítem 02 (Compartilhamento de dados), Ítem 03 (Iniciação de pagamentos), Ítem 04 (Jornadas alternativas de iniciação de pagamento – Jornada sem Redirecionamento – Etapa 3). Más detalles en el [enlace](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378535/Guia+de+Experi+ncia+do+Usu+rio).
+**Observación:** Las pantallas presentadas en esta sección están contenidas en la Guía de Experiencia del Usuario, Ítem 02 (Compartilhamento de dados), Ítem 03 (Iniciação de pagamentos), Ítem 04 (Jornadas alternativas de iniciação de pagamento – Jornada sem Redirecionamento – Etapa 3). Más detalles en el [enlace](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
 
 Estas pantallas están asociadas al proceso de confirmación de identidad del usuario y de consentimiento, asegurando que el cliente tenga control sobre sus permisos en el Open Finance. A continuación se muestran las pantallas que forman parte de esta etapa:
 
@@ -69,19 +69,19 @@ Estas pantallas están asociadas al proceso de confirmación de identidad del us
 
 - El usuario puede revisar el consentimiento de compartición de datos, pagos y vínculos de cuentas antes de finalizar el proceso. La pantalla muestra los datos autorizados y las finalidades.
 
-![Pantalla de Revisión de Consentimiento](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela1-RevisaoConsent.png)
+![Pantalla de Revisión de Consentimiento](./anexos/imagens/transmissaoDeDados/es-tela1RevisaoConsent.png)
 
 #### Pantalla 2: Confirmación de Consentimiento
 
 - Informa al usuario la información recopilada en la etapa anterior, detallando los permisos concedidos y proporcionando un resumen de lo que se está autorizando.
 
-![Pantalla de Confirmación de Consentimiento](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela2-ConfirmConsent.png)
+![Pantalla de Confirmación de Consentimiento](./anexos/imagens/transmissaoDeDados/es-tela2ConfirmConsent.png)
 
 #### Pantalla 3: Handoff  
 
 - Informa al usuario que su jornada deberá seguir por la app del cliente, presentando un QRCode que debe ser escaneado por la cámara del celular. Esta pantalla será exhibida solo para clientes que solo posean la opción app, sin internet banking.
 
-![Pantalla de Handoff](/Documentation/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/Tela3-Handoff.png)
+![Pantalla de Handoff](./anexos/imagens/transmissaoDeDados/es-tela3Handoff.png)
 
 Estas pantallas fueron diseñadas para proporcionar una experiencia segura y amigable, donde el usuario tiene control total sobre sus permisos y vínculos en el Open Finance.
 
@@ -102,7 +102,7 @@ Además, se necesitarán claves de firma y de cifrado para el flujo seguro de la
 Los datos necesarios de las marcas son:
 
 | Campo | Descripción | Responsable | Ejemplo |
-|:-----:|:---------:|:-----------:|:-------:|
+| :---: | :---------: | :---------: | :-----: |
 | brandId | CNPJ de la marca | Opus | *28811839000129* |
 | authorisationServerUrl | Dirección base de la instalación de la OOB de la marca | Opus | *https://authorization-server.instituicao.com.br* |
 | authenticationBrandUrl | URL de login de la marca al cual será enviado el post de autenticación del cliente | Marca | *https://marca.instituicao.com.br/login* |
@@ -160,7 +160,7 @@ Otro caso que necesita ser tratado vía interceptación de URL es el redireccion
 
 A continuación, un ejemplo de implementación en Kotlin:
 
-![Implementación en Kotlin](/Documentation/es/Open-Finance/Plataforma-OpusOpenFinance/Consentimento_Compartilhado/TransmissaoDeDados/images/ImplementacaoKotlin.png)
+![Implementación en Kotlin](./anexos/imagens/transmissaoDeDados/es-implementacaoKotlin.png)
 
 #### Checklist de implementación APP
 
@@ -272,18 +272,18 @@ eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKj
 
 El JWT debe contener los siguientes claims:
 
-| Claim            | Descripción                                               | Obligatorio | Detalles                                          |
-|:----------------:|:-------------------------------------------------------:|:---------------:|:-------------------------------------------------:|
-| jti              | Identificador único del token                            | Obligatorio     |                                                   |
-| iat              | Data de emissão do token no formato unix epoch          | Obligatorio     | El emisor debe tener su reloj sincronizado, dado que esta claim será usada para calcular la expiración del token |
-| authenticationId | El id enviado en el POST para la página de autenticación      | Obligatorio solo para autenticación de consentimientos |            |
-| brandId          | El identificador de la marca a la cual la autenticación pertenece | Obligatorio     |                                                   |
-| name             | Nombre del cliente autenticado                             |                 |                                                   |
-| cpf              | CPF del cliente autenticado                              | Obligatorio     |                                                   |
-| cnpj             | CNPJ del cliente autenticado                             | Obligatorio solo para cliente PJ |                                |
-| refused          | Variable booleana que indica si la autenticación fue rechazada por la marca. También sirve para casos negativos como la contraseña o usuario incorrecto. Se considerará el valor predeterminado false si no se envía |                                     |                                                   |
-| deviceId         | Identificador del dispositivo                            |                 |                                                   |
-| accountIds       | Lista de cuentas a ser filtradas por el conector         |                 |                                                   |
+| Claim | Descripción | Obligatorio | Detalles |
+| :---: | :---------: | :---------: | :------: |
+| jti | Identificador único del token | Obligatorio | -- |
+| iat | Data de emissão do token no formato unix epoch | Obligatorio | El emisor debe tener su reloj sincronizado, dado que esta claim será usada para calcular la expiración del token |
+| authenticationId | El id enviado en el POST para la página de autenticación | Obligatorio solo para autenticación de consentimientos | -- |
+| brandId | El identificador de la marca a la cual la autenticación pertenece | Obligatorio | -- |
+| name | Nombre del cliente autenticado | -- | -- |
+| cpf | CPF del cliente autenticado | Obligatorio | -- |
+| cnpj | CNPJ del cliente autenticado | Obligatorio solo para cliente PJ | -- |
+| refused | Variable booleana que indica si la autenticación fue rechazada por la marca. También sirve para casos negativos como la contraseña o usuario incorrecto. Se considerará el valor predeterminado false si no se envía | -- | -- |
+| deviceId | Identificador del dispositivo | -- | -- |
+| accountIds | Lista de cuentas a ser filtradas por el conector | -- | -- |
 
 Además de esta información, también está permitido agregar otras claims que sean necesarias para la pantalla de contraseña de transacción, siempre que estén dentro del objeto “customClaims”.
 

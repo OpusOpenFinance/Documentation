@@ -102,7 +102,7 @@ In addition, signature and encryption keys will be required for secure communica
 The necessary data for brands are:
 
 | Field | Description | Responsible | Example |
-|:-----:|:-----------:|:-----------:|:-------:|
+| :---: | :---------: | :---------: | :-----: |
 | brandId | Local ID | Opus | *28811839000129* |
 | authorisationServerUrl | Brand's OOB installation base address | Opus | *https://authorization-server.institution.com.br* |
 | authenticationBrandUrl | Brand login URL to which the client authentication post will be sent | Brand | *https://brand.institution.com/login* |
@@ -274,7 +274,7 @@ eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JbC9dCW4uXidMaiKj
 The JWT must contain the following claims:
 
 | Claim | Description | Requirement | Details |
-|:-----:|:-----------:|:---------------:|:-------:|
+| :---: | :---------: | :---------: | :-----: |
 | jti | Unique token identifier | Mandatory | -- |
 | iat | Token issuance date in unix epoch format | Mandatory | The issuer's clock must be synchronized as this claim will be used to calculate token expiry |
 | authenticationId | The ID sent in the authentication page POST | Mandatory only for consent authentications | -- |

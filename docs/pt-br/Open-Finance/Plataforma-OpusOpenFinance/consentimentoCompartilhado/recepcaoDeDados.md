@@ -89,15 +89,15 @@ Além disso, chaves de assinatura e de encriptação serão necessárias para o 
 
 Os dados necessários das marcas são:
 
-| Campo                    | Descrição                                                       | Responsável         | Exemplo                    |
-|:------------------------:|:---------------------------------------------------------------:|:-------------------:|:--------------------------:|
-| brandId                  | CNPJ da marca                                                   | Instituição Cliente | *28811839000129*           |
-| authorisationServerUrl   | Endereço base da instalação do OOB da marca                     | Instituição Cliente | *https://authorization-server.com.br* |
-| URL de callback          | Url padrão onde a marca será chamada quando o fluxo sair da Instituição Transmissora e voltar para ela | Instituição Cliente | *https://shared-consent.instituicao-cliente.tech/marca/callback* |
-| URL de fim de fluxo      | Url para qual o usuário será redirecionado em caso de sessão expirada ou erros. A marca pode redirecionar o usuário para a home ou interceptar a URL e realizar alguma tratativa de erro, como fechar o app.                    | Marca               | *https://marca.com.br/home* |
-| isAppOnly                | Booleana que indica se a marca só tem aplicativo                | Marca               | false                      |
-| assetLinksUrl            | Url pública com o conteúdo do assetlinks.json                   | Marca               | *https://marca.com.br/assentlinks* |
-| appleAppSiteUrl          | Url pública com o conteúdo do apple-app-site-association        | Marca               | *https://marca.com.br/appleappsite* |
+| Campo | Descrição | Responsável | Exemplo |
+| :---: | :-------: | :---------: | :-----: |
+| brandId | CNPJ da marca | Instituição Cliente | *28811839000129* |
+| authorisationServerUrl | Endereço base da instalação do OOB da marca | Instituição Cliente | *https://authorization-server.com.br* |
+| URL de callback | Url padrão onde a marca será chamada quando o fluxo sair da Instituição Transmissora e voltar para ela | Instituição Cliente | *https://shared-consent.instituicao-cliente.tech/marca/callback* |
+| URL de fim de fluxo | Url para qual o usuário será redirecionado em caso de sessão expirada ou erros. A marca pode redirecionar o usuário para a home ou interceptar a URL e realizar alguma tratativa de erro, como fechar o app. | Marca | *https://marca.com.br/home* |
+| isAppOnly | Booleana que indica se a marca só tem aplicativo | Marca | false |
+| assetLinksUrl | Url pública com o conteúdo do assetlinks.json | Marca | *https://marca.com.br/assentlinks* |
+| appleAppSiteUrl | Url pública com o conteúdo do apple-app-site-association | Marca | *https://marca.com.br/appleappsite* |
 
 #### Chaves
 
@@ -123,16 +123,16 @@ Esse par de chaves de assinatura fica a encargo da Instituição Cliente, que de
 
 O JWT deve conter as seguintes claims:
 
-| Claim        | Descrição                                                                         | Obrigatoriedade | Detalhes                         |
-|:------------:|:---------------------------------------------------------------------------------:|:---------------:|:--------------------------------:|
-| jti          | Identificador único do token                                                      | Obrigatório     | --                               |
-| iat          | Data de emissão do token no formato unix epoch                                    | Obrigatório     | O emissor deve ter seu relógio sincronizado, dado que essa claim será usada para calcular a expiração do token |
-| brandId      | O identificador da marca a qual a autenticação pertence                           | Obrigatório     | --                               |
-| name         | Nome do cliente autenticado                                                       | Obrigatório     | --                               |
-| companyName  | Razão Social do CNPJ                                                              | Obrigatório apenas para cliente PJ | --            |
-| cpf          | CPF do cliente autenticado                                                        | Obrigatório     | --                               |
-| cnpj         | CNPJ do cliente autenticado                                                       | Obrigatório apenas para cliente PJ | --            |
-| accountIds   | Lista de contas a serem filtradas pelo conector                                   | --              | --                               |
+| Claim | Descrição | Obrigatoriedade | Detalhes |
+| :---: | :-------: | :-------------: | :------: |
+| jti | Identificador único do token | Obrigatório | -- |
+| iat | Data de emissão do token no formato unix epoch | Obrigatório | O emissor deve ter seu relógio sincronizado, dado que essa claim será usada para calcular a expiração do token |
+| brandId | O identificador da marca a qual a autenticação pertence | Obrigatório | -- |
+| name | Nome do cliente autenticado | Obrigatório | -- |
+| companyName | Razão Social do CNPJ | Obrigatório apenas para cliente PJ | -- |
+| cpf | CPF do cliente autenticado | Obrigatório | -- |
+| cnpj | CNPJ do cliente autenticado | Obrigatório apenas para cliente PJ | -- |
+| accountIds | Lista de contas a serem filtradas pelo conector | -- | -- |
 
 Exemplo:
 

@@ -25,7 +25,7 @@ Após a autenticação do usuário, este terá acesso as telas descritas:
 
 ### Transmissão - Telas de Gestão (Item 05 - Área de Gestão)
 
-**Observação:** As telas apresentadas nesta seção estão contidas no Guia de Experiência do Usuário, Item 05 – Área de Gestão. Mais detalhes no [link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
+**Observação:** As telas apresentadas nesta seção estão contidas no Guia de Experiência do Usuário, Item 05 – Área de Gestão. Mais detalhes [no link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
 
 As telas de gestão são focadas no gerenciamento dos consentimentos do Open Finance. Essas telas fornecem ao usuário um controle claro e eficiente sobre seus compartilhamentos de dados, autorizações de pagamento e vínculos de contas.  
 
