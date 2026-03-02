@@ -17,47 +17,49 @@ window.onload = () => {
     // =====================================================
     // Open Finance Brasil
     // Perfis de Participação
-    "oas-receptor": `${base}/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPDados.yml`,
-    "oas-itp-pagamentos": `${base}/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentos.yml`,
-    "oas-itp-pagamentos-automaticos": `${base}/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentosAutomaticos.yml`,
-    "oas-back-dados": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/apis/oas-oof-dados.yml`,
-    "oas-pagamentos-jsr": `${base}/pt-br/Open-Finance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasPagamentosJSR.yaml`,
+    "oas-receptor": `${base}docs/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPDados.yml`,
+    "oas-itp-pagamentos": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentos.yml`,
+    "oas-itp-pagamentos-automaticos": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentosAutomaticos.yml`,
+    "oas-back-dados": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOOFDados.yml`,
+    "oas-pagamentos-jsr": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasPagamentosJSR.yaml`,
+    // Opus Open finance
     // Compartilhamento de Dados
-    "cambio": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/exchange-1-0-0.yml`,
-    "dados-cadastrais": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/customers-2-2-0.yml`,
-    "cartao-de-credito": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/creditCards-2-3-1.yml`,
-    "contas": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/accounts-2-4-1.yml`,
-    "opus-commons": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/opusCommons-1-0-0.yml`,
+    "cambio": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/exchange-1-0-0.yml`,
+    "dados-cadastrais": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/customers-2-2-0.yml`,
+    "cartao-de-credito": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/creditCards-2-3-1.yml`,
+    "contas": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/accounts-2-4-1.yml`,
+    "opus-commons": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/opusCommons-1-0-0.yml`,
     // Compartilhamento de Dados - Investimentos
-    "fundos-investimento": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/investimentos/funds.yml`,
-    "renda-fixa-bancaria": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/investimentos/bankFixedIncomes.yml`,
-    "renda-fixa-credito": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/investimentos/creditFixedIncomes.yml`,
-    "tesouro-direto": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/investimentos/treasuryBonds.yml`,
-    "renda-variavel": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/investimentos/variableIncomes.yml`,
+    "fundos-investimento": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/investimentos/funds.yml`,
+    "renda-fixa-bancaria": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/investimentos/bankFixedIncomes.yml`,
+    "renda-fixa-credito": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/investimentos/creditFixedIncomes.yml`,
+    "tesouro-direto": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/investimentos/treasuryBonds.yml`,
+    "renda-variavel": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/investimentos/variableIncomes.yml`,
     // Compartilhamento de Dados - Operações de Crédito
-    "emprestimos": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/loans-2-4-0.yml`,
-    "financiamentos": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/financings-2-3-0.yml`,
-    "adiantamentos": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/overdraft-2-4-0.yml`,
-    "direitos-creditorios": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/invoiceFinancings-2-3-0.yml`,
-    "payment-integration": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/anexos/yml/paymentIntegration-0.1.0.yml`,
+    "emprestimos": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/loans-2-4-0.yml`,
+    "financiamentos": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/financings-2-3-0.yml`,
+    "adiantamentos": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/overdraft-2-4-0.yml`,
+    "direitos-creditorios": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/invoiceFinancings-2-3-0.yml`,
+    // Pagamentos
+    "payment-integration": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/anexos/yml/paymentIntegration-0.1.0.yml`,
     // App e web
-    "mobile": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/anexos/yml/mobileWebapp2as.yml`,
+    "mobile": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/appEWeb/anexos/yml/mobileWebapp2as.yml`,
     // Dados Abertos
-    "open-data-acquiring": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-acquiringServices.yml`,
-    "open-data-accounts": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-accounts.yml`,
-    "open-data-capitalization": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-capitalizationBonds.yml`,
-    "open-data-channels": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-channels.yml`,
-    "open-data-credit-cards": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-creditCards.yml`,
-    "open-data-exchange": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-exchange.yml`,
-    "open-data-financings": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-financings.yml`,
-    "open-data-insurance": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-insurance.yml`,
-    "open-data-investments": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-investments.yml`,
-    "open-data-invoice-financings": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-invoiceFinancings.yml`,
-    "open-data-loans": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-loans.yml`,
-    "open-data-pension": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-pension.yml`,
-    "open-data-unarranged": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/dadosAbertos/anexos/yml/openData-unarrangedAccountOverdraft.yml`,
+    "open-data-acquiring": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-acquiringServices.yml`,
+    "open-data-accounts": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-accounts.yml`,
+    "open-data-capitalization": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-capitalizationBonds.yml`,
+    "open-data-channels": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-channels.yml`,
+    "open-data-credit-cards": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-creditCards.yml`,
+    "open-data-exchange": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-exchange.yml`,
+    "open-data-financings": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-financings.yml`,
+    "open-data-insurance": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-insurance.yml`,
+    "open-data-investments": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-investments.yml`,
+    "open-data-invoice-financings": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-invoiceFinancings.yml`,
+    "open-data-loans": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-loans.yml`,
+    "open-data-pension": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-pension.yml`,
+    "open-data-unarranged": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/dadosAbertos/anexos/yml/openData-unarrangedAccountOverdraft.yml`,
     //Portabilidade de Crédito
-    "portability": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/Integração/portabilidadeCredito/anexos/yml/portability.yml`,
+    "portability": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/portabilidadeCredito/anexos/yml/portability.yml`,
     // ODR
     "odr-setup": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/setup_oas.yml`,
     "odr-accounts": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/accounts_oas.yml`,
@@ -90,7 +92,6 @@ window.onload = () => {
     "en-contas": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/en-accounts-2-4-1.yml`,
     "en-cambio": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/en-exchange-1-0-0.yml`,
     "en-opus-commons": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/en-opusCommons-1-0-0.yml`,
-    "en-payment-integration": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/anexos/yml/en-paymentIntegration-0.1.0.yml`,
     // Compartilhamento de Dados - Investimentos
     "en-data-funds": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/investimentos/en-funds.yml`,
     "en-data-bank-fixed-incomes": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/investimentos/en-bankFixedIncomes.yml`,
@@ -102,6 +103,8 @@ window.onload = () => {
     "en-financiamentos": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/en-financings-2-3-0.yml`,
     "en-adiantamentos": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/en-overdraft-2-4-0.yml`,
     "en-direitos-creditorios": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/en-invoiceFinancings-2-3-0.yml`,
+    // Pagamentos
+    "en-payment-integration": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/anexos/yml/en-paymentIntegration-0.1.0.yml`,
     // App e web
     "en-mobile": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/anexos/yml/en-mobileWebapp2as.yml`,
     // Dados Abertos
@@ -163,6 +166,7 @@ window.onload = () => {
     "es-financiamentos": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/es-financings-2-3-0.yml`,
     "es-adiantamentos": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/es-overdraft-2-4-0.yml`,
     "es-direitos-creditorios": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/es-invoiceFinancings-2-3-0.yml`,
+    // Pagamentos
     "es-payment-integration": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/pagamentos/anexos/yml/es-paymentIntegration-0.1.0.yml`,
     // App e Web
     "es-mobile": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/Integração/appEWeb/anexos/yml/es-mobileWebapp2as.yml`,
