@@ -1,0 +1,613 @@
+openapi: 3.0.0
+info:
+  title: API OpenData Exchange - Open Finance Brasil
+  description: |
+    API de Cambio de la fase OpenData del Open Finance Brasil.
+    API que retorna información de Cambio.
+  version: 1.0.1
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+tags:
+  - name: Exchange Online Rate
+    description: Operaciones para obtener la información de Cambio para tasa online.
+  - name: Exchange VET Value
+    description: Operaciones para obtener la información de Cambio para valor del VET.
+paths:
+  /online-rates:
+    get:
+      tags:
+        - Exchange Online Rate
+      summary: Conjunto de información de Cambio para tasa online.
+      operationId: exchangeGetOnlineRate
+      description: |-
+        Las instituciones autorizadas a operar en cambio que disponibilizan en sus canales digitales la posibilidad de contratación o la información de tasa de cambio deben retornar las condiciones en el momento de la consulta, siendo admitida una desfase máxima de actualización de 5 minutos en relación a sus canales digitales.
+
+        Ya las demás instituciones participantes del Open Finance autorizadas a operar en cambio pueden adoptar las ventanas de consulta de la PTAX como frecuencia mínima de actualización de las informaciones retornadas en este servicio.
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseExchangeOnlineRate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+  /vet-values:
+    get:
+      tags:
+        - Exchange VET Value
+      summary: Conjunto de información de Cambio para valor del VET.
+      operationId: exchangeGetVetValue
+      description: 'Método para disponibilizar los VETs practicados por la institución en las operaciones de cambio, agrupados por tipo de operación (compra o venta), moneda, forma de entrega, franjas de valores y público objetivo (persona física, persona jurídica o ambos).'
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseExchangeVetValue'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+components:
+  schemas:
+    Links:
+      type: object
+      description: Referencias a otros recursos de la API solicitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI completo que generó la respuesta actual.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        first:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI de la primera página que originó esta lista de resultados. Restricción - Obligatorio cuando no sea la primera página de la respuesta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        prev:
+          type: string
+          format: url
+          maxLength: 2000
+          description: "URI de la página anterior de esta lista de resultados. Restricción - \tObligatorio cuando no sea la primera página de la respuesta"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        next:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI de la próxima página de esta lista de resultados. Restricción - Obligatorio cuando no sea la última página de la respuesta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        last:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI de la última página de esta lista de resultados. Restricción - Obligatorio cuando no sea la última página de la respuesta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+      additionalProperties: false
+    OpenDataMeta:
+      type: object
+      description: Meta informaciones referentes a la API solicitada.
+      required:
+        - totalRecords
+        - totalPages
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Número total de registros en el resultado
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Número total de páginas en el resultado
+          example: 1
+      additionalProperties: false
+    OKResponseExchangeOnlineRate:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExchangeOnlineRate'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/OpenDataMeta'
+      additionalProperties: false
+    OKResponseExchangeVetValue:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExchangeVetValue'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/OpenDataMeta'
+      additionalProperties: false
+    ExchangeOnlineRate:
+      type: object
+      description: Conjunto de información referente a las informaciones de cambio
+      required:
+        - participant
+        - foreignCurrency
+        - deliveryForeignCurrency
+        - transactionType
+        - transactionCategory
+        - value
+        - targetAudience
+        - valueUpdateDateTime
+        - disclaimer
+      properties:
+        participant:
+          $ref: '#/components/schemas/Participant'
+        foreignCurrency:
+          $ref: '#/components/schemas/CurrencyCode'
+        deliveryForeignCurrency:
+          $ref: '#/components/schemas/EnumExchangeDeliveryForeignCurrency'
+        transactionType:
+          $ref: '#/components/schemas/EnumExchangeTransactionType'
+        transactionCategory:
+          $ref: '#/components/schemas/EnumExchangeTransactionCategory'
+        targetAudience:
+          $ref: '#/components/schemas/EnumDistinctTargetAudienceExchange'
+        value:
+          type: string
+          maxLength: 22
+          minLength: 8
+          pattern: '^\d{1,15}\.\d{6}$'
+          example: '0.019800'
+          description: Valor de la operación.
+        valueUpdateDateTime:
+          type: string
+          format: date-time
+          maxLength: 20
+          example: '2017-07-21T17:32:28Z'
+          description: Fecha y hora de la última actualización de la cotización.
+          pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
+        disclaimer:
+          type: string
+          description: 'Disclaimer informando que la tasa presentada es solamente informativa, para la contratación de una operación, deberá consultarse el canal correspondiente de cada institución.'
+          example: 'Informamos que esta tasa es estimada y exclusiva para fines de Open Finance, no siendo válida para la contratación de operaciones de cambio. Para obtener la tasa para cierre del cambio, pedimos consultar los canales disponibles para contratación.'
+      example:
+        participant:
+          brand: Organización
+          name: Organización A1
+          cnpjNumber: '13456789000112'
+          urlComplementaryList: 'https://empresaa1.com/companies'
+        foreignCurrency: USD
+        deliveryForeignCurrency: TELETRANSMISSAO_SWIFT
+        transactionType: COMPRA
+        transactionCategory: COMERCIO_EXTERIOR
+        targetAudience: PESSOA_NATURAL
+        value: '0.019800'
+        valueUpdateDateTime: '2017-07-21T17:32:28Z'
+        disclaimer: 'Informamos que esta tasa es estimada y exclusiva para fines de Open Finance, no siendo válida para la contratación de operaciones de cambio. Para obtener la tasa para cierre del cambio, pedimos consultar los canales disponibles para contratación.'
+      additionalProperties: false
+    ExchangeVetValue:
+      type: object
+      description: Conjunto de información referente a las informaciones de cambio
+      required:
+        - participant
+        - transactionType
+        - foreignCurrency
+        - deliveryForeignCurrency
+        - rangeTransactionCategory
+        - vetAmount
+        - targetAudience
+      properties:
+        participant:
+          $ref: '#/components/schemas/Participant'
+        transactionType:
+          $ref: '#/components/schemas/EnumExchangeTransactionType'
+        foreignCurrency:
+          $ref: '#/components/schemas/CurrencyCode'
+        deliveryForeignCurrency:
+          $ref: '#/components/schemas/EnumExchangeDeliveryForeignCurrency'
+        rangeTransactionCategory:
+          $ref: '#/components/schemas/EnumExchangeRangeTransactionCategory'
+        targetAudience:
+          $ref: '#/components/schemas/EnumDistinctTargetAudienceExchange'
+        vetAmount:
+          $ref: '#/components/schemas/ExchangeNoIdentificationFrequencyDistribution'
+      additionalProperties: false
+    ExchangeNoIdentificationFrequencyDistribution:
+      type: object
+      description: |
+        Distribución por frecuencia.  
+        Es necesario que las Instituciones Financieras desconsideren los valores de VET negativo en el cálculo de vetAmount.
+      required:
+        - prices
+        - minimum
+        - maximum
+      properties:
+        prices:
+          type: array
+          description: Distribución de los precios.
+          items:
+            $ref: '#/components/schemas/ExchangeFrequencyDistributionPrice'
+          minItems: 4
+          maxItems: 4
+          example:
+            - interval: 1_FAIXA
+              value: '0.020300'
+              operationRate: '0.500000'
+            - interval: 2_FAIXA
+              value: '0.030600'
+              operationRate: '0.100000'
+            - interval: 3_FAIXA
+              value: '0.034300'
+              operationRate: '0.300000'
+            - interval: 4_FAIXA
+              value: '0.246800'
+              operationRate: '0.100000'
+        minimum:
+          type: string
+          description: Valor mínimo.
+          minLength: 8
+          maxLength: 22
+          pattern: '^\d{1,15}\.\d{6}$'
+          example: '0.010000'
+        maximum:
+          type: string
+          description: Valor máximo.
+          minLength: 8
+          maxLength: 22
+          pattern: '^\d{1,15}\.\d{6}$'
+          example: '0.300000'
+      additionalProperties: false
+    ExchangeFrequencyDistributionPrice:
+      type: object
+      required:
+        - interval
+        - value
+        - operationRate
+      properties:
+        interval:
+          $ref: '#/components/schemas/EnumInterval'
+        value:
+          type: string
+          description: Mediana.
+          example: '0.020300'
+          minLength: 8
+          maxLength: 22
+          pattern: '^\d{1,15}\.\d{6}$'
+        operationRate:
+          type: string
+          description: Porcentaje de Operación.
+          example: '0.500000'
+          minLength: 8
+          maxLength: 8
+          pattern: '^\d{1}\.\d{6}$'
+      additionalProperties: false
+    OnlineRate:
+      type: object
+      description: Tasa disponibilizada (tasa online) por las instituciones en el formato D+0/D+2 (valor U$500 operaciones cambio pronto) separado por moneda dólar y euro compra y venta PF/PJ.
+      required:
+        - foreignCurrency
+        - deliveryForeignCurrency
+        - transactionType
+        - transactionCategory
+        - value
+        - targetAudience
+        - valueUpdateDateTime
+      properties:
+        foreignCurrency:
+          $ref: '#/components/schemas/CurrencyCode'
+        deliveryForeignCurrency:
+          $ref: '#/components/schemas/EnumExchangeDeliveryForeignCurrency'
+        transactionType:
+          $ref: '#/components/schemas/EnumExchangeTransactionType'
+        transactionCategory:
+          $ref: '#/components/schemas/EnumExchangeTransactionCategory'
+        targetAudience:
+          $ref: '#/components/schemas/EnumDistinctTargetAudienceExchange'
+        value:
+          type: string
+          maxLength: 7
+          minLength: 3
+          pattern: '^\d{1}\.\d{1,5}$'
+          example: '5.5023'
+          description: Valor de la operación.
+        valueUpdateDateTime:
+          type: string
+          format: date-time
+          maxLength: 20
+          example: '2017-07-21T17:32:28Z'
+          description: Fecha y hora de la última actualización de la cotización.
+          pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
+      additionalProperties: false
+    EnumExchangeDeliveryForeignCurrency:
+      type: string
+      description: 'La clasificación de la forma de operación, conforme Resolución BCB nº 277 de 31/12/2022 u otro normativo que la revoque. (Véase Enum)<br><ul><li>ESPECIE</li><li>CARTAO_PRE_PAGO</li><li>TELETRANSMISSAO_SWIFT</li></ul>'
+      enum:
+        - ESPECIE
+        - CARTAO_PRE_PAGO
+        - TELETRANSMISSAO_SWIFT
+      example: CARTAO_PRE_PAGO
+    EnumExchangeRangeTransactionCategory:
+      type: string
+      description: |
+        Franja de valor de la operación (equivalente en USD), conforme Instrucción
+
+        Normativa BCB 184, de 12 Noviembre de 2021.
+      enum:
+        - '0,01_200'
+        - '200,01_500'
+        - '500,01_1.000'
+        - '1.000,01_3.000'
+        - '3.000,01_10.000'
+        - '10.000,01_30.000'
+        - '30.000,01_100.000'
+      example: '0,01_200'
+    EnumExchangeTransactionCategory:
+      type: string
+      description: 'La clasificación del tipo de operación, conforme Resolución BCB nº 277 de 31/12/2022 u otro normativo que la revoque.'
+      enum:
+        - COMERCIO_EXTERIOR
+        - TRANSPORTE
+        - SEGUROS
+        - VIAGENS_INTERNACIONAIS
+        - TRANSFERENCIAS_UNILATERAIS
+        - SERVICOS_DIVERSOS
+        - RENDAS_CAPITAIS
+        - CAPITAIS_BRASILEIROS
+        - CAPITAIS_ESTRANGEIROS
+        - PRESTACAO_SERVICO_PAGAMENTO_OU_TRANSFERENCIA_INTERNACIONAL_EFX
+      example: COMERCIO_EXTERIOR
+    EnumExchangeTransactionType:
+      type: string
+      description: |
+        Determina si el Banco está comprando o vendiendo la moneda extranjera en las operaciones
+        spot, que se liquidan en hasta dos días (no aplica a operaciones futuras). (Véase Enum)
+        - Compra
+        - Venta
+      enum:
+        - COMPRA
+        - VENDA
+      example: COMPRA
+    EnumDistinctTargetAudienceExchange:
+      type: string
+      description: 'Público objetivo. En casos en que la institución no posea tasas de cambio diferenciadas para persona natural y jurídica utilizar la opción: PESSOA_NATURAL_JURIDICA.'
+      enum:
+        - PESSOA_NATURAL
+        - PESSOA_JURIDICA
+        - PESSOA_NATURAL_JURIDICA
+      example: PESSOA_JURIDICA
+    EnumInterval:
+      type: string
+      description: Franjas de frecuencia
+      enum:
+        - 1_FAIXA
+        - 2_FAIXA
+        - 3_FAIXA
+        - 4_FAIXA
+      example: 1_FAIXA
+    CnpjNumber:
+      type: string
+      description: 'El CNPJ corresponde al número de inscripción en el Cadastro de Pessoa Jurídica. Debe contener solo los números del CNPJ, sin máscara.'
+      maxLength: 14
+      pattern: '^\d{14}$'
+      example: '13456789000112'
+    Participant:
+      type: object
+      description: Conjunto de información relativa al participante del producto de Open Finance
+      required:
+        - brand
+        - name
+        - cnpjNumber
+      properties:
+        brand:
+          type: string
+          description: 'Nombre de la marca reportada por el participante del Open Finance. El concepto al que se refiere la ''marca'' es en esencia una promesa de la empresa de proporcionar una serie específica de atributos, beneficios y servicios uniformes a los clientes.'
+          pattern: '[\w\W\s]*'
+          maxLength: 80
+          example: Organización
+        name:
+          type: string
+          description: Nombre del participante del Open Finance.
+          pattern: '[\w\W\s]*'
+          maxLength: 80
+          example: Organización A1
+        cnpjNumber:
+          $ref: '#/components/schemas/CnpjNumber'
+        urlComplementaryList:
+          type: string
+          format: url
+          description: |
+            Se espera que el valor de retorno, después del acceso al enlace 'urlComplementaryList', sea un array de objeto con la estructura abajo:
+
+            - 'name' con el valor contenido en el campo 'LegalEntityName' según registro en el directorio;
+
+            - 'cnpjNumber' con el valor contenido en el campo CNPJ ('RegistrationNumber') correspondiente a esta institución;
+
+            - Ambos de tipo string;
+
+            - Ambos obligatorios.
+          maxLength: 1024
+          example: 'https://empresaa1.com/companies'
+      additionalProperties: false
+    CurrencyCode:
+      type: string
+      pattern: '^[A-Z]{3}$'
+      maxLength: 3
+      description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+      example: BRL
+    OpenDataResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Código de error específico del endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descripción legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+            additionalProperties: false
+        meta:
+          $ref: '#/components/schemas/OpenDataMeta'
+      additionalProperties: false
+  parameters:
+    page:
+      name: page
+      in: query
+      description: Número de la página que se está solicitando (el valor de la primera página es 1).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+        maximum: 2147483647
+        format: int32
+    pageSize:
+      name: page-size
+      in: query
+      description: Cantidad total de registros por páginas.
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        format: int32
+        maximum: 1000
+  responses:
+    OKResponseExchangeOnlineRate:
+      description: Datos de operaciones de cambio de la institución obtenidos con éxito.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OKResponseExchangeOnlineRate'
+    OKResponseExchangeVetValue:
+      description: Datos de operaciones de cambio de la institución obtenidos con éxito.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OKResponseExchangeVetValue'
+    BadRequest:
+      description: 'La solicitud fue malformada, omitiendo atributos obligatorios, sea en el payload o a través de atributos en la URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/OpenDataResponseError'
+    NotFound:
+      description: El recurso solicitado no existe o no ha sido implementado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/OpenDataResponseError'
+    MethodNotAllowed:
+      description: El consumidor intentó acceder al recurso con un método no soportado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/OpenDataResponseError'
+    TooManyRequests:
+      description: 'La operación fue rechazada, pues muchas solicitudes fueron hechas dentro de un determinado período o el límite de solicitudes concurrentes fue alcanzado.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/OpenDataResponseError'
+    InternalServerError:
+      description: Ocurrió un error en el gateway de la API o en el microservicio
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/OpenDataResponseError'
+    SiteIsOverloaded:
+      description: 'El sitio está sobrecargado y la operación fue rechazada, pues se alcanzó el límite máximo de TPS global, en este momento.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            type: object
+            required:
+              - errors
+            properties:
+              errors:
+                type: array
+                minItems: 1
+                maxItems: 13
+                items:
+                  type: object
+                  required:
+                    - code
+                    - title
+                    - detail
+                  properties:
+                    code:
+                      description: Código de error específico del endpoint
+                      type: string
+                      pattern: '[\w\W\s]*'
+                      maxLength: 255
+                    title:
+                      description: Título legible por humanos de este error específico
+                      type: string
+                      pattern: '[\w\W\s]*'
+                      maxLength: 255
+                    detail:
+                      description: Descripción legible por humanos de este error específico
+                      type: string
+                      pattern: '[\w\W\s]*'
+                      maxLength: 2048
+              meta:
+                type: object
+                description: Meta informaciones referentes a la API solicitada.
+                required:
+                  - requestDateTime
+                properties:
+                  requestDateTime:
+                    description: 'Fecha y hora de la consulta, según especificación RFC-3339, formato UTC.'
+                    type: string
+                    maxLength: 20
+                    format: date-time
+                    example: '2021-05-21T08:30:00Z'
+                    

@@ -1,0 +1,1027 @@
+openapi: 3.0.0
+info:
+  title: oofc-core
+  description: |-
+    Opus Open Client - Consent management core
+
+    # Payment Transaction Initiation
+
+    For more information on the consent creation flow, consult the Opus Open Finance Platform documentation.
+  version: 1.0.0
+tags:
+  - name: Opus Open Finance
+    description: |-
+      Consent management endpoints
+  - name: Payment
+    description: |-
+      Payment initiation endpoints related to consent. The expected and returned data models are the same as those defined by the official documentation ([Open Finance - API Payment Initiation](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/API+-+Pagamentos)).
+  - name: Deeplinks
+    description: |-
+      Endpoints for obtaining iOS Universal Links and Android App Links settings so that the recipient institution's application can intercept URLs.
+servers:
+  - url: https://open-finance-core.instituicao.com.br
+paths:
+  /.well-known/assetlinks.json:
+    get:
+      tags:
+        - Deeplinks
+      operationId: oofcDeeplinksGetAssetLinks
+      description: Method to obtain the content of the assetlinks.json file
+      summary: Get Android App Links configuration file
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetLinks'
+  /.well-known/apple-app-site-association:
+    get:
+      tags:
+        - Deeplinks
+      operationId: oofcDeeplinksGetAppleAppSiteAssociation
+      description: Method to obtain the content of the apple-app-site-association file
+      summary: Get Apple App Site Association configuration file
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppleAppSiteAssociation'
+  /opus-open-finance/payments/v1/consents:
+    post:
+      tags:
+        - Opus Open Finance
+      operationId: oofcPaymentsPostConsents
+      description: Method to create a new payment consent request
+      summary: Create new payment consent request
+      externalDocs:
+        description: Open Finance - API Payment Initiation
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/API+-+Pagamentos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentConsentRequest'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '201':
+          description: Payment consent successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePaymentConsentResponse'
+        '400':
+          description: Error sent by the account holder, following the standard defined by BACEN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Error sent by the account holder, following the standard defined by BACEN
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /opus-open-finance/payments/v1/consents/{consentId}/authorisation-retry:
+    post:
+      tags:
+        - Opus Open Finance
+      operationId: oofcPaymentsPostConsentsConsentIdAuthorisationRetry
+      description: Method to generate a new authorization URL for the consent identified by consentId
+      summary: Generate new authorization URL for the consent identified by consentId.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetryPaymentConsentRequest'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/consentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetryPaymentConsentResponse'
+  /opus-open-finance/payments/v1/consents/{consentId}:
+    get:
+      operationId: oofcPaymentsGetConsentsConsentId
+      description: Method to obtain details of the payment consent identified by consentId
+      tags:
+        - Opus Open Finance
+      summary: Get details of the consent identified by consentId.
+      externalDocs:
+        description: Open Finance - API Payment Initiation
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/API+-+Pagamentos
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/consentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPaymentConsentResponse'
+        '400':
+          description: Error sent by the account holder, following the standard defined by BACEN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Error sent by the account holder, following the standard defined by BACEN
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /opus-open-finance/participants:
+    get:
+      operationId: oofcGetParticipants
+      description: Method to obtain participants registered in the directory
+      tags:
+        - Opus Open Finance
+      summary: Details of participants registered in the directory, identifying their APIs
+      externalDocs:
+        description: Open Finance - Regulatory functions for OpenID and OAuth 2.0 mappings
+        url: https://openbanking-brasil.github.io/specs-seguranca/open-banking-brasil-dynamic-client-registration-1_ID2-ptbr.html#section-7.2
+      parameters:
+       - in: query
+         name: role
+         schema:
+           type: string
+         description: Filters OrgDomainRoleClaims containing the informed role. Role types are subject to change, check in the described externalDocs.
+       - in: query
+         name: familyType
+         schema:
+           type: string
+         description: Filters ApiResources containing the informed familyType
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParticipantsResponse'
+        '502':
+          description: Error in Opus Open Client when communicating with the BACEN participants API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the BACEN participants API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /proxy/open-banking/payments/v3/pix/payments:
+    post:
+      tags:
+        - Payment
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to create a payment initiation.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: 'Follows the request standard defined in the official documentation ([Open Finance - API Payment Initiation](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/142671873/v3.0.0-beta.2+-+Pagamentos)).'
+              example: {}
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/payments/v4/pix/payments:
+    post:
+      tags:
+        - Payment
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+      description: 'Proxy method to create a payment initiation.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: 'Follows the request standard defined in the official documentation ([Open Finance - API Payment Initiation](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/347079010/Informa+es+T+cnicas+-+SV+Pagamentos+-+v4.0.0)).'
+              example: {}
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/payments/v3/pix/payments/{paymentId}:
+    get:
+      tags:
+        - Payment
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - name: paymentId
+          in: path
+          description: Payment operation identifier
+          schema:
+            type: string
+          required: true
+          example: D730A10D6784379085391417F3EF657C1247B2B3645210DD97F739B33B349376
+      description: Proxy method to query a payment initiation.
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+    patch:
+      tags:
+        - Payment
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - name: paymentId
+          in: path
+          description: Payment operation identifier
+          schema:
+            type: string
+          required: true
+          example: D730A10D6784379085391417F3EF657C1247B2B3645210DD97F739B33B349376
+      description: Proxy method to revoke a payment initiation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: 'Follows the request standard defined in the official documentation ([Open Finance - API Payment Initiation](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/142671873/v3.0.0-beta.2+-+Pagamentos)).'
+              example: {}
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/payments/v4/pix/payments/{paymentId}:
+    get:
+      tags:
+        - Payment
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - name: paymentId
+          in: path
+          description: Payment operation identifier
+          schema:
+            type: string
+          required: true
+          example: D730A10D6784379085391417F3EF657C1247B2B3645210DD97F739B33B349376
+      description: Proxy method to query a payment initiation.
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+    patch:
+      tags:
+        - Payment
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - name: paymentId
+          in: path
+          description: Payment operation identifier
+          schema:
+            type: string
+          required: true
+          example: D730A10D6784379085391417F3EF657C1247B2B3645210DD97F739B33B349376
+      description: Proxy method to revoke a payment initiation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: 'Follows the request standard defined in the official documentation ([Open Finance - API Payment Initiation](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/347079010/Informa+es+T+cnicas+-+SV+Pagamentos+-+v4.0.0)).'
+              example: {}
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /proxy/open-banking/payments/v4/pix/payments/consents/{consentId}:
+    patch:
+      tags:
+        - Payment
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/headerConsentId'
+        - name: consentId
+          in: path
+          description: Consent identifier
+          schema:
+            type: string
+          required: true
+          example: urn:amazingbank:5e456567-e53c-41c4-80f6-b16bcd63d243
+      description: Proxy method to revoke all payments related to the same consent.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: 'Follows the request standard defined in the official documentation ([Open Finance - API Payment Initiation](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/347079010/Informa+es+T+cnicas+-+SV+Pagamentos+-+v4.0.0)).'
+              example: {}
+      responses:
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Follows the response standard defined by BACEN
+  /opus-open-finance/dcm:
+    get:
+      operationId: oofcGetDcm
+      description: Method to obtain DCM data for all brand clients of the application.
+      tags:
+        - Opus Open Finance
+      summary: Details of DCM status for brand clients.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DcmData'
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the BACEN participants API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+    put:
+      operationId: oofcPutDcm
+      description: Method to update DCM data for all brand clients of the application.
+      tags:
+        - Opus Open Finance
+      summary: Update DCM data for brand clients.
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutDcmRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DcmData'
+        '502':
+          description: Error in Opus Open Client when communicating with the account holder
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded when communicating with the BACEN participants API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /opus-open-finance/authorization-result:
+    post:
+      tags:
+        - Opus Open Finance
+      operationId: oofcAppToAppAuthorizationResult
+      description: Method used in the App-To-App flow to exchange the authorization code returned for tokens or to handle any authorization errors.
+      summary: Send OIDC flow result to Opus TPP.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppToAppAuthorizationResultRequest'
+      responses:
+        '204':
+          description: Success in the authorization process
+        '422':
+          description: Error in the authorization process
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppToAppAuthorizationErrorResponse'
+components:
+  schemas:
+    PutDcmRequest:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - version
+          properties:
+            version:
+              type: string
+              description: Version string
+              example: '1'
+    RetryPaymentConsentRequest:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - callbackApplicationUri
+          properties:
+            callbackApplicationUri:
+              type: string
+              format: uri
+              maxLength: 2000
+              description: Callback URI of the application after the authentication process
+              example: 'https://aplicativo.instituicao.com.br'
+              pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    RetryPaymentConsentResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - redirectUrl
+            - consentId
+            - consent
+          properties:
+            redirectUrl:
+              type: string
+              format: uri
+              maxLength: 2000
+              description: Redirect URI to the account holder's Authorisation Server to request consent approval
+              example: 'https://authorisation-server.detentora.com.br'
+              pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+            consentId:
+              description: |
+                The consentId is the unique identifier of the consent and must be a URN - Uniform Resource Name.
+                A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+                Identifier - URI - that is assigned under the URI scheme "urn" and a specific URN namespace, with the intention that the URN
+                be a persistent and location-independent resource identifier.
+                Considering the string urn:bancoex:C1DD33123 as an example for consentId we have:
+                - the namespace (urn)
+                - the identifier associated with the transmitting institution's namespace (bancoex)
+                - the specific identifier within the namespace (C1DD33123).
+                More detailed information about namespace construction can be found in [RFC8141](https://tools.ietf.org/html/rfc8141).
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              example: 'urn:bancoex:C1DD33123'
+            consent:
+              type: string
+              description: Payment consent object returned by the account holder according to the standard defined by BACEN - https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/API+-+Pagamentos
+    ParticipantsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Participants'
+    Participants:
+      type: object
+      required:
+        - OpenIDDiscoveryDocument
+        - CustomerFriendlyName
+        - CustomerFriendlyLogoUri
+        - Organisations
+        - AuthorisationServerIds
+        - ApiResources
+      properties:
+        OpenIDDiscoveryDocument:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: Discovery URI of the account holder's Authorisation Server
+          example: 'https://open-finance.detentora.com.br/.well-known/openid-configuration'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        CustomerFriendlyName:
+          type: string
+          maxLength: 255
+          example: 'Account Holder Open Finance'
+        CustomerFriendlyLogoUri:
+          type: string
+          format: uri
+          maxLength: 2000
+          example: 'https://cdn.raidiam.io/directory-ui/brand/obbrazil/0.2.0.112/favicon.svg'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        CustomerFriendlyDescription:
+          type: string
+          maxLength: 255
+          example: "Description of the Account Holder Open Finance"
+        Organisations:
+          type: array
+          minLength: 1
+          items:
+            required:
+              - OrganisationId
+              - RegistrationNumber
+            properties:
+              OrganisationId:
+                type: string
+                description: Unique organization identifier
+                minLength: 1
+                maxLength: 40
+                example: 'ce31b1e1-71c5-4918-ba5b-3e8f6401c71f'
+              RegisteredName:
+                type: string
+                maxLength: 256
+                example: 'Account Holder S.A.'
+              RegistrationNumber:
+                type: string
+                maxLength: 256
+                example: '60663556000104'
+              ParentOrganisationReference:
+                type: string
+                maxLength: 65535
+                example: '60701190000104'
+        OrgDomainRoleClaims:
+          type: array
+          minLength: 1
+          items:
+            required:
+              - Status
+              - role
+            properties:
+                Status:
+                  type: string
+                  example: Active
+                role:
+                  $ref: '#/components/schemas/EnumRole'
+        AuthorisationServerIds:
+          type: array
+          items:
+            type: string
+            maxLength: 40
+            example: a9e62501-0b91-4af9-837d-c2d210736f28
+        ApiResources:
+          type: array
+          items:
+            properties:
+              ApiFamilyType:
+                type: string
+                minLength: 1
+                maxLength: 40
+                example: payments-consents
+              ApiVersion:
+                type: number
+                example: 1
+    AssetLinks:
+      type: array
+      items:
+        type: object
+        properties:
+          relation:
+            type: array
+            items:
+              type: string
+              example: 'delegate_permission/common.handle_all_urls'
+          target:
+            type: object
+            properties:
+              namespace:
+                type: string
+                example: 'android_app'
+              package_name:
+                type: string
+                example: 'example.com'
+              sha256_cert_fingerprints:
+                type: array
+                items:
+                  type: string
+                  example: 'A1:22:30:35:08:85:CC:4D:B6:A6:6C:02:4C:9F:3C:FE:07:CA:39:4C:66:30:C0:1F:00:FA:43:BE:3E:8E:94:3D'
+    AppleAppSiteAssociation:
+      type: object
+      properties:
+        applinks:
+          type: object
+          properties:
+            apps:
+              type: array
+              items:
+                type: object
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  appID:
+                    type: string
+                    example: 'app.native.example'
+                  paths:
+                    type: array
+                    items:
+                      type: string
+                      example: '/auth/handoff/*'
+                  appIDs:
+                    type: array
+                    items:
+                      type: string
+                      example: 'app.native.example'
+                  components:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        /:
+                          type: string
+                          example: '/auth/auth'
+    AppToAppAuthorizationResultRequest:
+      type: object
+      properties:
+        data:
+          type: string
+          example: 'code=LxSevzQNevQJM0yx4dhPo4oJHdYhAHG808ssYF2OlzC&id_token=eyJhbGciOiJQUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVKU01fbW1UMV9qTTVieTM5aEttR01BSWNTM2lzQ3BPSlB5NVdnUmY3RUUifQ.eyJzdWIiOiJPRkMtNDkzOGI1ODIzZWQzNjMxNmQyZTVjYzY5M2YxNzljMTJjNTE0MjNlYTQ0NzJiYjgyZWI5YWYzNTE0NjEyYmI2MSIsImF1dGhfdGltZSI6MTY5NTY3NjE2MCwiYWNyIjoidXJuOmJyYXNpbDpvcGVuYmFua2luZzpsb2EyIiwibm9uY2UiOiIzNjE2YzM3NWFjMDZlODBjMTk3MjljMTkwOGEzYjkxMGQ3ODVlYzViZTkxOTZhN2YyZjllZjhmNDI1YmVlNWMxIiwiY19oYXNoIjoiRUVMd2FoU1FQUGt2WEZWZzJOZnRHUSIsInNfaGFzaCI6IndPN1hZbFB1c1FZMGtwOG1Ucmw3WVEiLCJhdWQiOiI1aUtkV3JCdlhFRjJHNWgwZ1RaMkMiLCJleHAiOjE2OTU2NzcwNjAsImlhdCI6MTY5NTY3NjE2MCwiaXNzIjoiaHR0cHM6Ly9vYmIucWEub29iLm9wdXMtc29mdHdhcmUuY29tLmJyLyJ9.SNBN_Buh_Y0iLuJGP4bgSHYnSKC_g76R0CpWEVRJua788RNoJpAzhAm6Ah6vOb2nD-H4Yq2MAjRy_Fkh7ruziBaJ4ebDexxQ2GAocBgrmQ2JwI-Q-1D4Xm1WuSS6OSm04Kk0CiV8MylidwxF_4XS40uWqxTJQcgG8dP4NC9-ty8S6a-6oGs0MekjOqm9mU0aFDwS8fRGZ8TU-8AT15hiMQ9sXsgNlfrci0MQi9Jb6t9o4c93mKCLhGypYswjs1MjVoXD3K6btZ2NSZYBQROtTK_tl9HkvW1uRVhNVZjzwDs1DJrvZpLP48es8YPxFtYAAKsuwiB8bza58MYKvvW81A&state=dXJuOmFtYXppbmdiYW5rOjdlOWYxMDhmLWE3MDktNDBlNi1iMzQ2LTNjNGZiMzBjNjcyNnwx'
+    AppToAppAuthorizationErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: 'access_denied'
+        error_description:
+          type: string
+          example: 'Error in user authentication'
+    DcmData:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DcmStatus'
+    DcmStatus:
+      type: object
+      required:
+        - brandId
+        - dcmVersion
+        - dcmDate
+      properties:
+        brandId:
+          type: string
+          maxLength: 40
+          example: a9e62501-0b91-4af9-837d-c2d210736f28
+        dcmVersion:
+          type: string
+          maxLength: 20
+          example: '2.0'
+        dcmDate:
+          description: 'Date and time of DCM execution for the indicated version, according to RFC-3339 specification, UTC format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2023-07-07T09:30:00Z'
+        status:
+          type: string
+          maxLength: 20
+          example: 'success'
+    GetPaymentConsentResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - consentId
+            - consent
+          properties:
+            consentId:
+              description: |
+                The consentId is the unique identifier of the consent and must be a URN - Uniform Resource Name.
+                A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+                Identifier - URI - that is assigned under the URI scheme "urn" and a specific URN namespace, with the intention that the URN
+                be a persistent and location-independent resource identifier.
+                Considering the string urn:bancoex:C1DD33123 as an example for consentId we have:
+                - the namespace (urn)
+                - the identifier associated with the transmitting institution's namespace (bancoex)
+                - the specific identifier within the namespace (C1DD33123).
+                More detailed information about namespace construction can be found in [RFC8141](https://tools.ietf.org/html/rfc8141).
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              example: 'urn:bancoex:C1DD33123'
+            consent:
+              type: string
+              description: Payment consent object returned by the account holder according to the standard defined by BACEN - https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/API+-+Pagamentos
+    CreatePaymentConsentResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - redirectUrl
+            - consentId
+            - consent
+          properties:
+            redirectUrl:
+              type: string
+              format: uri
+              maxLength: 2000
+              description: Redirect URI to the account holder's Authorisation Server to request consent approval
+              example: 'https://authorisation-server.detentora.com.br'
+              pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+            consentId:
+              description: |
+                The consentId is the unique identifier of the consent and must be a URN - Uniform Resource Name.
+                A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+                Identifier - URI - that is assigned under the URI scheme "urn" and a specific URN namespace, with the intention that the URN
+                be a persistent and location-independent resource identifier.
+                Considering the string urn:bancoex:C1DD33123 as an example for consentId we have:
+                - the namespace (urn)
+                - the identifier associated with the transmitting institution's namespace (bancoex)
+                - the specific identifier within the namespace (C1DD33123).
+                More detailed information about namespace construction can be found in [RFC8141](https://tools.ietf.org/html/rfc8141).
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              example: 'urn:bancoex:C1DD33123'
+            consent:
+              type: string
+              description: Payment consent object returned by the account holder according to the standard defined by BACEN - https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/API+-+Pagamentos
+    Meta:
+      type: object
+      description: Meta information regarding the requested API.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Total number of records in the result
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Total number of pages in the result
+          example: 1
+        requestDateTime:
+          description: 'Consultation date and time, according to RFC-3339 specification, UTC format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+      additionalProperties: false
+    CreatePaymentConsentRequest:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Object containing the consent information for individual payment initiation. For the remaining fields, follow the request standard defined in the official documentation ([Open Finance - API Payment Initiation](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/SV+API+-+Pagamentos)).
+          required:
+            - callbackApplicationUri
+          properties:
+            callbackApplicationUri:
+              type: string
+              format: uri
+              maxLength: 2000
+              description: Callback URI of the application after the authentication process
+              example: 'https://aplicativo.instituicao.com.br'
+              pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    EnumAccountPaymentsType:
+      type: string
+      maxLength: 4
+      enum:
+        - CACC
+        - SLRY
+        - SVGS
+        - TRAN
+      example: CACC
+      description: |
+        Types of accounts used for payment via Pix.
+        Traditional modalities provided for by Resolution 4.753, not including linked accounts,
+        accounts for domiciled abroad, foreign currency accounts, and corresponding electronic currency account.
+        Follows description of each ENUM value for the Pix scope.
+        CACC - Current - Current Account.
+        SLRY - Salary - Salary Account.
+        SVGS - Savings - Savings Account.
+        TRAN - TransactingAccount - Prepaid Payment Account.
+    EnumRole:
+      type: string
+      maxLength: 5
+      enum:
+        - DADOS
+        - PAGTO
+        - CONTA
+        - CCORR
+      example: CONTA
+      description: |
+        Regulatory role of the institution. Role types are subject to change.
+    UUID:
+      format: uuid
+      pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+      type: string
+      example: '556392bd-b4c2-4cc0-9abe-f2c77a5c5d8f'
+    ResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Endpoint-specific error code
+                type: string
+                pattern: '[\w\W\s]*'
+                example: '4XX'
+                maxLength: 255
+              title:
+                description: Human-readable title for this specific error
+                type: string
+                example: 'Human-readable title for this specific error'
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Human-readable description for this specific error
+                type: string
+                example: 'Human-readable description for this specific error'
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+            additionalProperties: false
+        meta:
+          $ref: '#/components/schemas/Meta'
+      additionalProperties: false
+  parameters:
+    applicationId:
+      name: x-application-id
+      in: header
+      required: true
+      description: Identifier of the application making the request
+      schema:
+        $ref: '#/components/schemas/UUID'
+    authorisationServerId:
+      name: x-authorisation-server-id
+      required: true
+      description: Identifier of the consent transmitter's Authorisation Server, obtained by querying the participant list
+      in: header
+      schema:
+        $ref: '#/components/schemas/UUID'
+    headerConsentId:
+      name: x-consent-id
+      required: true
+      in: header
+      description: Identifier of the consent to be used in this operation, obtained in the response to its creation
+      schema:
+        type: string
+        pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+        maxLength: 256
+      example: 'urn:bancox:f865cd66-392a-420b-9ff0-1b6d7cc60ee0'
+    consentId:
+      name: consentId
+      required: true
+      in: path
+      description: |
+        The consentId is the unique identifier of the consent and must be a URN - Uniform Resource Name.
+        A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+        Identifier - URI - that is assigned under the URI scheme "urn" and a specific URN namespace, with the intention that the URN
+        be a persistent and location-independent resource identifier.
+        Considering the string urn:prudential:C1DD93123 as an example for consentId we have:
+        - the namespace (urn)
+        - the identifier associated with the transmitting institution's namespace (bancox)
+        - the specific identifier within the namespace (f865cd66-392a-420b-9ff0-1b6d7cc60ee0).
+        More detailed information about namespace construction can be found in [RFC8141](https://tools.ietf.org/html/rfc8141).
+      schema:
+        type: string
+        pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+        maxLength: 256
+      example: 'urn:bancox:f865cd66-392a-420b-9ff0-1b6d7cc60ee0'
+      

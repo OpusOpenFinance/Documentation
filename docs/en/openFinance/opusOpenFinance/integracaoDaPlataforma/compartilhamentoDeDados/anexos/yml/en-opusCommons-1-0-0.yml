@@ -1,0 +1,245 @@
+openapi: 3.0.0
+info:
+  title: API Opus Commons - Integration Layer - Opus Open Finance Brasil
+  description: |
+    API with routes that are general for the operation of all product connectors.
+    API with the route that checks if a given client has an account at the financial institution necessary for the routes.
+  version: 4.0.0-rc.3
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+tags:
+  - name: Common
+    description: Operations required for general connector functionality
+paths:
+  /check-account-holder:
+    post:
+      tags:
+        - Common
+      operationId: checkAccountHolderStatus
+      summary: Checks if the consulted document has an account at the holder institution
+      description: Method to verify if an individual or legal entity maintains an account at the financial institution
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckAccountHolderRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseCheckAccountHolder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+components:
+  schemas:
+    RequestMeta:
+      type: object
+      description: Object containing data related to the context in which the request was received.
+      required:
+        - correlationId
+        - brandId
+      properties:
+        correlationId:
+          type: string
+          description: UUID identifying the correlation ID of the performed request. Must be propagated to all calls made between systems and logged whenever possible to facilitate error tracing
+          pattern: >-
+            ^(localID:)?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+          example: localID:97623ed1-4732-4bf2-8d4b-ae7aced5443b
+        brandId:
+          type: string
+          description: Identifier of the brand reported by the Open Finance participant
+          example: cbanco
+          minLength: 1
+          maxLength: 50
+      additionalProperties: false
+    CheckAccountHolderRequest:
+      type: object
+      description: Payload used for account holder verification
+      required:
+        - requestBody
+        - requestMeta
+      properties:
+        requestBody:
+          type: object
+          required:
+            - data
+          properties:
+            data:
+              type: object
+              required:
+                - loggedUserDocument
+              properties:
+                loggedUserDocument:
+                  type: string
+                  maxLength: 11
+                  description: User's CPF number.
+                  example:
+                    '11111111111'
+                  pattern: ^\d{11}$
+                businessEntityDocument:
+                  type: string
+                  maxLength: 14
+                  description: Company's CNPJ number.
+                  example:
+                    '11111111111111'
+                  pattern: ^\d{14}$
+        requestMeta:
+          $ref: '#/components/schemas/RequestMeta'
+    CheckAccountHolderResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Checks if the consulted document has an account at the holder institution
+          required:
+            - isAccountHolder
+          properties:
+            isAccountHolder:
+              type: boolean
+              description: Indicates if the consulted document has an account at the holder institution
+              example: 'true'
+          additionalProperties: false
+      additionalProperties: false
+    ResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Endpoint specific error code
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Human-readable title of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Human-readable description of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+  responses:
+    OKResponseCheckAccountHolder:
+      description: 'Successfully verified if the consulted document has an account at the holder institution'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CheckAccountHolderResponse'
+    BadRequest:
+      description: 'The request was malformed, omitting mandatory attributes, either in the payload or through URL attributes.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Forbidden:
+      description: The token has incorrect scope or a security policy was violated
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    GatewayTimeout:
+      description: GATEWAY TIMEOUT - The request was not completed within the established time limit
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    InternalServerError:
+      description: An error occurred at the API gateway or in the microservice
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Locked:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    MethodNotAllowed:
+      description: The consumer attempted to access the resource with an unsupported method
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    NotAcceptable:
+      description: The request contained an Accept header different from the allowed media types or a character set other than UTF-8
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    NotFound:
+      description: The requested resource does not exist or has not been implemented
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    TooManyRequests:
+      description: 'The operation was refused because too many requests were made within a certain period or the global concurrent request limit was reached'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Unauthorized:
+      description: Missing/invalid authentication header or invalid token
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    UnprocessableEntity:
+      description: 'The request syntax is correct, but it was not possible to process the instructions provided.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Default:
+      description: Unexpected error.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    SiteIsOverloaded:
+      description: 'The site is overloaded and the operation was refused because the global maximum TPS limit has been reached at this time.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+            
