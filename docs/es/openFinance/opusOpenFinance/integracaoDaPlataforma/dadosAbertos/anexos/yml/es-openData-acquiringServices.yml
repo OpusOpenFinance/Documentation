@@ -1,0 +1,431 @@
+openapi: 3.0.0
+info:
+  title: API OpenData Acquiring Services - Open Finance Brasil
+  description: |
+    API de Adquirencia/Procesamiento de la fase OpenData del Open Finance Brasil.
+    API que retorna información de Procesamiento.
+  version: 1.0.1
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+tags:
+  - name: PersonalAcquiringServices
+    description: Operaciones para obtener la información de Procesamiento para Persona Física.
+  - name: BusinessAcquiringServices
+    description: Operaciones para obtener la información de Procesamiento para Persona Jurídica.
+paths:
+  /personals:
+    get:
+      tags:
+        - PersonalAcquiringServices
+      summary: Conjunto de información de Procesamiento para Persona Física.
+      operationId: getPersonalAcquiringServices
+      description: Método para disponibilizar las tasas y tarifas por servicios.
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseAcquiringServices'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+  /businesses:
+    get:
+      tags:
+        - BusinessAcquiringServices
+      summary: Conjunto de información de Procesamiento para Persona Jurídica.
+      operationId: getBusinessAcquiringServices
+      description: Método para disponibilizar las tasas y tarifas por servicios.
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseAcquiringServices'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+components:
+  schemas:
+    OKResponseAcquiringServices:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AcquiringServicesContractData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/OpenDataMeta'
+      additionalProperties: false
+    Links:
+      type: object
+      description: Referencias a otros recursos de la API solicitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI completo que generó la respuesta actual.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        first:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI de la primera página que originó esta lista de resultados. Restricción - Obligatorio cuando no sea la primera página de la respuesta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        prev:
+          type: string
+          format: url
+          maxLength: 2000
+          description: "URI de la página anterior de esta lista de resultados. Restricción - \tObligatorio cuando no sea la primera página de la respuesta"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        next:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI de la próxima página de esta lista de resultados. Restricción - Obligatorio cuando no sea la última página de la respuesta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+        last:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI de la última página de esta lista de resultados. Restricción - Obligatorio cuando no sea la última página de la respuesta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+      additionalProperties: false
+    OpenDataMeta:
+      type: object
+      description: Meta informaciones referentes a la API solicitada.
+      required:
+        - totalRecords
+        - totalPages
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Número total de registros en el resultado
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Número total de páginas en el resultado
+          example: 1
+      additionalProperties: false
+    AcquiringParticipant:
+      type: object
+      description: Conjunto de información relativa al participante del producto de Open Finance
+      required:
+        - brand
+        - name
+        - cnpjNumber
+      properties:
+        brand:
+          type: string
+          description: 'Nombre de la marca reportada por el participante del Open Finance. El concepto al que se refiere la ''marca'' es en esencia una promesa de la empresa de proporcionar una serie específica de atributos, beneficios y servicios uniformes a los clientes.'
+          pattern: '[\w\W\s]*'
+          maxLength: 80
+          example: Organización
+        name:
+          type: string
+          description: Nombre del participante del Open Finance.
+          pattern: '[\w\W\s]*'
+          maxLength: 80
+          example: Organización A1
+        cnpjNumber:
+          type: string
+          description: 'El CNPJ corresponde al número de inscripción en el Cadastro de Pessoa Jurídica. Debe contener solo los números del CNPJ, sin máscara.'
+          pattern: '^\d{14}$'
+          example: '13456789000112'
+        urlComplementaryList:
+          type: string
+          description: |
+            Se espera que el valor de retorno, después del acceso al enlace 'urlComplementaryList', sea un array de objeto con la estructura abajo:
+
+            - 'name' con el valor contenido en el campo 'LegalEntityName' según registro en el directorio;
+
+            - 'cnpjNumber' con el valor contenido en el campo CNPJ ('RegistrationNumber') correspondiente a esta institución;
+
+            - Ambos de tipo string;
+
+            - Ambos obligatorios.
+          maxLength: 1024
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          example: 'https://empresaa1.com/companies'
+      additionalProperties: false
+    EnumAcquiringServicesFeeName:
+      type: string
+      description: |
+        Nombre de la tarifa cobrada sobre el servicio de procesamiento, para persona física/jurídica.
+          1. Tasa de Descuento en la Modalidad Crédito
+          2. Tasa de Descuento en la Modalidad Débito
+      enum:
+        - TAXA_DESCONTO_MODALIDADE_CREDITO
+        - TAXA_DESCONTO_MODALIDADE_DEBITO
+      example: TAXA_DESCONTO_MODALIDADE_CREDITO
+    EnumAcquiringServicesCode:
+      type: string
+      description: Sigla de la Tarifa cobrada sobre el Servicio de Procesamiento informado.
+      enum:
+        - MDR_CREDITO
+        - MDR_DEBITO
+      example: MDR_CREDITO
+    EnumAcquiringServicesInterval:
+      type: string
+      description: Identificación del intervalo a ser exhibido.
+      enum:
+        - 1_FAIXA
+        - 2_FAIXA
+        - 3_FAIXA
+        - 4_FAIXA
+      example: 1_FAIXA
+    Price:
+      type: object
+      description: '4 Franjas de igual tamaño, con sus respectivas medianas y porcentajes de clientes.'
+      required:
+        - interval
+        - value
+        - customerRate
+      properties:
+        interval:
+          $ref: '#/components/schemas/EnumAcquiringServicesInterval'
+        value:
+          type: string
+          example: '0.019800'
+          minLength: 8
+          maxLength: 8
+          pattern: '^\d{1}\.\d{6}$'
+          description: Mediana referente a la tasa de descuento de débito o crédito en cada intervalo.
+        customerRate:
+          type: string
+          example: '0.019800'
+          minLength: 8
+          maxLength: 8
+          pattern: '^\d{1}\.\d{6}$'
+          description: Porcentaje de clientes en cada intervalo.
+      additionalProperties: false
+    AcquiringServicesContractData:
+      type: object
+      description: Conjunto de información referente a las informaciones de procesamiento
+      required:
+        - participant
+        - feeName
+        - code
+        - prices
+        - chargingTriggerInfo
+        - minimum
+        - maximum
+      properties:
+        participant:
+          $ref: '#/components/schemas/AcquiringParticipant'
+        feeName:
+          $ref: '#/components/schemas/EnumAcquiringServicesFeeName'
+        code:
+          $ref: '#/components/schemas/EnumAcquiringServicesCode'
+        prices:
+          type: array
+          minItems: 4
+          maxItems: 4
+          items:
+            $ref: '#/components/schemas/Price'
+          example:
+            - interval: 1_FAIXA
+              value: '0.020300'
+              customerRate: '0.500000'
+            - interval: 2_FAIXA
+              value: '0.030600'
+              customerRate: '0.100000'
+            - interval: 3_FAIXA
+              value: '0.034300'
+              customerRate: '0.300000'
+            - interval: 4_FAIXA
+              value: '0.246800'
+              customerRate: '0.100000'
+        chargingTriggerInfo:
+          type: string
+          minLength: 1
+          maxLength: 200
+          example: Recepción mediante transacción de tarjeta.
+          description: |
+            Descripción del Factor generador de cobro que incide sobre el servicio de procesamiento.
+        minimum:
+          type: string
+          minLength: 8
+          maxLength: 8
+          pattern: '^\d{1}\.\d{6}$'
+          description: Valor mínimo
+          example: '0.019800'
+        maximum:
+          type: string
+          minLength: 8
+          maxLength: 8
+          pattern: '^\d{1}\.\d{6}$'
+          description: Valor máximo
+          example: '0.019800'
+      additionalProperties: false
+    OpenDataResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Código de error específico del endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descripción legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+            additionalProperties: false
+        meta:
+          $ref: '#/components/schemas/OpenDataMeta'
+      additionalProperties: false
+  parameters:
+    page:
+      name: page
+      in: query
+      description: Número de la página que se está solicitando (el valor de la primera página es 1).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+        maximum: 2147483647
+        format: int32
+    pageSize:
+      name: page-size
+      in: query
+      description: Cantidad total de registros por páginas.
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        format: int32
+        maximum: 1000
+  responses:
+    OKResponseAcquiringServices:
+      description: Datos de operaciones de procesamiento obtenidos con éxito.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OKResponseAcquiringServices'
+    BadRequest:
+      description: 'La solicitud fue malformada, omitiendo atributos obligatorios, sea en el payload o a través de atributos en la URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/OpenDataResponseError'
+    NotFound:
+      description: El recurso solicitado no existe o no ha sido implementado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/OpenDataResponseError'
+    MethodNotAllowed:
+      description: El consumidor intentó acceder al recurso con un método no soportado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/OpenDataResponseError'
+    TooManyRequests:
+      description: 'La operación fue rechazada, pues muchas solicitudes fueron hechas dentro de un determinado período o el límite de solicitudes concurrentes fue alcanzado.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/OpenDataResponseError'
+    InternalServerError:
+      description: Ocurrió un error en el gateway de la API o en el microservicio
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/OpenDataResponseError'
+    SiteIsOverloaded:
+      description: 'El sitio está sobrecargado y la operación fue rechazada, pues se alcanzó el límite máximo de TPS global, en este momento.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            type: object
+            required:
+              - errors
+            properties:
+              errors:
+                type: array
+                minItems: 1
+                maxItems: 13
+                items:
+                  type: object
+                  required:
+                    - code
+                    - title
+                    - detail
+                  properties:
+                    code:
+                      description: Código de error específico del endpoint
+                      type: string
+                      pattern: '[\w\W\s]*'
+                      maxLength: 255
+                    title:
+                      description: Título legible por humanos de este error específico
+                      type: string
+                      pattern: '[\w\W\s]*'
+                      maxLength: 255
+                    detail:
+                      description: Descripción legible por humanos de este error específico
+                      type: string
+                      pattern: '[\w\W\s]*'
+                      maxLength: 2048
+              meta:
+                type: object
+                description: Meta informaciones referentes a la API solicitada.
+                required:
+                  - requestDateTime
+                properties:
+                  requestDateTime:
+                    description: 'Fecha y hora de la consulta, según especificación RFC-3339, formato UTC.'
+                    type: string
+                    maxLength: 20
+                    format: date-time
+                    example: '2021-05-21T08:30:00Z'
+                    
