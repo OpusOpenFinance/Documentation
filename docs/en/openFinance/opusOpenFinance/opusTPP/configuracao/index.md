@@ -6,15 +6,15 @@ nav_order: 2
 lang: "pt-br"
 ---
 
-# Objetivo
+## Objetivo
 
 Descrever, de forma simples, o que uma instituição precisa fazer para configurar o OpusTPP.
 
 Este documento não contém comandos ou termos técnicos desnecessários. Para acessar a descrição mais técnica acesse [arquivo config técnica].
 
-# Etapas de Configuração
+## Etapas de Configuração
 
-## 1. Obter certificados regulatórios
+### 1. Obter certificados regulatórios
 
 São exigidos pelo Open Finance Brasil e Open Insurance Brasil:
 
@@ -24,7 +24,7 @@ São exigidos pelo Open Finance Brasil e Open Insurance Brasil:
 
 Esses certificados são gerados no Diretório de Participantes.
 
-## 2. Registrar a instituição e o aplicativo no Diretório Central
+### 2. Registrar a instituição e o aplicativo no Diretório Central
 
 São dois cadastros:
 
@@ -33,7 +33,7 @@ São dois cadastros:
 
 Esses IDs são essenciais para o funcionamento do produto.
 
-## 3. Definir URLs de redirecionamento
+### 3. Definir URLs de redirecionamento
 
 São utilizadas pelas instituições transmissoras para redirecionar usuários após consentimentos e autorizações.
 
@@ -44,7 +44,7 @@ Exemplos comuns:
 
 Essas URL devem ser cadastradas no software-statement.
 
-## 4. Disponibilizar o ambiente de execução
+### 4. Disponibilizar o ambiente de execução
 
 A instituição deve fornecer:
 
@@ -53,7 +53,7 @@ A instituição deve fornecer:
 
 Um domínio (FQDN) para expor o produto
 
-## 5. Fornecer informações ao time técnico
+### 5. Fornecer informações ao time técnico
 
 Os técnicos irão configurar o OpusTPP, mas precisam receber:
 
@@ -63,7 +63,7 @@ Os técnicos irão configurar o OpusTPP, mas precisam receber:
 - FQDN público
 - Dados do banco de dados
 
-## 6. Decidir integrações opcionais
+### 6. Decidir integrações opcionais
 
 O OpusTPP suporta:
 
@@ -75,7 +75,8 @@ O OpusTPP suporta:
 
 Cabe ao negócio definir o que será habilitado.
 
-# Conclusão
+## Conclusão
+
 A configuração em alto nível se resume a:
 
 Ter certificados

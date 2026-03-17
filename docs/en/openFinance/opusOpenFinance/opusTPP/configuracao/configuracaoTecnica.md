@@ -6,15 +6,15 @@ nav_order: 2
 lang: "pt-br"
 ---
 
-# Objetivo
+## Objetivo
 
 Descrever os parâmetros técnicos necessários para configurar o OpusTPP.
 
 Instruções de instalação via Helm e Kubernetes podem ser obtidos em [arquivo instalcao tecnica].
 
-# Etapas de Configuração
+## Etapas de Configuração
 
-## 1. Certificados no Kubernetes
+### 1. Certificados no Kubernetes
 
 O OpusTPP utiliza:
 
@@ -25,20 +25,20 @@ O OpusTPP utiliza:
 
 Esses arquivos devem ser carregados em secrets do Kubernetes.
 
-## 2. Estrutura necessária no banco
+### 2. Estrutura necessária no banco
 
 O banco precisa conter:
 
-### Organização
+#### Organização
 
 Identificador do participante (CNPJ → id_organisation).
 
-### Software Statement
+#### Software Statement
 
 - softwareStatementId
 - client_id
 
-### Application
+#### Application
 
 - id_application
 - id_organisation
@@ -48,13 +48,13 @@ Identificador do participante (CNPJ → id_organisation).
 - fqdn (opcional)
 - redirect_identifier (opcional)
 
-## 3. Estrutura de Configurações (Helm values.yaml)
+### 3. Estrutura de Configurações (Helm values.yaml)
 
-### services
+#### services
 
 - URLs do Diretório Central.
 
-### privateKeys
+#### privateKeys
 
 Relaciona:
 
@@ -64,11 +64,11 @@ Relaciona:
 - softwareStatementId;
 - securityProfilePriority.
 
-### db
+#### db
 
 Configurações PostgreSQL.
 
-### config
+#### config
 
 Inclui:
 
@@ -79,7 +79,7 @@ Inclui:
 - companyProfileInfoUri;
 - pepper.
 
-### dapr
+#### dapr
 
 Configura:
 
@@ -88,19 +88,19 @@ Configura:
 - Pub/Sub
 - State store (opcional, recomendado)
 
-### cache (webhook)
+#### cache (webhook)
 
 Habilitação e TTL.
 
-### logs
+#### logs
 
 Configurações de logs regulatórios.
 
-### mqd
+#### mqd
 
 Integração com o Motor de Qualidade de Dados.
 
-### additionalVars
+#### additionalVars
 
 Parâmetros opcionais, como:
 

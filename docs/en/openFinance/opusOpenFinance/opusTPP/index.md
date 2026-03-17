@@ -2,17 +2,22 @@
 layout: default
 title: OpusTPP
 parent: "Opus Open Finance"
-nav_order: 5
+nav_order: 6
 lang: "pt-br"
+alternate_lang:
+    - path: "/Documentation/en/openFinance/opusOpenFinance/opusTPP/index"
+      lang: "en"
+    - path: "/Documentation/es/openFinance/opusOpenFinance/opusTPP/index"
+      lang: "es"
 ---
 
-# OpusTPP
+## OpusTPP
 
 O OpusTPP é um middleware especializado que abstrai integralmente as complexidades regulatórias do **Open Finance Brasil** e do **Open Insurance Brasil**. Ele permite que instituições atuem como Iniciadoras de Pagamento (ITP) e Receptoras de Dados sem lidar diretamente com padrões de segurança, requisitos técnicos ou fluxos regulatórios.
 
 Seu objetivo é simples: permitir que desenvolvedores integrem APIs reguladas como se fossem APIs REST tradicionais, enquanto o OpusTPP cuida de tudo que é complexo e regulatório.
 
-# O problema que o OpusTPP resolve
+## O problema que o OpusTPP resolve
 
 O Open Finance e o Open Insurance oferecem um ecossistema rico em dados e serviços, mas apresentam desafios técnicos e regulatórios significativos:
 
@@ -25,7 +30,7 @@ O Open Finance e o Open Insurance oferecem um ecossistema rico em dados e servi�
 - Alta complexidade para atender aos requisitos de ITP e Receptor de Dados;
 - Custos elevados e necessidade constante de equipe especializada.
 
-# O que o OpusTPP faz
+## O que o OpusTPP faz
 
 O OpusTPP funciona como um proxy cliente regulatório entre sua aplicação e os ecossistemas do Open Finance Brasil e Open Insurance Brasil. Ele:
 
@@ -40,7 +45,7 @@ O OpusTPP funciona como um proxy cliente regulatório entre sua aplicação e os
 
 O produto é composto por módulos que podem ser adquiridos separadamente:
 
-## Open Finance Brasil
+### Open Finance Brasil
 
 - **Receptor de Dados Cadastrais e Transacionais:**
   - Permite solicitar e obter dados de clientes, incluindo dados cadastrais, transações, cartões e produtos de crédito.
@@ -49,14 +54,14 @@ O produto é composto por módulos que podem ser adquiridos separadamente:
 - **Iniciador de Transação de Pagamento (ITP):**
   - Suporta iniciação, execução e acompanhamento de pagamentos, incluindo toda a jornada de consentimento.
 
-## Open Insurance Brasil:**
+### Open Insurance Brasil:**
 
 - **Receptor de Dados Cadastrais e Apólices:**
   - Permite acesso a dados cadastrais e informações de seguros, previdência complementar aberta e capitalização.
 
 Com isso, integrações regulatórias passam a ser simples, previsíveis e estáveis.
 
-# O que o OpusTPP não faz
+## O que o OpusTPP não faz
 
 Para evitar expectativas incorretas, é importante esclarecer o que o OpusTPP não se propõe a fazer:
 
@@ -69,7 +74,7 @@ Para evitar expectativas incorretas, é importante esclarecer o que o OpusTPP n�
 
 O foco do OpusTPP é garantir conformidade, segurança e padronização — não substituir as decisões ou responsabilidades da instituição usuária.
 
-# A proposta central
+## A proposta central
 
 Em essência, o OpusTPP transforma APIs regulatórias complexas em integrações simples, estáveis e escaláveis.
 
