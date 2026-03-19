@@ -1,0 +1,1598 @@
+openapi: 3.0.0
+info:
+  title: API Setup - API de registro de un cliente en Opus Data Receiver
+  description: |
+    API que trata de la creación, consulta, renovación y revocación de registros de clientes en ODR. Para Open Finance Brasil, corresponde a la API de gestión de un consentimiento para Datos registrales y transaccionales - customer-data.
+    No posee segregación entre persona natural y persona jurídica.
+
+    # Orientaciones importantes
+
+    - La API Setups está compuesta de endpoints que permiten:
+      - Creación del registro: `POST /setup`
+      - Devolución del registro específico: `GET /setup/{setupId}`
+      - Solicitud de renovación de registro: `POST /setup/{setupId}/extends`
+      - Solicitud de revocación del registro: `DELETE /setup/{setupId}`
+    - Para el registro vinculado a Open Finance Brasil, se recomienda encarecidamente la lectura de la sección [Orientaciones - [DC] Consentimiento](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/219480491) para mayores detalles, reglas y restricciones referentes a los endpoints de la API Consents
+    - Después del `POST` de creación del registro, el `STATUS` devuelto en la respuesta deberá ser `AWAITING_AUTHORISATION`.
+    - El `STATUS` será alterado para `AUTHORISED` solamente después de autenticación y confirmación por parte del usuario en la institución transmisora de los datos.
+    - La descripción del flujo de registro en ODR vinculado a Open Finance Brasil (consentimiento) se encuentra disponible en el [Portal del desarrollador](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369300/Dados+Cadastrais+e+Transacionais#Fluxo-b%C3%A1sico-de-consentimento).
+    - El archivo con el mapeo completo entre `Roles`, `scopes` y `permissions` está disponible en el Portal del desarrollador, en el mismo ítem arriba - descripción del flujo de consentimiento.
+    - La receptora debe enviar obligatoriamente, en la solicitud de creación de consentimiento, todas las permissions de los agrupamientos de datos a los cuales ella desea consentimiento, conforme tabla abajo:
+
+      ```
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      | ROLE  | CATEGORÍA DE DATOS   | AGRUPAMIENTO                  | PERMISSIONS                                              | SCOPE OAUTH 2.0               |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ                  | customers                     |
+      |       | Registro             | Datos Registrales PF          |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           | resources                     |
+      |       |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CUSTOMERS_PERSONAL_ADITTIONALINFO_READ                   | customers                     |
+      |       | Registro             | Informaciones complementarias PF |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           | resources                     |
+      | DATOS |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ                  | customers                     |
+      |       | Registro             | Datos Registrales PJ          |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           | resources                     |
+      |       |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CUSTOMERS_BUSINESS_ADITTIONALINFO_READ                   | customers                     |
+      |       | Registro             | Informaciones complementarias PJ |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           | resources                     |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | ACCOUNTS_READ                                            |                               |
+      |       |                      |                               |----------------------------------------------------------| accounts                      |
+      |       | Cuentas              | Saldos                        | ACCOUNTS_BALANCES_READ                                   |                               |
+      |       |                      |                               |----------------------------------------------------------| resources                     |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |       |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | ACCOUNTS_READ                                            |                               |
+      |       |                      |                               |----------------------------------------------------------| accounts                      |
+      | DATOS | Cuentas              | Límites                       | ACCOUNTS_OVERDRAFT_LIMITS_READ                           |                               |
+      |       |                      |                               |----------------------------------------------------------| resources                     |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |       |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | ACCOUNTS_READ                                            |                               |
+      |       |                      |                               |----------------------------------------------------------| accounts                      |
+      |       | Cuentas              | Extractos                     | ACCOUNTS_TRANSACTIONS_READ                               |                               |
+      |       |                      |                               |----------------------------------------------------------| resources                     |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CREDIT_CARDS_ACCOUNTS_READ                               |                               |
+      |       |                      |                               |----------------------------------------------------------| credit-cards-accounts         |
+      |       | Tarjeta de Crédito   | Límites                       | CREDIT_CARDS_ACCOUNTS_LIMITS_READ                        |                               |
+      |       |                      |                               |----------------------------------------------------------| resources                     |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |       |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CREDIT_CARDS_ACCOUNTS_READ                               |                               |
+      |       |                      |                               |----------------------------------------------------------| credit-cards-accounts         |
+      |       | Tarjeta de Crédito   | Transacciones                 | CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ                  |                               |
+      | DATOS |                      |                               |----------------------------------------------------------| resources                     |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |       |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CREDIT_CARDS_ACCOUNTS_READ                               |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | CREDIT_CARDS_ACCOUNTS_BILLS_READ                         | credit-cards-accounts         |
+      |       | Tarjeta de Crédito   | Facturas                      |----------------------------------------------------------|                               |
+      |       |                      |                               | CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ            | resources                     |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | LOANS_READ                                               |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | LOANS_WARRANTIES_READ                                    |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | LOANS_SCHEDULED_INSTALMENTS_READ                         |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | LOANS_PAYMENTS_READ                                      |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | FINANCINGS_READ                                          |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | FINANCINGS_WARRANTIES_READ                               |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | FINANCINGS_SCHEDULED_INSTALMENTS_READ                    | loans                         |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | FINANCINGS_PAYMENTS_READ                                 | financings                    |
+      | DATOS | Operaciones de Crédito | Datos del Contrato          | UNARRANGED_ACCOUNTS_OVERDRAFT_READ                       | unarranged-accounts-overdraft |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ            | invoice-financings            |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ | resources                     |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ              |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | INVOICE_FINANCINGS_READ                                  |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | INVOICE_FINANCINGS_WARRANTIES_READ                       |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ            |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | INVOICE_FINANCINGS_PAYMENTS_READ                         |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | BANK_FIXED_INCOMES_READ                                  | bank-fixed-incomes            |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | CREDIT_FIXED_INCOMES_READ                                | credit-fixed-incomes          |
+      | DATOS | Inversión            | Datos de la Operación         | FUNDS_READ                                               | variable-incomes              |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | VARIABLE_INCOMES_READ                                    | treasure-titles               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | TREASURE_TITLES_READ                                     | funds                         |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           | resources                     |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | EXCHANGES_READ                                           |                               |
+      | DATOS | Cambio               | Datos de la Operación         |----------------------------------------------------------| exchanges                     |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+
+      ```
+
+  version: 3.2.0
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+tags:
+  - name: Setups
+    description: 'Operaciones para creación, consulta, renovación y revocación del registro de un cliente en ODR.'
+paths:
+  /setup:
+    post:
+      tags:
+        - Setups
+      summary: Crear nuevo registro del cliente en ODR.
+      operationId: setupPostConsents
+      description: Método para la creación de un nuevo registro del cliente en ODR.
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConsent'
+        description: Payload para creación del registro del cliente en ODR. Utiliza como patrón el payload del consentimiento del Open Finance Brasil
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/201SetupCreated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+
+  '/setup/{setupId}':
+    get:
+      tags:
+        - Setups
+      summary: Obtener detalles del registro identificado por setupId.
+      operationId: setupGetConsentsConsentId
+      description: Método para obtener detalles del registro del cliente en ODR identificado por setupId.
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/200SetupSetupUUIDRead'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - Setups
+      summary: Eliminar / Revocar el registro del cliente en ODR identificado por setupId.
+      operationId: setupDeleteConsentsConsentId
+      description: Método para eliminar / revocar el registro del cliente en ODR identificado por setupId.
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '204':
+          $ref: '#/components/responses/204SetupSetupIdDeleted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityDelete'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+
+  '/setup/{setupId}/extensions':
+    get:
+      tags:
+        - Setups
+      summary: Obtener detalles de extensiones hechas en el registro del cliente en ODR identificado por setupId.
+      operationId: setupGetConsentsConsentIdExtensions
+      description: |
+        Método para obtener histórico de extensiones de registro del cliente en ODR identificado por setupId.
+
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/AuthorizationExtensions'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/200SetupSetupIdReadExtensions'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+
+  '/setup/{setupId}/extends':
+    post:
+      tags:
+        - Setups
+      summary: Renovar registro del cliente en ODR identificado por setupId.
+      operationId: setupPostConsentsConsentIdExtends
+      description: Método utilizado para renovación de registro del cliente en ODR del cliente. El registro del cliente en ODR solo puede ser renovado caso esté activo (status AUTHORISED) y tenga alcance simple de aprobación (no dependa de múltiples aprobadores). La alteración de fecha efectuada por la renovación debe reflejarse también en la consulta del método _GET/setup/{setupId}_.
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/AuthorizationExtensions'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddressExtensions'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgentExtensions'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConsentExtensions'
+        description: Payload para renovación del registro del cliente en ODR.
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/201SetupCreatedExtensions'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityConsents'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    Links:
+      type: object
+      description: Referencias para otros recursos de la API solicitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI completo que generó la respuesta actual.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        first:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI de la primera página que originó esta lista de resultados. Restricción - Obligatorio cuando no sea la primera página de la respuesta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        prev:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: "URI de la página anterior de esta lista de resultados. Restricción - Obligatorio cuando no sea la primera página de la respuesta"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        next:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI de la próxima página de esta lista de resultados. Restricción - Obligatorio cuando no sea la última página de la respuesta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        last:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI de la última página de esta lista de resultados. Restricción - Obligatorio cuando no sea la última página de la respuesta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    LinksConsents:
+      type: object
+      description: Referencias para otros recursos de la API solicitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI completo que generó la respuesta actual.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    Meta:
+      type: object
+      description: Meta información referente a la API solicitada.
+      required:
+        - requestDateTime
+      properties:
+        requestDateTime:
+          description: 'Fecha y hora de la consulta, conforme especificación RFC-3339, formato UTC.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+    MetaExtensions:
+      type: object
+      description: Meta información referente a la API solicitada.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Número total de registros en el resultado
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Número total de páginas en el resultado
+          example: 1
+        requestDateTime:
+          description: 'Fecha y hora de la consulta, conforme especificación RFC-3339, formato UTC.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+    MetaError:
+      type: object
+      description: Meta información referente a la API solicitada.
+      required:
+        - requestDateTime
+      properties:
+        requestDateTime:
+          description: 'Fecha y hora de la consulta, conforme especificación RFC-3339, formato UTC.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+    CreateConsent:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - permissions
+            - loggedUser
+          x-regulatory-required:
+            - permissions
+            - expirationDateTime
+          properties:
+            loggedUser:
+              $ref: '#/components/schemas/LoggedUser'
+            businessEntity:
+              $ref: '#/components/schemas/BusinessEntity'
+            permissions:
+              type: array
+              items:
+                description: 'Especifica los tipos de permisos de acceso a las APIs en el alcance del Open Finance Brasil - Datos registrales y transaccionales, de acuerdo con los bloques de consentimiento proporcionados por el usuario y necesarios para el acceso a cada endpoint de las APIs. Este array no debe tener duplicidad de ítems.'
+                type: string
+                enum:
+                  - ACCOUNTS_READ
+                  - ACCOUNTS_BALANCES_READ
+                  - ACCOUNTS_TRANSACTIONS_READ
+                  - ACCOUNTS_OVERDRAFT_LIMITS_READ
+                  - CREDIT_CARDS_ACCOUNTS_READ
+                  - CREDIT_CARDS_ACCOUNTS_BILLS_READ
+                  - CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ
+                  - CREDIT_CARDS_ACCOUNTS_LIMITS_READ
+                  - CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ
+                  - CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ
+                  - CUSTOMERS_PERSONAL_ADITTIONALINFO_READ
+                  - CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ
+                  - CUSTOMERS_BUSINESS_ADITTIONALINFO_READ
+                  - FINANCINGS_READ
+                  - FINANCINGS_SCHEDULED_INSTALMENTS_READ
+                  - FINANCINGS_PAYMENTS_READ
+                  - FINANCINGS_WARRANTIES_READ
+                  - INVOICE_FINANCINGS_READ
+                  - INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ
+                  - INVOICE_FINANCINGS_PAYMENTS_READ
+                  - INVOICE_FINANCINGS_WARRANTIES_READ
+                  - LOANS_READ
+                  - LOANS_SCHEDULED_INSTALMENTS_READ
+                  - LOANS_PAYMENTS_READ
+                  - LOANS_WARRANTIES_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ
+                  - RESOURCES_READ
+                  - BANK_FIXED_INCOMES_READ
+                  - CREDIT_FIXED_INCOMES_READ
+                  - FUNDS_READ
+                  - VARIABLE_INCOMES_READ
+                  - TREASURE_TITLES_READ
+                  - EXCHANGES_READ
+              minItems: 1
+              example:
+                - ACCOUNTS_READ
+                - ACCOUNTS_OVERDRAFT_LIMITS_READ
+                - RESOURCES_READ
+            expirationDateTime:
+              description: |
+                Fecha y hora de expiración del permiso. Refleja la fecha límite de validez del consentimiento.
+                Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC (UTC time format).
+
+                [Restricción] De llenado obligatorio en los casos en que haya validez determinada.
+                En casos de consentimiento con plazo indeterminado el campo no debe ser enviado.
+                Cuando llenado, el valor del campo no puede ultrapasar 12 meses.
+              type: string
+              maxLength: 20
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              example: '2021-05-21T08:30:00Z'
+    CreateConsentExtensions:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - loggedUser
+          properties:
+            expirationDateTime:
+              description: |
+                Fecha y hora de expiración del permiso. Refleja la fecha límite de validez del consentimiento.
+                Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC (UTC time format).
+
+              type: string
+              format: date-time
+              pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
+              maxLength: 20
+              example: '2021-05-21T08:30:00Z'
+            loggedUser:
+              $ref: '#/components/schemas/LoggedUserExtensions'
+            businessEntity:
+              $ref: '#/components/schemas/BusinessEntityExtensions'
+    EnumRejectedBy:
+      type: string
+      description: |
+        Informar usuario responsable por el rechazo.
+        1. USER usuario
+        2. ASPSP institución transmisora
+        3. TPP institución receptora
+      enum:
+        - USER
+        - ASPSP
+        - TPP
+      example: USER
+    ResponseConsent:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - consentId
+            - creationDateTime
+            - status
+            - statusUpdateDateTime
+            - permissions
+          x-regulatory-required:
+            - permissions
+            - expirationDateTime
+          properties:
+            consentId:
+              description: |
+                El consentId es el identificador único del consentimiento y deberá ser un URN - Uniform Resource Name.
+                Un URN, conforme definido en [RFC8141](https://tools.ietf.org/html/rfc8141) es un Uniform Resource
+                Identifier - URI - que es atribuido bajo el URI scheme "urn" y un namespace URN específico, con la intención de que el URN
+                sea un identificador de recurso persistente e independiente de la localización.
+                Considerando la string urn:bancoex:C1DD33123 como ejemplo para consentId tenemos:
+                - el namespace(urn)
+                - el identificador asociado al namespace de la institución transmisora (bancoex)
+                - el identificador específico dentro del namespace (C1DD33123).
+                Informaciones más detalladas sobre la construcción de namespaces deben ser consultadas en la [RFC8141](https://tools.ietf.org/html/rfc8141).
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              example: 'urn:bancoex:C1DD33123'
+            creationDateTime:
+              description: 'Fecha y hora en que el recurso fue creado. Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC(UTC time format).'
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              example: '2021-05-21T08:30:00Z'
+              maxLength: 20
+            status:
+              description: Estado actual del consentimiento registrado.
+              type: string
+              enum:
+                - AUTHORISED
+                - AWAITING_AUTHORISATION
+                - REJECTED
+              example: AWAITING_AUTHORISATION
+            statusUpdateDateTime:
+              description: 'Fecha y hora en que el recurso fue actualizado. Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC(UTC time format).'
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              example: '2021-05-21T08:30:00Z'
+              maxLength: 20
+            permissions:
+              type: array
+              minItems: 1
+              description: 'Especifica los tipos de permisos de acceso a las APIs en el alcance del Open Finance Brasil - Datos registrales y transaccionales, de acuerdo con los bloques de consentimiento proporcionados por el usuario y necesarios para el acceso a cada endpoint de las APIs. Este array no debe tener duplicidad de ítems.'
+              items:
+                type: string
+                enum:
+                  - ACCOUNTS_READ
+                  - ACCOUNTS_BALANCES_READ
+                  - ACCOUNTS_TRANSACTIONS_READ
+                  - ACCOUNTS_OVERDRAFT_LIMITS_READ
+                  - CREDIT_CARDS_ACCOUNTS_READ
+                  - CREDIT_CARDS_ACCOUNTS_BILLS_READ
+                  - CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ
+                  - CREDIT_CARDS_ACCOUNTS_LIMITS_READ
+                  - CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ
+                  - CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ
+                  - CUSTOMERS_PERSONAL_ADITTIONALINFO_READ
+                  - CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ
+                  - CUSTOMERS_BUSINESS_ADITTIONALINFO_READ
+                  - FINANCINGS_READ
+                  - FINANCINGS_SCHEDULED_INSTALMENTS_READ
+                  - FINANCINGS_PAYMENTS_READ
+                  - FINANCINGS_WARRANTIES_READ
+                  - INVOICE_FINANCINGS_READ
+                  - INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ
+                  - INVOICE_FINANCINGS_PAYMENTS_READ
+                  - INVOICE_FINANCINGS_WARRANTIES_READ
+                  - LOANS_READ
+                  - LOANS_SCHEDULED_INSTALMENTS_READ
+                  - LOANS_PAYMENTS_READ
+                  - LOANS_WARRANTIES_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ
+                  - RESOURCES_READ
+                  - BANK_FIXED_INCOMES_READ
+                  - CREDIT_FIXED_INCOMES_READ
+                  - FUNDS_READ
+                  - VARIABLE_INCOMES_READ
+                  - TREASURE_TITLES_READ
+                  - EXCHANGES_READ
+              example:
+                - ACCOUNTS_READ
+                - ACCOUNTS_OVERDRAFT_LIMITS_READ
+                - RESOURCES_READ
+            expirationDateTime:
+              description: |
+                Fecha y hora de expiración del permiso. Refleja la fecha límite de validez del consentimiento.
+                Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC (UTC time format).
+
+                [Restricción] De llenado obligatorio en los casos en que haya validez determinada.
+                En casos de consentimiento con plazo indeterminado el campo no debe ser enviado.
+                Cuando llenado, el valor del campo no puede ultrapasar 12 meses.
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              example: '2021-05-21T08:30:00Z'
+              maxLength: 20
+            setupId:
+              description: |
+                El SetupUUID es el identificador único en ODR (GUID).
+                Deberá ser usado para realizar todas las otras llamadas en ODR, como búsqueda de cuentas, transacciones, etc.
+              type: string
+              format: uuid
+              example: '550e8400-e29b-41d4-a716-446655440000'
+        links:
+          $ref: '#/components/schemas/LinksConsents'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseConsentExtensions:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - consentId
+            - creationDateTime
+            - status
+            - statusUpdateDateTime
+            - permissions
+          properties:
+            consentId:
+              description: |
+                El consentId es el identificador único del consentimiento y deberá ser un URN - Uniform Resource Name.
+                Un URN, conforme definido en [RFC8141](https://tools.ietf.org/html/rfc8141) es un Uniform Resource
+                Identifier - URI - que es atribuido bajo el URI scheme "urn" y un namespace URN específico, con la intención de que el URN
+                sea un identificador de recurso persistente e independiente de la localización.
+                Considerando la string urn:bancoex:C1DD33123 como ejemplo para consentId tenemos:
+                - el namespace(urn)
+                - el identificador asociado al namespace de la institución transmisora (bancoex)
+                - el identificador específico dentro del namespace (C1DD33123).
+                Informaciones más detalladas sobre la construcción de namespaces deben ser consultadas en la [RFC8141](https://tools.ietf.org/html/rfc8141).
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              example: 'urn:bancoex:C1DD33123'
+            creationDateTime:
+              description: Fecha y hora en que el recurso fue creado. Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC(UTC time format).
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              maxLength: 20
+            status:
+              description: Estado actual del consentimiento registrado.
+              type: string
+              enum:
+                - AUTHORISED
+                - AWAITING_AUTHORISATION
+                - REJECTED
+              example: AWAITING_AUTHORISATION
+            statusUpdateDateTime:
+              description: Fecha y hora en que el recurso fue actualizado. Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC(UTC time format).
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              maxLength: 20
+            permissions:
+              type: array
+              minItems: 1
+              description: Especifica los tipos de permisos de acceso a las APIs en el alcance del Open Finance Brasil - Datos registrales y transaccionales, de acuerdo con los bloques de consentimiento proporcionados por el usuario y necesarios para el acceso a cada endpoint de las APIs. Este array no debe tener duplicidad de ítems.
+              items:
+                type: string
+                enum:
+                  - ACCOUNTS_READ
+                  - ACCOUNTS_BALANCES_READ
+                  - ACCOUNTS_TRANSACTIONS_READ
+                  - ACCOUNTS_OVERDRAFT_LIMITS_READ
+                  - CREDIT_CARDS_ACCOUNTS_READ
+                  - CREDIT_CARDS_ACCOUNTS_BILLS_READ
+                  - CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ
+                  - CREDIT_CARDS_ACCOUNTS_LIMITS_READ
+                  - CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ
+                  - CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ
+                  - CUSTOMERS_PERSONAL_ADITTIONALINFO_READ
+                  - CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ
+                  - CUSTOMERS_BUSINESS_ADITTIONALINFO_READ
+                  - FINANCINGS_READ
+                  - FINANCINGS_SCHEDULED_INSTALMENTS_READ
+                  - FINANCINGS_PAYMENTS_READ
+                  - FINANCINGS_WARRANTIES_READ
+                  - INVOICE_FINANCINGS_READ
+                  - INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ
+                  - INVOICE_FINANCINGS_PAYMENTS_READ
+                  - INVOICE_FINANCINGS_WARRANTIES_READ
+                  - LOANS_READ
+                  - LOANS_SCHEDULED_INSTALMENTS_READ
+                  - LOANS_PAYMENTS_READ
+                  - LOANS_WARRANTIES_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ
+                  - RESOURCES_READ
+                  - BANK_FIXED_INCOMES_READ
+                  - CREDIT_FIXED_INCOMES_READ
+                  - FUNDS_READ
+                  - VARIABLE_INCOMES_READ
+                  - TREASURE_TITLES_READ
+              example:
+                - ACCOUNTS_READ
+                - ACCOUNTS_OVERDRAFT_LIMITS_READ
+                - RESOURCES_READ
+            expirationDateTime:
+              description: |
+                Fecha y hora de expiración del permiso. Refleja la fecha límite de validez del consentimiento.
+                Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC (UTC time format).
+
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              maxLength: 20
+        links:
+          $ref: '#/components/schemas/LinksConsents'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseConsentRead:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - consentId
+            - creationDateTime
+            - status
+            - statusUpdateDateTime
+            - permissions
+          x-regulatory-required:
+            - permissions
+            - expirationDateTime​
+          properties:
+            consentId:
+              description: |
+                El consentId es el identificador único del consentimiento y deberá ser un URN - Uniform Resource Name.
+                Un URN, conforme definido en [RFC8141](https://tools.ietf.org/html/rfc8141) es un Uniform Resource
+                Identifier - URI - que es atribuido bajo el URI scheme "urn" y un namespace URN específico, con la intención de que el URN
+                sea un identificador de recurso persistente e independiente de la localización.
+                Considerando la string urn:bancoex:C1DD33123 como ejemplo para consentId tenemos:
+                - el namespace(urn)
+                - el identificador asociado al namespace de la institución transmisora (bancoex)
+                - el identificador específico dentro del namespace (C1DD33123).
+                Informaciones más detalladas sobre la construcción de namespaces deben ser consultadas en la [RFC8141](https://tools.ietf.org/html/rfc8141).
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              example: 'urn:bancoex:C1DD33123'
+            creationDateTime:
+              description: 'Fecha y hora en que el recurso fue creado. Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC(UTC time format).'
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              example: '2021-05-21T08:30:00Z'
+              maxLength: 20
+            status:
+              description: Estado actual del consentimiento registrado.
+              type: string
+              enum:
+                - AUTHORISED
+                - AWAITING_AUTHORISATION
+                - REJECTED
+              example: AWAITING_AUTHORISATION
+            statusUpdateDateTime:
+              description: 'Fecha y hora en que el recurso fue actualizado. Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC(UTC time format).'
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              example: '2021-05-21T08:30:00Z'
+              maxLength: 20
+            permissions:
+              type: array
+              minItems: 1
+              description: 'Especifica los tipos de permisos de acceso a las APIs en el alcance del Open Finance Brasil - Datos registrales y transaccionales, de acuerdo con los bloques de consentimiento proporcionados por el usuario y necesarios para el acceso a cada endpoint de las APIs. Este array no debe tener duplicidad de ítems.'
+              items:
+                type: string
+                enum:
+                  - ACCOUNTS_READ
+                  - ACCOUNTS_BALANCES_READ
+                  - ACCOUNTS_TRANSACTIONS_READ
+                  - ACCOUNTS_OVERDRAFT_LIMITS_READ
+                  - CREDIT_CARDS_ACCOUNTS_READ
+                  - CREDIT_CARDS_ACCOUNTS_BILLS_READ
+                  - CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ
+                  - CREDIT_CARDS_ACCOUNTS_LIMITS_READ
+                  - CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ
+                  - CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ
+                  - CUSTOMERS_PERSONAL_ADITTIONALINFO_READ
+                  - CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ
+                  - CUSTOMERS_BUSINESS_ADITTIONALINFO_READ
+                  - FINANCINGS_READ
+                  - FINANCINGS_SCHEDULED_INSTALMENTS_READ
+                  - FINANCINGS_PAYMENTS_READ
+                  - FINANCINGS_WARRANTIES_READ
+                  - INVOICE_FINANCINGS_READ
+                  - INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ
+                  - INVOICE_FINANCINGS_PAYMENTS_READ
+                  - INVOICE_FINANCINGS_WARRANTIES_READ
+                  - LOANS_READ
+                  - LOANS_SCHEDULED_INSTALMENTS_READ
+                  - LOANS_PAYMENTS_READ
+                  - LOANS_WARRANTIES_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ
+                  - RESOURCES_READ
+                  - BANK_FIXED_INCOMES_READ
+                  - CREDIT_FIXED_INCOMES_READ
+                  - FUNDS_READ
+                  - VARIABLE_INCOMES_READ
+                  - TREASURE_TITLES_READ
+                  - EXCHANGES_READ
+              example:
+                - ACCOUNTS_READ
+                - ACCOUNTS_OVERDRAFT_LIMITS_READ
+                - RESOURCES_READ
+            expirationDateTime:
+              description: |
+                Fecha y hora de expiración del permiso. Refleja la fecha límite de validez del consentimiento. Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC(UTC time format).
+
+                [Restricción] De llenado obligatorio en los casos en que haya validez determinada. En casos de consentimiento con plazo indeterminado el campo no debe ser llenado.
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              example: '2021-05-21T08:30:00Z'
+              maxLength: 20
+            rejection:
+              type: object
+              description: Objeto a ser devuelto caso el consentimiento sea rechazado.
+              required:
+                - rejectedBy
+                - reason
+              properties:
+                rejectedBy:
+                  $ref: '#/components/schemas/EnumRejectedBy'
+                reason:
+                  type: object
+                  description: Define la razón por la cual el consentimiento fue rechazado.
+                  required:
+                    - code
+                  properties:
+                    code:
+                      type: string
+                      description: |
+                        Define el código de la razón por la cual el consentimiento fue rechazado.
+
+                        - CONSENT_EXPIRED – consentimiento que ultrapasó el tiempo límite para autorización.
+                        - CUSTOMER_MANUALLY_REJECTED – cliente efectuó el rechazo del consentimiento manualmente a través de interacción en las instituciones participantes.
+                        - CUSTOMER_MANUALLY_REVOKED – cliente efectuó la revocación después de la autorización del consentimiento.
+                        - CONSENT_MAX_DATE_REACHED – consentimiento que ultrapasó el tiempo límite de compartimiento.
+                        - CONSENT_TECHNICAL_ISSUE – consentimiento que fue rechazado debido a un problema técnico que imposibilita su uso por la institución receptora, por ejemplo: falla asociada a cambio del AuthCode por el AccessToken, durante el proceso de Hybrid Flow.
+                        - INTERNAL_SECURITY_REASON – consentimiento que fue rechazado debido a las políticas de seguridad aplicada por la institución transmisora.
+                      enum:
+                        - CONSENT_EXPIRED
+                        - CUSTOMER_MANUALLY_REJECTED
+                        - CUSTOMER_MANUALLY_REVOKED
+                        - CONSENT_MAX_DATE_REACHED
+                        - CONSENT_TECHNICAL_ISSUE
+                        - INTERNAL_SECURITY_REASON
+                      example: CONSENT_EXPIRED
+                    additionalInformation:
+                      type: string
+                      description: Contiene informaciones adicionales a criterio de la transmisora.
+                      maxLength: 140
+                      pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                      example: Tiempo de confirmación de la múltiple alcance excedido.
+        links:
+          $ref: '#/components/schemas/LinksConsents'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseConsentReadExtensions:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            type: object
+            required:
+              - loggedUser
+              - requestDateTime
+            properties:
+              expirationDateTime:
+                description: |
+                  Fecha y hora de expiración del permiso. Refleja la fecha límite de validez del consentimiento. Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC(UTC time format), utilizado solo para consulta de alteraciones históricas de extensión del consentimiento.
+
+                  [Restricción] De llenado obligatorio en los casos en que haya validez determinada.
+
+                  En casos de consentimiento con plazo indeterminado el campo no debe ser llenado.
+                type: string
+                format: date-time
+                pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
+                maxLength: 20
+                example: '2021-05-21T08:30:00Z'
+              loggedUser:
+                $ref: '#/components/schemas/LoggedUserExtensions'
+              requestDateTime:
+                description: Fecha y hora en que el recurso fue creado. Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC(UTC time format).
+                type: string
+                format: date-time
+                example: '2021-05-21T08:30:00Z'
+                maxLength: 20
+              previousExpirationDateTime:
+                description: |
+                  Fecha y hora de expiración anteriores a la renovación. Refleja la fecha límite anterior de validez del consentimiento. Una string con fecha y hora conforme especificación RFC-3339, siempre con la utilización de timezone UTC (UTC time format).
+
+                  [Restricción] De llenado obligatorio en los casos en que haya validez determinada. En casos de consentimiento con plazo indeterminado, o renovaciones hechas con la v2.2.0 en que no exista persistencia de esa información, el campo no debe ser llenado.
+                type: string
+                format: date-time
+                pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
+                maxLength: 20
+                example: '2023-10-18T18:30:00Z'
+              xFapiCustomerIpAddress:
+                description: |
+                  La dirección IP del usuario logueado con el receptor que solicitó la renovación sin redireccionamiento.
+
+                  [Restricción] De llenado obligatorio a partir de la v3.0.0. Opcional para renovaciones hechas con la v2.2.0 cuando no existir persistencia de esa información.
+                type: string
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                minLength: 1
+                maxLength: 100
+                example: '172.217.22.14'
+              xCustomerUserAgent:
+                description: |
+                  Indica el user-agent que el usuario utilizó cuando solicitó la renovación sin redireccionamiento.
+
+                  [Restricción] De llenado obligatorio a partir de la v3.0.0. Opcional para renovaciones hechas con la v2.2.0 cuando no existir persistencia de esa información.
+                type: string
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                minLength: 1
+                maxLength: 100
+                example: Mozilla/5.0 (iPhone14,6; U; CPU iPhone OS 15_4 like Mac OS X)
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/MetaExtensions'
+    ResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Código de error específico del endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descripción legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          $ref: '#/components/schemas/MetaError'
+    ResponseErrorUnprocessableEntityDelete:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                type: string
+                enum:
+                  - CONSENTIMENTO_EM_STATUS_REJEITADO
+                example: CONSENTIMENTO_EM_STATUS_REJEITADO
+                description: |
+                  - CONSENTIMENTO_EM_STATUS_REJEITADO
+              title:
+                description: Título legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descripción legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          $ref: '#/components/schemas/MetaError'
+    ResponseErrorUnprocessableEntity:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                type: string
+                enum:
+                  - SEM_PERMISSOES_FUNCIONAIS_RESTANTES
+                  - INFORMACOES_PJ_NAO_INFORMADAS
+                  - PERMISSOES_PJ_INCORRETAS
+                  - PERMISSAO_PF_PJ_EM_CONJUNTO
+                  - COMBINACAO_PERMISSOES_INCORRETA
+                  - DATA_EXPIRACAO_INVALIDA
+                  - ERRO_NAO_MAPEADO
+                example: SEM_PERMISSOES_FUNCIONAIS_RESTANTES
+                description: |
+                  - SEM_PERMISSOES_FUNCIONAIS_RESTANTES
+                  - INFORMACOES_PJ_NAO_INFORMADAS
+                  - PERMISSOES_PJ_INCORRETAS
+                  - PERMISSAO_PF_PJ_EM_CONJUNTO
+                  - COMBINACAO_PERMISSOES_INCORRETA
+                  - DATA_EXPIRACAO_INVALIDA
+                  - ERRO_NAO_MAPEADO
+
+                  La opción "ERRO_NAO_MAPEADO" solo debe ser utilizada caso no haya un code específico mapeado para el error.
+              title:
+                description: Título legible por humanos de este error específico.
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descripción legible por humanos de este error específico.
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          $ref: '#/components/schemas/MetaError'
+    422ResponseErrorCreateConsent:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 3
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                type: string
+                enum:
+                  - DEPENDE_MULTIPLA_ALCADA
+                  - ESTADO_CONSENTIMENTO_INVALIDO
+                  - DATA_EXPIRACAO_INVALIDA
+                  - ERRO_NAO_MAPEADO
+                example: DEPENDE_MULTIPLA_ALCADA
+                description: |
+                 Códigos de errores previstos en durante el proceso de extensión del consentimiento:
+                  - DEPENDE_MULTIPLA_ALCADA: Necesario aprobación de múltiple alcance.
+                  - ESTADO_CONSENTIMENTO_INVALIDO: Estado inválido del consentimiento.
+                  - DATA_EXPIRACAO_INVALIDA: Nueva fecha para expiración del consentimiento es inválida.
+                  - ERRO_NAO_MAPEADO: Utilizado cuando no haya un code de error definido.
+              title:
+                type: string
+                maxLength: 255
+                pattern: '[\w\W\s]*'
+                example: Necesario aprobación de múltiple alcance.
+                description: |
+                  Título específico del error reportado, de acuerdo con el código enviado:
+                  - DEPENDE_MULTIPLA_ALCADA: Necesario aprobación de múltiple alcance.
+                  - ESTADO_CONSENTIMENTO_INVALIDO: Estado inválido del consentimiento.
+                  - DATA_EXPIRACAO_INVALIDA: Nueva fecha para expiración del consentimiento es inválida.
+                  - ERRO_NAO_MAPEADO: Utilizado cuando no haya un code de error definido. El texto debe dejar claro el motivo del error ocurrido.
+              detail:
+                type: string
+                maxLength: 2048
+                pattern: '[\w\W\s]*'
+                example: El consentimiento informado no puede ser renovado sin redireccionamiento porque depende de múltiple alcance para aprobación.
+                description: |
+                  Título específico del error reportado, de acuerdo con el código enviado:
+                  - DEPENDE_MULTIPLA_ALCADA: El consentimiento informado no puede ser renovado sin redireccionamiento porque depende de múltiple alcance para aprobación.
+                  - ESTADO_CONSENTIMENTO_INVALIDO: El consentimiento informado no puede ser renovado sin redireccionamiento porque está en un estado que no permite la renovación.
+                  - DATA_EXPIRACAO_INVALIDA: El consentimiento informado no puede ser renovado pues la nueva fecha de expiración no sigue la convención del ecosistema.
+                  - ERRO_NAO_MAPEADO: Utilizado cuando no haya un code de error definido. El texto debe dejar claro el motivo del error ocurrido.
+        meta:
+          $ref: '#/components/schemas/Meta'
+    LoggedUser:
+      type: object
+      description: |
+        Usuario (persona natural) que se encuentra logueado en la institución receptora y que iniciará el proceso de consentimiento para compartimiento de datos.
+
+        Es obligatorio que el número del documento utilizado sea un número válido y perteneciente al usuario logueado. La transmisora puede utilizar algoritmos de validación de documento para garantizar que se trata de un documento válido, como por ejemplo: Cálculo de DV módulo 11 para el CPF.
+      required:
+        - document
+      properties:
+        document:
+          $ref: '#/components/schemas/LoggedUserDocument'
+    LoggedUserExtensions:
+      type: object
+      description: |
+        Usuario (persona natural) que se encuentra logueado en la institución receptora y que iniciará el proceso de consentimiento para compartimiento de datos.
+        Debe ser almacenado como nuevo usuario logueado responsable por la renovación del consentimiento actual.
+      required:
+        - document
+      properties:
+        document:
+          $ref: '#/components/schemas/LoggedUserDocumentExtensions'
+    LoggedUserDocument:
+      type: object
+      required:
+        - identification
+        - rel
+      x-regulatory-required:
+        - identification
+      properties:
+        identification:
+          type: string
+          maxLength: 11
+          description: Número del documento de identificación oficial del usuario.
+          example: '11111111111'
+          pattern: '^\d{11}$'
+        rel:
+          type: string
+          maxLength: 3
+          description: Tipo del documento de identificación oficial del usuario.
+          example: CPF
+          pattern: '^[A-Z]{3}$'
+    LoggedUserDocumentExtensions:
+      type: object
+      required:
+        - identification
+        - rel
+      properties:
+        identification:
+          type: string
+          maxLength: 11
+          description: Número del documento de identificación oficial del usuario.
+          example: '11111111111'
+          pattern: '^\d{11}$'
+        rel:
+          type: string
+          maxLength: 3
+          description: Tipo del documento de identificación oficial del usuario.
+          example: CPF
+          pattern: '^[A-Z]{3}$'
+    BusinessEntity:
+      type: object
+      description: |
+        Titular, persona jurídica a quien se refieren los datos que son objeto de compartimiento.
+
+        Es obligatorio que el número del CNPJ utilizado sea un número válido. La transmisora puede utilizar algoritmos de validación de documento para garantizar que se trata de un documento válido, como por ejemplo: Cálculo de DV módulo 11 para el CNPJ.
+      required:
+        - document
+      properties:
+        document:
+          $ref: '#/components/schemas/BusinessEntityDocument'
+    BusinessEntityExtensions:
+      type: object
+      description: |
+        Titular, persona jurídica a quien se refieren los datos que son objeto de compartimiento.
+        Debe ser informado solo para casos de consentimiento persona jurídica.
+        No necesita ser almacenado separadamente. Para fines de renovación de consentimiento, será utilizado solo para verificación del consentimiento vigente, pues es un atributo inmutable.
+      required:
+        - document
+      properties:
+        document:
+          $ref: '#/components/schemas/BusinessEntityDocumentExtensions'
+    BusinessEntityDocument:
+      type: object
+      required:
+        - identification
+        - rel
+      x-regulatory-required:
+        - identification
+      properties:
+        identification:
+          type: string
+          maxLength: 14
+          description: Número del documento de identificación oficial del titular persona jurídica.
+          example: '11111111111111'
+          pattern: '^\d{14}$'
+        rel:
+          type: string
+          maxLength: 4
+          description: Tipo del documento de identificación oficial del titular persona jurídica.
+          example: CNPJ
+          pattern: '^[A-Z]{4}$'
+    BusinessEntityDocumentExtensions:
+      type: object
+      required:
+        - identification
+        - rel
+      properties:
+        identification:
+          type: string
+          maxLength: 14
+          description: Número del documento de identificación oficial del titular persona jurídica.
+          example: '11111111111111'
+          pattern: '^\d{14}$'
+        rel:
+          type: string
+          maxLength: 4
+          description: Tipo del documento de identificación oficial del titular persona jurídica.
+          example: CNPJ
+          pattern: '^[A-Z]{4}$'
+  parameters:
+    SetupID:
+      name: setupId
+      in: path
+      description: |
+          El SetupUUID es el identificador único en ODR (GUID).
+          Deberá ser usado para realizar todas las otras llamadas en ODR, como búsqueda de cuentas, transacciones, etc.
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: '550e8400-e29b-41d4-a716-446655440000'
+    ConsentId:
+      name: consentId
+      in: path
+      description: |
+        El consentId es el identificador único del consentimiento y deberá ser un URN - Uniform Resource Name.
+        Un URN, conforme definido en [RFC8141](https://tools.ietf.org/html/rfc8141) es un Uniform Resource
+        Identifier - URI - que es atribuido bajo el URI scheme "urn" y un namespace URN específico, con la intención de que el URN
+        sea un identificador de recurso persistente e independiente de la localización.
+        Considerando la string urn:bancoex:C1DD33123 como ejemplo para consentId tenemos:
+        - el namespace(urn)
+        - el identificador asociado al namespace de la institución transmisora (bancoex)
+        - el identificador específico dentro del namespace (C1DD33123).
+        Informaciones más detalladas sobre la construcción de namespaces deben ser consultadas en [RFC8141](https://tools.ietf.org/html/rfc8141).
+      required: true
+      schema:
+        type: string
+        pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+        minLength: 6
+        maxLength: 256
+    Authorization:
+      name: Authorization
+      in: header
+      description: Encabezado HTTP estándar. Permite que las credenciales sean proporcionadas dependiendo del tipo de recurso solicitado
+      required: true
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 2048
+    AuthorizationExtensions:
+      name: Authorization
+      in: header
+      description: Encabezado HTTP estándar. Permite que las credenciales sean proporcionadas dependiendo del tipo de recurso solicitado
+      required: true
+      schema:
+        type: string
+        pattern: '[^\s][\w\W\s][^\s]*'
+        minLength: 1
+        maxLength: 2048
+    Page:
+      name: page
+      in: query
+      description: Número de la página que está siendo solicitada (el valor de la primera página es 1).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+        maximum: 2147483647
+        format: int32
+    PageSize:
+      name: page-size
+      in: query
+      description: Cantidad total de registros por páginas. La transmisora debe considerar entrada como 25, caso sea informado algún valor menor por la receptora. Mientras haya más que 25 registros a enviar, la transmisora debe considerar el mínimo por página como 25. Solamente la última página devuelta (o primera, en el caso de página única) puede contener menos de 25 registros. Más información, acceda Especificaciones de APIs > Patrones > Paginación.
+      schema:
+        type: integer
+        default: 25
+        minimum: 25
+        format: int32
+        maximum: 1000
+    xCustomerUserAgent:
+      name: x-customer-user-agent
+      in: header
+      description: Indica el user-agent que el usuario utiliza.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xCustomerUserAgentExtensions:
+      name: x-customer-user-agent
+      in: header
+      description: Indica el user-agent que el usuario utiliza.
+      required: true
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xFapiAuthDate:
+      name: x-fapi-auth-date
+      in: header
+      description: 'Fecha en que el usuario inició sesión por última vez con el receptor. Representada de acuerdo con [RFC7231](https://tools.ietf.org/html/rfc7231).Ejemplo: Sun, 10 Sep 2017 19:43:31 UTC'
+      required: false
+      schema:
+        type: string
+        pattern: '^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$'
+        minLength: 29
+        maxLength: 29
+    xFapiCustomerIpAddress:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: La dirección IP del usuario si está actualmente logueado con el receptor.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xFapiCustomerIpAddressExtensions:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: La dirección IP del usuario si está actualmente logueado con el receptor.
+      required: true
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xFapiInteractionId:
+      name: x-fapi-interaction-id
+      in: header
+      description: Un UUID RFC4122 usado como un ID de correlación entre request y response. En el contexto de Open Finance Brasil es un campo de generación y envío obligatorio por la receptora (client) y su valor debe ser "reflejado" por la transmisora (server) en el encabezado de respuesta. Caso no sea recibido o si se recibe un valor inválido, la transmisora debe generar un x-fapi-interaction-id y devolverlo en la respuesta con el HTTP Status Code 400. La receptora debe acatar el valor recibido de la transmisora.
+      required: true
+      schema:
+        type: string
+        pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+        minLength: 1
+        maxLength: 36
+        format: uuid
+        example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+  responses:
+    UnsupportedMediaType:
+      description: El formato del payload no es un formato soportado.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    BadRequest:
+      description: 'La solicitud fue mal formada, omitiendo atributos obligatorios, sea en el payload o a través de atributos en la URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Forbidden:
+      description: El token tiene alcance incorrecto o una política de seguridad fue violada
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    InternalServerError:
+      description: Ocurrió un error en el gateway de la API o en el microservicio
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    MethodNotAllowed:
+      description: El consumidor intentó acceder al recurso con un método no soportado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    NotAcceptable:
+      description: La solicitud contenía un encabezado Accept diferente de los tipos de medios permitidos o un conjunto de caracteres diferente de UTF-8
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    NotFound:
+      description: El recurso solicitado no existe o no fue implementado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    TooManyRequests:
+      description: 'La operación fue rechazada, pues muchas solicitudes fueron hechas dentro de un determinado período o el límite global de solicitudes concurrentes fue alcanzado'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    UnprocessableEntity:
+      description: 'La sintaxis de la solicitud es correcta, pero no fue posible procesar las instrucciones presentes.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorUnprocessableEntity'
+    UnprocessableEntityDelete:
+      description: 'La sintaxis de la solicitud es correcta, pero no fue posible procesar las instrucciones presentes.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorUnprocessableEntityDelete'
+    UnprocessableEntityConsents:
+      description: 'La sintaxis de la solicitud está correcta, pero no fue posible procesar las instrucciones presentes.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/422ResponseErrorCreateConsent'
+          examples:
+            Necessário aprovação de múltipla alçada:
+              summary: Necesario aprobación de múltiple alcance
+              value:
+                errors:
+                  - code: DEPENDE_MULTIPLA_ALCADA
+                    title: Necesario aprobación de múltiple alcance.
+                    detail: 'El consentimiento informado no puede ser renovado sin redireccionamiento porque depende de múltiple alcance para aprobación'
+                meta:
+                  requestDateTime: '2021-05-21T08:30:00Z'
+                  totalPages: 1
+                  totalRecords: 1
+    Unauthorized:
+      description: Encabezado de autenticación ausente/inválido o token inválido
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+
+    201SetupCreated:
+      description: Registro creado con éxito.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Un UUID RFC4122 usado como un ID de correlación entre request y response. En el contexto de Open Finance Brasil es un campo de generación y envío obligatorio por la receptora (client) y su valor debe ser "reflejado" por la transmisora (server) en el encabezado de respuesta. Caso no sea recibido o si se recibe un valor inválido, la transmisora debe generar un x-fapi-interaction-id y devolverlo en la respuesta con el HTTP Status Code 400. La receptora debe acatar el valor recibido de la transmisora.
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            minLength: 1
+            maxLength: 36
+            example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+            format: uuid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseConsent'
+    201SetupCreatedExtensions:
+      description: Renovación del registro del cliente en ODR finalizada con éxito.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Un UUID RFC4122 usado como un ID de correlación entre request y response. En el contexto de Open Finance Brasil es un campo de generación y envío obligatorio por la receptora (client) y su valor debe ser "reflejado" por la transmisora (server) en el encabezado de respuesta. Caso no sea recibido o si se recibe un valor inválido, la transmisora debe generar un x-fapi-interaction-id y devolverlo en la respuesta con el HTTP Status Code 400. La receptora debe acatar el valor recibido de la transmisora.
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            minLength: 1
+            maxLength: 36
+            example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+            format: uuid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseConsentExtensions'
+    200SetupSetupUUIDRead:
+      description: Registro consultado con éxito.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Un UUID RFC4122 usado como un ID de correlación entre request y response. En el contexto de Open Finance Brasil es un campo de generación y envío obligatorio por la receptora (client) y su valor debe ser "reflejado" por la transmisora (server) en el encabezado de respuesta. Caso no sea recibido o si se recibe un valor inválido, la transmisora debe generar un x-fapi-interaction-id y devolverlo en la respuesta con el HTTP Status Code 400. La receptora debe acatar el valor recibido de la transmisora.
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            minLength: 1
+            maxLength: 36
+            example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+            format: uuid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseConsentRead'
+    200SetupSetupIdReadExtensions:
+      description: Renovaciones de registro del cliente en ODR consultado con éxito.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Un UUID RFC4122 usado como un ID de correlación entre request y response. En el contexto de Open Finance Brasil es un campo de generación y envío obligatorio por la receptora (client) y su valor debe ser "reflejado" por la transmisora (server) en el encabezado de respuesta. Caso no sea recibido o si se recibe un valor inválido, la transmisora debe generar un x-fapi-interaction-id y devolverlo en la respuesta con el HTTP Status Code 400. La receptora debe acatar el valor recibido de la transmisora.
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            minLength: 1
+            maxLength: 36
+            example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+            format: uuid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseConsentReadExtensions'
+    204SetupSetupIdDeleted:
+      description: Registro revocado con éxito.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Un UUID RFC4122 usado como un ID de correlación entre request y response. En el contexto de Open Finance Brasil es un campo de generación y envío obligatorio por la receptora (client) y su valor debe ser "reflejado" por la transmisora (server) en el encabezado de respuesta. Caso no sea recibido o si se recibe un valor inválido, la transmisora debe generar un x-fapi-interaction-id y devolverlo en la respuesta con el HTTP Status Code 400. La receptora debe acatar el valor recibido de la transmisora.
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            minLength: 1
+            maxLength: 36
+            example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+            format: uuid
+            
