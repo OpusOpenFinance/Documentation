@@ -107,7 +107,7 @@ function initSearch() {
 
   // Define o caminho para o arquivo search-data do idioma
   // var searchDataPath = "/Documentation/" + lang + "/assets/js/search-data-" + lang + ".json";
-  var searchDataPath = "/Documentation/" + "/assets/js/search-data-" + lang + ".json";
+  var searchDataPath = "/Documentation" + "/assets/js/search-data-" + lang + ".json";
 
   // Carrega o arquivo de dados de busca via AJAX
   var request = new XMLHttpRequest();
