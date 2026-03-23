@@ -12,3 +12,9 @@ alternate_lang:
 ---
 
 Em construção...
+
+<!--
+- Diferença de Open Finance pra Open Insurance;
+- O que significa solicitar consentimento;
+
+-->
