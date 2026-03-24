@@ -17,7 +17,7 @@ window.onload = () => {
     // =====================================================
     // Open Finance Brasil
     // Perfis de Participação
-    "oas-receptor": `${base}docs/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPDados.yml`,
+    "oas-receptor": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPDados.yml`,
     "oas-itp-pagamentos": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentos.yml`,
     "oas-itp-pagamentos-automaticos": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentosAutomaticos.yml`,
     "oas-back-dados": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOOFDados.yml`,
