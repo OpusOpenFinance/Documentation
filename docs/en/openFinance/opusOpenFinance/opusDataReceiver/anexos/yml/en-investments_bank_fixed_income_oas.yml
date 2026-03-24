@@ -1,0 +1,1418 @@
+openapi: 3.0.0
+info:
+  title: API Bank Fixed Incomes - Opus Data Receiver
+  description: |
+    API for Bank Fixed Income operation information stored in ODR. Uses the same standard definition as Open Finance Brazil (Phase 4) Bank Fixed Income.
+
+    API that returns investment operation information of the Bank Fixed Income type (CDB/RDB, LCI, and LCA) maintained at transmitting institutions by their customers, including data such as product denomination, profitability, quantity, terms, customer position balances, and financial transactions. 
+    
+    Does not have segregation between natural persons and legal entities. 
+    
+    Requires customer consent for all endpoints. Exposure will be per each fixed income operation contracted by the customer.
+  version: 1.0.4
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+tags:
+  - name: Product List
+    description: Gets the list of Bank Fixed Income operations maintained by the customer at the transmitting institution and for which they have provided customer registration in ODR.
+  - name: Product Identification
+    description: Gets the data of the Bank Fixed Income operation identified by investmentId.
+  - name: Balances
+    description: Gets the position of the Bank Fixed Income operation identified by investmentId.
+  - name: Transactions
+    description: Gets the historical transactions (last 12 months) of the Bank Fixed Income operation identified by investmentId.
+  - name: Transactions Current
+    description: 'Gets the recent transactions of the Bank Fixed Income operation identified by investmentId. The period to be considered for transaction presentation will be up to 7 days - 7 days prior to the query, including the query day (D-6).'
+paths:
+  /setup/investments/bank-fixed-income:
+    get:
+      tags:
+        - Product List
+      summary: Gets the list of Bank Fixed Income operations maintained by the customer at the transmitting institution and for which they have provided consent.
+      operationId: banktFixedIncomesGetInvestments
+      description: Gets the list of Bank Fixed Income operations maintained by the customer at the transmitting institution and for which they have provided consent.
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OkResponseBankFixedIncomesProductList'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '502':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        
+  '/setup/investments/bank-fixed-income/{investmentId}':
+    get:
+      tags:
+        - Product Identification
+      summary: Gets the data of the Bank Fixed Income operation identified by investmentId.
+      operationId: banktFixedIncomesGetInvestmentsInvestmentId
+      description: Gets the data of the Bank Fixed Income operation identified by investmentId.
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseBankFixedIncomeIdentifyProduct'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '502':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        
+  '/setup/investments/bank-fixed-income/{investmentId}/balances':
+    get:
+      tags:
+        - Balances
+      summary: Gets the position of the Bank Fixed Income operation identified by investmentId.
+      operationId: banktFixedIncomesGetInvestmentsInvestmentIdBalances
+      description: |
+        Gets the position of the Bank Fixed Income operation identified by investmentId.
+
+        In cases where there is no position for the investment, i.e., zero quantity of assets and monetary values, but it is still within the exposure period (up to 12 months after the last transaction), status code 200 should be returned and for the return payload consider the values below. Non-mandatory fields should not be returned: 
+
+        - Monetary values: 0.00
+        - Quantity of assets: 0.00
+        - Date and time of last position: same content as the requestDateTime field
+      parameters:
+        - name: investmentId
+          in: path
+          description: 'Uniquely identifies the customer relationship with the product, maintaining immutability rules within the transmitting institution.'
+          required: true
+          schema:
+            type: string
+            pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+            example: '92792126019929200000000000000000000000000'
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OkResponseBankFixedIncomesBalances'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '502':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        
+  '/setup/investments/bank-fixed-income/{investmentId}/transactions':
+    get:
+      tags:
+        - Transactions
+      summary: Gets the historical transactions (last 12 months) of the Bank Fixed Income operation identified by investmentId.
+      operationId: banktFixedIncomesGetInvestmentsInvestmentIdTransactions
+      description: Gets the historical transactions (last 12 months) of the Bank Fixed Income operation identified by investmentId.
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+        - $ref: '#/components/parameters/fromTransactionDate'
+        - $ref: '#/components/parameters/toTransactionDate'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseBankFixedIncomesProductMovement'
+        '400':
+          $ref: '#/components/responses/TransactionsBadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/TransactionsUnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/TransactionsForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/TransactionsNotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/TransactionsMethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/TransactionsNotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/TransactionsUnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/TransactionsLockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TransactionsTooManyRequestsWithAdditionalProperties'
+        '502':
+          $ref: '#/components/responses/TransactionsInternalServerErrorWithAdditionalProperties'
+        
+  '/setup/investments/bank-fixed-income/{investmentId}/transactions-current':
+    get:
+      tags:
+        - Transactions Current
+      summary: 'Gets the recent transactions of the Bank Fixed Income operation identified by investmentId. The period to be considered for transaction presentation will be up to 7 days - 7 days prior to the query, including the query day (D-6).'
+      operationId: banktFixedIncomesGetInvestmentsInvestmentIdTransactionsCurrent
+      description: 'Gets the recent transactions of the Bank Fixed Income operation identified by investmentId. The period to be considered for transaction presentation will be up to 7 days - 7 days prior to the query, including the query day (D-6).'
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+        - $ref: '#/components/parameters/fromTransactionDateMaxLimited'
+        - $ref: '#/components/parameters/toTransactionDateMaxLimited'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseBankFixedIncomesProductMovement'
+        '400':
+          $ref: '#/components/responses/TransactionsBadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/TransactionsUnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/TransactionsForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/TransactionsNotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/TransactionsMethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/TransactionsNotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/TransactionsUnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/TransactionsLockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TransactionsTooManyRequestsWithAdditionalProperties'
+        '502':
+          $ref: '#/components/responses/TransactionsInternalServerErrorWithAdditionalProperties'
+        
+components:
+  schemas:
+    ResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Specific error code of the endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Human-readable title of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Human-readable description of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+            additionalProperties: false
+        meta:
+          type: object
+          description: Meta information related to the requested API.
+          required:
+            - totalRecords
+            - totalPages
+            - requestDateTime
+          properties:
+            totalRecords:
+              type: integer
+              format: int32
+              description: Total number of records in the result
+              example: 1
+            totalPages:
+              type: integer
+              format: int32
+              description: Total number of pages in the result
+              example: 1
+            requestDateTime:
+              description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
+              type: string
+              maxLength: 20
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+          additionalProperties: false
+      additionalProperties: false
+    ResponseErrorMetaSingle:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Specific error code of the endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Human-readable title of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Human-readable description of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          type: object
+          description: Meta information related to the requested API.
+          required:
+            - requestDateTime
+          properties:
+            requestDateTime:
+              description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
+              type: string
+              maxLength: 20
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+    ResponseBankFixedIncomesProductList:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            type: object
+            description: List of bank fixed income securities maintained by the customer at the transmitting institution and for which they have provided consent
+            required:
+              - brandName
+              - companyCnpj
+              - investmentType
+              - investmentId
+            properties:
+              brandName:
+                type: string
+                description: 'Brand name reported by the participant in Open Finance. It is recommended to use, whenever possible, the same brand name assigned in the Customer Friendly Server Name field of the directory (Authorisation Server).'
+                pattern: '[\w\W\s]*'
+                example: Organization A
+                maxLength: 80
+              companyCnpj:
+                type: string
+                description: 'Complete CNPJ number of the institution responsible for the Registration - CNPJ corresponds to the registration number in the Legal Entity Registry. Should have only CNPJ numbers, without mask'
+                maxLength: 14
+                pattern: '^\d{14}$'
+                example: '21281590001660'
+              investmentType:
+                $ref: '#/components/schemas/EnumInvestmentType'
+              investmentId:
+                type: string
+                description: 'Uniquely identifies the customer relationship with the product, maintaining immutability rules within the transmitting institution.'
+                maxLength: 100
+                pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+                example: '92792126019929200000000000000000000000000'
+            additionalProperties: false
+        links:
+          $ref: '#/components/schemas/BankFixedIncomeProductListLinks'
+        meta:
+          $ref: '#/components/schemas/BankFixedIncomesMeta'
+      additionalProperties: false
+    ResponseBankFixedIncomesProductIdentification:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/IdentifyProduct'
+        links:
+          $ref: '#/components/schemas/BankFixedIncomeLinks'
+        meta:
+          $ref: '#/components/schemas/BankFixedIncomesMeta'
+      additionalProperties: false
+    ResponseBankFixedIncomesBalances:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          required:
+            - referenceDateTime
+            - quantity
+            - updatedUnitPrice
+            - grossAmount
+            - netAmount
+            - incomeTax
+            - financialTransactionTax
+            - blockedBalance
+            - purchaseUnitPrice
+          properties:
+            referenceDateTime:
+              type: string
+              format: date-time
+              description: 'Date and time of the last consolidated position available to which the customer transactional data available in electronic channels refer; In date representation, minutes and seconds should be considered as zero (00:00:00Z).'
+              pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
+              example: '2022-07-21T17:32:00Z'
+              maxLength: 20
+            quantity:
+              type: string
+              format: double
+              description: Quantity of securities held on the customer position date
+              maxLength: 24
+              pattern: '^\d{1,15}\.\d{2,8}$'
+              example: '1000.0004'
+            updatedUnitPrice:
+              type: object
+              required:
+                - amount
+                - currency
+              description: Updated gross unit value on the reference date.
+              properties:
+                amount:
+                  description: Value related to the object.
+                  type: string
+                  format: double
+                  maxLength: 24
+                  pattern: '^\d{1,15}\.\d{2,8}$'
+                  example: '1000.000004'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            grossAmount:
+              description: Investment value that refers to quantity multiplied by the updated Unit Price on the reference date;
+              type: object
+              required:
+                - amount
+                - currency
+              properties:
+                amount:
+                  $ref: '#/components/schemas/BalanceAmount'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            netAmount:
+              description: 'Investment value updated on the reference date, after deduction of taxes (IOF and IR).'
+              type: object
+              required:
+                - amount
+                - currency
+              properties:
+                amount:
+                  $ref: '#/components/schemas/BalanceAmount'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            incomeTax:
+              type: object
+              required:
+                - amount
+                - currency
+              description: Value of provisioned income tax considering the applicable rate on the reference date.
+              properties:
+                amount:
+                  $ref: '#/components/schemas/BalanceAmount'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            financialTransactionTax:
+              type: object
+              required:
+                - amount
+                - currency
+              description: Value of provisioned IOF tax considering the applicable rate on the reference date.
+              properties:
+                amount:
+                  $ref: '#/components/schemas/BalanceAmount'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            blockedBalance:
+              type: object
+              required:
+                - amount
+                - currency
+              description: Value not available for movement at that moment for any reason (judicial block, guarantee block, among others). Grace period is not considered as a block.
+              properties:
+                amount:
+                  $ref: '#/components/schemas/BalanceAmount'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            purchaseUnitPrice:
+              type: object
+              required:
+                - amount
+                - currency
+              description: Unit value negotiated with the customer on the acquisition date
+              properties:
+                amount:
+                  description: Value related to the object.
+                  type: string
+                  format: double
+                  maxLength: 24
+                  pattern: '^\d{1,15}\.\d{2,8}$'
+                  example: '1000.000004'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            preFixedRate:
+              type: string
+              format: double
+              description: |
+                Remuneration rate agreed with the customer at contracting. In cases of progressive products, consider the maximum contracted rate. 
+                Filling must respect 6 decimal places, even if filled with zeros (percentage representation e.g., 0.150000. 
+                This value represents 15%. Value 1 represents 100%). 
+                It is expected that filling this field by participants will be sent as agreed at the time of contracting.
+              pattern: '^\d{1}\.\d{6}$'
+              maxLength: 8
+              minLength: 8
+              example: '0.300000'
+            postFixedIndexerPercentage:
+              type: string
+              format: double
+              description: |
+                Percentage of the indexer agreed with the customer at contracting. In cases of progressive products, consider the maximum contracted rate. 
+                Filling must respect 6 decimal places, even if filled with zeros (percentage representation e.g., 0.150000. 
+                This value represents 15%. Value 1 represents 100%). 
+                It is expected that filling this field by participants will be sent as agreed at the time of contracting.
+              pattern: '^\d{1}\.\d{6}$'
+              maxLength: 8
+              minLength: 8
+              example: '1.000000'
+        links:
+          $ref: '#/components/schemas/BankFixedIncomeLinks'
+        meta:
+          $ref: '#/components/schemas/BankFixedIncomesMeta'
+      additionalProperties: false
+    ResponseBankFixedIncomesTransactions:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/BankFixedIncomesProductMovement'
+        links:
+          $ref: '#/components/schemas/BankFixedIncomeTransactionsLinks'
+        meta:
+          $ref: '#/components/schemas/BankFixedIncomesTransactionsMeta'
+      additionalProperties: false
+    IdentifyProduct:
+      type: object
+      required:
+        - issuerInstitutionCnpjNumber
+        - investmentType
+        - remuneration
+        - issueUnitPrice
+        - dueDate
+        - issueDate
+        - purchaseDate
+        - gracePeriodDate
+      properties:
+        issuerInstitutionCnpjNumber:
+          type: string
+          description: CNPJ of the issuing institution.
+          maxLength: 14
+          pattern: '^\d{14}$'
+          example: '11225860000140'
+        isinCode:
+          type: string
+          description: |
+            ISIN code of the issuance, Product ISIN code, Issuer code (optional field): universal code that identifies each security or financial instrument, according to ISO 6166 Standard
+          maxLength: 12
+          minLength: 12
+          pattern: '^[A-Z]{2}([A-Z0-9]){9}\d{1}$'
+          example: BRCST4CTF001
+        investmentType:
+          $ref: '#/components/schemas/EnumInvestmentType'
+        remuneration:
+          $ref: '#/components/schemas/Remuneration'
+        issueUnitPrice:
+          type: object
+          description: Unit price of security issuance.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              maxLength: 24
+              pattern: '^\d{1,15}\.\d{2,8}$'
+              example: '1000.000004'
+              description: Value related to the object.
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
+        dueDate:
+          type: string
+          format: date
+          maxLength: 10
+          minLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-15'
+          description: Security maturity date.
+        issueDate:
+          type: string
+          format: date
+          maxLength: 10
+          minLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-16'
+          description: Security issuance date.
+        clearingCode:
+          type: string
+          maxLength: 30
+          pattern: '[\w\W-]*'
+          example: CDB421GPXXX
+          description: Asset registration code at the clearing.
+        purchaseDate:
+          type: string
+          format: date
+          maxLength: 10
+          minLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-15'
+          description: Customer acquisition date.
+        gracePeriodDate:
+          type: string
+          format: date
+          maxLength: 10
+          minLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-16'
+          description: Date until which the customer cannot early redeem their investment.
+      additionalProperties: false
+    EnumInvestmentType:
+      type: string
+      description: 'Specification of the asset in question (CDB, RDB, LCI, or LCA)'
+      enum:
+        - CDB
+        - RDB
+        - LCI
+        - LCA
+      example: CDB
+    EnumBankFixedIncomeIndexer:
+      type: string
+      description: 'Index used as reference for correction of asset profitability and/or earnings (CDI, DI, TR, IPCA, IGP_M, IGP_DI, INPC, BCP, TLC, SELIC, PRE_FIXADO, and OUTROS)'
+      enum:
+        - CDI
+        - DI
+        - TR
+        - IPCA
+        - IGP_M
+        - IGP_DI
+        - INPC
+        - BCP
+        - TLC
+        - SELIC
+        - PRE_FIXADO
+        - OUTROS
+      example: CDI
+    Remuneration:
+      type: object
+      description: Object for detailing security remuneration.
+      required:
+        - rateType
+        - ratePeriodicity
+        - calculation
+        - indexer
+      properties:
+        preFixedRate:
+          type: string
+          format: double
+          pattern: '^\d{1}\.\d{6}$'
+          maxLength: 8
+          minLength: 8
+          example: '0.300000'
+          description: |
+            Pre-fixed remuneration rate of security issuance. e.g., 0.014500.
+
+            Filling must respect 6 decimal places, even if filled with zeros (percentage representation e.g., 0.150000. This value represents 15%. Value 1 represents 100%).  
+
+            [Restriction] Mandatory filling field by participants when there is 'PRE_FIXADO' in the 'indexer' field or when dealing with a product with hybrid remuneration.
+        postFixedIndexerPercentage:
+          type: string
+          format: double
+          pattern: '^\d{1}\.\d{6}$'
+          maxLength: 8
+          minLength: 8
+          example: '1.100000'
+          description: |
+            Percentage of the post-fixed indexer of security issuance. e.g., 0.014500.
+
+            Filling must respect 6 decimal places, even if filled with zeros (percentage representation e.g., 0.150000. This value represents 15%. Value 1 represents 100%).
+
+            [Restriction] Mandatory filling field by participants when the 'indexer' field is filled differently from 'PRE_FIXADO' or when dealing with a product with hybrid remuneration.
+        rateType:
+          $ref: '#/components/schemas/EnumRateType'
+        ratePeriodicity:
+          $ref: '#/components/schemas/EnumRatePeriodicity'
+        calculation:
+          $ref: '#/components/schemas/EnumCalculation'
+        indexer:
+          $ref: '#/components/schemas/EnumBankFixedIncomeIndexer'
+        indexerAdditionalInfo:
+          type: string
+          description: |
+            Additional information of the indexer
+
+            [Restriction] Mandatory filling field by participants when there is 'Outros' in the 'indexer' field.
+          maxLength: 50
+          example: Dollar
+          pattern: '[\w\W\s]*'
+      additionalProperties: false
+    EnumRateType:
+      type: string
+      description: |
+        "Type of remuneration rate (linear or exponential)"
+      enum:
+        - LINEAR
+        - EXPONENCIAL
+      example: LINEAR
+    EnumRatePeriodicity:
+      type: string
+      description: |
+        Periodicity of the remuneration rate (monthly, annual, daily, semiannual)
+      enum:
+        - MENSAL
+        - ANUAL
+        - DIARIO
+        - SEMESTRAL
+      example: MENSAL
+    EnumCalculation:
+      type: string
+      description: |
+        "Calculation basis (business days or calendar days)"
+      enum:
+        - DIAS_UTEIS
+        - DIAS_CORRIDOS
+      example: DIAS_CORRIDOS
+    BankFixedIncomesMeta:
+      type: object
+      description: Meta information related to the requested API.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Total number of records in the result
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Total number of pages in the result
+          example: 1
+        requestDateTime:
+          description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+      additionalProperties: false
+    BankFixedIncomesTransactionsMeta:
+      type: object
+      description: Meta information related to the requested API.
+      required:
+        - requestDateTime
+      properties:
+        requestDateTime:
+          description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+      additionalProperties: false
+    BankFixedIncomeProductListLinks:
+      type: object
+      description: References to other resources of the requested API.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: Complete URI that generated the current response.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        first:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        prev:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: "URI of the previous page of this result list. Restriction - Mandatory when not the first page of the response"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        next:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        last:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the last page of this result list. Restriction - Mandatory when not the last page of the response.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%.\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%\+.~#?&\/\/=]*)$'
+    BankFixedIncomeLinks:
+      type: object
+      description: References to other resources of the requested API.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: Complete URI that generated the current response.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        first:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        prev:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: "URI of the previous page of this result list. Restriction - Mandatory when not the first page of the response"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        next:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        last:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the last page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    BankFixedIncomeTransactionsLinks:
+      type: object
+      description: References to other resources of the requested API.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: Complete URI that generated the current response.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        first:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        prev:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: "URI of the previous page of this result list. Restriction - Mandatory when not the first page of the response"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        next:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    BankFixedIncomesProductMovement:
+      type: object
+      required:
+        - type
+        - transactionType
+        - transactionDate
+        - transactionUnitPrice
+        - transactionQuantity
+        - transactionGrossValue
+        - transactionNetValue
+        - transactionId
+      properties:
+        type:
+          $ref: '#/components/schemas/EnumBankFixedIncomeMovementType'
+        transactionType:
+          $ref: '#/components/schemas/EnumBankFixedIncomeTransactionType'
+        transactionTypeAdditionalInfo:
+          type: string
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+          description: |
+            Additional information of the transaction type, for filling in case of transactions not delimited in the domain.
+
+            [Restriction] Mandatory filling field by participants when there is 'Outros' in the Transaction reason field.
+        transactionDate:
+          type: string
+          format: date
+          maxLength: 10
+          minLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-15'
+          description: Transaction date.
+        transactionUnitPrice:
+          type: object
+          description: Gross unit price negotiated in the transaction.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              maxLength: 24
+              pattern: '^\d{1,15}\.\d{2,8}$'
+              example: '1000.04'
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
+        transactionQuantity:
+          type: string
+          format: double
+          maxLength: 24
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          example: '42.25'
+          description: Quantity of securities involved in the transaction.
+        transactionGrossValue:
+          type: object
+          description: Gross transaction value (Transaction unit price x Quantity).
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
+        incomeTax:
+          type: object
+          description: |
+            Value of income tax collected in the transaction.
+
+            [Restriction] Mandatory filling field by participants when the 'type' field is filled with value 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
+        financialTransactionTax:
+          type: object
+          description: |
+            Value of IOF collected in the transaction.
+
+            [Restriction] Mandatory filling field by participants when the 'type' field is filled with value 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+              description: Value related to the object.
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
+        transactionNetValue:
+          type: object
+          description: Net transaction value.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+              description: Value related to the object.
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
+        remunerationTransactionRate:
+          type: string
+          format: double
+          maxLength: 8
+          minLength: 8
+          pattern: '^\d{1}\.\d{6}$'
+          example: '0.300000'
+          description: |
+            Transaction remuneration rate.
+
+            [Restriction] Mandatory filling field by participants when the 'type' field is filled with value 'ENTRADA' and dealing with a prefixed or hybrid product.
+        indexerPercentage:
+          type: string
+          format: double
+          maxLength: 8
+          minLength: 8
+          pattern: '^\d{1}\.\d{6}$'
+          example: '1.100000'
+          description: |
+            Maximum percentage of the indexer agreed with the customer at contracting.
+
+            [Restriction] Mandatory filling field by participants when the 'type' field is filled with value 'ENTRADA' and dealing with a post-fixed or hybrid product.
+        transactionId:
+          type: string
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: ABCD2126019929279212650822221989319253344
+          description: Code or unique identifier provided by the institution that maintains the individual representation of the movement.
+      additionalProperties: false
+    EnumBankFixedIncomeMovementType:
+      type: string
+      description: |
+        Type of transaction from the investment perspective
+
+        - ENTRADA: APLICACAO, CANCELAMENTO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, OUTROS.
+
+        - SAIDA: RESGATE, CANCELAMENTO, VENCIMENTO, PAGAMENTO_JUROS, AMORTIZACAO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, OUTROS.
+
+        For example, for CANCELAMENTO transaction, typically, it will be the opposite type to the originating event. That is, for cancellation of APLICACAO, consider type SAIDA; for cancellation of RESGATE, consider type ENTRADA.
+      enum:
+        - ENTRADA
+        - SAIDA
+      example: ENTRADA
+    EnumBankFixedIncomeTransactionType:
+      type: string
+      description: Application, redemption, cancellation, maturity, interest payment, amortization, ownership transfer, custody transfer, and others. For transfer movements (ownership or custody), the unit price (transactionUnitPrice) of the security acquisition should be considered.
+      enum:
+        - APLICACAO
+        - RESGATE
+        - CANCELAMENTO
+        - VENCIMENTO
+        - PAGAMENTO_JUROS
+        - AMORTIZACAO
+        - TRANSFERENCIA_TITULARIDADE
+        - TRANSFERENCIA_CUSTODIA
+        - OUTROS
+      example: APLICACAO
+    CurrencyCode:
+      type: string
+      pattern: '^[A-Z]{3}$'
+      maxLength: 3
+      description: 'Currency relative to monetary value, following ISO-4217 model.'
+      example: BRL
+    BalanceCurrency:
+      description: 'Currency relative to monetary value, following ISO-4217 model.'
+      type: string
+      maxLength: 3
+      pattern: '^[A-Z]{3}$'
+      example: BRL
+    BalanceAmount:
+      description: Value related to the object.
+      type: string
+      format: double
+      maxLength: 20
+      pattern: '^\d{1,15}\.\d{2,4}$'
+      example: '1000.0004'
+  securitySchemes:
+    OAuth2AuthorizationCode:
+      type: oauth2
+      description: OAuth flow necessary for the receiver to have access to data at the transmitting institution. Requires the redirection process and authentication of the user to whom the data refers.
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://authserver.example/authorization'
+          tokenUrl: 'https://authserver.example/token'
+          scopes:
+            bank-fixed-incomes: Scope necessary for access to the Bank Fixed Incomes API. Control of specific endpoints is done via permissions.
+  parameters:
+    InvestmentId:
+      name: investmentId
+      in: path
+      description: 'Uniquely identifies the customer relationship with the product, maintaining immutability rules within the transmitting institution.'
+      required: true
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+        maxLength: 100
+        example: '92792126019929200000000000000000000000000'
+    SetupID:
+      name: setupId
+      in: header
+      description: |
+          SetupUUID is the unique identifier in ODR (GUID).  
+          Must be used to perform all other calls in ODR, such as account search, transactions, etc.
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: '550e8400-e29b-41d4-a716-446655440000'  
+    pagination-key:
+      name: pagination-key
+      in: query
+      description: 'Recall identifier, used to avoid counting calls to the endpoint during pagination.'
+      schema:
+        type: string
+        maxLength: 2048
+        pattern: '[\w\W\s]*'
+    page:
+      name: page
+      in: query
+      description: Number of the page being requested (first page value is 1).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+        maximum: 2147483647
+        format: int32
+    pageSize:
+      name: page-size
+      in: query
+      description: Total number of records per page. The transmitter must consider input as 25, if a lower value is informed by the receiver. While there are more than 25 records to send, the transmitter must consider the minimum per page as 25. Only the last returned page (or first, in case of single page) may contain less than 25 records. For more information, access API Specifications > Standards > Pagination.
+      schema:
+        type: integer
+        default: 25
+        minimum: 25
+        format: int32
+        maximum: 1000
+    xCustomerUserAgent:
+      name: x-customer-user-agent
+      in: header
+      description: Indicates the user-agent that the user uses.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xFapiAuthDate:
+      name: x-fapi-auth-date
+      in: header
+      description: 'Date when the user last logged in with the receiver. Represented according to [RFC7231](https://tools.ietf.org/html/rfc7231).Example: Sun, 10 Sep 2017 19:43:31 UTC'
+      required: false
+      schema:
+        type: string
+        pattern: '^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$'
+        minLength: 29
+        maxLength: 29
+    xFapiCustomerIpAddress:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: The user's IP address if currently logged in with the receiver.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xFapiInteractionId:
+      name: x-fapi-interaction-id
+      in: header
+      description: A UUID RFC4122 used as a correlation ID between request and response. Mandatory generation and sending field by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header.
+      required: false
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+        minLength: 1
+        maxLength: 100
+    fromTransactionDate:
+      name: fromTransactionDate
+      description: |
+        Initial filtering date.
+
+        [Restriction] Must be sent if the toTransactionDate field is informed. If not informed, the current day must be assumed.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
+    fromTransactionDateMaxLimited:
+      name: fromTransactionDate
+      description: |
+        Initial filtering date. The maximum period used in the filter is 7 days inclusive (D-6).
+
+        [Restriction] Must be sent if the toTransactionDate field is informed. If not informed, the current day must be assumed.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
+    toTransactionDate:
+      name: toTransactionDate
+      description: |
+        Final filtering date.
+
+        [Restriction] Must be sent if the fromTransactionDate field is informed. If not informed, the current day must be assumed.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
+    toTransactionDateMaxLimited:
+      name: toTransactionDate
+      description: |
+        Final filtering date. The maximum period used in the filter is 7 days inclusive (D-6).
+
+        [Restriction] Must be sent if the fromTransactionDate field is informed. If not informed, the current day must be assumed.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
+  responses:
+    OkResponseBankFixedIncomesBalances:
+      description: Data obtained successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseBankFixedIncomesBalances'
+    OkResponseBankFixedIncomesProductList:
+      description: Data obtained successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseBankFixedIncomesProductList'
+    ResponseBankFixedIncomeIdentifyProduct:
+      description: Investment fund data obtained successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseBankFixedIncomesProductIdentification'
+    ResponseBankFixedIncomesProductMovement:
+      description: Data obtained successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseBankFixedIncomesTransactions'
+    BadRequestWithAdditionalProperties:
+      description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    ForbiddenWithAdditionalProperties:
+      description: The token has incorrect scope or a security policy was violated
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    GatewayTimeoutWithAdditionalProperties:
+      description: GATEWAY TIMEOUT - The request was not answered within the established time limit
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    InternalServerErrorWithAdditionalProperties:
+      description: An error occurred in the API gateway or microservice
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    LockedWithAdditionalProperties:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    MethodNotAllowedWithAdditionalProperties:
+      description: The consumer tried to access the resource with an unsupported method
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    NotAcceptableWithAdditionalProperties:
+      description: The request contained an Accept header different from the allowed media types or a character set different from UTF-8
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    NotFoundWithAdditionalProperties:
+      description: The requested resource does not exist or was not implemented
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    TooManyRequestsWithAdditionalProperties:
+      description: 'The operation was refused because too many requests were made within a certain period or the global concurrent request limit was reached'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    UnauthorizedWithAdditionalProperties:
+      description: Missing/invalid authentication header or invalid token
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    UnprocessableEntityWithAdditionalProperties:
+      description: 'The request syntax is correct, but it was not possible to process the present instructions.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    TransactionsBadRequestWithAdditionalProperties:
+      description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    TransactionsForbiddenWithAdditionalProperties:
+      description: The token has incorrect scope or a security policy was violated
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    TransactionsInternalServerErrorWithAdditionalProperties:
+      description: An error occurred in the API gateway or microservice
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    TransactionsLockedWithAdditionalProperties:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    TransactionsMethodNotAllowedWithAdditionalProperties:
+      description: The consumer tried to access the resource with an unsupported method
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    TransactionsNotAcceptableWithAdditionalProperties:
+      description: The request contained an Accept header different from the allowed media types or a character set different from UTF-8
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    TransactionsNotFoundWithAdditionalProperties:
+      description: The requested resource does not exist or was not implemented
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    TransactionsTooManyRequestsWithAdditionalProperties:
+      description: 'The operation was refused because too many requests were made within a certain period or the global concurrent request limit was reached'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    TransactionsUnauthorizedWithAdditionalProperties:
+      description: Missing/invalid authentication header or invalid token
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    TransactionsUnprocessableEntityWithAdditionalProperties:
+      description: 'The request syntax is correct, but it was not possible to process the present instructions.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+            
