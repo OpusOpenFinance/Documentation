@@ -16,5 +16,6 @@ Em construção...
 <!--
 - Diferença de Open Finance pra Open Insurance;
 - O que significa solicitar consentimento;
-
+- Diferenças de revogação de pagamento e consentimento;
+- Diferenças App-to-App, App-to-Web, Web-to-App
 -->
