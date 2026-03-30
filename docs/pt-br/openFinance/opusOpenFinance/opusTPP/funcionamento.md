@@ -11,122 +11,129 @@ alternate_lang:
       lang: "es"
 ---
 
-<!-- Tornar texto em uma linguagem melhor de negócio -->
-## Fluxo de solicitação de consentimento
+## Funcionamento do OpusTPP
 
-O fluxo para solicitação de consentimentos é muito similar para recepção de dados e para pagamentos, com diferença em apenas uma chamada, como mostra abaixo o diagrama para Open Finance.
-<!-- OPEN INSURANCE
-tanto para Open Finance quanto para Open Insurance.-->
+Este documento descreve os fluxos de negócio suportados pelo OpusTPP para integração com o ecossistema Open Finance.
 
-Para o Open Finance:
+---
 
-![Diagrama de sequência](./anexos/imagens/consent-sequence-finance.png)
+## Fluxo de Solicitação de Consentimento
 
-<!-- OPEN INSURANCE
-Para o Open Insurance:
+O consentimento é a autorização concedida pelo usuário para que uma instituição Iniciadora de Pagamento (TPP) possa acessar seus dados ou realizar pagamentos em seu nome. O fluxo de solicitação é similar para ambas as finalidades (recepção de dados e iniciação de pagamento), diferenciando-se apenas em uma chamada específica.
 
-![Diagrama de sequência](./anexos/imagens/consent-sequence-insurance.png) -->
+### Diagrama de Sequência - Open Finance
 
-Logo abaixo é descrita uma sequência de passos que representam o fluxo.
+![Diagrama de sequência](./anexos/imagens/funcionamento-consentSequenceFinance.png)
 
-### 1 - Listagem das Instituições do Diretório de Participantes - `GET /opus-open-finance/participants`
-<!-- OPEN INSURANCE
-ou /opus-open-insurance/participants`-->
+### Etapas do Fluxo
 
-Esta chamada retorna a lista de *marcas* de instituições cadastradas no Diretório de Participantes do Open Finance Brasil ou Open Insurance Brasil que suportam as operações selecionadas.
+#### 1. Listagem das Instituições Participantes
 
-Existem dois tipos básicos de ***Instituições Destino***, que podem também ser filtradas de acordo com as operações que suportam:
+**Endpoint:** `GET /opus-open-finance/participants`
 
-- [***Transmissoras de Dados***][TransmissorDados]: permitem compartilhamento de dados cadastrais e transacionais.
-- [***Detentoras de Conta***][DetentorConta]: permitem operações de iniciação de pagamento.
+**Objetivo:** Identificar as instituições disponíveis para o consentimento.
 
-> O `AuthorisationServerId` da marca da instituição selecionada deve ser utilizado no header `x-authorisation-server-id` das demais chamadas.
+Esta chamada retorna a lista de *marcas* de instituições cadastradas no Diretório de Participantes do Open Finance Brasil que suportam as operações desejadas.
 
-A filtragem da chamada pode ser feita por meio da **role** ou do **familyType**:
+As instituições são classificadas por suas funções:
 
-- A role diz respeito ao papel regulador da instituição e tem 4 tipos: **DADOS**, **PAGTO**, **CONTA** e **CCORR**;
-- O familyType é referente ao retorno das **ApiResources** das instituições. Cada ApiResource possui uma propriedade `ApiFamilyType`, exemplo: "customers-business".
+| Tipo | Descrição | Finalidade |
+| ---- | --------- | ---------- |
+| **[Transmissora de Dados](../../openFinanceBrasil/perfisParticipacao/transmissorDeDados.html)** | Instituição que compartilha informações | Permite acesso a dados cadastrais e transacionais |
+| **[Detentora de Conta](../../openFinanceBrasil/perfisParticipacao/detentorDeContas.html)** | Instituição que custodia a conta do usuário | Permite operações de iniciação de pagamento |
 
-### 2 - Criação da intenção de consentimento
+> **Importante:** O `AuthorisationServerId` da marca selecionada deve ser utilizado no header `x-authorisation-server-id` de todas as chamadas subsequentes.
 
-Nesta etapa, os endpoints utilizados são diferentes:
+**Filtros disponíveis:**
 
-- Open Finance - Obtenção de dados cadastrais e transacionais: `POST /opus-open-finance/consents/v1/consents`
-- Open Finance - Iniciação de pagamento: `POST /opus-open-finance/payments/v1/consents`
-- Open Finance - Iniciação de pagamento automático: `POST /opus-open-finance/automatic-payments/v1/recurring-consents`
-<!-- OPEN INSURANCE
-- Open Insurance - Obtenção de dados cadastrais e apólices: `POST /opus-open-insurance/open-insurance/consents/v1/consents`
--->
+- **role (papel regulador):** DADOS, PAGTO, CONTA, CCORR;
+- **familyType (família de APIs):** Define quais recursos a instituição oferece (ex.: "customers-business").
 
-Esta chamada envia à Instituição Destino (Transmissora ou Detentora) as informações do consentimento que se deseja criar. Uma resposta com código `HTTP 201 Created` significa que o pedido de consentimento foi criado, e o payload contém o código identificador do consentimento (`consentId`) que deverá ser utilizado nas etapas seguintes.
+#### 2. Criação da Intenção de Consentimento
 
-O status do consentimento após esta etapa é **AWAITING_AUTHORISATION**.
+**Objetivo:** Registrar a intenção do TPP de acessar dados ou realizar pagamentos em nome do usuário.
 
-### 3 - Redirecionamento do usuário para autorização na Instituição Destino
+**Endpoints por tipo de operação:**
 
-Após a criação do consentimento, o usuário deve ser redirecionado para a Instituição Destino.
+| Finalidade | Endpoint |
+| :--------: | :------: |
+| Compartilhamento de Dados (Open Finance) | `POST /opus-open-finance/consents/v1/consents` |
+| Iniciação de Pagamento | `POST /opus-open-finance/payments/v1/consents` |
+| Iniciação de Pagamento Automático | `POST /opus-open-finance/automatic-payments/v1/recurring-consents` |
 
-> A URL de autorização é retornada na etapa anterior.
+**Comportamento:**
 
-Uma vez identificado, o usuário poderá ver as informações do consentimento solicitado e aprová-lo (ou rejeitá-lo) no ambiente da Instituição Destino.
+- A chamada envia à Instituição Destino as informações do consentimento desejado;
+- Resposta `HTTP 201 Created` indica criação bem-sucedida;
+- O payload retorna o `consentId`, identificador único do consentimento;
+- Status inicial: **AWAITING_AUTHORISATION** (aguardando autorização do usuário).
 
-Após esse processo ele estará na etapa final do fluxo de autorização.
+#### 3. Redirecionamento para Autorização
 
-Caso a aplicação TPP seja mobile:
+Após a criação do consentimento, o usuário deve ser redirecionado para o ambiente da Instituição Destino, onde:
 
-- O aplicativo mobile deverá interceptar as URLs de redirecionamento descritas nos diagramas acima e em seguida acionar o endpoint `authorization-result` enviando o resultado do fluxo OIDC obtido. O retorno dessa chamada será o final do fluxo de autorização, seja num cenário de sucesso (`204`)  ou erro (`422`). Maiores detalhes sobre essa parte específica do fluxo podem ser conferidos na documentação sobre o [redirecionamento app-to-app](../integracaoDaPlataforma/appEWeb/mobileBanking.html).
+- Visualiza as informações do consentimento solicitado;
+- Aprova ou rejeita a solicitação;
+- É redirecionado de volta à aplicação TPP ao final do processo.
 
-> **Atenção!**
->
-> Ainda que a solução do TPP seja 100% um aplicativo mobile é **obrigatória** a implementação da rota de redirect web para tratamento de casos onde o usuário escolha abrir a URL de callback com outro aplicativo que não o TPP. Essa implementação visa garantir uma boa experiência de navegação ao usuário. Se a instituição não implementar o tratamento da rota de redirect web não há como o usuário saber o resultado final do fluxo, ou seja, ele não consegue identificar se a autorização do consentimento foi bem sucedida ou não.
+**Considerações para aplicações mobile:**
 
-Caso a aplicação TPP seja disponibilizada via browser:
+- O aplicativo deve interceptar as URLs de redirecionamento;
+- Após o redirecionamento, deve acionar o endpoint `authorization-result` com o resultado do fluxo OIDC;
+- **É obrigatória** a implementação da rota de redirect web como contingência, garantindo que o usuário conheça o resultado mesmo quando a URL é aberta em outro aplicativo.
 
-- O usuário será redirecionado automaticamente de volta para a aplicação TPP com o resultado da solicitação.
+#### 3.1. Nova Tentativa de Autorização
 
-Esse resultado deve ser enviado em sua totalidade para o **OpusTPP**.
+Em casos de falha no redirecionamento (ex.: timeout, erro 500 do servidor), o BACEN recomenda a **reutilização da mesma intenção de consentimento**.
 
-### 3.1 - Nova tentativa de autorização do consentimento
+**Endpoints para nova tentativa:**
 
-Em casos de falha no fluxo do redirecionamento (ex.: o servidor da transmissora retornou HTTP 500, timeout, etc), a recomendação do BACEN é a **reutilização da mesma intenção de consentimento**.
+| Finalidade | Endpoint |
+| :--------: | :------: |
+| Compartilhamento de Dados | `POST /opus-open-finance/consents/v1/consents/{consentId}/authorisation-retry` |
+| Iniciação de Pagamento | `POST /opus-open-finance/payments/v1/consents/{consentId}/authorisation-retry` |
 
-Para isso, o OpusTPP oferece três endpoints:
+> **Prazo para nova tentativa:** Disponível enquanto o status for **AWAITING_AUTHORISATION** (5 minutos para pagamento, 60 minutos para compartilhamento de dados).
 
-- Open Finance - Obtenção de dados cadastrais e transacionais: `POST /opus-open-finance/consents/v1/consents/{consentId}/authorisation-retry`
-- Open Finance - Iniciação de pagamento: `POST /opus-open-finance/payments/v1/consents/{consentId}/authorisation-retry`
-<!-- OPEN INSURANCE
-- Open Insurance - Obtenção de dados cadastrais e apólices: `POST /opus-open-insurance/open-insurance/consents/v1/consents/{consentId}/authorisation-retry`-->
+#### 4. Retorno do Resultado da Autorização
 
-> Esta operação pode ser realizada enquanto o status do consentimento for **AWAITING_AUTHORISATION** (5 minutos para iniciação de pagamento e 60 minutos para compartilhamento de dados).
+Após o redirecionamento, a aplicação TPP encaminha o resultado ao OpusTPP.
 
-### 4 - Retorno do resultado da autorização de consentimento
+**Possíveis resultados:**
 
-Após a aprovação (ou rejeição) do consentimento na Instituição Destino, o usuário é redirecionado de volta à aplicação TPP. Através desta chamada, a aplicação encaminha o resultado recebido para o Opus Open Client.
+| Decisão do Usuário | Status do Consentimento | Ações do Sistema |
+| :----------------: | :---------------------: | :--------------: |
+| Aprova | **AUTHORISED** | Tokens de acesso são gerados e armazenados automaticamente |
+| Rejeição | **REJECTED** | Fluxo encerrado |
+| Aguardando | **AWAITING_AUTHORISATION** | Permite nova tentativa |
 
-Caso o consentimento seja aprovado, seu status será alterado para **AUTHORISED** e os tokens de acesso serão gerados automaticamente pelo OOC junto à Instituição Destino. Eles serão armazenados pelo OOC e utilizados de maneira transparente nas etapas de utilização do consentimento.
+Os tokens gerados são gerenciados pelo OpusTPP e utilizados de forma transparente nas etapas de utilização do consentimento.
 
-Caso o consentimento seja negado, seu status será alterado para **REJECTED** e o fluxo será encerrado.
+---
 
-Além disso, é possível que o consentimento permaneça no status **AWAITING_AUTHORISATION**. Neste caso, pode-se realizar uma nova tentativa de autorização do consentimento.
-<!-- Link redireciona pra página inexistente
-[nova tentativa de autorização do consentimento](#31---nova-tentativa-de-autorização-do-consentimento).-->
+## Utilização do Consentimento
 
-## Utilização do consentimento
+Após a aprovação, o consentimento pode ser utilizado para:
 
-Depois que um consentimento é aprovado, ele pode ser utilizado para obtenção de dados ou para iniciação de pagamento ou pagamento automático. Chamamos essa etapa de *utilização do consentimento*, e para isso podem ser utilizadas as APIs de proxy, detalhadas nas páginas a seguir:
+| Tipo de Consentimento | Finalidade |
+| :-------------------: | :--------: |
+| Compartilhamento de Dados | Obtenção de dados cadastrais e transacionais |
+| Iniciação de Pagamento | Criação e execução de pagamentos |
+| Pagamento Automático | Criação e gestão de pagamentos recorrentes |
 
-<!-- Confirmar se os redirecionamentos estão corretos -->
-- [Recepção de Dados Cadastrais e Transacionais](../../openFinanceBrasil/perfisParticipacao/receptorDeDados.html).
-- [Iniciação de Transação de Pagamento](../../openFinanceBrasil/perfisParticipacao/itp/index.html).
-- [Iniciação de Transação de Pagamento Automático](../../openFinanceBrasil/perfisParticipacao/itp/itpAutomatico.html).
-<!-- OPEN INSURANCE
-- [Recepção de Dados Cadastrais e Apólices](./open-insurance-dados/readme.md).-->
+**Documentação específica:**
 
-> **:warning:** Os consentimentos de compartilhamento de dados e de iniciação de pagamento são desvinculados entre si, ou seja, um consentimento de leitura de dados **NÃO** pode ser utilizado para criar um pagamento (e vice-versa).
+- [Recepção de Dados Cadastrais e Transacionais](../../openFinanceBrasil/perfisParticipacao/receptorDeDados.html)
+- [Iniciação de Transação de Pagamento](../../openFinanceBrasil/perfisParticipacao/itp/index.html)
+- [Iniciação de Transação de Pagamento Automático](../../openFinanceBrasil/perfisParticipacao/itp/itpAutomatico.html)
 
-## Paginação
+> **Atenção:** Consentimentos de dados e de pagamento são independentes. Um consentimento de leitura de dados **não pode** ser utilizado para criar pagamentos, e vice-versa.
 
-Algumas das APIs de proxy possuem em seu retorno os links de paginação definidos pela detentora/transmissora, como no exemplo de **Open Finance** a seguir:
+---
+
+## Paginação em APIs de Proxy
+
+Algumas APIs de proxy retornam links de paginação definidos pela instituição:
 
 ```json
 {
@@ -141,170 +148,166 @@ Algumas das APIs de proxy possuem em seu retorno os links de paginação definid
 }
 ```
 
-Caso a instituição queira acessar um dos links, deverá substituir seu FQDN pelo do ***OpusTPP*** mantendo os query parameters após o caracter ***?***.
+Para acessar os recursos, substitua o FQDN (domínio) da instituição pelo do **OpusTPP**, mantendo os parâmetros após o caractere `?`.
 
-Considerando o exemplo acima, os recursos da próxima página deveriam ser acessados através da seguinte URL: `https://opustpp.instituicao.com.br/proxy/open-banking/resources/v2/resources?page=3&page-size=25`
+**Exemplo:** Para acessar a próxima página: `https://opustpp.instituicao.com.br/proxy/open-banking/resources/v2/resources?page=3&page-size=25`
 
-<!-- OPEN INSURANCE
-Analogamente podemos ter essa paginação como no exemplo de **Open Insurance** a seguir:
+---
 
-```json
-{
-  "data": {},
-  "links": {
-    "self": "https://mtls-api.seguradora.com.br/open-insurance/api/v1/resource?page=2&page-size=25",
-    "first": "https://mtls-api.seguradora.com.br/open-insurance/api/v1/resource?page=2&page-size=25",
-    "prev": "https://mtls-api.seguradora.com.br/open-insurance/api/v1/resource?page=1&page-size=25",
-    "next": "https://mtls-api.seguradora.com.br/open-insurance/api/v1/resource?page=3&page-size=25",
-    "last": "https://mtls-api.seguradora.com.br/open-insurance/api/v1/resource?page=5&page-size=25"
-  }
-}
-```
+## Fluxo de Solicitação de Iniciação de Pagamento
 
-Caso a instituição queira acessar um dos links, deverá substituir seu FQDN pelo do ***OpusTPP*** mantendo os query parameters após o carácter *?*.
+A iniciação do pagamento deve ocorrer **após** a autorização do consentimento de pagamento. Este fluxo utiliza as APIs de proxy para efetivar a transação.
 
-Considerando o exemplo acima, os recursos da próxima página deveriam ser acessados através da seguinte URL: `https://opustpp.instituicao.com.br/proxy/open-insurance/resources/v1/resources?page=3&page-size=25` -->
+![Diagrama de sequência](./anexos/imagens/funcionamento-paymentSequence.png)
 
-## Fluxo de solicitação de iniciação de pagamento
+Para detalhes técnicos, consulte a documentação específica de [Iniciação de Transação de Pagamento](../../openFinanceBrasil/perfisParticipacao/itp/index.html) e [Pagamento Automático](../../openFinanceBrasil/perfisParticipacao/itp/itpAutomatico.html).
 
-O fluxo para solicitação de iniciação de pagamentos deve ser realizado após a autorização do consentimento de pagamento.
+---
 
-Para esse fluxo devem ser utilizadas as APIs de proxy que podem ser detalhadas nas seguintes paginas:
+## Fluxo de Solicitação de Vínculo de Dispositivo
 
-- [Iniciação de Transação de Pagamento](../../openFinanceBrasil/perfisParticipacao/itp/index.html).
-- [Iniciação de Transação de Pagamento Automático](../../openFinanceBrasil/perfisParticipacao/itp/itpAutomatico.html).
+O vínculo de dispositivo permite que o usuário autorize um dispositivo (ex.: celular, computador) para aprovar transações utilizando autenticação FIDO2 (biometria, PIN), proporcionando maior segurança e praticidade.
 
-![Diagrama de sequência](./anexos/imagens/payment-sequence.png)
+![Diagrama de sequência](./anexos/imagens/funcionamento-enrollmentSequence.png)
 
-## Fluxo de solicitação de vínculo de dispositivo
+### Etapas do Fluxo de Solicitação de Vínculo de Dispositivo
 
-![Diagrama de sequência](./anexos/imagens/enrollment-sequence.png)
+#### 1. Listagem das Instituições Participantes do Fluxo de Solicitação de Vínculo de Dispositivo
 
-### 1 - Listagem das Instituições do Diretório de Participantes - GET /opus-open-finance/participants
+Mesmo processo descrito no Fluxo de Solicitação de Consentimento descrito mais acima.
 
-Segue da mesma forma que é feito no consentimento. <!--Completar--> <!--[Listagem das Instituições do Diretório de Participantes](#1---listagem-das-instituições-do-diretório-de-participantes---get-opus-open-financeparticipants-ou-opus-open-insuranceparticipants).-->
+#### 2. Criação do Vínculo de Dispositivo
 
-### 2 - Criação do vínculo de dispositivo
+**Endpoint:** `POST /opus-open-finance/enrollments/v1/enrollments`
 
-Nesta etapa, o endpoint utilizado é:
+Esta chamada registra a intenção de criar um vínculo de dispositivo. O vínculo pode ser configurado para aprovar:
 
-- `POST /opus-open-finance/enrollments/v1/enrollments`
+- Consentimentos de pagamento;
+- Transferências inteligentes.
 
-Esta chamada envia à Instituição Destino (Detentora) as informações do vínculo de dispositivo que se deseja criar. Uma resposta com código `HTTP 201 Created` significa que o pedido de vínculo foi criado, e o payload contém o código identificador do vínculo de dispositivo (`enrollmentId`) que deverá ser utilizado nas etapas seguintes.
+> **Importante:** Para suportar ambos os tipos, é necessário criar dois vínculos distintos, cada um com suas permissões específicas.
 
-O status do vínculo de dispositivo após esta etapa é **AWAITING_RISK_SIGNALS**.
+**Status inicial:** **AWAITING_RISK_SIGNALS**
 
-A criação do vínculo poderá ser para aprovação de consentimentos de pagamentos ou de transferências inteligentes. O que define isso é as permissões usadas no corpo da requisição. Não é possível criar um vinculo com permissões para aprovação de ambos os tipos de consentimentos. Para isso, é necessário criar dois vínculos com permissões distintas e aprovar em fluxos separados.
+**Seleção de Versão Regulatória:**
 
-**Importante - Seleção de Versão Regulatória**:
+- Se enviado o header `x-regulatory-v`, o sistema tenta usar a versão solicitada;
+- Se não enviado, utiliza a versão mais atual disponível;
+- O header `x-selected-regulatory-v` na resposta indica a versão efetivamente utilizada.
 
-Na criação do vínculo de dispositivo, o comportamento é o mesmo das rotas não-proxy:
+#### 3. Envio dos Sinais de Risco
 
-- Se enviado o header `x-regulatory-v`, será tentado usar a versão solicitada.
-- Se não enviado, será utilizada a versão mais atual disponível.
-- Se enviado com uma versão inexistente, será utilizada a versão mais recente da mesma major, se disponível.
-- A resposta indica no header `x-selected-regulatory-v` qual versão foi efetivamente utilizada.
+**Endpoint:** `POST /opus-open-finance/enrollments/v1/enrollments/{enrollmentId}/risk-signals`
 
-### 3 - Envio dos sinais de risco
+Envia à Instituição Destino os sinais de risco coletados (ex.: dados do dispositivo, localização). A resposta contém a URL para redirecionamento do usuário.
 
-Nesta etapa o endpoint utilizado é:
+**Status após esta etapa:** **AWAITING_ACCOUNT_HOLDER_VALIDATION**
 
-- `POST /opus-open-finance/enrollments/v1/enrollments/{enrollmentId}/risk-signals`
+#### 4. Redirecionamento para Autorização
 
-Esta chamada envia à Instituição Destino (Detentora) as informações dos sinais de risco. Ela retorna a URL de autorização para que o usuário seja redirecionado para a Instituição Destino.
+O usuário é redirecionado para a Instituição Destino, onde poderá:
 
-O status do vínculo de dispositivo após esta etapa vai para **AWAITING_ACCOUNT_HOLDER_VALIDATION**.
+- Definir limites para transações;
+- Configurar data de expiração do vínculo;
+- Nomear o dispositivo;
+- Confirmar ou rejeitar o vínculo.
 
-### 4 - Redirecionamento do usuário para autorização na Instituição Destino
+#### 5. Retorno do Resultado da Autorização
 
-Após o envio dos sinais de risco, o usuário deve ser redirecionado para a Instituição Destino.
+Após a confirmação (ou rejeição), o resultado é processado pelo OpusTPP, que:
 
-Uma vez identificado, o usuário poderá adicionar limites para transaçôes, adicionar data de expiração do vínculo, adicionar o nome do dispositivo e confirmá-lo (ou rejeitá-lo) no ambiente da Instituição Destino.
+- Gerencia o retorno do fluxo OIDC;
+- Realiza o callback para geração de tokens;
+- Redireciona o usuário de volta à aplicação TPP.
 
-Após esse processo ele estará na etapa final do fluxo de autorização.
+**Possíveis resultados:**
 
-### 5 - Retorno do resultado da autorização de vínculo de dispositivo
+| Decisão | Status do Vínculo |
+| :-----: | :---------------: |
+| Confirmação | **AWAITING_ENROLLMENT** |
+| Rejeição | **REJECTED** |
 
-Após a confirmação (ou rejeição) do vínculo de dispositivo na Instituição Destino, o resultado é recebido pelo Opus Open Client, onde é processado o retorno do fluxo OIDC e realizado o processo de callback para geração de tokens. Após isso, o usuário é redirecionado de volta à aplicação TPP com o resultado da autorização.
+#### 6. Envio das Opções de Registro FIDO
 
-Caso o vínculo de dispositivo seja confirmado, seu status será alterado para **AWAITING_ENROLLMENT** e os tokens de acesso serão gerados automaticamente pelo OpusTPP junto à Instituição Destino. Eles serão armazenados pelo OpusTPP e utilizados de maneira transparente nas etapas de utilização do vínculo de dispositivo.
+**Endpoint:** `POST /proxy/open-banking/enrollments/v2/enrollments/{enrollmentId}/fido-registration-options`
 
-Caso o vínculo de dispositivo seja negado, seu status será alterado para **REJECTED** e o fluxo será encerrado.
+Solicita à Instituição Destino as informações necessárias para iniciar o registro da credencial FIDO2.
 
-### 6 - Envio das opções de registro FIDO
+#### 7. Envio do Registro FIDO
 
-Após o processo de autorização é necessário enviar as opções de registro FIDO.
+**Endpoint:** `POST /proxy/open-banking/enrollments/v2/enrollments/{enrollmentId}/fido-registration`
 
-Nesta etapa o endpoint utilizado é:
+Após o usuário realizar o gesto de autenticação (ex.: biometria, PIN) e a credencial FIDO2 ser criada no dispositivo, os dados são enviados para a Instituição Destino.
 
-- `POST /proxy/open-banking/enrollments/v2/enrollments/{enrollmentId}/fido-registration-options`
+**Status final:** **AUTHORISED**
 
-Esta chamada busca na Instituição Destino as informações necessarias para realizar a autenticação FIDO2.
+#### 8. Criação da Intenção de Pagamento
 
-Com as opções de registro o usuário deve realizar o gesto de autenticação (ex.: biometrica, PIN) para criar a credencial FIDO2.
+Com o vínculo aprovado, o TPP pode criar uma intenção de pagamento:
 
-### 7 - Envio do registro FIDO
+| Fluxo | Endpoint |
+| :---: | :------: |
+| Pagamento padrão | `POST /opus-open-finance/payments/v1/consents` |
+| Transferências Inteligentes | `POST /opus-open-finance/automatic-payments/v1/recurring-consents` |
 
-Após o usuário realizar o gesto de autenticação e for criado a credencial FIDO2, é necessario enviar a credencial para a Instituição Destino.
+#### 9. Obtenção dos Parâmetros para Autenticação FIDO
 
-Nesta etapa o endpoint utilizado é:
+**Endpoint:** `POST /opus-open-finance/enrollments/v1/enrollments/{enrollmentId}/fido-sign-options`
 
-- `POST /proxy/open-banking/enrollments/v2/enrollments/{enrollmentId}/fido-registration`
+Solicita os parâmetros para que o usuário realize a autenticação FIDO2. O corpo da requisição deve conter o ID do consentimento criado:
 
-Esta chamada envia os dados da credencial FIDO2 para a Instituição Destino.
+- Para pagamento padrão: `consentId`;
+- Para transferências inteligentes: `recurringConsentId`.
 
-O status do vínculo de dispositivo após esta etapa vai para **AUTHORISED**.
+#### 10. Autorização do Consentimento de Pagamento
 
-### 8 - Criação do pagamento
-
-Depois que o vínculo de dispositivo é aprovado, ele pode ser utilizado para intenção do consentimento de pagamento.
-
-Para isso, é necessário iniciar uma intenção de consentimento de pagamento através de algum dos seguintes endpoints a depender do fluxo ser de pagamento ou transferências inteligentes:
-
-- `POST /opus-open-finance/payments/v1/consents`
-- `POST /opus-open-finance/automatic-payments/v1/recurring-consents`
-
-### 9 - Obtenção dos parâmetros para autenticação FIDO
-
-Após iniciar uma intenção de consentimento de pagamento é necessário obter os parâmetros para autenticação FIDO através do endpoint:
-
-- `POST /opus-open-finance/enrollments/v1/enrollments/{enrollmentId}/fido-sign-options`
-
-Esta chamada envia os dados do Relying Party e a plataforma sobre a qual o usuário está utilizando o serviço da iniciadora para utilização de FIDO2. E envia o ID da intenção de consentimento de pagamento para atrelar o consentimento ao vículo de dispositivo.
-
-Neste endpoint, é importante enviar o `id` do consentimento a ser aprovado no corpo da requisição. Se o consentimento for de pagamento, deve ser enviado o `consentId`. Se o consentimento for de transferências de inteligentes, deve ser enviado o `recurringConsentId`.
-
-Após a obtenção dos parâmetros para autenticação é necessário que o usuário realize o gesto de autenticação (ex.: biometria, PIN) e envie os dados (ex.: fidoAssertion, sinais de risco) para o Opus Open Client.
-
-### 10 - Autorização do consentimento de pagamento
-
-Após o usuário realizar a autenticação FIDO2 é necessário realizar a autorização do consentimento de pagamento.
-
-Nesta etapa o endpoint utilizado será algum destes a depender se o consentimento a ser aprovado é de pagamento ou trasnferências inteligentes.
+**Endpoints conforme tipo:**
 
 - `POST /proxy/open-banking/enrollments/v2/consents/{consentId}/authorise`
 - `POST /proxy/open-banking/enrollments/v2/recurring-consents/{recurringConsentId}/authorise`
 
-Esta chamada envia os sinais de risco e os dados da asserção FIDO2 para
-a Instituição Destino.
+Envia os sinais de risco e os dados da asserção FIDO2 para a Instituição Destino.
 
-Após a autorização do consentimento o status do consentimento vai para **AUTHORISED**.
+**Status após autorização:** **AUTHORISED**
 
-Com isso, a iniciação do pagamento pode ser realizado no padrão dos demais fluxos.
+Com o consentimento autorizado, a iniciação do pagamento segue o padrão dos demais fluxos.
+
+---
 
 ## Fluxo Jornada Otimizada
 
-Jornada Otimizada tem como objetivo simplificar o fluxo, permitindo o compartilhamento de dados a partir da jornada de pagamentos em um processo unificado, reduzindo problemas de pagamentos sem saldo disponível. É possível compartilhar dados da conta a partir de dois produtos de pagamento: Transferências Inteligentes e Jornada Sem Redirecionamento.
+### Conceito
 
-Na Jornada Otimizada, são gerados dois consentimentos: o consentimento de pagamentos, considerado primário, e o consentimento de dados, considerado secundário. O usuário pode revogar o consentimento de dados sem revogar o consentimento de pagamentos. Ao revogar o consentimento de pagamentos, o consentimento de dados relacionado deve ser automaticamente revogado. Em caso de cancelamento apenas do consentimento de dados, o usuário precisará conceder um novo consentimento de dados para que o saldo volte a ficar disponível.
+A Jornada Otimizada simplifica a experiência do usuário ao permitir o compartilhamento de dados da conta no mesmo fluxo de um pagamento. Isso reduz problemas como pagamentos sem saldo disponível, pois o TPP pode consultar o saldo antes de solicitar o pagamento.
 
-Para executar a Jornada Otimizada, primeiro deve ser criada a intenção de consentimento de transmissão de dados, informando no corpo da requisição que se trata de um consentimento secundário através do campo "isLinked".
+### Como Funciona
+
+No fluxo de Jornada Otimizada, são gerados **dois consentimentos**:
+
+| Tipo | Descrição |
+| :--: | :-------: |
+| **Primário (Pagamento)** | Consentimento principal que autoriza o pagamento |
+| **Secundário (Dados)** | Consentimento vinculado que autoriza acesso a dados da conta |
+
+### Relação entre os Consentimentos
+
+- O consentimento secundário pode ser revogado sem afetar o consentimento primário;
+- Se o consentimento primário for revogado, o secundário também é revogado automaticamente;
+- Se apenas o consentimento de dados for cancelado, o usuário precisará conceder um novo para que o acesso ao saldo seja restabelecido.
+
+### Passo a Passo
+
+#### 1. Criar Consentimento Secundário (Dados)
+
+**Endpoint:** `POST /opus-open-finance/consents/v1/consents`
+
+Informar no corpo da requisição:
 
 ```json
 "isLinked": true
 ```
 
-As permissões devem ser exatamente estas:
+As permissões obrigatórias:
 
 ```json
 "permissions": [
@@ -315,16 +318,29 @@ As permissões devem ser exatamente estas:
 ]
 ```
 
-Em seguida, deve ser criada a intenção de consentimento de pagamento ou de vínculo de dispositivo, passando o ID do consentimento secundário da seguinte maneira:
+#### 2. Criar Consentimento Primário (Pagamento ou Vínculo)
+
+**Endpoints:**
+
+- `POST /opus-open-finance/payments/v1/consents` (pagamento)
+- `POST /opus-open-finance/automatic-payments/v1/recurring-consents` (pagamento automático)
+- `POST /opus-open-finance/enrollments/v1/enrollments` (vínculo de dispositivo)
+
+Informar no corpo da requisição:
 
 ```json
-"journey":{
+"journey": {
   "isLinked": true,
   "linkId": "consentId"
 }
 ```
 
-Após a aprovação do consentimento primário, o consentimento secundário também será aprovado automaticamente. Após isso, é possível acessar os dados da conta consentida usando o ID do consentimento secundário. O fluxo de pagamento segue conforme orientado em outros tópicos.
+Onde `linkId` é o ID do consentimento secundário criado no passo anterior.
 
-[TransmissorDados]: ../../openFinanceBrasil/perfisParticipacao/transmissorDeDados.html
-[DetentorConta]: ../../openFinanceBrasil/perfisParticipacao/detentorDeContas.html
+#### 3. Fluxo de Autorização
+
+Quando o usuário aprova o consentimento primário:
+
+- O consentimento secundário é automaticamente aprovado;
+- O TPP pode acessar os dados da conta usando o ID do consentimento secundário;
+- O fluxo de pagamento segue normalmente.

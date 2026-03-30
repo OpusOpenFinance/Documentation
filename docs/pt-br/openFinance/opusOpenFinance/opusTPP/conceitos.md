@@ -18,4 +18,6 @@ Em construção...
 - O que significa solicitar consentimento;
 - Diferenças de revogação de pagamento e consentimento;
 - Diferenças App-to-App, App-to-Web, Web-to-App
+- Consentimento vs Vínculo de Dispositivo
+- Jornada Otimizada
 -->
