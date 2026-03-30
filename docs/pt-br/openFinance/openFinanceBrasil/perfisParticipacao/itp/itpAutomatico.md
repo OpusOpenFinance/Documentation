@@ -1,8 +1,8 @@
 ---
 layout: default
-title: "Iniciação de Transação de Pagamento Automático"
+title: "ITP Automático"
 parent: "ITP"
-nav_order: 1
+nav_order: 2
 lang: "pt-br"
 alternate_lang: 
     - path: "/Documentation/en/openFinance/openFinanceBrasil/perfisParticipacao/itp/itpAutomatico/"
@@ -11,27 +11,52 @@ alternate_lang:
       lang: "es"
 ---
 
-<!-- Adicionar um contexto do que é o ITP automático -->
+## Iniciação de Transação de Pagamento Automático
 
-## Endpoints disponíveis
+A **Iniciação de Transação de Pagamento (ITP) Automático** é uma funcionalidade do Open Finance Brasil que viabiliza a realização de pagamentos agendados e recorrentes, como assinaturas e cobranças periódicas, de forma automatizada e segura.
 
-- **Versão 1**: `POST /proxy/open-banking/automatic-payments/v1/pix/recurring-payments`
-  - [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/345178113/v1.0.0+SV+Pagamentos+Autom+ticos)
+### Modelo de Negócio
 
-- **Versão 2**: `POST /proxy/open-banking/automatic-payments/v2/pix/recurring-payments`
-  - [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/896368641/v2.0.0+SV+Pagamentos+Autom+ticos)
+Este serviço estabelece um modelo de delegação de autorização onde:
 
-Após a aprovação do consentimento, é necessário requisitar o início da transação do pagamento junto à Detentora de Conta.
+- **Pagador (Consumidor):** Titular da conta que autoriza débitos automáticos
+- **[Iniciador de Pagamento:](./index.html)** Pessoa jurídica (ex.: plataforma de serviços, loja virtual) que solicita os débitos
+- **[Detentora de Conta:](../detentorDeContas.html)** Instituição financeira que custodia a conta do pagador e executa os pagamentos
 
-Nos casos de sucesso, a resposta terá código HTTP 201 Created e conterá as informações do pagamento iniciado. O consentimento associado terá seu status **CONSUMED** após atingir algum dos limites globais de transações.
+### Fluxo de Funcionamento
 
-> É necessário consultar o status do pagamento iniciado (ex.: através de *polling* no endpoint descrito abaixo) para verificar quando/se ele foi de fato realizado. <!--Explicar o que é "polling"-->
+O processo é estruturado em duas etapas complementares:
 
-Já para os casos de falha na criação do pagamento, a Detentora retornará HTTP 422 Unprocessable Entity com o código referente ao erro ocorrido, e o status de seu consentimento se tornará **REJECTED**. Para mais informações sobre os códigos de erro durante a criação do pagamento PIX, consultar a documentação oficial (seção *"Informações Técnicas - Pagamentos Automáticos"*, schema `422ResponseErrorCreatePixRecurringPayment`).
+| Etapa | Descrição | Responsável |
+| ----- | --------- | ----------- |
+| **1. Consentimento** | O pagador autoriza, no ambiente digital da Detentora de Conta, que o Iniciador realize débitos automáticos em sua conta, estabelecendo limites de valor, periodicidade e vigência. | Pagador e Detentora de Conta |
+| **2. Iniciação do Pagamento** | O Iniciador requisita a criação de um pagamento específico à Detentora de Conta, utilizando o consentimento previamente autorizado como base legal para o débito. | Iniciador de Pagamento |
 
-Exemplo de request com amount (100.00) diferente do definido no consentimento (10.00):
+---
 
-Request Body:
+## Endpoints por Funcionalidade
+
+### 1. Criação de Pagamento Automático
+
+**Objetivo:** Solicitar a realização de um pagamento recorrente ou agendado com base em um consentimento já aprovado.
+
+**Endpoints:**
+
+| Versão | Método | Endpoint |
+| :----: | :----: | :------: |
+| v1 | POST | `/proxy/open-banking/automatic-payments/v1/pix/recurring-payments` |
+| v2 | POST | `/proxy/open-banking/automatic-payments/v2/pix/recurring-payments` |
+
+**Comportamento esperado:**
+
+| Cenário | Código HTTP | Status do Consentimento | Descrição |
+| :-----: | :---------: | :---------------------: | :-------: |
+| Sucesso | 201 Created | CONSUMED | Pagamento criado. O consentimento é consumido ao atingir os limites autorizados (valor total ou número de transações). |
+| Falha | 422 Unprocessable Entity | REJECTED | Pagamento rejeitado. O consentimento é invalidado. |
+
+**Exemplo de falha por divergência de valor:**
+
+*Request* com valor de R$ 100,00 enquanto o consentimento autoriza apenas R$ 10,00:
 
 ```json
 {
@@ -50,10 +75,10 @@ Request Body:
       "remittanceInformation": "Pagamento da nota XPTO035-002.",
       "cnpjInitiator": "00000000000191"
     }
-  }
+}
 ```
 
-Response Error no formato JSON - resposta é retornada no formato JWT:
+*Response* de erro (formato JWT):
 
 ```json
 {
@@ -74,55 +99,65 @@ Response Error no formato JSON - resposta é retornada no formato JWT:
 }
 ```
 
-### Consulta de pagamentos associados a um consentimento
+> **Importante:** A criação do pagamento não garante sua liquidação imediata. Recomenda-se a adoção de mecanismo de *polling* (consulta periódica) ao endpoint de consulta para acompanhamento efetivo da execução.
 
-Endpoints disponíveis:
+---
 
-- **Versão 1**: `GET /proxy/open-banking/automatic-payments/v1/pix/recurring-payments`
-  - [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/345178187/M+quina+de+Estados+-+v1.0.0+-+SV+Pagamentos+Autom+ticos)
+### 2. Consulta de Pagamentos por Consentimento
 
-- **Versão 2**: `GET /proxy/open-banking/automatic-payments/v2/pix/recurring-payments`
-  - [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/896368699/M+quina+de+Estados+-+v2.0.0+-+SV+Pagamentos+Autom+ticos)
+**Objetivo:** Obter a relação de todos os pagamentos associados a um consentimento, com seus respectivos status.
 
-Permite a consulta do status e as informações de pagamento associados a um consentimento.
+**Endpoints:**
 
-Uma explicação detalhada da máquina de estados do status do pagamento pode ser encontrada na documentação oficial do Open Finance Brasil.
+| Versão | Método | Endpoint |
+| :----: | :----: | :------: |
+| v1 | GET | `/proxy/open-banking/automatic-payments/v1/pix/recurring-payments` |
+| v2 | GET | `/proxy/open-banking/automatic-payments/v2/pix/recurring-payments` |
 
-### Consulta de status do pagamento automático
+A [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/896368699/M+quina+de+Estados+-+v2.0.0+-+SV+Pagamentos+Autom+ticos) detalha a máquina de estados completa dos pagamentos.
 
-Endpoints disponíveis:
+---
 
-- **Versão 1**: `GET /proxy/open-banking/automatic-payments/v1/pix/recurring-payments/{recurringPaymentId}`
-  - [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/345178187/M+quina+de+Estados+-+v1.0.0+-+SV+Pagamentos+Autom+ticos)
+### 3. Consulta de Pagamento Específico
 
-- **Versão 2**: `GET /proxy/open-banking/automatic-payments/v2/pix/recurring-payments/{recurringPaymentId}`
-  - [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/896368699/M+quina+de+Estados+-+v2.0.0+-+SV+Pagamentos+Autom+ticos)
+**Objetivo:** Obter o status detalhado e as informações de um pagamento automático específico.
 
-Permite a consulta do status e as informações de um pagamento automático.
+**Endpoints:**
 
-Uma explicação detalhada da máquina de estados do status do pagamento pode ser encontrada na documentação oficial do Open Finance Brasil. <!--Adicionar o link que redireciona pra máquina de estados-->
+| Versão | Método | Endpoint |
+| :----: | :----: | :------: |
+| v1 | GET | `/proxy/open-banking/automatic-payments/v1/pix/recurring-payments/{recurringPaymentId}` |
+| v2 | GET | `/proxy/open-banking/automatic-payments/v2/pix/recurring-payments/{recurringPaymentId}` |
 
-### Revogação do pagamento
+---
 
-Endpoints disponíveis:
+### 4. Revogação de Pagamento
 
-- **Versão 1**: `PATCH /proxy/open-banking/automatic-payments/v1/pix/recurring-payments/{recurringPaymentId}`
-  - [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/345178113/v1.0.0+SV+Pagamentos+Autom+ticos)
+**Objetivo:** Cancelar um pagamento que já foi iniciado, mas ainda não foi liquidado.
 
-- **Versão 2**: `PATCH /proxy/open-banking/automatic-payments/v2/pix/recurring-payments/{recurringPaymentId}`
-  - [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/896368641/v2.0.0+SV+Pagamentos+Autom+ticos)
+**Endpoints:**
 
-Permite a revogação de um pagamento.
+| Versão | Método | Endpoint |
+| :----: | :----: | :------: |
+| v1 | PATCH | `/proxy/open-banking/automatic-payments/v1/pix/recurring-payments/{recurringPaymentId}` |
+| v2 | PATCH | `/proxy/open-banking/automatic-payments/v2/pix/recurring-payments/{recurringPaymentId}` |
 
-É permitido realizar a revogação de um pagamento após a iniciação do pagamento e se o pagamento estiver nas seguintes situações: Agendada com sucesso (SCHD) ou retida para análise (PDNG).
+**Condições para revogação:**
 
-Nos casos de sucesso, a resposta terá código `HTTP 200` e conterá as informações da revogação juntamente com as informações do pagamento iniciado.
+| Status do Pagamento | Permite Revogação |
+| :-----------------: | :---------------: |
+| SCHD (Agendado com sucesso) | ✓ Sim |
+| PDNG (Retido para análise) | ✓ Sim |
+| Outros status | ✗ Não |
 
-Já para os casos de falha na revogação do pagamento, a Detentora retornará `HTTP 422 Unprocessable Entity` com o código referente ao erro ocorrido. Para mais informações sobre os códigos de erro durante a revogação do pagamento PIX, consultar a documentação oficial (seção *"Informações Técnicas - Pagamentos Automáticos"*, schema `422ResponseErrorCreateRecurringPaymentsPaymentId`).
+**Comportamento esperado:**
 
-Exemplo de request:
+| Cenário | Código HTTP | Descrição |
+| :-----: | :---------: | :-------: |
+| Sucesso | 200 OK | Revogação efetivada. Resposta inclui dados do pagamento e da revogação. |
+| Falha | 422 Unprocessable Entity | Revogação não permitida. Retorno do erro específico. |
 
-Request Body:
+**Exemplo de request:**
 
 ```json
 {
@@ -140,46 +175,39 @@ Request Body:
 }
 ```
 
-Response Error no formato JSON - resposta é retornada no formato JWT:
+---
 
-```json
-{
-  "errors": [
-    {
-      "code": "PAGAMENTO_NAO_PERMITE_CANCELAMENTO",
-      "title": "Pagamento não permite cancelamento",
-      "detail": "Pagamento não permite cancelamento"
-    }
-  ],
-  "meta": {
-    "requestDateTime": "2021-05-21T08:30:00Z"
-  },
-  "aud": "27aea8f6-2119-55f8-9553-5ad4b08eeb17",
-  "iss": "27aea8f6-2119-55f8-9553-5ad4b08eeb17",
-  "jti": "3f47c50e-3a19-4d16-905c-8eb61102b0da",
-  "iat": 1689103922
-}
-```
+### 5. Consulta de Status do Consentimento
 
-### Consulta de status do consentimento - GET /opus-open-finance/automatic-payments/v1/recurring-consents/{recurringConsentId}
+**Objetivo:** Verificar a situação atual de um consentimento de pagamento automático.
 
-Permite a consulta do status e as informações de um consentimento de pagamento automático.
+**Endpoint:** `GET /opus-open-finance/automatic-payments/v1/recurring-consents/{recurringConsentId}`
 
-Uma explicação detalhada da máquina de estados do status do consentimento pode ser encontrada na [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/345178187/M+quina+de+Estados+-+v1.0.0+-+SV+Pagamentos+Autom+ticos) do Open Finance Brasil.
+A [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/345178187/M+quina+de+Estados+-+v1.0.0+-+SV+Pagamentos+Autom+ticos) detalha a máquina de estados completa dos consentimentos.
 
-### Revogação de consentimento - PATCH /opus-open-finance/automatic-payments/v1/recurring-consents/{recurringConsentId}
+---
 
-Permite a revogação de um consentimento.
+### 6. Revogação de Consentimento
 
-É permitido realizar a revogação de um consentimento após a criação do consentimento e se o consentimento estiver com status **AUTHORIZED**.
+**Objetivo:** Cancelar um consentimento ativo, impedindo a criação de novos pagamentos associados a ele.
 
-Nos casos de sucesso, a resposta terá código `HTTP 200` e conterá as informações da revogação juntamente com as informações do consentimento.
+**Endpoint:** `PATCH /opus-open-finance/automatic-payments/v1/recurring-consents/{recurringConsentId}`
 
-Já para os casos de falha na revogação do pagamento, a Detentora retornará `HTTP 422 Unprocessable Entity` com o código referente ao erro ocorrido. Para mais informações sobre os códigos de erro durante a revogação do pagamento PIX, consultar a [documentação oficial](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/345178113/v1.0.0+SV+Pagamentos+Autom+ticos) (seção *"Informações Técnicas - Pagamentos Automáticos"*, schema `422ResponseErrorRecurringConsents`).
+**Condições para revogação:**
 
-Exemplo de request:
+| Status do Consentimento | Permite Revogação |
+| :---------------------: | :---------------: |
+| AUTHORIZED | ✓ Sim |
+| Outros status | ✗ Não |
 
-Request Body:
+**Comportamento esperado:**
+
+| Cenário | Código HTTP | Descrição |
+| :-----: | :---------: | :-------: |
+| Sucesso | 200 OK | Consentimento revogado com sucesso. |
+| Falha | 422 Unprocessable Entity | Erro na revogação. Retorno do código específico. |
+
+**Exemplo de request:**
 
 ```json
 {
@@ -197,23 +225,31 @@ Request Body:
 }
 ```
 
-Response Error no formato JSON - resposta é retornada no formato JWT:
+---
+
+## Tratamento de Erros
+
+Em cenários de erro, as respostas são retornadas no formato JWT (JSON Web Token) com a seguinte estrutura padrão:
 
 ```json
 {
   "errors": [
     {
-      "code": "PAGAMENTO_NAO_PERMITE_CANCELAMENTO",
-      "title": "Pagamento não permite cancelamento",
-      "detail": "Pagamento não permite cancelamento"
+      "code": "CODIGO_DO_ERRO",
+      "title": "Título descritivo",
+      "detail": "Detalhamento específico do erro"
     }
   ],
   "meta": {
     "requestDateTime": "2021-05-21T08:30:00Z"
   },
-  "aud": "27aea8f6-2119-55f8-9553-5ad4b08eeb17",
-  "iss": "27aea8f6-2119-55f8-9553-5ad4b08eeb17",
-  "jti": "3f47c50e-3a19-4d16-905c-8eb61102b0da",
+  "aud": "...",
+  "iss": "...",
+  "jti": "...",
   "iat": 1689103922
 }
 ```
+
+Para consultar a lista completa de códigos de erro, acesse [este link][ITP-Autom].
+
+[ITP-Autom]: ../../../../../swagger-ui/index.html?api=oas-itp-pagamentos-automaticos
