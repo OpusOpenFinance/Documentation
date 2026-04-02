@@ -1,13 +1,13 @@
 ---
 layout: default
-title: "Data Transmission"
+title: "Account Holder and Data Transmission"
 parent: "Shared Consent"
 nav_order: 2
 lang: "en"
 alternate_lang:
-    - path: "/Documentation/pt-br/openFinance/opusOpenFinance/consentimentoCompartilhado/transmissaoDeDados/"
+    - path: "/Documentation/pt-br/openFinance/opusOpenFinance/consentimentoCompartilhado/detentorContasETransmissaoDados/"
       lang: "pt-br"
-    - path: "/Documentation/es/openFinance/opusOpenFinance/consentimentoCompartilhado/transmissaoDeDados/"
+    - path: "/Documentation/es/openFinance/opusOpenFinance/consentimentoCompartilhado/detentorContasETransmissaoDados/"
       lang: "es"
 ---
 
