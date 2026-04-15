@@ -46,9 +46,12 @@ _Etapa de liquidación del pago:_
 
 ### API de integración
 
-La descripción de la API que debe ser implementada por la _capa de integración de pago_, que es la API _Payment Initiation_, puede encontrarse [**aquí**][API-pago].
+La descripción de la API que debe ser implementada por la _capa de integración de pagos_, que es la API de _Payment Initiation_, se puede encontrar en 2 versiones:
 
-Para descargar el archivo YAML/OAS que contiene la especificación de la API haga clic [**aquí**](./anexos/yml/es-paymentIntegration-0.1.0.yml){:download="es-paymentIntegration-0.1.0.yml"}.
+* **v4**: [haga clic aquí para acceder][API-pago].
+* **v5**: [haga clic aquí para acceder][API-pagoV5].
+
+Para descargar los archivos YAML/OAS que contienen las especificaciones de las APIs, haga clic [**aquí para la v4**](./anexos/yml/es-paymentIntegration-0.1.0.yml){:download="es-paymentIntegration-0.1.0.yml"} y [**aquí para la v5**](./anexos/yml/es-paymentIntegration-v5.0.0-rc.1-2.2.0.yaml){:download="es-paymentIntegration-v5.0.0-rc.1-2.2.0.yaml"}.
 
 ### Escenarios de Pagos a Ser Cúbiertos por la Integración
 
@@ -268,3 +271,4 @@ La fecha de cada programación debe determinarse como se describe en [cómo iden
 [App-e-Web]: ../appEWeb/index.html
 [Imagen-Capa-Integración]: ./anexos/imagens/representacaoCamadaDeIntegracao.png
 [API-pago]: ../../../../../swagger-ui/index.html?api=es-payment-integration
+[API-pagoV5]: ../../../../../swagger-ui/index.html?api=es-payment-integration-v5
