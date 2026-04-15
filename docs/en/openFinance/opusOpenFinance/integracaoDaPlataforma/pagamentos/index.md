@@ -45,9 +45,13 @@ _Payment settlement step:_
 
 ### Integration API
 
-The description of the API that must be implemented by the _payment integration layer_, known as the _Payment Initiation API_, can be found [**right here**][API-pagamento].
+The description of the API that must be implemented by the _payment integration layer_, which is the _Payment Initiation_ API, can be found in two versions:
 
-To download the YAML/OAS file containing the API specification, click [**right here**](./anexos/yml/en-paymentIntegration-0.1.0.yml){:download="en-payment-integration-0-1-0.yml"}.
+* **v4**: [click here to access][API-pagamento].
+* **v5**: [click here to access][API-pagamentoV5].
+
+To download the YAML/OAS files containing the API specifications, click [**here for v4**](./anexos/yml/en-paymentIntegration-0.1.0.yml){:download="en-paymentIntegration-0.1.0.yml"} and [**here for v5**](./anexos/yml/en-paymentIntegration-v5.0.0-rc.1-2.2.0.yaml){:download="en-paymentIntegration-v5.0.0-rc.1-2.2.0.yaml"}.
+
 
 ### Payment Scenarios to Be Covered by the Integration
 
@@ -266,7 +270,8 @@ The date of each schedule must follow the rules described in [how to identify th
 
 [App-e-Web]: ../appEWeb/index.html
 [Imagem-Camada-Integração]: ./anexos/imagens/representacaoCamadaDeIntegracao.png
-[API-pagamento]: ../../../../..//swagger-ui/index.html?api=en-payment-integration
+[API-pagamento]: ../../../../../swagger-ui/index.html?api=en-payment-integration
+[API-pagamentoV5]: ../../../../../swagger-ui/index.html?api=en-payment-integration-v5
 [Cenarios-Pagamentos]: ./cenariosPagamentos.html
 [Validacoes-Pagamentos]: ./validacoesPagamentos.html
 [Discovery-Recursos]: ./discoveryRecursos.html
