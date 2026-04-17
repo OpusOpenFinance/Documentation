@@ -47,24 +47,33 @@ Antes de iniciarmos as instruções para o uso, aqui vai uma explicação de ter
 
 O primeiro passo é selecionar qual categoria de serviço deseja testar. Escolha entre **Pagamentos** e **Compartilhamento de Dados**.
 
+![Seleção de Categoria: - Pagamentos ou - Compartilhamento de Dados](./anexos/imagens/index-selecaoCategoriaInicial.png)
+
 ### **Pagamentos**
 
-1) Conta de origem
+#### 1. Conta de origem
+
 Nesta etapa, você deve selecionar a instituição financeira de onde o valor deve ser transferido. Você pode escolher entre uma instituição pré-definida na tela ou pode optar por buscar a instituição que deseja, através da barra de pesquisa que se encontra logo no início da página:
 
-<!--Inserir foto-->
+![Escolha de Instituição Financeira](./anexos/imagens/index-escolhaInstituicaoFinanceira.png)
 
-{:.exemplo}
-_Digite "Digio" para filtrar._
-2) Validação inicial
+>**EXEMPLO:**
+>Digite "Digio" para filtrar.
+
+#### 2. Validação inicial
+
 Aqui você deve escolher como será identificado:
 
 - Pessoa Física;
 - Pessoa Jurídica.
 
+![Pessoa Física ou Jurídica](./anexos/imagens/index-pessoaFOuJ.png)
+
 Caso opte por Pessoa Física, você deve informar o CPF do pagamento, caso opte por Pessoa Jurídica, deve adicionar também o CNPJ.
 Após o preenchimento correto dos campos obrigatórios, você poderá prosseguir para a próxima etapa.
-3) Modalidade de pagamento
+
+#### 3. Modalidade de pagamento
+
 Aqui, realize a seleção da modalidade do pagamento a ser realizado. A escolha pode ser feita entre:
 
 - Imediato;
@@ -73,29 +82,102 @@ Aqui, realize a seleção da modalidade do pagamento a ser realizado. A escolha 
 - Transferência inteligente;
 - Pix automático.
 
+![Seleção de Modalidade de Pagamento](./anexos/imagens/index-modalidadePagamento.png)
+
 | Modalidade | Campos Adicionais |
 | :--------: | :---------------: |
-| **Pix Automático** | Frequência (semanal/mensal/trimestral/semestral/anual), prazo de validade |
 | **Agendado Recorrente** | Data final e intervalo de repetição |
 | **Transferência Inteligente** | Frequência (diária/semanal/mensal/anual), prazo de validade (horas/dias) |
+| **Pix Automático** | Frequência (semanal/mensal/trimestral/semestral/anual), prazo de validade |
 
-{:.observação}
-_Campos dinâmicos serão exibidos conforme a modalidade._
-4) Método de Inserção
+>**OBSERVAÇÃO:**
+>Campos dinâmicos serão exibidos conforme a modalidade escolhida.
+
+#### 4. Método de Inserção
+
 Aqui você deve selecionar entre as cinco opções dispostas, como os dados do recebedor do pagamento serão inseridos, para Pessoa Física ou Jurídica.
+
+![Tipos de método disponíveis](./anexos/imagens/index-metodoInsercao.png)
 
 Preencha os campos editáveis de cada método (os cinco) e selecione quase ao fim da página o tipo de conta do recebedor:
 
-<!--Adicionar imagem-->
+![Tipo de conta](./anexos/imagens/index-tipoDeConta.png)
 
 - **INIC e DICT:** Após o preenchimento, por fim, insira a chave pix do recebedor.
 - **QRDN:** Após o preenchimento, por fim, insira a chave pix do recebedor e o código do QR Code Dinâmico.
 - **QRES:** Após o preenchimento, por fim, insira a chave pix do recebedor e o código do QR Code Estático.
 
-5) Redirecionamento para o banco
+#### 5. Redirecionamento para o banco
+
 Aguarde o redirecionamento para confirmar a operação. Ao receber a confirmação do banco emissor terá chegado ao fim do processo!  
 
-{:.tempo médio}
-_Cerca de 5-15 segundos para PIX._
+>**TEMPO MÉDIO:**
+>Cerca de 5-15 segundos para PIX.
 
 ### Compartilhamento de Dados
+
+#### 1. Conta de origem - Compartilhamento de Dados
+
+Nesta etapa, você deve selecionar a instituição financeira de onde o valor deve ser transferido. Você pode escolher entre uma instituição pré-definida na tela ou pode optar por buscar a instituição que deseja, através da barra de pesquisa que se encontra logo no início da página:
+
+![Escolha de Instituição Financeira](./anexos/imagens/index-escolhaInstituicaoFinanceira.png)
+
+>**EXEMPLO:**
+>Digite "Digio" para filtrar.
+
+#### 2. Validação inicial - Compartilhamento de Dados
+
+Aqui você deve escolher como será identificado:
+
+- Pessoa Física;
+- Pessoa Jurídica.
+
+![Pessoa Física ou Jurídica](./anexos/imagens/index-pessoaFOuJ.png)
+
+Caso opte por Pessoa Física, você deve informar o CPF do pagamento, caso opte por Pessoa Jurídica, deve adicionar também o CNPJ.
+Após o preenchimento correto dos campos obrigatórios, você poderá prosseguir para a próxima etapa.
+
+#### 3. Seleção de dados
+
+Nesta etapa, por padrão, todas as opções se encontrarão **selecionadas**, o que significa que todos os dados presentes serão compartilhados.
+
+Os tipos de dados para consentimento presentes na página são:
+
+- **Dados cadastrais;**
+- **Cartão de crédito;**
+- **Contas;**
+- **Empréstimos;**
+- **Financiamentos;**
+- **Adiantamento a depositantes;**
+- **Direitos creditórios descontados;**
+- **Renda fixa bancária;**
+- **Renda fixa crédito;**
+- **Renda variável;**
+- **Título do tesouro direto;**
+- **Fundo de investimento;**
+- **Câmbio;**
+- **Recursos.**
+
+Ao final da lista é possível definir o prazo de validade do consentimento dos dados selecionados. Esse prazo define por quanto tempo seus dados poderão ser acessados pela instituição. A definição do prazo é feita através de uma caixa de seleção como mostra na imagem:
+
+![Definição do tempo de validade](./anexos/imagens/index-prazoValidade.png)
+
+Ao clicar na caixa de seleção um calendário será aberto:
+
+![Calendário aberto via caixa de seleção](./anexos/imagens/index-calendarioPrazoValidade.png)
+
+Ao escolher o prazo desejado, prossiga para a próxima etapa.
+
+#### 4. Revisão de dados
+
+Esta é a etapa onde é possível revisar os dados que serão compartilhados com segurança com a sua instituição. Você pode visualizar os dados escolhidos e preenchidos, de forma resumida, por meio de uma lista que estará em sua tela.
+
+Caso tenha interesse em editar alguma informação, basta voltar, realizar a edição e depois realizar o procedimento de retorno à esta tela.
+
+![Voltar e revisar](./anexos/imagens/index-voltarERevisar.png)
+
+Se optar por continuar, você autorizará o compartilhamento dos dados escolhidos e revisados, por meio deste botão:
+
+![Autorizar e seguir](./anexos/imagens/index-autorizarESeguir.png)
+
+**E fim! O compartilhamento foi autorizado e realizado.**
