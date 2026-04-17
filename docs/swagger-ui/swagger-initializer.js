@@ -42,7 +42,7 @@ window.onload = () => {
     "direitos-creditorios": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/invoiceFinancings-2-3-0.yml`,
     // Integração -> Pagamentos
     "payment-integration": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/anexos/yml/paymentIntegration-0.1.0.yml`,
-    "payment-integration-v5": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/anexos/yml/paymentIntegration-v5.0.0-rc.1-2.2.0.yaml`,
+    "payment-integration-v5": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/anexos/yml/paymentIntegration-v5.0.0-rc.1-2.2.0.yml`,
     // Integração -> App e web
     "mobile": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/appEWeb/anexos/yml/mobileWebapp2as.yml`,
     // Integração -> Dados Abertos
@@ -107,7 +107,7 @@ window.onload = () => {
     "en-direitos-creditorios": `${base}/en/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/en-invoiceFinancings-2-3-0.yml`,
     // Integração -> Pagamentos
     "en-payment-integration": `${base}/en/openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/anexos/yml/en-paymentIntegration-0.1.0.yml`,
-    "en-payment-integration-v5": `${base}/en/openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/anexos/yml/en-paymentIntegration-v5.0.0-rc.1-2.2.0.yaml`,
+    "en-payment-integration-v5": `${base}/en/openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/anexos/yml/en-paymentIntegration-v5.0.0-rc.1-2.2.0.yml`,
     // Integração -> App e web
     "en-mobile": `${base}/en/openFinance/opusOpenFinance/integracaoDaPlataforma/appEWeb/anexos/yml/en-mobileWebapp2as.yml`,
     // Integração -> Dados Abertos
@@ -171,7 +171,7 @@ window.onload = () => {
     "es-direitos-creditorios": `${base}/es/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/operacoesDeCredito/es-invoiceFinancings-2-3-0.yml`,
     // Integração -> Pagamentos
     "es-payment-integration": `${base}/es/openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/anexos/yml/es-paymentIntegration-0.1.0.yml`,
-    "es-payment-integration-v5": `${base}/es/openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/anexos/yml/es-paymentIntegration-v5.0.0-rc.1-2.2.0.yaml`,
+    "es-payment-integration-v5": `${base}/es/openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/anexos/yml/es-paymentIntegration-v5.0.0-rc.1-2.2.0.yml`,
     // Integração -> App e Web
     "es-mobile": `${base}/es/openFinance/opusOpenFinance/integracaoDaPlataforma/appEWeb/anexos/yml/es-mobileWebapp2as.yml`,
     // Integração -> Dados Abertos
