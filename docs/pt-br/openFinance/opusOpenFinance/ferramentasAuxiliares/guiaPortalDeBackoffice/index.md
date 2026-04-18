@@ -13,7 +13,7 @@ alternate_lang:
 
 ## Introdução
 
-O Portal de Backoffice tem como objetivo permitir a **visualização, consulta e acompanhamento de pagamentos iniciados via OpusTPP**, oferecendo informações detalhadas sobre cada transação, seu status e dados relacionados.
+O Portal de Backoffice tem como objetivo permitir a **visualização, consulta e rastreabilidade de pagamentos**, oferecendo informações detalhadas sobre cada transação, seu status e dados relacionados e garantindo visibilidade completa do fluxo, desde a criação até a liquidação ou falha.
 
 Esta documentação descreve as funcionalidades disponíveis nas telas do sistema, bem como o comportamento esperado de cada campo e ação, auxiliando no uso e no desenvolvimento da aplicação.
 
@@ -21,13 +21,12 @@ Esta documentação descreve as funcionalidades disponíveis nas telas do sistem
 
 <!--## Links Úteis
 
-* **Figma:** *(inserir link)*
-* **Máquina de Estados do Pagamento (OOF):** *(inserir link)*
+- **Máquina de Estados do Pagamento (OOF):** *(inserir link)*
 
 ---
 -->
 
-### Tela 01 – Login
+## Tela 01 – Login
 
 ![Tela de Login](./anexos/imagens/index-telaLogin.png)
 
@@ -48,7 +47,7 @@ Tela inicial do sistema, responsável pela autenticação do usuário.
 
 ---
 
-### Tela 02 – Listagem de Pagamentos
+## Tela 02 – Listagem de Pagamentos
 
 ![Listagem de Pagamentos](./anexos/imagens/index-listagemPagamentos.png)
 
@@ -118,7 +117,7 @@ Para informações mais detalhadas, acesse [este link](https://openfinancebrasil
 
 ---
 
-### Tela 03 – Detalhe de um Pagamento
+## Tela 03 – Detalhe de um Pagamento
 
 ![Detalhe do Pagamento](./anexos/imagens/index-detalhePagamentos.png)
 
@@ -127,43 +126,43 @@ Para informações mais detalhadas, acesse [este link](https://openfinancebrasil
 Apresenta todas as informações detalhadas de um pagamento específico.
 
 ### Seções da tela de detalhes
-<!--
-#### Cabeçalho
-
-![Cabeçalho do Pagamento](./images/cabecalho.png)
-
-### Campos
-
-- Instituição Detentora
-- Tipo: PIX (fixo)
-- Valor (com cor baseada no status)
-- Status
-- Atualizado em
-
-### Ações
-
-- **Voltar:** Retorna à listagem mantendo filtros
-- **Atualizar:** Consulta o status mais recente na instituição
 
 ---
 
-## IDs Correlacionáveis
+### Cabeçalho
 
-### IDs
-
-![IDs Correlacionáveis](./images/ids.png)
+![Cabeçalho do Pagamento](./anexos/imagens/index-cabecalhoDetalhePagamentos.png)
 
 ### Campos
 
-- Payment ID
-- E2E ID
-- Internal ID
-- Consent ID
+- Instituição Detentora;
+- Tipo: PIX (fixo);
+- Valor (com cor baseada no status);
+- Status;
+- Atualizado em.
 
 ### Ações
 
-- **Copiar:** Copia o valor para a área de transferência
-- **Selecionar Consent ID:** Redireciona para listagem filtrada
+- **Voltar:** Retorna à listagem mantendo filtros;
+- **Atualizar:** Consulta o status mais recente na instituição.
+
+---
+
+### IDs Correlacionáveis
+
+![IDs Correlacionáveis](./anexos/imagens/index-idsCorrelacionaveis.png)
+
+### Campos de IDs
+
+- Payment ID;
+- E2E ID;
+- Internal ID;
+- Consent ID.
+
+### Ações da página
+
+- **Copiar:** Copia o valor para a área de transferência;
+- **Selecionar Consent ID:** Redireciona para listagem filtrada.
 
 ### Mensagem
 
@@ -171,78 +170,70 @@ Apresenta todas as informações detalhadas de um pagamento específico.
 
 ---
 
-## 5.3 Linha do Tempo
+### Timeline (Linha do Tempo)
 
-### Timeline
+![Linha do Tempo](./anexos/imagens/index-timeline.png)
 
-![Linha do Tempo](./images/timeline.png)
-
-### Campos
+### Campos do Timeline
 
 Cada evento contém:
 
-- Status (título)
-- Data e hora
-- FAPI Interaction ID
+- Status (título);
+- Data e hora;
+- FAPI Interaction ID.
 
-### Regras
+### Regras do Timeline
 
-- Exibir apenas os eventos informados pela instituição detentora
-- A quantidade de eventos pode variar
+- Exibir apenas os eventos informados pela instituição detentora;
+- A quantidade de eventos pode variar.
 
 ---
-
-## Detalhes
 
 ### Detalhes
 
-![Detalhes do Pagamento](./images/detalhes.png)
+![Detalhes do Pagamento](./anexos/imagens/index-cardDetalhesPagamentos.png)
 
 ### Pagamento
 
-- Criado (data/hora)
-- Atualizado (data/hora)
-- Moeda
+- Criado (data/hora);
+- Atualizado (data/hora);
+- Moeda.
 
-#### Regra
+### Regra
 
-- Caso não haja atualização, repetir a data de criação
+- Caso não haja atualização, repetir a data de criação.
 
 ---
-
-### **Consentimento**
 
 ### Consentimento
 
-![Dados do Consentimento](./images/consentimento.png)
+![Dados do Consentimento](./anexos/imagens/index-cardConsentimentoPagamentos.png)
 
-#### Exemplos de Campos (PIX)
+### Exemplos de Campos (PIX)
 
-* Data do consentimento
-* Identificador
-* Destinatário
-* CPF/CNPJ
-* Solicitante
-* Devedor
+- Data do consentimento;
+- Identificador;
+- Destinatário;
+- CPF/CNPJ;
+- Solicitante;
+- Devedor.
 
-#### Regras
+### Regras do campo
 
-- Os dados são apenas para visualização
-- **Não é permitido editar nenhum campo**
+- Os dados são apenas para visualização;
+- **Não é permitido editar nenhum campo.**
 
 ---
 
-## Request Payload
+### Request Payload
 
-### Request
+![Request Payload](./anexos/imagens/index-requestPayloadPagamentos.png)
 
-![Request Payload](./images/request.png)
-
-### Descrição
+### Descrição do Request
 
 Exibe o payload enviado pela instituição cliente.
 
-### Regra
+### Regra do Request
 
 Caso não exista:
 
@@ -250,17 +241,15 @@ Caso não exista:
 
 ---
 
-## Response Payload
+### Response Payload
 
-### Response
+![Response Payload](./anexos/imagens/index-responsePayloadPagamentos.png)
 
-![Response Payload](./images/response.png)
-
-### Descrição
+### Descrição do Response
 
 Exibe o payload retornado pelo sistema.
 
-### Regra
+### Regra do Response
 
 Caso não exista:
 
@@ -268,33 +257,23 @@ Caso não exista:
 
 ---
 
-## **5.7 Log de Erro**
-
 ### Log de Erro
 
-![Log de Erro](./images/log-erro.png)
+![Log de Erro](./anexos/imagens/index-logDeErroPagamentos.png)
 
-### **Descrição**
+### Descrição do Log de Erro
 
 Mostra o motivo da falha no pagamento.
 
-### **Exibição Condicional**
+### Exibição Condicional
 
 Apenas para status:
 
-* CANC
-* RJCT
+- `CANC`;
+- `RJCT.`
 
-### Regra
+### Regra do Log de Erro
 
 Caso não exista:
 
 > “Log de erro não disponível para este pagamento.”
-
----
-
-## Considerações Finais
-
-O portal tem foco em **consulta e rastreabilidade de pagamentos**, garantindo visibilidade completa do fluxo, desde a criação até a liquidação ou falha.
-
--->
