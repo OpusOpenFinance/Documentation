@@ -114,7 +114,7 @@ Aguarde o redirecionamento para confirmar a operação. Ao receber a confirmaç�
 >**TEMPO MÉDIO:**
 >Cerca de 5-15 segundos para PIX.
 
-### Compartilhamento de Dados
+### **Compartilhamento de Dados**
 
 #### 1. Conta de origem - Compartilhamento de Dados
 

@@ -114,13 +114,13 @@ Espere la redirección para confirmar la operación. Una vez recibida la confirm
 >**TIEMPO PROMEDIO:**
 >Aproximadamente 5–15 segundos para Pix.
 
-### Compartición de Datos
+### **Compartición de Datos**
 
 #### 1. Cuenta de origen - Compartición de Datos
 
 En esta etapa, debe seleccionar la institución financiera desde donde se transferirá el valor. Puede elegir una institución predefinida en pantalla o buscar la institución deseada mediante la barra de búsqueda ubicada al inicio de la página:
 
-![Selección de Institución Financiera](./anexos/imagens/index-escolhaInstituicaoFinanceira.png)
+![Selección de Institución Financiera](./anexos/imagens/es-index-escolhaInstituicaoFinanceira.png)
 
 >**EJEMPLO:**
 >Escriba "Digio" para filtrar.
@@ -132,7 +132,7 @@ Aquí debe elegir cómo será identificado:
 - Persona Física;
 - Persona Jurídica.
 
-![Persona Física o Jurídica](./anexos/imagens/index-pessoaFOuJ.png)
+![Persona Física o Jurídica](./anexos/imagens/es-index-pessoaFOuJ.png)
 
 Si elige Persona Física, deberá informar el CPF del pago. Si elige Persona Jurídica, también deberá agregar el CNPJ.
 Después de completar correctamente los campos obligatorios, podrá continuar al siguiente paso.
@@ -160,11 +160,11 @@ Los tipos de datos de consentimiento presentes en la página son:
 
 Al final de la lista es posible definir el período de validez del consentimiento de los datos seleccionados. Este período define durante cuánto tiempo sus datos podrán ser accedidos por la institución. La definición se realiza mediante una caja de selección como se muestra en la imagen:
 
-![Definición del período de validez](./anexos/imagens/index-prazoValidade.png)
+![Definición del período de validez](./anexos/imagens/es-index-prazoValidade.png)
 
 Al hacer clic en la caja de selección, se abrirá un calendario:
 
-![Calendario abierto mediante caja de selección](./anexos/imagens/index-calendarioPrazoValidade.png)
+![Calendario abierto mediante caja de selección](./anexos/imagens/es-index-calendarioPrazoValidade.png)
 
 Después de elegir el período deseado, continúe con el siguiente paso.
 
@@ -174,10 +174,10 @@ Esta es la etapa donde podrá revisar de manera segura los datos que serán comp
 
 Si desea editar alguna información, simplemente vuelva atrás, realice la edición y luego regrese a esta pantalla.
 
-![Volver y revisar](./anexos/imagens/index-voltarERevisar.png)
+![Volver y revisar](./anexos/imagens/es-index-voltarERevisar.png)
 
 Si decide continuar, autorizará el intercambio de los datos seleccionados y revisados mediante este botón:
 
-![Autorizar y continuar](./anexos/imagens/index-autorizarESeguir.png)
+![Autorizar y continuar](./anexos/imagens/es-index-autorizarESeguir.png)
 
 **¡Y listo! La compartición de datos ha sido autorizada y realizada.**

@@ -114,13 +114,13 @@ Wait for the redirection to confirm the operation. Once you receive confirmation
 >**AVERAGE TIME:**
 >Approximately 5–15 seconds for Pix.
 
-### Data Sharing
+### **Data Sharing**
 
 #### 1. Source account - Data Sharing
 
 At this stage, you must select the financial institution from which the amount will be transferred. You can choose a predefined institution displayed on the screen or search for the institution you want using the search bar located at the top of the page:
 
-![Financial Institution Selection](./anexos/imagens/index-escolhaInstituicaoFinanceira.png)
+![Financial Institution Selection](./anexos/imagens/en-index-escolhaInstituicaoFinanceira.png)
 
 >**EXAMPLE:**
 >Type "Digio" to filter.
@@ -132,7 +132,7 @@ Here you must choose how you will be identified:
 - Individual;
 - Legal Entity.
 
-![Individual or Legal Entity](./anexos/imagens/index-pessoaFOuJ.png)
+![Individual or Legal Entity](./anexos/imagens/en-index-pessoaFOuJ.png)
 
 If you choose Individual, you must provide the payer’s CPF. If you choose Legal Entity, you must also provide the CNPJ.
 After correctly filling in the required fields, you may proceed to the next step.
@@ -160,11 +160,11 @@ The consent data types available on the page are:
 
 At the end of the list, it is possible to define the validity period for the selected data consent. This period defines how long your data may be accessed by the institution. The validity period is defined using a selection box, as shown in the image:
 
-![Validity period definition](./anexos/imagens/index-prazoValidade.png)
+![Validity period definition](./anexos/imagens/en-index-prazoValidade.png)
 
 When clicking the selection box, a calendar will open:
 
-![Calendar opened through selection box](./anexos/imagens/index-calendarioPrazoValidade.png)
+![Calendar opened through selection box](./anexos/imagens/en-index-calendarioPrazoValidade.png)
 
 After choosing the desired period, proceed to the next step.
 
@@ -174,10 +174,10 @@ This is the stage where you can securely review the data that will be shared wit
 
 If you wish to edit any information, simply go back, make the changes, and return to this screen.
 
-![Go back and review](./anexos/imagens/index-voltarERevisar.png)
+![Go back and review](./anexos/imagens/en-index-voltarERevisar.png)
 
 If you choose to continue, you will authorize the sharing of the selected and reviewed data through this button:
 
-![Authorize and continue](./anexos/imagens/index-autorizarESeguir.png)
+![Authorize and continue](./anexos/imagens/en-index-autorizarESeguir.png)
 
 **And that’s it! The data sharing has been authorized and completed.**
