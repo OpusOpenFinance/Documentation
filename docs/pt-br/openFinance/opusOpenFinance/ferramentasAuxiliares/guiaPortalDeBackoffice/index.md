@@ -70,7 +70,7 @@ Exibe todos os pagamentos registrados no sistema, permitindo busca e filtragem.
 Para informações mais detalhadas, acesse [este link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1600030369/M+quina+de+Estados+-+v5.0.0-rc.1+-+SV+Pagamentos).
 
 | Nome "Natural"              | Código |
-| --------------------------- | ------ |
+| :-------------------------: | :----: |
 | Requisição recebida         | RCVD   |
 | Cancelado pelo usuário      | CANC   |
 | PIX pronto                  | ACCP   |
