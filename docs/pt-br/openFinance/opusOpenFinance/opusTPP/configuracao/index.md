@@ -21,7 +21,7 @@ São exigidos pelo Open Finance Brasil:
 - Certificado de transporte (**BRCAC**) — para autenticação mTLS;
 - Certificado de assinatura (**BRSEAL**) — para assinar mensagens entre a TPP e a Detentora;
 
-Esses certificados são gerados no Diretório de Participantes. Detalhes técnicos sobre conversão para JWK em [Certificados Regulatórios](certificadosRegulatorios.html).
+Esses certificados são gerados no Diretório de Participantes. Detalhes técnicos sobre conversão para JWK em [Certificados Regulatórios](certificadosRegulatorios.html). <!--VALIDAR-->
 
 ### 2. Registrar a instituição e o aplicativo no Diretório Central - Opus
 
@@ -30,7 +30,7 @@ São dois cadastros:
 - **Organização** (identificada pelo CNPJ) — representa a TPP;
 - **Aplicação**, que gera um Software Statement ID e um client_id — representa cada marca/aplicativo cliente.
 
-Esses IDs são essenciais para o funcionamento do produto. Open Finance e Open Insurance possuem Diretórios independentes — instituições que atuam nos dois ecossistemas precisam de cadastros separados.
+Esses IDs são essenciais para o funcionamento do produto.
 
 ### 3. Definir URLs de redirecionamento - Instituição Cliente
 
@@ -42,11 +42,11 @@ Exemplos comuns:
 - `/opus-open-finance/payments/redirect-uri`
 - `/opus-open-insurance/consents/redirect-uri`
 
-Essas URLs devem ser cadastradas no Software Statement de cada aplicação. Quando a instituição tem mais de um app, cada URL precisa carregar um `redirect_identifier` único — ver [Redirecionamento](../funcionamento/redirecionamento.html).
+Essas URLs devem ser cadastradas no Software Statement de cada aplicação. Quando a instituição tem mais de um app, cada URL precisa carregar um `redirect_identifier` único — ver [Redirecionamento](../funcionamento/redirecionamento.html). <!--VALIDAR-->
 
 ### 4. Disponibilizar o ambiente de execução - Opus
 
-A Opus realizará a configuração de um ambiente de execução - COMPLEMENTAR.
+A Opus realizará a configuração de um ambiente de execução - COMPLEMENTAR. <!--VALIDAR-->
 
 ### 5. Fornecer informações ao time técnico
 
@@ -80,16 +80,18 @@ Cache opcional sobre os dados da funcionalidade de webhook. Por padrão, vem **d
 
 #### PCM Service
 
-Módulo **obrigatório** para envio dos reportes de chamadas para a Plataforma de Coleta de Métricas (PCM) do Open Finance Brasil. Tem banco próprio, consome eventos do OOFC-Core via Dapr, e envia reportes periódicos. Detalhes em [PCM Service](pcmService.html).
+Módulo **obrigatório** para envio dos reportes de chamadas para a Plataforma de Coleta de Métricas (PCM) do Open Finance Brasil. Tem banco próprio, consome eventos do OpusTPP via Dapr, e envia reportes periódicos.
+
+---
 
 ## Conclusão
 
 A configuração em alto nível se resume a:
 
-1. Ter certificados regulatórios
-2. Ter registro no Diretório Central (OF)
-3. Escolher URLs e domínio
-4. Prover esses dados ao time técnico
-5. Decidir quais integrações opcionais ativar
+1. Ter certificados regulatórios;
+2. Ter registro no Diretório Central (OF);
+3. Escolher URLs e domínio;
+4. Prover esses dados ao time técnico;
+5. Decidir quais integrações opcionais ativar.
 
-Todo o restante pertence à descrição mais técnica, em [Configuração Técnica](configuracaoTecnica.html) e ao procedimento operacional em [Instalação Técnica](instalacaoTecnica.html).
+> **Nota:** Todo o restante pertence à descrição mais técnica e ao procedimento operacional.
