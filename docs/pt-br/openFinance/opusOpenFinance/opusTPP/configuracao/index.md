@@ -14,6 +14,8 @@ alternate_lang:
 
 ## Etapas de Configuração
 
+> **Importante:** Caso surja alguma dúvida acerca de algum termo utilizado, consulte a página de [**Conceitos**](../conceitos.html).
+
 ### 1. Obter certificados regulatórios - Opus + Instituição Cliente
 
 São exigidos pelo Open Finance Brasil:

@@ -186,6 +186,19 @@ Interface administrativa do OpusTPP que expõe operações de **consulta** sobre
 
 ## Glossário técnico-regulatório
 
+### API (Application Programming Interface)
+
+Contrato técnico que define como dois sistemas trocam informações pela internet — quais operações estão disponíveis, em que formato as requisições devem ser feitas e o que retorna em cada resposta. No contexto do OpusTPP, dois tipos convivem:
+
+- **APIs REST tradicionais:** o padrão que a maioria dos desenvolvedores usa — HTTP, verbos simples (GET/POST/PATCH/DELETE), JSON, autenticação por token. É como o OpusTPP se apresenta para a TPP.
+- **APIs reguladas:** as APIs do Open Finance Brasil e Open Insurance Brasil, que adicionam camadas extras de segurança e conformidade (mTLS, FAPI-BR, JWS, DCR, fluxos de consentimento). É como o OpusTPP se comunica com as Instituições Destino.
+
+O papel central do OpusTPP é ser o **tradutor** entre os dois: oferecer uma API REST simples para a TPP e cuidar internamente de toda a complexidade regulatória.
+
+### API de Proxy
+
+Subconjunto das APIs do OpusTPP cuja função é **repassar** uma chamada para a Instituição Destino (Detentora ou Transmissora), mantendo o contrato regulatório original e gerenciando os tokens de acesso automaticamente. As rotas de proxy ficam sob o prefixo `/proxy/open-banking/...` ou `/proxy/open-insurance/...` e refletem 1-para-1 o que está definido no contrato regulatório de cada API. Não aceitam o header `x-regulatory-v` (a versão é fixa pelo path).
+
 ### FAPI-BR (Financial-grade API — Brasil)
 
 Padrão de segurança baseado no perfil FAPI do OpenID Foundation, adaptado ao Open Finance Brasil. Define requisitos de autenticação mTLS, JWS, encriptação de tokens, e validação de assinaturas. O OpusTPP implementa o perfil completo de forma transparente.

@@ -18,6 +18,8 @@ O OpusTPP é um middleware especializado que abstrai integralmente as complexida
 
 Seu objetivo é simples: permitir que desenvolvedores integrem APIs reguladas como se fossem APIs REST tradicionais, enquanto o OpusTPP cuida de tudo que é complexo e regulatório.
 
+> **APIs reguladas** são as APIs do Open Finance Brasil - seguem normas técnicas estritas (mTLS, FAPI-BR, JWS, consentimento, DCR) impostas pelo regulador. **APIs REST tradicionais** são o padrão que a maioria das integrações usa: HTTP simples, JSON, autenticação por token. O OpusTPP traduz uma na outra para você.
+
 ## O problema que o OpusTPP resolve
 
 O Open Finance oferece um ecossistema rico em dados e serviços, mas apresentam desafios técnicos e regulatórios significativos:
@@ -88,11 +90,11 @@ A documentação do OpusTPP está organizada em três grandes blocos. Use os lin
 
 ### [Conceitos](conceitos/)
 
-Fundamentos do ecossistema Open Finance / Open Insurance e do funcionamento do OpusTPP. Recomendado para quem está começando.
+Fundamentos do ecossistema Open Finance e do funcionamento do OpusTPP. Recomendado para quem está começando.
 
 - [Glossário e Conceitos Fundamentais](conceitos/) — Consentimento, vínculo de dispositivo, jornadas, perfis regulatórios
 
-### [Funcionamento](funcionamento/)
+### [Funcionamento](funcionamento/) <!--VALIDAR-->
 
 Como o produto opera no dia a dia — fluxos completos, endpoints, payloads, máquinas de estado, regras de negócio e tratamento de erros.
 
