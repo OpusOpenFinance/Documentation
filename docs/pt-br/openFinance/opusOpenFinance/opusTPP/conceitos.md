@@ -225,6 +225,21 @@ Conjunto pré-definido de *scopes* que devem ser solicitados juntos para acesso 
 
 Chave passada em chamadas paginadas no Open Finance Brasil que permite **iterar 1 hora sem custo adicional** dentro de uma mesma busca. Sem essa chave, cada nova página conta como nova requisição contra o limite regulatório.
 
+### Latência
+
+Tempo de resposta entre fazer uma requisição e receber o retorno. Em arquiteturas distribuídas como a do OpusTPP — onde uma única operação passa por TPP → OpusTPP → Detentora — a latência total é a soma do tempo gasto em cada etapa. Medir latência por etapa é essencial em produção para identificar gargalos e garantir que o usuário não fique esperando.
+
+### Traces distribuídos
+
+"Rastro" de uma única requisição à medida que passa pelos diferentes serviços/componentes do sistema. Cada etapa é registrada com timestamps, dados de contexto e eventuais erros. O OpusTPP exporta esses traces via **OpenTelemetry** para ferramentas de observabilidade (Tempo, Jaeger, Grafana Cloud), permitindo visualizar a jornada completa de cada operação.
+
+### Cache
+
+Armazenamento temporário de dados consultados com frequência, evitando ir até a fonte original a cada nova requisição. O OpusTPP usa cache (via componentes Dapr) em dois pontos:
+
+- **Brand Cache:** guarda a lista de instituições participantes do Diretório. **Recomendado manter habilitado** pelo alto tempo de resposta do Diretório de Participantes.
+- **Webhook Cache:** opcional, geralmente desativado, útil apenas em volumes altos de notificações.
+
 ---
 
 > **Nota:** Para detalhes técnicos sobre a implementação desses conceitos (endpoints, payloads, e fluxos de fallback), consulte a seção de [Funcionamento](../funcionamento/).

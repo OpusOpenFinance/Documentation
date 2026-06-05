@@ -64,7 +64,12 @@ O OpusTPP é modular. Estas integrações podem ser ativadas conforme a necessid
 
 #### OpenTelemetry
 
-Habilita exportação de **traces distribuídos** para uma plataforma de observabilidade (Tempo, Jaeger, Grafana Cloud, etc.). Recomendado para ambientes produtivos onde análise de latência e troubleshooting de chamadas é crítica.
+Habilita exportação de **traces distribuídos** para uma plataforma de observabilidade (Tempo, Jaeger, Grafana Cloud, etc.). Um *trace distribuído* é o "rastro" deixado por cada requisição à medida que passa pelos diferentes componentes do sistema — permite ver quanto tempo cada etapa levou e onde ocorreram erros.
+
+Recomendado para ambientes produtivos onde é importante:
+
+- **Medir o tempo de resposta** das operações (latência) para identificar gargalos;
+- **Investigar falhas** em chamadas que dão erro, descobrindo exatamente em qual ponto do fluxo o problema ocorreu.
 
 #### Cache via Dapr
 
@@ -76,7 +81,9 @@ Direciona logs de requisição/resposta das chamadas regulatórias para um colet
 
 #### Webhook cache
 
-Cache opcional sobre os dados da funcionalidade de webhook. Por padrão, vem **desabilitado** e a maioria das instituições não o ativa.
+*Cache* é um armazenamento temporário de dados frequentemente consultados, evitando refazer a busca toda vez. O OpusTPP suporta um cache opcional para os dados da funcionalidade de webhook, reduzindo a carga sobre o banco em cenários de alto volume de notificações.
+
+Por padrão, vem **desabilitado** — a maioria das instituições não o ativa porque o ganho só é perceptível em volume muito alto de webhooks. Pode ser ativado nas configurações do Helm.
 
 #### PCM Service
 
