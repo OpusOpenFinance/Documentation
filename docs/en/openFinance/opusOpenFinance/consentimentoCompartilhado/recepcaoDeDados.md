@@ -55,7 +55,7 @@ This guide contains descriptions of the developed screens, organized into:
 
 ### Data Reception Consent Request and Effectuation Screens
 
-**Note:** The screens presented in this section are contained in the [User Experience Guide](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil), Item 02 (Compartilhamento de dados) -> 2.1: Jornada Básica, composed of the stages:
+**Note:** The screens presented in this section are contained in the [User Experience Guide](https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01/gestao-de-compartilhamento-de-dados), Item 02 (Compartilhamento de dados) -> 2.1: Jornada Básica, composed of the stages:
 
 - 1: Consentimento Instituição Receptora (Receiving Institution Consent);
 - 2: Redirecionamento Instituição Receptora para Instituição Transmissora (Redirection from Receiving to Transmitting Institution);

@@ -25,7 +25,7 @@ Tras la autenticación del usuario, este tendrá acceso a las pantallas descrita
 
 ### Transmisión - Pantallas de Gestión (Ítem 05 - Área de Gestión)
 
-**Observación:** Las pantallas presentadas en esta sección están contenidas en la Guía de Experiencia del Usuario, Ítem 05 – Área de Gestión. Más detalles en el [enlace](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
+**Observación:** Las pantallas presentadas en esta sección están contenidas en la Guía de Experiencia del Usuario, Ítem 05 – Área de Gestión. Más detalles en el [enlace](https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01/gestao-de-compartilhamento-de-dados).
 
 Las pantallas de gestión están enfocadas en la gestión de los consentimientos de Open Finance. Estas pantallas proporcionan al usuario un control claro y eficiente sobre sus comparticiones de datos, autorizaciones de pago y vínculos de cuentas.
 

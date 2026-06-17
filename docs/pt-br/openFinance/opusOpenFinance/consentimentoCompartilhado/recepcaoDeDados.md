@@ -51,7 +51,7 @@ Nosso objetivo é assegurar que, ao longo de toda a jornada de Open Finance, os 
 
 ### Telas de Solicitação e Efetivação de Consentimento
 
-**Observação:** As telas apresentadas nesta seção estão contidas no [Guia de Experiência do Usuário](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil), Item 02 (Compartilhamento de dados) -> 2.1: Jornada Básica, composta pelas etapas:
+**Observação:** As telas apresentadas nesta seção estão contidas no [Guia de Experiência do Usuário](https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01/gestao-de-compartilhamento-de-dados), Item 02 (Compartilhamento de dados) -> 2.1: Jornada Básica, composta pelas etapas:
 
 - 1: Consentimento Instituição Receptora;
 - 2: Redirecionamento Instituição Receptora para Instituição Transmissora;

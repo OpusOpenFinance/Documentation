@@ -25,7 +25,7 @@ After user authentication, they will have access to the described screens:
 
 ### Transmission - Management Screens (Item 05 - Management Area)
 
-**Note:** The screens presented in this section are contained in the User Experience Guide, Item 05 – Management Area. More details at [this link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
+**Note:** The screens presented in this section are contained in the User Experience Guide, Item 05 – Management Area. More details at [this link](https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01/gestao-de-compartilhamento-de-dados).
 
 The management screens focus on managing Open Finance consents. These screens provide the user with clear and efficient control over their data sharing, payment authorizations, and account linkages.
 
