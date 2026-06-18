@@ -58,7 +58,7 @@ Um ponto importante a ressaltar é que as etapas mais trabalhosas do processo de
 
 - Construção das telas da [jornada de consentimento](../../openFinanceBrasil/jornadaConsentimento/index.html):
   - Para web, aplicativo e handoff (caso necessário);
-  - Segundo o [guia de experiência do usuário](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil) do *Open Finance Brasil*.
+  - Segundo o [guia de experiência do usuário](https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01/compartilhamento-de-dados) do *Open Finance Brasil*.
 - Execução de testes da jornada de consentimento;
 - Integração completa da jornada nos canais da instituição.
 

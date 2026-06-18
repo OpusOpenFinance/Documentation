@@ -61,7 +61,7 @@ After user authentication, they will have access to the described screens:
 
 ### Consent Acceptance Screens
 
-**Note:** The screens presented in this section are contained in the User Experience Guide, Item 02 (Data Sharing), Item 03 (Payment Initiation), Item 04 (Alternative Payment Initiation Journeys – Non-Redirected Journey – Step 3). More details in [the link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
+**Note:** The screens presented in this section are contained in the User Experience Guide, Item 02 (Data Sharing), Item 03 (Payment Initiation), Item 04 (Alternative Payment Initiation Journeys – Non-Redirected Journey – Step 3). More details in [the link](https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01).
 
 These screens are associated with the user's identity confirmation and consent process, ensuring that the client has control over their permissions in Open Finance. Below are the screens that are part of this stage:
 
