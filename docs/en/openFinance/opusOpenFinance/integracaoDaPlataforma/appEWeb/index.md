@@ -47,5 +47,5 @@ Consent management refers to the functionality that allows the end customer to a
 
 In parallel to building the mobile app and/or Internet Banking screens, it is also necessary to integrate these artifacts with the platform. The next pages of this documentation detail this integration, as well as the operation of the *Handoff* screen, in case the financial institution does not offer a self-service Web channel.
 
-[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil
+[GuiaUX]: https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01
 [JornadaConsentimento]: ../../../openFinanceBrasil/jornadaConsentimento/index.html

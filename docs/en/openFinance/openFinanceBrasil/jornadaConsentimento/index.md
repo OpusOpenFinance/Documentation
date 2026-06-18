@@ -57,4 +57,4 @@ Although similar, the journeys have particularities due to their distinct purpos
 | **Payment Amount** | Does not apply. | Defined by the ITP and displayed to the user during consent confirmation. |
 | **Variations in Consent** | Depends on the information of the products the user wants to share ([see possible products here](../perfisParticipacao/transmissorDeDados.html)). | Depends on the type of payment selected [(check the roadmap here)](../perfisParticipacao/detentorDeContas.html). |
 
-For more information on the user experience journey defined by the regulator, click on [this link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
+For more information on the user experience journey defined by the regulator, click on [this link](https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01/compartilhamento-de-dados).

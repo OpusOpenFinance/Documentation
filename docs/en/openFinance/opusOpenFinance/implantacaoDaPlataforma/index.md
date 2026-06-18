@@ -58,7 +58,7 @@ It is important to highlight that the most labor-intensive stages of the deploym
 
 - Development of the [consent journey screens](../../openFinanceBrasil/jornadaConsentimento/index.html):
   - For web, app, and handoff (if necessary).
-  - According to the *Open Finance Brazil* [user experience guide](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
+  - According to the *Open Finance Brazil* [user experience guide](https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01/compartilhamento-de-dados).
 - Execution of tests for the consent journey.
 - Full integration of the journey in the institution’s channels.
 

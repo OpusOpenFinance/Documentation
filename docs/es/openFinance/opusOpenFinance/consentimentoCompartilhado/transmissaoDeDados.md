@@ -61,7 +61,7 @@ Tras la autenticación del usuario, este tendrá acceso a las pantallas descrita
 
 ### Pantallas de Aceptación de Consentimiento
 
-**Observación:** Las pantallas presentadas en esta sección están contenidas en la Guía de Experiencia del Usuario, Ítem 02 (Compartilhamento de dados), Ítem 03 (Iniciação de pagamentos), Ítem 04 (Jornadas alternativas de iniciação de pagamento – Jornada sem Redirecionamento – Etapa 3). Más detalles en el [enlace](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
+**Observación:** Las pantallas presentadas en esta sección están contenidas en la Guía de Experiencia del Usuario, Ítem 02 (Compartilhamento de dados), Ítem 03 (Iniciação de pagamentos), Ítem 04 (Jornadas alternativas de iniciação de pagamento – Jornada sem Redirecionamento – Etapa 3). Más detalles en el [enlace](https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01).
 
 Estas pantallas están asociadas al proceso de confirmación de identidad del usuario y de consentimiento, asegurando que el cliente tenga control sobre sus permisos en el Open Finance. A continuación se muestran las pantallas que forman parte de esta etapa:
 

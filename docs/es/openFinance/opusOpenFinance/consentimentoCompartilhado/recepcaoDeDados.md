@@ -51,7 +51,7 @@ Nuestro objetivo es asegurar que, a lo largo de toda la jornada de Open Finance,
 
 ### Pantallas de Solicitud y Efectivización de Consentimiento
 
-**Observación:** Las pantallas presentadas en esta sección están contenidas en la [Guía de Experiencia del Usuario](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil), Ítem 02 (Compartilhamento de dados) -> 2.1: Jornada Básica, compuesta por las etapas:
+**Observación:** Las pantallas presentadas en esta sección están contenidas en la [Guía de Experiencia del Usuario](https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01/gestao-de-compartilhamento-de-dados), Ítem 02 (Compartilhamento de dados) -> 2.1: Jornada Básica, compuesta por las etapas:
 
 - 1: Consentimiento Institución Receptora;
 - 2: Redirección Institución Receptora a Institución Transmisora;

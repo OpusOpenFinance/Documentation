@@ -57,4 +57,4 @@ Embora sejam similares, as jornadas possuem particularidades devido às suas fin
 | **Valor do Pagamento** | Não se aplica. | Definido pelo ITP e exibido ao usuário durante a confirmação do consentimento. |
 | **Variações no Consentimento** | Depende das informações dos produtos que o usuário deseja compartilhar ([veja os possíveis produtos aqui](../perfisParticipacao/transmissorDeDados.html)). | Depende do tipo de pagamento selecionado [(confira o roadmap aqui)](../perfisParticipacao/detentorDeConta.html). |
 
-Para mais informações sobre a jornada de experiência do usuário definida pelo regulador, [clique aqui](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil).
+Para mais informações sobre a jornada de experiência do usuário definida pelo regulador, [clique aqui](https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01/compartilhamento-de-dados).
