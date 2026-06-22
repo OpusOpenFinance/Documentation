@@ -23,7 +23,7 @@ São exigidos pelo Open Finance Brasil:
 - Certificado de transporte (**BRCAC**) — para autenticação mTLS;
 - Certificado de assinatura (**BRSEAL**) — para assinar mensagens entre a TPP e a Detentora;
 
-Esses certificados são gerados no Diretório de Participantes. Detalhes técnicos sobre conversão para JWK em [Certificados Regulatórios](certificadosRegulatorios.html). <!--VALIDAR-->
+Esses certificados são gerados no Diretório de Participantes. Detalhes técnicos sobre conversão para JWK em [Certificados Regulatórios](certificadosRegulatorios.html).
 
 ### 2. Registrar a instituição e o aplicativo no Diretório Central - Opus
 
@@ -44,7 +44,7 @@ Exemplos comuns:
 - `/opus-open-finance/payments/redirect-uri`
 - `/opus-open-insurance/consents/redirect-uri`
 
-Essas URLs devem ser cadastradas no Software Statement de cada aplicação. Quando a instituição tem mais de um app, cada URL precisa carregar um `redirect_identifier` único — ver [Redirecionamento](../funcionamento/redirecionamento.html). <!--VALIDAR-->
+Essas URLs devem ser cadastradas no Software Statement de cada aplicação. Quando a instituição tem mais de um app, cada URL precisa carregar um `redirect_identifier` único — ver [Redirecionamento](../funcionamento/redirecionamento.html).
 
 ### 4. Disponibilizar o ambiente de execução - Opus
 

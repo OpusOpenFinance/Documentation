@@ -176,11 +176,11 @@ Identificador único de cada **marca** (brand) que uma instituição opera no Op
 
 Mecanismo pelo qual a Instituição Detentora de Conta **notifica** o OpusTPP de mudanças em pagamentos, consentimentos ou vínculos. O OpusTPP recebe a notificação (apenas a data — não o novo status), reenvia para a URL de webhook cadastrada pelo cliente e publica em um tópico Dapr para processamento assíncrono.
 
-Detalhes em [Webhooks](../funcionamento/webhooks.html). <!--VALIDAR-->
+Detalhes em [Webhooks](../funcionamento/webhooks.html).
 
 ### Backoffice
 
-Interface administrativa do OpusTPP que expõe operações de **consulta** sobre consentimentos, vínculos e pagamentos. Voltada para times de suporte, ops e backoffice — não substitui a UI do cliente. Detalhes em [Backoffice](../funcionamento/backoffice.html).<!--VALIDAR-->
+Interface administrativa do OpusTPP que expõe operações de **consulta** sobre consentimentos, vínculos e pagamentos. Voltada para times de suporte, ops e backoffice — não substitui a UI do cliente. Detalhes em [Backoffice](../funcionamento/backoffice.html).
 
 ---
 

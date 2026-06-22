@@ -94,7 +94,7 @@ Fundamentos do ecossistema Open Finance e do funcionamento do OpusTPP. Recomenda
 
 - [Glossário e Conceitos Fundamentais](conceitos/) — Consentimento, vínculo de dispositivo, jornadas, perfis regulatórios
 
-### [Funcionamento](funcionamento/) <!--VALIDAR-->
+### [Funcionamento](funcionamento/)
 
 Como o produto opera no dia a dia — fluxos completos, endpoints, payloads, máquinas de estado, regras de negócio e tratamento de erros.
 
@@ -114,9 +114,8 @@ Como o produto opera no dia a dia — fluxos completos, endpoints, payloads, má
 Como configurar, instalar e operar o OpusTPP — do cadastro no Diretório de Participantes ao deploy no Kubernetes.
 
 - [Visão de Configuração](configuracao/) — Etapas em alto nível
-<!--- [Certificados Regulatórios](configuracao/certificadosRegulatorios.html) — BRCAC, BRSEAL, ID_TOKEN_ENC e conversão para JWK
+- [Certificados Regulatórios](configuracao/certificadosRegulatorios.html) — BRCAC, BRSEAL, ID_TOKEN_ENC e conversão para JWK
 - [Relatórios Regulatórios](configuracao/relatoriosRegulatorios.html) — Scripts SQL para extração de dados
--->
 
 ### Anexos
 
