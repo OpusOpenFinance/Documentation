@@ -1,0 +1,1963 @@
+openapi: 3.0.0
+info:
+  title: API Funds - Integration Layer - OPUS Open Finance Brasil
+  description: |
+    API de información de operaciones de Fondos de Inversión Open Finance Brasil – Fase 4.
+    API que retorna información de operaciones de inversión del tipo Fondos de Inversión mantenidas en las instituciones transmisoras por sus clientes, incluyendo datos como información del producto, cantidad, saldos en posición del cliente y movimientos financieros.
+    No existe segregación entre persona natural y persona jurídica.
+    Deben ser considerados como alcance de exposición todos los fondos de inversión clasificados como: Renta Fija, Acciones, Multimercado y Cambiario.
+    Para identificación del producto y posición del cliente, la exposición será de forma consolidada por Fondo de Inversión.
+    Para movimientos, la exposición se dará por la Orden del Cliente, por ejemplo, una Orden de Rescate se comparte como un único movimiento, aunque esté asociada a diferentes Certificados (Cautelas).
+
+    Las instituciones pueden presentar escenarios distintos en lo que respecta al sincronismo entre posición `/balances` y movimiento `/transactions` y `/transactions-current` de la API:
+
+    - Algunas instituciones reflejan movimientos aún no convertidos en la posición del cliente en sus canales electrónicos. Esto implica que puede ocurrir compartición de posición actualizada, cuyos movimientos relacionados serán expuestos en el ecosistema solo después de su conversión;
+
+    - Otras instituciones reflejan en la posición solo movimientos convertidos en sus canales electrónicos. Esto implica que la compartición de la posición en relación con los movimientos se realiza de forma sincronizada en el ecosistema.
+
+    Para el identificador de la inversión (investmentId) se debe adoptar el siguiente comportamiento:
+
+    - Después de 12 meses sin movimientos y con cantidad de activos en cero, el resourceId correspondiente al investmentId en cuestión debe pasar al estado UNAVAILABLE (considerando consentimiento válido);
+  version: 4.0.0-rc.1-base1.0.2
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+tags:
+  - name: Product List
+    description: Obtiene la lista de operaciones de Fondos de Inversión mantenidas por el cliente en la institución transmisora.
+  - name: Product Identification
+    description: Obtiene los datos de la operación de Fondos de Inversión identificada por investmentId.
+  - name: Balances
+    description: Obtiene la posición de la operación de Fondos de Inversión identificada por investmentId.
+  - name: Transactions
+    description: Obtiene los movimientos históricos (últimos 12 meses) de la operación de Fondos de Inversión identificada por investmentId.
+  - name: Transactions Current
+    description: 'Obtiene los movimientos recientes de la operación de Fondos de Inversión identificada por investmentId. El período a considerar para la presentación de movimientos será de hasta 7 días - 7 días anteriores a la consulta, incluyendo el día de la consulta (D-6).'
+paths:
+  /discovery:
+    post:
+      tags:
+        - Product List
+      summary: Obtiene una lista de recursos que representan todas las inversiones del tipo Fondos de Inversión realizadas por el cliente.
+      operationId: discoverFunds
+      description: Método para obtener la lista de inversiones del tipo Fondos de Inversión realizadas por el cliente en la institución transmisora.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestWithConsentAndRequestMeta'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseFundDiscovery'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+  /investments:
+    post:
+      tags:
+        - Product List
+      summary: Obtiene la lista de operaciones de Fondos de Inversión mantenidas por el cliente en la institución transmisora y para las cuales haya proporcionado consentimiento.
+      operationId: fundsGetInvestments
+      description: Obtiene la lista de operaciones de Fondos de Inversión mantenidas por el cliente en la institución transmisora y para las cuales haya proporcionado consentimiento.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestWithConsentAndRequestMetaAndPagination'
+      responses:
+        '200':
+          $ref: '#/components/responses/OkResponseFundsProductList'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        default:
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+  /find:
+    post:
+      tags:
+        - Product Identification
+      summary: Obtiene los datos de la operación de Fondos de Inversión identificada por investmentId.
+      operationId: fundsGetInvestmentsInvestmentId
+      description: Obtiene los datos de la operación de Fondos de Inversión identificada por investmentId.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestWithConsentAndRequestMetaAndInvestmentId'
+      responses:
+        '200':
+          $ref: '#/components/responses/OkResponseFundsProductIdentification'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        default:
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+  /balances:
+    post:
+      tags:
+        - Balances
+      summary: Obtiene la posición de la operación de Fondos de Inversión identificada por investmentId.
+      operationId: fundsGetInvestmentsInvestmentIdBalances
+      description: |
+        Obtiene la posición de la operación de Fondos de Inversión identificada por investmentId.
+
+        En los casos en que no haya posición para la inversión, es decir, cantidad de activos y valores monetarios en cero, pero la misma aún esté dentro del plazo de exposición (hasta 12 meses después del último movimiento), se debe retornar status code 200 y para el payload de retorno considerar los valores a continuación. Los campos no obligatorios no deben ser retornados:
+
+        - Valores monetarios: 0.00
+        - Cantidad de activos: 0.00
+        - Fecha de la última posición: mismo contenido (fecha) del campo requestDateTime, con excepción de la fracción correspondiente a la hora
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestWithConsentAndRequestMetaAndInvestmentId'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseFundsBalances'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        default:
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+  /transactions:
+    post:
+      tags:
+        - Transactions
+      summary: Obtiene los movimientos históricos (últimos 12 meses) de la operación de Fondos de Inversión identificada por investmentId.
+      operationId: fundsGetInvestmentsInvestmentIdTransactions
+      description: Obtiene los movimientos históricos (últimos 12 meses) de la operación de Fondos de Inversión identificada por investmentId.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestTransactions'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseFundsTransactions'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+  /transactions-current:
+    post:
+      tags:
+        - Transactions Current
+      summary: 'Obtiene los movimientos recientes de la operación de Fondos de Inversión identificada por investmentId. El período a considerar para la presentación de movimientos será de hasta 7 días - 7 días anteriores a la consulta, incluyendo el día de la consulta (D-6).'
+      operationId: fundsGetInvestmentsInvestmentIdTransactionsCurrent
+      description: 'Obtiene los movimientos recientes de la operación de Fondos de Inversión identificada por investmentId. El período a considerar para la presentación de movimientos será de hasta 7 días - 7 días anteriores a la consulta, incluyendo el día de la consulta (D-6).'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestTransactionsCurrent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseFundsTransactionsCurrent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+components:
+  schemas:
+    ResponseFundsProductList:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ResponseFundsProductListData'
+        meta:
+          $ref: '#/components/schemas/FundsMeta'
+      additionalProperties: false
+    ResponseFundsProductIdentification:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/ResponseFundsProductIdentificationData'
+        meta:
+          $ref: '#/components/schemas/FundsMeta'
+      additionalProperties: false
+    ResponseFundsBalances:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/ResponseFundsBalanceData'
+        meta:
+          $ref: '#/components/schemas/FundsMeta'
+      additionalProperties: false
+    ResponseFundsTransactions:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ResponseFundsTransactionsData'
+        meta:
+          $ref: '#/components/schemas/MetaOnlyRequestDateTimeAndHasMoreRecords'
+      additionalProperties: false
+    ResponseFundsTransactionsCurrent:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ResponseFundsTransactionsCurrentData'
+        meta:
+          $ref: '#/components/schemas/MetaOnlyRequestDateTimeAndHasMoreRecords'
+      additionalProperties: false
+    ResponseFundsProductListData:
+      type: object
+      description: Lista de fondos de inversión mantenidos por el cliente en la institución transmisora y para los cuales haya proporcionado consentimiento.
+      required:
+        - brandName
+        - companyCnpj
+        - investmentId
+      properties:
+        brandName:
+          type: string
+          description: 'Nombre de la Marca reportada por el participante en Open Finance. Se recomienda utilizar, siempre que sea posible, el mismo nombre de marca atribuido en el campo del directorio Customer Friendly Server Name (Authorisation Server).'
+          pattern: '[\w\W\s]*'
+          example: Organização A
+          maxLength: 80
+        companyCnpj:
+          type: string
+          description: 'Número completo del CNPJ de la institución responsable del Registro - el CNPJ corresponde al número de inscripción en el Registro de Personas Jurídicas. Debe tener solo los números del CNPJ, sin máscara.'
+          maxLength: 14
+          pattern: '^\d{14}$'
+          example: '21128159000166'
+        anbimaCategory:
+          type: string
+          description: |
+            Según clasificación ANBIMA, que sigue la deliberación 77 de ANBIMA.
+
+            – Renta Fija
+
+            – Acciones
+
+            – Multimercado
+
+            – Cambiario
+
+            https://www.anbima.com.br/data/files/5A/44/2C/B7/8411B510CD3B4DA568A80AC2/DeliberacaoN77-Diretriz-de-Classificacao-de-Fundos.pdf
+          enum:
+            - RENDA_FIXA
+            - ACOES
+            - MULTIMERCADO
+            - CAMBIAL
+          example: RENDA_FIXA
+        anbimaClass:
+          type: string
+          description: Campo necesario para la adhesión a la Resolución CVM175. En espera de definiciones de mercado. Debe ser un campo de tipo enum.
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+        anbimaSubclass:
+          type: string
+          description: Campo necesario para la adhesión a la Resolución CVM175. En espera de definiciones de mercado. Debe ser un campo de tipo enum.
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+        investmentId:
+          $ref: '#/components/schemas/LegacyId'
+      additionalProperties: false
+    ResponseFundsProductIdentificationData:
+      type: object
+      description: Informaciones del producto de fondo de inversión al que se refiere investmentId.
+      required:
+        - name
+        - cnpjNumber
+      properties:
+        name:
+          type: string
+          description: Nombre oficial del fondo de inversión según se muestra a los clientes en los canales electrónicos.
+          maxLength: 250
+          example: CONSTELLATION MASTER FIA
+        cnpjNumber:
+          type: string
+          description: CNPJ del fondo de inversión.
+          maxLength: 14
+          pattern: '^\d{14}$'
+          example: '11225860000140'
+        isinCode:
+          type: string
+          description: |
+            Código universal que identifica cada valor mobiliario o instrumento financiero, según la Norma ISO 6166.
+
+            DEFINICIÓN: El ISIN (International Securities Identification Number) es un código que identifica un valor mobiliario, conforme a la norma ISO 6166.
+
+            ESTRUCTURA: El ISIN es un código alfanumérico que tiene 12 caracteres con la siguiente estructura:
+            - Un prefijo, compuesto de 2 caracteres alfa, que identifica el código del país (Norma ISO 3166);
+            - El número básico, compuesto de 9 caracteres alfabéticos o numéricos en su extensión;
+            - Un dígito numérico de control.
+          maxLength: 12
+          minLength: 12
+          pattern: '^[A-Z]{2}([A-Z0-9]){9}\d{1}$'
+          example: BRCST4CTF001
+        anbimaCategory:
+          type: string
+          description: |
+            Según clasificación ANBIMA, que sigue la deliberación 77 de ANBIMA.
+
+            – Renta Fija
+
+            – Acciones
+
+            – Multimercado
+
+            – Cambiario
+
+            https://www.anbima.com.br/data/files/5A/44/2C/B7/8411B510CD3B4DA568A80AC2/DeliberacaoN77-Diretriz-de-Classificacao-de-Fundos.pdf
+          enum:
+            - RENDA_FIXA
+            - ACOES
+            - MULTIMERCADO
+            - CAMBIAL
+          example: RENDA_FIXA
+        anbimaClass:
+          type: string
+          description: Campo necesario para la adhesión a la Resolución CVM175. En espera de definiciones de mercado. Debe ser un campo de tipo enum.
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+        anbimaSubclass:
+          type: string
+          description: Campo necesario para la adhesión a la Resolución CVM175. En espera de definiciones de mercado. Debe ser un campo de tipo enum.
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+      additionalProperties: false
+    ResponseFundsBalanceData:
+      type: object
+      description: Informaciones de la posición del fondo de inversión al que se refiere investmentId.
+      required:
+        - referenceDate
+        - grossAmount
+        - netAmount
+        - incomeTaxProvision
+        - financialTransactionTaxProvision
+        - blockedAmount
+        - quotaQuantity
+        - quotaGrossPriceValue
+      properties:
+        referenceDate:
+          type: string
+          format: date
+          description: Fecha de la última posición consolidada disponible a la que se refieren los datos transaccionales del cliente disponibles en los canales electrónicos.
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2023-01-07'
+        grossAmount:
+          $ref: '#/components/schemas/FundsBalancesGrossAmount'
+        netAmount:
+          $ref: '#/components/schemas/FundsBalancesNetAmount'
+        incomeTaxProvision:
+          $ref: '#/components/schemas/FundsBalancesIncomeTaxProvision'
+        financialTransactionTaxProvision:
+          $ref: '#/components/schemas/FundsBalancesFinancialTransactionTaxProvision'
+        blockedAmount:
+          $ref: '#/components/schemas/FundsBalancesBlockedAmount'
+        quotaQuantity:
+          type: string
+          format: double
+          description: Cantidad de cuotas poseídas en posición del cliente.
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          maxLength: 24
+          example: '42.25'
+        quotaGrossPriceValue:
+          $ref: '#/components/schemas/FundsBalancesQuotaGrossPriceValue'
+    ResponseFundsTransactionsData:
+      type: object
+      description: Informaciones de la posición del fondo de inversión al que se refiere investmentId.
+      required:
+        - transactionId
+        - type
+        - transactionType
+        - transactionConversionDate
+        - transactionQuotaPrice
+        - transactionQuotaQuantity
+        - transactionValue
+        - transactionGrossValue
+      properties:
+        transactionId:
+          $ref: '#/components/schemas/LegacyId'
+        type:
+          $ref: '#/components/schemas/EnumFundsTransactionsType'
+        transactionType:
+          $ref: '#/components/schemas/EnumFundsTransactionsTransactionType'
+        transactionTypeAdditionalInfo:
+          type: string
+          description: |
+            Información adicional del tipo del motivo, para completar en caso de movimientos no delimitados en el dominio.
+
+            [Restricción] Campo de llenado obligatorio por las participantes cuando el campo 'transactionType' sea completado con el valor 'OUTROS'.
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+        transactionConversionDate:
+          type: string
+          format: date
+          description: Fecha de conversión de la transacción de movimiento del fondo de inversión.
+          maxLength: 10
+          minLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2023-01-07'
+        transactionQuotaPrice:
+          type: object
+          description: |
+            Es el valor de la cuota utilizada en la conversión para la realización del movimiento del cliente en el fondo, conforme a la regla prevista en el reglamento - el valor puede ser negativo.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 25
+              pattern: '^-?\d{1,15}\.\d{2,8}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionQuotaQuantity:
+          type: string
+          format: double
+          description: |
+            Número de cuotas convertidas en la fecha del movimiento.
+          maxLength: 24
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          example: '42.25'
+        transactionValue:
+          type: object
+          description: Valor solicitado por el cliente.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionGrossValue:
+          type: object
+          description: |
+            Valor del movimiento que se refiere a la cantidad de la cuota x valor de la cuota del movimiento.
+            En los casos en que no haya movimiento de cuotas, por ejemplo: amortización, no considerar la regla descrita.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        incomeTax:
+          type: object
+          description: |
+            Valor del Impuesto a la Renta (IR) retenido en la fuente considerando la alícuota vigente en la fecha del movimiento.
+
+            [Restricción] Campo de llenado obligatorio por las participantes cuando el campo 'type' sea completado con el valor 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        financialTransactionTax:
+          type: object
+          description: |
+            Valor del Impuesto sobre Operaciones Financieras (IOF) retenido en la fuente considerando la alícuota vigente en la fecha del movimiento.
+
+            [Restricción] Campo de llenado obligatorio por las participantes cuando el campo 'type' sea completado con el valor 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionExitFee:
+          type: object
+          description: |
+            Valor de la comisión de salida considerado en el movimiento.
+
+            [Restricción] Campo de llenado obligatorio por las participantes cuando el campo 'type' sea completado con el valor 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionNetValue:
+          type: object
+          description: |
+            Valor neto del movimiento posterior a la deducción de impuestos (IOF e IR) y comisión de salida.
+            [Restricción] Campo de llenado obligatorio por las participantes cuando el campo 'type' sea completado con el valor 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+      additionalProperties: false
+    ResponseFundsTransactionsCurrentData:
+      type: object
+      description: Informaciones de la posición del fondo de inversión al que se refiere investmentId.
+      required:
+        - transactionId
+        - type
+        - transactionType
+        - transactionConversionDate
+        - transactionQuotaPrice
+        - transactionQuotaQuantity
+        - transactionValue
+        - transactionGrossValue
+      properties:
+        transactionId:
+          $ref: '#/components/schemas/LegacyId'
+        type:
+          $ref: '#/components/schemas/EnumFundsTransactionsCurrentType'
+        transactionType:
+          $ref: '#/components/schemas/EnumFundsTransactionsCurrentTransactionType'
+        transactionTypeAdditionalInfo:
+          type: string
+          description: |
+            Información adicional del tipo del motivo, para completar en caso de movimientos no delimitados en el dominio.
+
+            [Restricción] Campo de llenado obligatorio por las participantes cuando el campo 'transactionType' sea completado con el valor 'OUTROS'.
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+        transactionConversionDate:
+          type: string
+          format: date
+          description: Fecha de conversión de la transacción de movimiento del fondo de inversión.
+          maxLength: 10
+          minLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2023-01-07'
+        transactionQuotaPrice:
+          type: object
+          description: |
+            Es el valor de la cuota utilizada en la conversión para la realización del movimiento del cliente en el fondo, conforme a la regla prevista en el reglamento - el valor puede ser negativo.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 25
+              pattern: '^-?\d{1,15}\.\d{2,8}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionQuotaQuantity:
+          type: string
+          format: double
+          description: |
+            Número de cuotas convertidas en la fecha del movimiento.
+          maxLength: 24
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          example: '42.25'
+        transactionValue:
+          type: object
+          description: Valor solicitado por el cliente.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionGrossValue:
+          type: object
+          description: |
+            Valor del movimiento que se refiere a la cantidad de la cuota x valor de la cuota del movimiento.
+            En los casos en que no haya movimiento de cuotas, por ejemplo: amortización, no considerar la regla descrita.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        incomeTax:
+          type: object
+          description: |
+            Valor del Impuesto a la Renta (IR) retenido en la fuente considerando la alícuota vigente en la fecha del movimiento.
+
+            [Restricción] Campo de llenado obligatorio por las participantes cuando el campo 'type' sea completado con el valor 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        financialTransactionTax:
+          type: object
+          description: |
+            Valor del Impuesto sobre Operaciones Financieras (IOF) retenido en la fuente considerando la alícuota vigente en la fecha del movimiento.
+
+            [Restricción] Campo de llenado obligatorio por las participantes cuando el campo 'type' sea completado con el valor 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionExitFee:
+          type: object
+          description: |
+            Valor de la comisión de salida considerado en el movimiento.
+
+            [Restricción] Campo de llenado obligatorio por las participantes cuando el campo 'type' sea completado con el valor 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionNetValue:
+          type: object
+          description: |
+            Valor neto del movimiento posterior a la deducción de impuestos (IOF e IR) y comisión de salida.
+            [Restricción] Campo de llenado obligatorio por las participantes cuando el campo 'type' sea completado con el valor 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado al objeto.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+      additionalProperties: false
+    FundsMeta:
+      type: object
+      description: Meta información referente a la API solicitada.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Número total de registros en el resultado
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Número total de páginas en el resultado
+          example: 1
+        requestDateTime:
+          description: 'Fecha y hora de la consulta, según especificación RFC-3339, formato UTC.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+      additionalProperties: false
+    FundsBalancesBlockedAmount:
+      type: object
+      description: Valor no disponible para movimiento en ese momento por cualquier motivo (bloqueo judicial, bloqueo en garantía, entre otros). El plazo de carencia no se considera como bloqueo.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Valor relacionado al objeto.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesFinancialTransactionTaxProvision:
+      type: object
+      description: Valor del impuesto considerando la alícuota vigente en la fecha de referencia.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Valor relacionado al objeto.
+          pattern: '^\d{1,15}\.\d{2,4}$'
+          maxLength: 20
+          example: '50.02'
+        currency:
+          type: string
+          description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesGrossAmount:
+      type: object
+      description: 'Valor de la inversión que se refiere a la cantidad de la cuota x valor de la cuota, actualizado en la fecha de referencia.'
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Valor relacionado al objeto.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesIncomeTaxProvision:
+      type: object
+      description: Valor del impuesto a la renta provisionado considerando la alícuota vigente en la fecha de referencia.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Valor relacionado al objeto.
+          pattern: '^\d{1,15}\.\d{2,4}$'
+          maxLength: 20
+          example: '50.02'
+        currency:
+          type: string
+          description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesNetAmount:
+      type: object
+      description: Valor de la inversión actualizado en la fecha de referencia, posterior a la deducción de impuestos (IOF e IR) y comisión de salida, si la institución considera este valor en la composición del saldo neto. Este valor considera el valor bloqueado (blockedAmount).
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Valor relacionado al objeto.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesQuotaGrossPriceValue:
+      type: object
+      description: Valor bruto de la cuota actualizado en la fecha de referencia.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Valor relacionado al objeto.
+          pattern: '^-?\d{1,15}\.\d{2,8}$'
+          maxLength: 25
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Moneda referente al valor monetario, siguiendo el modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    EnumFundsTransactionsType:
+      type: string
+      description: |
+        Tipo de movimiento (Entrada o Salida).
+
+        ENTRADA: APLICACAO, TRANSFERENCIA_COTAS, OUTROS.
+
+        SAIDA: RESGATE, COME_COTAS, TRANSFERENCIA_COTAS, AMORTIZACAO, OUTROS.
+      enum:
+        - ENTRADA
+        - SAIDA
+      example: ENTRADA
+    EnumFundsTransactionsTransactionType:
+      type: string
+      description: |
+        El campo debe clasificar la transacción de movimiento de inversión en uno de los tipos descritos (amortización, transferencia de cuotas, aplicación, rescate o come-cotas).
+        La opción OUTROS solo debe ser utilizada para los casos en que de hecho la transacción compartida no pueda ser clasificada como uno de los elementos de este Enum, y en ese caso se deben completar informaciones adicionales.
+      enum:
+        - AMORTIZACAO
+        - TRANSFERENCIA_COTAS
+        - APLICACAO
+        - RESGATE
+        - COME_COTAS
+        - OUTROS
+      example: AMORTIZACAO
+    EnumFundsTransactionsCurrentType:
+      type: string
+      description: |
+        Tipo de movimiento (Entrada o Salida).
+
+        ENTRADA: APLICACAO, TRANSFERENCIA_COTAS, OUTROS.
+
+        SAIDA: RESGATE, COME_COTAS, TRANSFERENCIA_COTAS, AMORTIZACAO, OUTROS.
+      enum:
+        - ENTRADA
+        - SAIDA
+      example: ENTRADA
+    EnumFundsTransactionsCurrentTransactionType:
+      type: string
+      description: |
+        El campo debe clasificar la transacción de movimiento de inversión en uno de los tipos descritos (amortización, transferencia de cuotas, aplicación, rescate o come-cotas).
+        La opción OUTROS solo debe ser utilizada para los casos en que de hecho la transacción compartida no pueda ser clasificada como uno de los elementos de este Enum, y en ese caso se deben completar informaciones adicionales.
+      enum:
+        - AMORTIZACAO
+        - TRANSFERENCIA_COTAS
+        - APLICACAO
+        - RESGATE
+        - COME_COTAS
+        - OUTROS
+      example: AMORTIZACAO
+    ResponseErrorMetaSingle:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Código de error específico del endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descripción legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          $ref: '#/components/schemas/MetaOnlyRequestDateTime'
+    MetaOnlyRequestDateTime:
+      type: object
+      description: Meta información referente a la API solicitada.
+      required:
+        - requestDateTime
+      properties:
+        requestDateTime:
+          description: 'Fecha y hora de la consulta, según especificación RFC-3339, formato UTC.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+    ResponseErrorWithAbleAdditionalProperties:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Código de error específico del endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descripción legible por humanos de este error específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          $ref: '#/components/schemas/MetaWithAbleAdditionalProperties'
+    MetaWithAbleAdditionalProperties:
+      type: object
+      description: Meta información referente a la API solicitada.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Número total de registros en el resultado
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Número total de páginas en el resultado
+          example: 1
+        requestDateTime:
+          description: 'Fecha y hora de la consulta, según especificación RFC-3339, formato UTC.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+    LegacyId:
+      description: |
+        Array de clave y valor con la clave de identificación del recurso en el sistema de origen (legado), permitiendo claves compuestas
+      type: array
+      items:
+        type: object
+        required:
+          - key
+          - value
+        properties:
+          key:
+            description: |
+              Nombre del campo del identificador en el sistema de origen
+            type: string
+            example: internalResourceId
+          value:
+            description: |
+              Valor del campo del identificador en el sistema de origen
+            type: string
+            example: '1234'
+        additionalProperties: false
+      minItems: 1
+      maxItems: 10
+    ToTransactionConversionDate:
+      description: |
+        Fecha final de filtrado.
+        [Restricción] Debe ser enviado obligatoriamente si se informa el campo fromTransactionConversionDate.
+        Si no se informa, se debe asumir el día actual.
+      type: string
+      maxLength: 10
+      format: date
+      example: '2021-05-21'
+    FromTransactionConversionDate:
+      description: |
+        Fecha inicial de filtrado.
+        [Restricción] Debe ser enviado obligatoriamente si se informa el campo toTransactionConversionDate.
+        Si no se informa, se debe asumir el día actual.
+      type: string
+      maxLength: 10
+      format: date
+      example: '2021-05-21'
+    ToTransactionConversionDateCurrent:
+      description: |
+        Fecha final de filtrado.
+        El período máximo utilizado en el filtro es de 7 días inclusive (D-6).
+        [Restricción] Debe ser enviado obligatoriamente si se informa el campo fromTransactionConversionDate.
+        Si no se informa, se debe asumir el día actual.
+      type: string
+      maxLength: 10
+      format: date
+      example: '2021-05-21'
+    FromTransactionConversionDateCurrent:
+      description: |
+        Fecha inicial de filtrado.
+        El período máximo utilizado en el filtro es de 7 días inclusive (D-6).
+        [Restricción] Debe ser enviado obligatoriamente si se informa el campo toTransactionConversionDate.
+        Si no se informa, se debe asumir el día actual.
+      type: string
+      maxLength: 10
+      format: date
+      example: '2021-05-21'
+    PaginationKey:
+      description: |
+        Identificador de rellamada, utilizado para evitar el conteo de llamadas al endpoint durante la paginación.
+        Este campo puede ser transferido de un flujo anterior como un valor residual y, aunque pueda estar presente en la solicitud, no es necesario utilizarlo — simplemente puede ser ignorado.
+      type: string
+      maxLength: 2048
+      pattern: '[\w\W\s]*'
+    Page:
+      description: |
+        Número de la página que se está solicitando (el valor de la primera página es 1).
+      type: integer
+      default: 1
+      minimum: 1
+      maximum: 2147483647
+      format: int32
+    PageSize:
+      description: |
+        Cantidad total de registros por páginas.
+      type: integer
+      default: 25
+      minimum: 1
+      format: int32
+      maximum: 1000
+    ConsentDataSharing:
+      description: |
+        Consentimiento de compartición de datos
+      type: object
+      required:
+        - brandId
+        - creationDateTime
+        - tpp
+        - externalId
+        - loggedUser
+        - permissions
+      properties:
+        authExtraData:
+          type: array
+          description: |
+            Array de clave y valor con datos adicionales provenientes del autorizador.
+            Estos datos pueden ser utilizados como filtros de recursos.
+          items:
+            type: object
+            required:
+              - key
+              - value
+            properties:
+              key:
+                type: string
+                example: agencia
+              value:
+                type: string
+                example: '0011'
+        consentOwner:
+          deprecated: true
+          type: array
+          description: |
+            [Obsoleto] Array de clave y valor con los datos de identificación referentes al dueño del consentimiento.
+          items:
+            type: object
+            required:
+              - key
+              - value
+            properties:
+              key:
+                type: string
+                example: agencia
+              value:
+                type: string
+                example: '0011'
+        brandId:
+          type: string
+          description: |
+            Identificador de la marca reportada por el participante de Open Finance
+          example: cbanco
+          minLength: 1
+          maxLength: 50
+        creationDateTime:
+          description: |
+            Fecha y hora en que se creó el consentimiento.
+            Una cadena con fecha y hora según especificación RFC-3339, siempre con la utilización de zona horaria UTC (UTC time format).
+          type: string
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$ '
+          example: '2021-05-21T08:30:00Z'
+          maxLength: 20
+        tpp:
+          type: object
+          description: |
+            Detalles del TPP (Third Party Provider) que solicitó el consentimiento
+          additionalProperties: false
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              description: |
+                Nombre del TPP que solicitó el consentimiento
+              example: GuiaBolsa
+              maxLength: 100
+        externalId:
+          type: string
+          description: |
+            Identificador del consentimiento utilizado fuera de la plataforma Opus Open Finance
+          example: urn:oob-bank:2f710909-4ccd-4998-8679-3d8de00e5ccf
+          maxLength: 100
+        loggedUser:
+          type: object
+          description: |
+            Usuario (persona natural) que se encuentra conectado en la institución Transmisora de Datos.
+          additionalProperties: false
+          required:
+            - document
+          properties:
+            document:
+              type: object
+              description: |
+                Documento de identificación oficial del usuario.
+              additionalProperties: false
+              required:
+                - identification
+                - rel
+              properties:
+                identification:
+                  type: string
+                  maxLength: 11
+                  description: |
+                    Número del documento de identificación oficial del usuario.
+                  example: '11111111111'
+                  pattern: ^\d{11}$
+                rel:
+                  type: string
+                  maxLength: 3
+                  description: |
+                    Tipo del documento de identificación oficial del usuario.
+                  example: CPF
+                  pattern: ^[A-Z]{3}$
+        businessDocumentType:
+          type: object
+          description: |
+            Usuario (persona jurídica) que se encuentra conectado en la institución Transmisora de Datos.
+            [Restricción] Llenado obligatorio si el usuario conectado en la institución Transmisora de Datos es un CNPJ (persona jurídica).
+          additionalProperties: false
+          required:
+            - document
+          properties:
+            document:
+              type: object
+              description: |
+                Documento de identificación oficial del titular persona jurídica.
+              additionalProperties: false
+              required:
+                - identification
+                - rel
+              properties:
+                identification:
+                  type: string
+                  maxLength: 14
+                  description: |
+                    Número del documento de identificación oficial del titular persona jurídica.
+                  example: '11111111111111'
+                  pattern: ^\d{14}$
+                rel:
+                  type: string
+                  maxLength: 4
+                  description: |
+                    Tipo del documento de identificación oficial del titular persona jurídica.
+                  example: CNPJ
+                  pattern: ^[A-Z]{4}$
+        resources:
+          description: |
+            Lista de recursos permitidos por el cliente
+          type: array
+          items:
+            type: object
+            description: |
+              Recursos seleccionados por el cliente
+            required:
+              - type
+              - resourceLegacyId
+            properties:
+              type:
+                description: |
+                  Tipo del recurso
+                type: string
+                enum:
+                  - ACCOUNT
+                  - CREDIT_CARD_ACCOUNT
+                  - LOAN
+                  - FINANCING
+                  - UNARRANGED_ACCOUNT_OVERDRAFT
+                  - INVOICE_FINANCING
+                  - PAYMENT
+                  - BANK_FIXED_INCOME
+                  - CREDIT_FIXED_INCOME
+                  - VARIABLE_INCOME
+                  - TREASURE_TITLE
+                  - FUND
+                example: PAYMENT
+              resourceLegacyId:
+                $ref: '#/components/schemas/LegacyId'
+              authorizers:
+                deprecated: true
+                description: |
+                  [Obsoleto] Lista de los autorizadores para el recurso en casos de múltiple competencia.
+                  Si el recurso es seleccionado, todos los autorizadores deberán aceptar el consentimiento del que el recurso forma parte.
+                type: array
+                items:
+                  type: object
+                  required:
+                    - cpf
+                    - name
+                  properties:
+                    cpf:
+                      description: |
+                        CPF del autorizador
+                      type: string
+                      minLength: 11
+                      maxLength: 11
+                      pattern: ^\d{11}$
+                      example: '11111111111'
+                    name:
+                      description: |
+                        Nombre del autorizador
+                      type: string
+                      example: Marco Antonio de Brito
+                minItems: 1
+              hasMultipleAuthorisers:
+                deprecated: true
+                type: boolean
+                example: 'false'
+            additionalProperties: false
+          maxItems: 1000
+        expirationDateTime:
+          description: |
+            Fecha y hora de expiración del permiso.
+            De llenado obligatorio, refleja la fecha límite de validez del consentimiento.
+            Una cadena con fecha y hora según especificación RFC-3339, siempre con la utilización de zona horaria UTC (UTC time format).
+          type: string
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$ '
+          example: '2021-05-21T08:30:00Z'
+        permissions:
+          type: array
+          items:
+            description: |
+              Solo para consentimientos de compartición de datos.
+              Especifica los tipos de permisos de acceso a las APIs en el ámbito de Open Finance Brasil - Fase 2, de acuerdo con los bloques de consentimiento proporcionados por el usuario y necesarios para el acceso a cada endpoint de las APIs.
+            type: string
+            enum:
+              - ACCOUNTS_READ
+              - ACCOUNTS_BALANCES_READ
+              - ACCOUNTS_TRANSACTIONS_READ
+              - ACCOUNTS_OVERDRAFT_LIMITS_READ
+              - CREDIT_CARDS_ACCOUNTS_READ
+              - CREDIT_CARDS_ACCOUNTS_BILLS_READ
+              - CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ
+              - CREDIT_CARDS_ACCOUNTS_LIMITS_READ
+              - CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ
+              - CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ
+              - CUSTOMERS_PERSONAL_ADITTIONALINFO_READ
+              - CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ
+              - CUSTOMERS_BUSINESS_ADITTIONALINFO_READ
+              - FINANCINGS_READ
+              - FINANCINGS_SCHEDULED_INSTALMENTS_READ
+              - FINANCINGS_PAYMENTS_READ
+              - FINANCINGS_WARRANTIES_READ
+              - INVOICE_FINANCINGS_READ
+              - INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ
+              - INVOICE_FINANCINGS_PAYMENTS_READ
+              - INVOICE_FINANCINGS_WARRANTIES_READ
+              - LOANS_READ
+              - LOANS_SCHEDULED_INSTALMENTS_READ
+              - LOANS_PAYMENTS_READ
+              - LOANS_WARRANTIES_READ
+              - UNARRANGED_ACCOUNTS_OVERDRAFT_READ
+              - UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ
+              - UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ
+              - UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ
+              - BANK_FIXED_INCOMES_READ
+              - CREDIT_FIXED_INCOMES_READ
+              - FUNDS_READ
+              - VARIABLE_INCOMES_READ
+              - TREASURE_TITLES_READ
+              - EXCHANGES_READ
+              - RESOURCES_READ
+          minItems: 1
+          maxItems: 30
+          example:
+            - ACCOUNTS_READ
+            - ACCOUNTS_OVERDRAFT_LIMITS_READ
+            - RESOURCES_READ
+      additionalProperties: false
+    RequestMeta:
+      type: object
+      description: |
+        Objeto que contiene datos referentes al contexto en el que se recibe la solicitud.
+      required:
+        - correlationId
+        - brandId
+      properties:
+        correlationId:
+          type: string
+          description: |
+            UUID que identifica el correlation ID de la solicitud realizada.
+            Debe ser propagado a todas las llamadas hechas entre sistemas y registrado siempre que sea posible para facilitar el rastreo de errores.
+          pattern: ^(localID:)?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+          example: localID:97623ed1-4732-4bf2-8d4b-ae7aced5443b
+        brandId:
+          type: string
+          description: |
+            Identificador de la marca reportada por el participante de Open Finance
+          example: cbanco
+          minLength: 1
+          maxLength: 50
+      additionalProperties: false
+    RequestWithConsentAndRequestMeta:
+      type: object
+      required:
+        - consent
+        - requestMeta
+      properties:
+        consent:
+          $ref: '#/components/schemas/ConsentDataSharing'
+        requestMeta:
+          $ref: '#/components/schemas/RequestMeta'
+    RequestWithConsentAndRequestMetaAndPagination:
+      type: object
+      required:
+        - consent
+        - requestMeta
+      properties:
+        consent:
+          $ref: '#/components/schemas/ConsentDataSharing'
+        requestMeta:
+          $ref: '#/components/schemas/RequestMeta'
+        page:
+          $ref: '#/components/schemas/Page'
+        pageSize:
+          $ref: '#/components/schemas/PageSize'
+        pagination-key:
+          $ref: '#/components/schemas/PaginationKey'
+    MetaOnlyRequestDateTimeAndHasMoreRecords:
+      type: object
+      description: |
+        Meta información referente a la API solicitada.
+      required:
+        - requestDateTime
+        - hasMoreRecords
+      properties:
+        requestDateTime:
+          description: |
+            Fecha y hora de la consulta, según especificación RFC-3339, formato UTC.
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+        hasMoreRecords:
+          type: boolean
+          description: |
+            Indica si hay más registros a ser retornados (true) o no (false).
+          example: true
+    NonSelectableResourceDiscoveryResponse:
+      title: Non-Selectable Resource Discovery Response
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: |
+            Objeto que contiene la lista de recursos del cliente.
+          required:
+            - resources
+          properties:
+            resources:
+              description: |
+                Lista de recursos relacionados al discovery
+              type: array
+              items:
+                type: object
+                properties:
+                  resourceLegacyId:
+                    description: |
+                      Array de clave y valor con la clave de identificación del recurso en el sistema de origen (legado), permitiendo claves compuestas
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          description: |
+                            Nombre del campo del identificador en el sistema de origen
+                          type: string
+                        value:
+                          description: |
+                            Valor del campo del identificador en el sistema de origen
+                          type: string
+                      required:
+                        - key
+                  validUntil:
+                    description: |
+                      Indica la fecha hasta la cual el recurso estará disponible.
+                    type: string
+                    format: date
+                    example: '2025-05-21'
+                  status:
+                    description: |
+                      Indica el estado actual del recurso
+                    type: string
+                    default: AVAILABLE
+                    enum:
+                      - AVAILABLE
+                      - PENDING_AUTHORISATION
+                      - UNAVAILABLE
+                      - TEMPORARILY_UNAVAILABLE
+                  authorizers:
+                    description: |
+                      Lista de los autorizadores para el recurso en casos de múltiple competencia.
+                      Si el recurso es seleccionado, todos los autorizadores deberán aceptar el consentimiento del que el recurso forma parte.
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        cpf:
+                          description: |
+                            CPF del autorizador
+                          type: string
+                          minLength: 11
+                          maxLength: 11
+                          pattern: ^\d{11}$
+                        name:
+                          description: |
+                            Nombre del autorizador
+                          type: string
+                      required:
+                        - cpf
+                        - name
+                    minItems: 1
+                required:
+                  - resourceLegacyId
+                  - validUntil
+    RequestWithConsentAndRequestMetaAndInvestmentId:
+      type: object
+      required:
+        - consent
+        - requestMeta
+        - investmentId
+      properties:
+        consent:
+          $ref: '#/components/schemas/ConsentDataSharing'
+        requestMeta:
+          $ref: '#/components/schemas/RequestMeta'
+        investmentId:
+          $ref: '#/components/schemas/LegacyId'
+    RequestTransactions:
+      type: object
+      required:
+        - consent
+        - requestMeta
+        - investmentId
+      properties:
+        consent:
+          $ref: '#/components/schemas/ConsentDataSharing'
+        requestMeta:
+          $ref: '#/components/schemas/RequestMeta'
+        investmentId:
+          $ref: '#/components/schemas/LegacyId'
+        page:
+          $ref: '#/components/schemas/Page'
+        pageSize:
+          $ref: '#/components/schemas/PageSize'
+        fromTransactionConversionDate:
+          $ref: '#/components/schemas/FromTransactionConversionDate'
+        toTransactionConversionDate:
+          $ref: '#/components/schemas/ToTransactionConversionDate'
+        pagination-key:
+          $ref: '#/components/schemas/PaginationKey'
+    RequestTransactionsCurrent:
+      type: object
+      required:
+        - consent
+        - requestMeta
+        - investmentId
+      properties:
+        consent:
+          $ref: '#/components/schemas/ConsentDataSharing'
+        requestMeta:
+          $ref: '#/components/schemas/RequestMeta'
+        investmentId:
+          $ref: '#/components/schemas/LegacyId'
+        page:
+          $ref: '#/components/schemas/Page'
+        pageSize:
+          $ref: '#/components/schemas/PageSize'
+        fromTransactionConversionDate:
+          $ref: '#/components/schemas/FromTransactionConversionDateCurrent'
+        toTransactionConversionDate:
+          $ref: '#/components/schemas/ToTransactionConversionDateCurrent'
+        pagination-key:
+          $ref: '#/components/schemas/PaginationKey'
+  responses:
+    OkResponseFundsProductList:
+      description: Datos obtenidos con éxito
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseFundsProductList'
+    OkResponseFundsProductIdentification:
+      description: Datos de fondos de inversión obtenidos con éxito.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseFundsProductIdentification'
+    ResponseFundsBalances:
+      description: Datos obtenidos con éxito
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseFundsBalances'
+    OKResponseFundsTransactions:
+      description: Datos obtenidos con éxito.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseFundsTransactions'
+    OKResponseFundsTransactionsCurrent:
+      description: Datos obtenidos con éxito.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseFundsTransactionsCurrent'
+    BadRequest:
+      description: 'La solicitud fue malformada, omitiendo atributos obligatorios, ya sea en el payload o a través de atributos en la URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    Forbidden:
+      description: El token tiene un alcance incorrecto o se violó una política de seguridad
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    GatewayTimeout:
+      description: GATEWAY TIMEOUT - La solicitud no fue atendida dentro del tiempo límite establecido
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    InternalServerError:
+      description: Ocurrió un error en el gateway de la API o en el microservicio
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    Locked:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    MethodNotAllowed:
+      description: El consumidor intentó acceder al recurso con un método no soportado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    NotAcceptable:
+      description: La solicitud contenía un encabezado Accept diferente de los tipos de medio permitidos o un conjunto de caracteres diferente de UTF-8
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    NotFound:
+      description: El recurso solicitado no existe o no fue implementado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    TooManyRequests:
+      description: 'La operación fue rechazada, ya que se realizaron demasiadas solicitudes dentro de un período determinado o se alcanzó el límite global de solicitudes concurrentes'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    Unauthorized:
+      description: Encabezado de autenticación ausente/inválido o token inválido
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    UnprocessableEntity:
+      description: 'La sintaxis de la solicitud es correcta, pero no fue posible procesar las instrucciones presentes.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    Default:
+      description: Error inesperado.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    SiteIsOverloaded:
+      description: 'El sitio está sobrecargado y la operación fue rechazada, ya que se alcanzó el límite máximo de TPS global, en este momento.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    BadRequestWithAdditionalProperties:
+      description: 'La solicitud fue malformada, omitiendo atributos obligatorios, ya sea en el payload o a través de atributos en la URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    ForbiddenWithAdditionalProperties:
+      description: El token tiene un alcance incorrecto o se violó una política de seguridad
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    GatewayTimeoutWithAdditionalProperties:
+      description: GATEWAY TIMEOUT - La solicitud no fue atendida dentro del tiempo límite establecido
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    InternalServerErrorWithAdditionalProperties:
+      description: Ocurrió un error en el gateway de la API o en el microservicio
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    LockedWithAdditionalProperties:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    MethodNotAllowedWithAdditionalProperties:
+      description: El consumidor intentó acceder al recurso con un método no soportado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    NotAcceptableWithAdditionalProperties:
+      description: La solicitud contenía un encabezado Accept diferente de los tipos de medio permitidos o un conjunto de caracteres diferente de UTF-8
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    NotFoundWithAdditionalProperties:
+      description: El recurso solicitado no existe o no fue implementado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    TooManyRequestsWithAdditionalProperties:
+      description: 'La operación fue rechazada, ya que se realizaron demasiadas solicitudes dentro de un período determinado o se alcanzó el límite global de solicitudes concurrentes'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    UnauthorizedWithAdditionalProperties:
+      description: Encabezado de autenticación ausente/inválido o token inválido
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    UnprocessableEntityWithAdditionalProperties:
+      description: 'La sintaxis de la solicitud es correcta, pero no fue posible procesar las instrucciones presentes.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    DefaultWithAdditionalProperties:
+      description: Error inesperado.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    SiteIsOverloadedWithAdditionalProperties:
+      description: 'El sitio está sobrecargado y la operación fue rechazada, ya que se alcanzó el límite máximo de TPS global, en este momento.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    OKResponseFundDiscovery:
+      description: Lista de recursos que representan las inversiones del tipo Fondos de Inversión realizadas por el cliente obtenidas con éxito.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NonSelectableResourceDiscoveryResponse'
+            

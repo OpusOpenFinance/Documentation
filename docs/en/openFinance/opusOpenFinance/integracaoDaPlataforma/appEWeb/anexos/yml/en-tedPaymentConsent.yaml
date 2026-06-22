@@ -1,0 +1,240 @@
+type: object
+description: Only for TED payment consents. Object containing payment data for consent.
+required:
+  - type
+  - currency
+  - amount
+  - creditorAccount
+  - purpose
+properties:
+  type:
+    type: string
+    maxLength: 3
+    enum:
+      - TED
+    example:
+      - TED
+    description: |
+      This field defines the type of payment that will be initiated after the consent authorization.
+  date:
+    type: string
+    format: date
+    maxLength: 10
+    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+    example:
+      - "2021-01-01"
+    description: Payment date, according to RFC-3339 specification.
+  schedule:
+    type: object
+    description: |
+      Defines the payment schedule. Used only in the payment scheduling feature.
+      Mutually exclusive with the date field. This field is mandatory for scheduling. In this case, the date field must not be informed.
+    properties:
+      single:
+        type: object
+        description: Defines the single scheduling policy.
+        additionalProperties: false
+        required:
+          - date
+        properties:
+          date:
+            type: string
+            format: date
+            maxLength: 10
+            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+            example: '2021-01-01'
+            description: |
+              Defines the target date for payment settlement. The Brasília time zone must be used for creating and reasoning about the data in this field.
+              NOTE: This field must always be at least D+1, i.e., the immediately following date concerning the consent date, considering the Brasília time zone, and at most one calendar year from the consent date, considering the Brasília time zone.
+    required:
+          - single
+    additionalProperties: false
+  currency:
+    type: string
+    maxLength: 3
+    pattern: ^([A-Z]{3})$
+    example:
+      - BRL
+    description: |
+      National currency code according to the ISO-4217 model, i.e., 'BRL'.
+      All monetary values provided are represented in the current currency of Brazil.
+  amount:
+    type: string
+    minLength: 4
+    maxLength: 19
+    pattern: ^((\d{1,16}\.\d{2}))$
+    example:
+      - "100000.12"
+    description: |
+      Transaction amount with 2 decimal places.
+  creditorAccount:
+        type: object
+        description: |
+          Object containing the identification of the beneficiary/recipient's destination account.
+        required:
+          - ispb
+          - number
+          - accountType
+        properties:
+          ispb:
+            type: string
+            minLength: 8
+            maxLength: 8
+            pattern: ^[0-9]{8}$
+            example:
+              - "12345678"
+            description: |
+              Must be filled with the ISPB (Identifier of the Brazilian Payment System) of the SPI (Instant Payment System) participant, numbers only.
+          issuer:
+            type: string
+            maxLength: 4
+            pattern: ^\d{4}$
+            example:
+              - "1774"
+            description: |
+              Issuing branch code of the account without the digit.
+              (Branch is the unit intended for customer service, the general public, and credit union members,
+              in the exercise of the institution's activities, cannot be mobile or temporary).
+              [Restriction] Mandatory for the following account types: CACC (CONTA_DEPOSITO_A_VISTA), SVGS (CONTA_POUPANCA) and SLRY (CONTA_SALARIO).
+          number:
+            type: string
+            minLength: 3
+            maxLength: 20
+            pattern: ^\d{3,20}$
+            example:
+              - "1234567890"
+            description: |
+              Must be filled with the receiving user's account number, with the check digit (if it exists),
+              if there is an alphanumeric value, it must be converted to 0.
+          accountType:
+            type: string
+            maxLength: 4
+            enum:
+              - CACC
+              - SLRY
+              - SVGS
+              - TRAN
+            example:
+              - CACC
+            description: |
+              Types of accounts used for payment via TED.
+              Traditional modalities provided for by Resolution 4.753, not including linked accounts,
+              accounts for non-residents, foreign currency accounts, and corresponding electronic currency accounts.
+              TED payment initiation does not support all credit account types
+              available through Open Banking, only checking accounts, savings accounts, and payment accounts are supported.
+              Descriptions for each ENUM value for the TED scope.
+              CACC - Current - Checking Account.
+              SLRY - Salary - Salary Account.
+              SVGS - Savings - Savings Account.
+              TRAN - TransactingAccount - Pre-paid Payment Account.
+  purpose:
+    type: number
+    enum: [1,10,100,101,103,104,107,108,109,11,110,111,112,113,114,117,12,121,123,124,13,131,132,136,139,14,149,15,150,157,175,18,19,2,200,201,202,203,204,205,206,207,208,209,23,27,28,29,3,30,300,301,302,303,31,33,34,35,36,37,38,39,4,40,41,42,43,44,45,47,5,50,500,501,502,504,505,507,508,509,510,511,512,513,514,515,516,517,518,519,520,6,7,8,9,97,99999]
+    description: >
+      Defines the purpose of the transfer
+      1 - Payment of Taxes, Tributes and Fees
+      10 - Credit to Account
+      100 - Judicial Deposit
+      101 - Alimony
+      103 - Assignment of credits - Principal settlement for acquisition of credits or credit rights or cash flow guaranteed by credits, by order of corporate financial client
+      104 - Assignment of credits - Principal settlement for acquisition of credits or credit rights, by order of FIDC or securitization company
+      107 - Assignment of credits - Contractual transfer of cash flow or receivables paid, by order of corporate financial client
+      108 - Assignment of credits - Contractual transfer of cash flow or receivables paid in advance, by order of corporate financial client
+      109 - Assignment of credits - Miscellaneous adjustments
+      11 - Payment to Brokerages
+      110 - Transfer between accounts of the same holder
+      111 - Credit for investor in client of Credited FI
+      112 - Debit of investor in client of Debited FI
+      113 - Payment of Credit Operations by Client
+      114 - Redemption of client's financial investment to their own account
+      117 - Financial investment in the name of the remitting client
+      12 - Payment of Bank Slip at Notary Public
+      121 - Payment of TIR - Pix Withdrawal and/or Pix Change
+      123 - Assignment of credits - Principal settlement for repurchase of credits or credit rights or cash flow guaranteed by credits, by order of corporate financial client
+      124 - Assignment of credits - Principal settlement for repurchase of credits or credit rights, by order of FIDC or securitization company
+      13 - Payment of Fees for Provision of Agreement Collection Services
+      131 - FGCoop - Collection of Credit Cooperative Guarantee Fund
+      132 - FGCoop - refund of overpayment
+      136 - FGTS - Emergency Withdrawal
+      139 - Credit to consumer arising from tax incentive program
+      14 - Transfer of Amounts Related to Settled Titles at Protest Notary Offices
+      149 - Emergency Aid Law 13.982
+      15 - Financial Settlement of Card Operator
+      150 - Emergency Benefit for Employment and Income Preservation - BEm
+      157 - Municipal Taxes ISS - LCP 157
+      175 - Municipal Taxes ISS THIRD PARTIES - LCP 157
+      18 - Housing Insurance Operations - SFH
+      19 - FDS Operations - Caixa
+      2 - Payment to Public Utility Concessionaires
+      200 - International Transfer in Reais
+      201 - Future Market Position Adjustment
+      202 - Transfer of BNDES Amounts
+      203 - Settlement of Commitments with BNDES
+      204 - Stock Purchase and Sale Operations - Stock Exchanges and Over-the-Counter Market
+      205 - Contracts Referenced in Stocks or Stock Indices - Stock, Commodity and Futures Exchanges
+      206 - Exchange Operation - Non-Interbank
+      207 - Operations in the Fixed Income and Variable Income Market using an Intermediary
+      208 - Exchange Operation - Interbank Market - Institutions without Reserve Bank account
+      209 - Payment of Operations with identification of final recipient
+      23 - Administration Fee
+      27 - Payment of Agreement / Judicial Execution
+      28 - Settlement of Payroll Loans
+      29 - Scholarship payment
+      3 - Dividend Payments
+      30 - Remuneration to cooperative member
+      300 - Income Tax Refund
+      301 - Treasury Bank Order - OBT
+      302 - Payment of fines to BACEN for import delays
+      303 - Tax refund - RFB
+      31 - Prebend payment (Remuneration to priests and clergy)
+      33 - Payment of interest on equity
+      34 - Payment of income or amortization on shares and/or debentures
+      35 - Service Fee
+      36 - Check payment to non-account holder
+      37 - Payment of interest and/or amortization of deposited securities as collateral at Clearing Houses
+      38 - Reversal or Refund - Miscellaneous
+      39 - Transportation Voucher Payment
+      4 - Salary Payment
+      40 - Simples Nacional
+      41 - Transfer of amounts to FUNDEB
+      42 - Transfer of Centralized Agreement Amounts
+      43 - Sponsorship with Tax Incentive
+      44 - Donation with Tax Incentive
+      45 - Transfer from non-bank institution's checking account to its Settlement Account
+      47 - Employment Contract Termination Payment
+      5 - Supplier Payment
+      50 - Reimbursement of expenses for structuring fixed and variable income operations
+      500 - Insurance Premium Refund
+      501 - Insurance Claim Indemnity Payment
+      502 - Co-Insurance Premium Payment
+      504 - Co-Insurance Claim Indemnity Payment
+      505 - Reinsurance Premium Payment
+      507 - Reinsurance Claim Indemnity Payment
+      508 - Reinsurance Claim Indemnity Refund
+      509 - Claim Expenses Payment
+      510 - Prior Inspections/Surveys Payment
+      511 - Capitalization Bond Redemption Payment
+      512 - Capitalization Bond Draw Payment
+      513 - Capitalization Bond Monthly Fee Refund
+      514 - Pension Plan Contribution Refund
+      515 - Pension Benefit Payment (Lump Sum)
+      516 - Pension Benefit Payment (Pension)
+      517 - Pension Benefit Payment (Retirement)
+      518 - Pension Redemption Payment
+      519 - Brokerage Commission Payment
+      520 - Insurance/Pension Reserve Transfer/Portability Payment
+      6 - Fee Payment
+      7 - Rent and Condominium Fee Payment
+      8 - Invoice and Title Payment
+      9 - Tuition Payment
+      97 - Foreign Currency Purchase by FSB - Brazilian Sovereign Fund
+      99999 - Other
+    example:
+      - 1
+  purposeAdditionalInfo:
+    type: string
+    description: Defines the complement of the transfer purpose in textual form.
+    example:
+      - Informações adicionais
+  additionalProperties: false
+additionalProperties: false
