@@ -3,7 +3,7 @@ layout: default
 title: Conceitos
 parent: "OpusTPP"
 nav_order: 1
-has_children: true
+has_children: false
 lang: "pt-br"
 alternate_lang:
     - path: "/Documentation/en/openFinance/opusOpenFinance/opusTPP/conceitos/index"

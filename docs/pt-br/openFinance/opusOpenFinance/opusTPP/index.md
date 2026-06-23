@@ -88,11 +88,11 @@ O OpusTPP assume toda essa complexidade para que sua equipe possa focar no produ
 
 A documentação do OpusTPP está organizada em três grandes blocos. Use os links abaixo como ponto de entrada para cada tema:
 
-### [Conceitos](conceitos/)
+### [Conceitos](conceitos.html)
 
 Fundamentos do ecossistema Open Finance e do funcionamento do OpusTPP. Recomendado para quem está começando.
 
-- [Glossário e Conceitos Fundamentais](conceitos/) — Consentimento, vínculo de dispositivo, jornadas, perfis regulatórios
+- [Glossário e Conceitos Fundamentais](conceitos.html) — Consentimento, vínculo de dispositivo, jornadas, perfis regulatórios
 
 ### [Funcionamento](funcionamento/)
 
