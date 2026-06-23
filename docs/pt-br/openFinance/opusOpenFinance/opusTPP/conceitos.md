@@ -125,7 +125,7 @@ Identificador escolhido pelo aplicativo cliente para o dispositivo (geralmente u
 
 ## Jornada Otimizada
 
-A Jornada Otimizada é um fluxo onde dois cosentimentos de Dados e Pagamentos podem ser criados em uma única interação, combinando dois consenitmentos vinculados:
+A Jornada Otimizada é um fluxo onde dois consentimentos de Dados e Pagamentos podem ser criados em uma única interação, combinando dois consentimentos vinculados:
 
 - **Primário (pagamento):** Autoriza as operações financeiras em si.
 - **Secundário (dados):** Autoriza a leitura de saldo da conta para validar a viabilidade do pagamento antes da execução.
@@ -151,7 +151,7 @@ Documento JWS emitido pelo Diretório de Participantes que descreve uma aplicaç
 - Lista de *redirect URIs* autorizadas;
 - Metadados da aplicação.
 
-Uma única instituição (organisation) pode ter múltiplos SSAs (um por aplicativo/marca). O SSA é armazenado no banco do OpusTPP..
+Uma única instituição (organisation) pode ter múltiplos SSAs (um por aplicativo/marca). O SSA é armazenado no banco do OpusTPP.
 
 ### Perfis Regulatórios (`role`)
 
