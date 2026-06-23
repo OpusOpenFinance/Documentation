@@ -47,10 +47,10 @@ Referências:
 
 ## Comportamento esperado
 
-- **Sucesso:** o consentimento permanece em `AUTHORIZED` até atingir os limites globais de transações estabelecidos no payload (quantidade total, valor total, data limite, etc.). Quando esses limites são alcançados, o status transita para `CONSUMED`.
+- **Sucesso:** o consentimento permanece em `AUTHORISED` até atingir os limites globais de transações estabelecidos no payload (quantidade total, valor total, data limite, etc.). Quando esses limites são alcançados, o status transita para `CONSUMED`.
 - **Erro de negócio (HTTP 422):** o status do pagamento individual entra em `REJECTED`. O consentimento permanece ativo (a menos que tenha sido violada uma regra global). Schemas de erro: `422ResponseErrorCreatePixRecurringPayment` e `422ResponseErrorCreateRecurringPaymentsPaymentId`.
 - **Revogação de pagamento individual:** permitida quando o pagamento está em `SCHEDULED` (SCHD) ou `PDNG`.
-- **Revogação de consentimento:** permitida quando o consentimento está em `AUTHORIZED`. Schema de erro: `422ResponseErrorRecurringConsents`.
+- **Revogação de consentimento:** permitida quando o consentimento está em `AUTHORISED`. Schema de erro: `422ResponseErrorRecurringConsents`.
 
 ## Exemplo — Criação de pagamento automático (v2)
 
