@@ -43,7 +43,7 @@ A API de Recepção de Dados Cadastrais e Transacionais expõe os endpoints que 
 
 ## Proxies para obtenção de dados
 
-Após o consentimento estar em `AUTHORISED`, a TPP pode chamar os **proxies regulatórios** expostos pelo OpusTPP. São aproximadamente **78 rotas** organizadas pelas seguintes famílias:
+Após o consentimento estar em `AUTHORISED`, a TPP pode chamar os **proxies regulatórios** expostos pelo OpusTPP, organizados pelas seguintes famílias. A lista completa e sempre atualizada de rotas está na especificação OpenAPI anexa.
 
 | Família | Recursos |
 | :-----: | :------: |
