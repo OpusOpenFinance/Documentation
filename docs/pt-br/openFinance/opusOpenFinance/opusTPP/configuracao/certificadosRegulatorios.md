@@ -3,7 +3,7 @@ layout: default
 title: Certificados Regulatórios
 parent: "Configuração"
 grand_parent: "OpusTPP"
-nav_order: 3
+nav_order: 1
 lang: "pt-br"
 alternate_lang:
     - path: "/Documentation/en/openFinance/opusOpenFinance/opusTPP/configuracao/certificadosRegulatorios"

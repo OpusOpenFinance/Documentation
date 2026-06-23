@@ -3,7 +3,7 @@ layout: default
 title: Relatórios Regulatórios
 parent: "Configuração"
 grand_parent: "OpusTPP"
-nav_order: 8
+nav_order: 2
 lang: "pt-br"
 alternate_lang:
     - path: "/Documentation/en/openFinance/opusOpenFinance/opusTPP/configuracao/relatoriosRegulatorios"

@@ -2,7 +2,7 @@
 layout: default
 title: Configuração
 parent: "OpusTPP"
-nav_order: 2
+nav_order: 3
 has_children: true
 lang: "pt-br"
 alternate_lang:
