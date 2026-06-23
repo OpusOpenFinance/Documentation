@@ -29,7 +29,7 @@ A API de Recepção de Dados Cadastrais e Transacionais expõe os endpoints que 
 | DELETE | `/opus-open-finance/consents/v1/consents/{consentId}` | Revogação do consentimento | 204 |
 | POST | `/opus-open-finance/consents/v1/consents/{consentId}/authorisation-retry` | Nova tentativa de autorização | 200 |
 | POST | `/opus-open-finance/consents/v1/consents/{consentId}/extends` | Renovação do consentimento | 201 |
-| GET | `/opus-open-finance/consents/v1/consents/{consentId}/extends` | Consulta dos dados de renovação | 200 |
+| GET | `/opus-open-finance/consents/v1/consents/{consentId}/extensions` | Consulta dos dados de renovação | 200 |
 | GET | `/opus-open-finance/dcm` | Obtenção dos dados de DCM dos *brand clients* | 200 |
 | PUT | `/opus-open-finance/dcm` | Atualização dos dados de DCM dos *brand clients* | 200 |
 
