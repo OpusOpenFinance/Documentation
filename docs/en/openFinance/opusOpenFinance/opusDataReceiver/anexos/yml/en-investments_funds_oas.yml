@@ -1,0 +1,1626 @@
+openapi: 3.0.0
+info:
+  title: API Funds - Opus Data Receiver
+  description: |
+    API for Investment Funds operations information stored in ODR. Uses the same definition of Investment Funds from Open Finance Brazil - Phase 4 as standard.
+
+    API that returns information about Investment Funds investment operations held by their clients in transmitting institutions, including data such as product information, quantity, client position balances, and financial transactions.
+
+    No segregation between natural and legal persons. Requires client registration in ODR for all endpoints.
+
+    As exposure scope, all investment funds classified as: Fixed Income, Equity, Multimarket and Foreign Exchange should be considered.
+
+    For product identification and client position, exposure will be consolidated per Investment Fund.
+
+    For transactions, exposure will be by Client Order, for example, a Redemption Order is shared as a single transaction, even if associated with different Certificates (Certificates).
+
+    Institutions may present different scenarios regarding synchronization between position `/balances` and transaction `/transactions` and `/transactions-current` of the API:
+
+    - Some institutions reflect unconverted transactions in the client position in their electronic channels. This implies that updated position sharing may occur, whose related transactions will be exposed in the ecosystem only after their conversion;
+
+    - Other institutions reflect in the position only converted transactions in their electronic channels. This implies that position sharing in relation to transactions is done in a synchronized manner in the ecosystem.
+
+    For the investment identifier (investmentId) the following behavior should be adopted:
+
+    - After 12 months without transactions and with asset quantity zeroed, the resourceId corresponding to the investmentId in question should change to UNAVAILABLE status (considering valid consent);
+
+    - In situations where the client repurchases the asset after a period of 12 months without transaction and with asset quantity zeroed, the same identifier (investmentId) should be used. Specifically for such products, the resource status in resources should change from UNAVAILABLE to AVAILABLE.
+  version: 1.0.2
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+tags:
+  - name: Product List
+    description: Gets the list of Investment Funds operations held by the client at the transmitting institution and for which they have provided consent.
+  - name: Product Identification
+    description: Gets the data of the Investment Funds operation identified by investmentId.
+  - name: Balances
+    description: Gets the position of the Investment Funds operation identified by investmentId.
+  - name: Transactions
+    description: Gets the historical transactions (last 12 months) of the Investment Funds operation identified by investmentId.
+  - name: Transactions Current
+    description: 'Gets the recent transactions of the Investment Funds operation identified by investmentId. The period to be considered for presenting transactions will be up to 7 days - 7 previous days from the query, including the query day (D-6).'
+paths:
+  /setup/investments/funds:
+    get:
+      tags:
+        - Product List
+      summary: Gets the list of Investment Funds operations held by the client at the transmitting institution and for which they have provided consent.
+      operationId: fundsGetInvestments
+      description: Gets the list of Investment Funds operations held by the client at the transmitting institution and for which they have provided consent.
+      parameters:
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OkResponseFundsProductList'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '502':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        
+  '/setup/investments/funds/{investmentId}':
+    get:
+      tags:
+        - Product Identification
+      summary: Gets the data of the Investment Funds operation identified by investmentId.
+      operationId: fundsGetInvestmentsInvestmentId
+      description: Gets the data of the Investment Funds operation identified by investmentId.
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OkResponseFundsProductIdentification'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '502':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        
+  '/setup/investments/funds/{investmentId}/balances':
+    get:
+      tags:
+        - Balances
+      summary: Gets the position of the Investment Funds operation identified by investmentId.
+      operationId: fundsGetInvestmentsInvestmentIdBalances
+      description: |
+        Gets the position of the Investment Funds operation identified by investmentId.
+
+        In cases where there is no position for the investment, i.e., quantity of assets and monetary values zeroed, but it is still within the exposure period (up to 12 months after the last transaction), status code 200 should be returned and for the return payload consider the values below. Non-mandatory fields should not be returned:
+
+        - Monetary values: 0.00
+        - Quantity of assets: 0.00
+        - Date of last position: same content (date) as the requestDateTime field, except for the time fraction
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseFundsBalances'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '502':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        
+  '/setup/investments/funds/{investmentId}/transactions':
+    get:
+      tags:
+        - Transactions
+      summary: Gets the historical transactions (last 12 months) of the Investment Funds operation identified by investmentId.
+      operationId: fundsGetInvestmentsInvestmentIdTransactions
+      description: Gets the historical transactions (last 12 months) of the Investment Funds operation identified by investmentId.
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+        - $ref: '#/components/parameters/fromTransactionConversionDate'
+        - $ref: '#/components/parameters/toTransactionConversionDate'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseFundsTransactions'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+        
+  '/setup/investments/funds/{investmentId}/transactions-current':
+    get:
+      tags:
+        - Transactions Current
+      summary: 'Gets the recent transactions of the Investment Funds operation identified by investmentId. The period to be considered for presenting transactions will be up to 7 days - 7 previous days from the query, including the query day (D-6).'
+      operationId: fundsGetInvestmentsInvestmentIdTransactionsCurrent
+      description: 'Gets the recent transactions of the Investment Funds operation identified by investmentId. The period to be considered for presenting transactions will be up to 7 days - 7 previous days from the query, including the query day (D-6).'
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/SetupID'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+        - $ref: '#/components/parameters/fromTransactionConversionDateCurrent'
+        - $ref: '#/components/parameters/toTransactionConversionDateCurrent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseFundsTransactionsCurrent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '502':
+          $ref: '#/components/responses/InternalServerError'
+        
+components:
+  schemas:
+    ResponseFundsProductList:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ResponseFundsProductListData'
+        links:
+          $ref: '#/components/schemas/FundsProductListLinks'
+        meta:
+          $ref: '#/components/schemas/FundsMeta'
+      additionalProperties: false
+    ResponseFundsProductIdentification:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/ResponseFundsProductIdentificationData'
+        links:
+          $ref: '#/components/schemas/FundsLinks'
+        meta:
+          $ref: '#/components/schemas/FundsMeta'
+      additionalProperties: false
+    ResponseFundsBalances:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/ResponseFundsBalanceData'
+        links:
+          $ref: '#/components/schemas/FundsLinks'
+        meta:
+          $ref: '#/components/schemas/FundsMeta'
+      additionalProperties: false
+    ResponseFundsTransactions:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ResponseFundsTransactionsData'
+        links:
+          $ref: '#/components/schemas/FundsTransactionsLinks'
+        meta:
+          $ref: '#/components/schemas/MetaSingle'
+      additionalProperties: false
+    ResponseFundsTransactionsCurrent:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ResponseFundsTransactionsCurrentData'
+        links:
+          $ref: '#/components/schemas/FundsTransactionsLinks'
+        meta:
+          $ref: '#/components/schemas/MetaSingle'
+      additionalProperties: false
+    ResponseFundsProductListData:
+      type: object
+      description: List of investment funds held by the client at the transmitting institution and for which they have provided consent.
+      required:
+        - brandName
+        - companyCnpj
+        - investmentId
+      properties:
+        brandName:
+          type: string
+          description: 'Brand name reported by the participant in Open Finance. It is recommended to use, whenever possible, the same brand name assigned in the Customer Friendly Server Name field of the directory (Authorisation Server).'
+          pattern: '[\w\W\s]*'
+          example: Organização A
+          maxLength: 80
+        companyCnpj:
+          type: string
+          description: 'Complete CNPJ number of the institution responsible for the Registration - the CNPJ corresponds to the registration number in the Legal Entity Register. Should contain only the CNPJ numbers, without mask.'
+          maxLength: 14
+          pattern: '^\d{14}$'
+          example: '21128159000166'
+        anbimaCategory:
+          type: string
+          description: |
+            According to ANBIMA classification, which follows ANBIMA deliberation 77.
+
+            – Fixed Income
+
+            – Equity
+
+            – Multimarket
+
+            – Foreign Exchange
+
+            https://www.anbima.com.br/data/files/5A/44/2C/B7/8411B510CD3B4DA568A80AC2/DeliberacaoN77-Diretriz-de-Classificacao-de-Fundos.pdf
+          enum:
+            - RENDA_FIXA
+            - ACOES
+            - MULTIMERCADO
+            - CAMBIAL
+          example: RENDA_FIXA
+        anbimaClass:
+          type: string
+          description: Field necessary for compliance with CVM Resolution 175. Awaiting market definitions. Should be an enum type field.
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+        anbimaSubclass:
+          type: string
+          description: Field necessary for compliance with CVM Resolution 175. Awaiting market definitions. Should be an enum type field.
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+        investmentId:
+          type: string
+          description: Uniquely identifies the client relationship with the product, maintaining the immutability rules within the transmitting institution. In cases where the client, after completing 12 months from the last transaction and with asset quantity zeroed (client no longer has possession of the product under transmitter custody), repurchases the asset they already invested in past periods, maintain the same investmentId previously used.
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: '92792126019929200000000000000000000000000'
+      additionalProperties: false
+    ResponseFundsProductIdentificationData:
+      type: object
+      description: Information of the investment fund product referred to by investmentId.
+      required:
+        - name
+        - cnpjNumber
+      properties:
+        name:
+          type: string
+          description: Official name of the investment fund as displayed to clients in electronic channels.
+          maxLength: 250
+          example: CONSTELLATION MASTER FIA
+        cnpjNumber:
+          type: string
+          description: CNPJ of the investment fund.
+          maxLength: 14
+          pattern: '^\d{14}$'
+          example: '11225860000140'
+        isinCode:
+          type: string
+          description: |
+            Universal code that identifies each security or financial instrument, according to ISO 6166 Standard.
+
+            DEFINITION: The ISIN (International Securities Identification Number) is a code that identifies a security, according to ISO 6166 standard.
+
+            STRUCTURE: The ISIN is an alphanumeric code that has 12 characters with the following structure:
+            - A prefix, composed of 2 alpha characters, that identifies the country code (ISO 3166 Standard);
+            - The basic number, composed of 9 alphabetical or numerical characters in its extension;
+            - A numerical check digit.
+          maxLength: 12
+          minLength: 12
+          pattern: '^[A-Z]{2}([A-Z0-9]){9}\d{1}$'
+          example: BRCST4CTF001
+        anbimaCategory:
+          type: string
+          description: |
+            According to ANBIMA classification, which follows ANBIMA deliberation 77.
+
+            – Fixed Income
+
+            – Equity
+
+            – Multimarket
+
+            – Foreign Exchange
+
+            https://www.anbima.com.br/data/files/5A/44/2C/B7/8411B510CD3B4DA568A80AC2/DeliberacaoN77-Diretriz-de-Classificacao-de-Fundos.pdf
+          enum:
+            - RENDA_FIXA
+            - ACOES
+            - MULTIMERCADO
+            - CAMBIAL
+          example: RENDA_FIXA
+        anbimaClass:
+          type: string
+          description: Field necessary for compliance with CVM Resolution 175. Awaiting market definitions. Should be an enum type field.
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+        anbimaSubclass:
+          type: string
+          description: Field necessary for compliance with CVM Resolution 175. Awaiting market definitions. Should be an enum type field.
+          maxLength: 70
+          pattern: '[\w\W\s]*'
+      additionalProperties: false
+    ResponseFundsBalanceData:
+      type: object
+      description: Information of the investment fund position referred to by investmentId.
+      required:
+        - referenceDate
+        - grossAmount
+        - netAmount
+        - incomeTaxProvision
+        - financialTransactionTaxProvision
+        - blockedAmount
+        - quotaQuantity
+        - quotaGrossPriceValue
+      properties:
+        referenceDate:
+          type: string
+          format: date
+          description: Date of the last consolidated position available to which the client transactional data available in electronic channels refer.
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2023-01-07'
+        grossAmount:
+          $ref: '#/components/schemas/FundsBalancesGrossAmount'
+        netAmount:
+          $ref: '#/components/schemas/FundsBalancesNetAmount'
+        incomeTaxProvision:
+          $ref: '#/components/schemas/FundsBalancesIncomeTaxProvision'
+        financialTransactionTaxProvision:
+          $ref: '#/components/schemas/FundsBalancesFinancialTransactionTaxProvision'
+        blockedAmount:
+          $ref: '#/components/schemas/FundsBalancesBlockedAmount'
+        quotaQuantity:
+          type: string
+          format: double
+          description: Quantity of quotas held in client position.
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          maxLength: 24
+          example: '42.25'
+        quotaGrossPriceValue:
+          $ref: '#/components/schemas/FundsBalancesQuotaGrossPriceValue'
+    ResponseFundsTransactionsData:
+      type: object
+      description: Information of the investment fund position referred to by investmentId.
+      required:
+        - transactionId
+        - type
+        - transactionType
+        - transactionConversionDate
+        - transactionQuotaPrice
+        - transactionQuotaQuantity
+        - transactionValue
+        - transactionGrossValue
+      properties:
+        transactionId:
+          type: string
+          description: Code or unique identifier provided by the institution that maintains the individual representation of the transaction in the fund position.
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: ABCD2126019929279212650822221989319253344
+        type:
+          $ref: '#/components/schemas/EnumFundsTransactionsType'
+        transactionType:
+          $ref: '#/components/schemas/EnumFundsTransactionsTransactionType'
+        transactionTypeAdditionalInfo:
+          type: string
+          description: |
+            Additional information about the type of reason, for filling in case of transactions not delimited in the domain.
+
+            [Restriction] Mandatory field for participants when the 'transactionType' field is filled with the value 'OUTROS'.
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+        transactionConversionDate:
+          type: string
+          format: date
+          description: Date of conversion of the investment fund transaction movement.
+          maxLength: 10
+          minLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2023-01-07'
+        transactionQuotaPrice:
+          type: object
+          description: |
+            Is the quota value used in conversion for executing the client movement in the fund, according to the rule provided in regulation - value may be negative.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 25
+              pattern: '^-?\d{1,15}\.\d{2,8}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionQuotaQuantity:
+          type: string
+          format: double
+          description: |
+            Number of quotas converted on the transaction date.
+          maxLength: 24
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          example: '42.25'
+        transactionValue:
+          type: object
+          description: Value requested by the client.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionGrossValue:
+          type: object
+          description: |
+            Transaction value that refers to quota quantity x transaction quota value.
+            In cases where there is no quota movement, for example: amortization, do not consider the described rule.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        incomeTax:
+          type: object
+          description: |
+            Income Tax (IR) amount withheld at source considering the current rate on the transaction date.
+
+            [Restriction] Mandatory field for participants when the 'type' field is filled with the value 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        financialTransactionTax:
+          type: object
+          description: |
+            Financial Transactions Tax (IOF) amount withheld at source considering the current rate on the transaction date.
+
+            [Restriction] Mandatory field for participants when the 'type' field is filled with the value 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionExitFee:
+          type: object
+          description: |
+            Exit fee value considered in the transaction.
+
+            [Restriction] Mandatory field for participants when the 'type' field is filled with the value 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionNetValue:
+          type: object
+          description: |
+            Net transaction value after deduction of taxes (IOF and IR) and exit fee.
+            [Restriction] Mandatory field for participants when the 'type' field is filled with the value 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+      additionalProperties: false
+    ResponseFundsTransactionsCurrentData:
+      type: object
+      description: Information of the investment fund position referred to by investmentId.
+      required:
+        - transactionId
+        - type
+        - transactionType
+        - transactionConversionDate
+        - transactionQuotaPrice
+        - transactionQuotaQuantity
+        - transactionValue
+        - transactionGrossValue
+      properties:
+        transactionId:
+          type: string
+          description: Code or unique identifier provided by the institution that maintains the individual representation of the transaction in the fund position.
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: ABCD2126019929279212650822221989319253344
+        type:
+          $ref: '#/components/schemas/EnumFundsTransactionsCurrentType'
+        transactionType:
+          $ref: '#/components/schemas/EnumFundsTransactionsCurrentTransactionType'
+        transactionTypeAdditionalInfo:
+          type: string
+          description: |
+            Additional information about the type of reason, for filling in case of transactions not delimited in the domain.
+
+            [Restriction] Mandatory field for participants when the 'transactionType' field is filled with the value 'OUTROS'.
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+        transactionConversionDate:
+          type: string
+          format: date
+          description: Date of conversion of the investment fund transaction movement.
+          maxLength: 10
+          minLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2023-01-07'
+        transactionQuotaPrice:
+          type: object
+          description: |
+            Is the quota value used in conversion for executing the client movement in the fund, according to the rule provided in regulation - value may be negative.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 25
+              pattern: '^-?\d{1,15}\.\d{2,8}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionQuotaQuantity:
+          type: string
+          format: double
+          description: |
+            Number of quotas converted on the transaction date.
+          maxLength: 24
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          example: '42.25'
+        transactionValue:
+          type: object
+          description: Value requested by the client.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionGrossValue:
+          type: object
+          description: |
+            Transaction value that refers to quota quantity x transaction quota value.
+            In cases where there is no quota movement, for example: amortization, do not consider the described rule.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        incomeTax:
+          type: object
+          description: |
+            Income Tax (IR) amount withheld at source considering the current rate on the transaction date.
+
+            [Restriction] Mandatory field for participants when the 'type' field is filled with the value 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        financialTransactionTax:
+          type: object
+          description: |
+            Financial Transactions Tax (IOF) amount withheld at source considering the current rate on the transaction date.
+
+            [Restriction] Mandatory field for participants when the 'type' field is filled with the value 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionExitFee:
+          type: object
+          description: |
+            Exit fee value considered in the transaction.
+
+            [Restriction] Mandatory field for participants when the 'type' field is filled with the value 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionNetValue:
+          type: object
+          description: |
+            Net transaction value after deduction of taxes (IOF and IR) and exit fee.
+            [Restriction] Mandatory field for participants when the 'type' field is filled with the value 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Value related to the object.
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Currency related to the monetary value, following the ISO-4217 model.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+      additionalProperties: false
+    MetaSingle:
+      type: object
+      description: Meta information regarding the requested API.
+      required:
+        - requestDateTime
+      properties:
+        requestDateTime:
+          description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+    FundsMeta:
+      type: object
+      description: Meta information regarding the requested API.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Total number of records in the result
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Total number of pages in the result
+          example: 1
+        requestDateTime:
+          description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+      additionalProperties: false
+    FundsProductListLinks:
+      type: object
+      description: References to other resources of the requested API.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: Complete URI that generated the current response.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        first:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        prev:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: "URI of the previous page of this result list. Restriction - Mandatory when not the first page of the response"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        next:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        last:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the last page of this result list. Restriction - Mandatory when not the last page of the response.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%.\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%\+.~#?&\/\/=]*)$'
+    FundsLinks:
+      type: object
+      description: References to other resources of the requested API.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: Complete URI that generated the current response.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        first:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        prev:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: "URI of the previous page of this result list. Restriction - Mandatory when not the first page of the response"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        next:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        last:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the last page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    FundsTransactionsLinks:
+      type: object
+      description: References to other resources of the requested API.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: Complete URI that generated the current response.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        first:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the first page that originated this result list. Restriction - Mandatory when not the first page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        prev:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: "URI of the previous page of this result list. Restriction - Mandatory when not the first page of the response"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        next:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI of the next page of this result list. Restriction - Mandatory when not the last page of the response
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    FundsBalancesBlockedAmount:
+      type: object
+      description: Amount not available for movement at that moment for any reason (judicial block, collateral block, among others). Grace period is not considered as a block.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Value related to the object.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Currency related to the monetary value, following the ISO-4217 model.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesFinancialTransactionTaxProvision:
+      type: object
+      description: Tax amount considering the current rate on the reference date.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Value related to the object.
+          pattern: '^\d{1,15}\.\d{2,4}$'
+          maxLength: 20
+          example: '50.02'
+        currency:
+          type: string
+          description: 'Currency related to the monetary value, following the ISO-4217 model.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesGrossAmount:
+      type: object
+      description: 'Investment value that refers to quota quantity x quota value, updated on the reference date.'
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Value related to the object.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Currency related to the monetary value, following the ISO-4217 model.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesIncomeTaxProvision:
+      type: object
+      description: Income tax amount provisioned considering the current rate on the reference date.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Value related to the object.
+          pattern: '^\d{1,15}\.\d{2,4}$'
+          maxLength: 20
+          example: '50.02'
+        currency:
+          type: string
+          description: 'Currency related to the monetary value, following the ISO-4217 model.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesNetAmount:
+      type: object
+      description: Investment value updated on the reference date, after deduction of taxes (IOF and IR) and exit fee, if the institution considers this value in the net balance composition. This value considers the blocked amount (blockedAmount).
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Value related to the object.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Currency related to the monetary value, following the ISO-4217 model.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesQuotaGrossPriceValue:
+      type: object
+      description: Gross quota value updated on the reference date.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Value related to the object.
+          pattern: '^-?\d{1,15}\.\d{2,8}$'
+          maxLength: 25
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Currency related to the monetary value, following the ISO-4217 model.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    EnumFundsTransactionsType:
+      type: string
+      description: |
+        Transaction type (Entry or Exit).
+
+        ENTRADA: APLICACAO, TRANSFERENCIA_COTAS, OUTROS.
+
+        SAIDA: RESGATE, COME_COTAS, TRANSFERENCIA_COTAS, AMORTIZACAO, OUTROS.
+      enum:
+        - ENTRADA
+        - SAIDA
+      example: ENTRADA
+    EnumFundsTransactionsTransactionType:
+      type: string
+      description: |
+        The field should classify the investment movement transaction into one of the described types (amortization, quota transfer, application, redemption or come-cotas).
+        The OTHERS option should only be used for cases where the shared transaction cannot be classified as one of the items in this Enum, and in that case additional information should be filled.
+      enum:
+        - AMORTIZACAO
+        - TRANSFERENCIA_COTAS
+        - APLICACAO
+        - RESGATE
+        - COME_COTAS
+        - OUTROS
+      example: AMORTIZACAO
+    EnumFundsTransactionsCurrentType:
+      type: string
+      description: |
+        Transaction type (Entry or Exit).
+
+        ENTRADA: APLICACAO, TRANSFERENCIA_COTAS, OUTROS.
+
+        SAIDA: RESGATE, COME_COTAS, TRANSFERENCIA_COTAS, AMORTIZACAO, OUTROS.
+      enum:
+        - ENTRADA
+        - SAIDA
+      example: ENTRADA
+    EnumFundsTransactionsCurrentTransactionType:
+      type: string
+      description: |
+        The field should classify the investment movement transaction into one of the described types (amortization, quota transfer, application, redemption or come-cotas).
+        The OTHERS option should only be used for cases where the shared transaction cannot be classified as one of the items in this Enum, and in that case additional information should be filled.
+      enum:
+        - AMORTIZACAO
+        - TRANSFERENCIA_COTAS
+        - APLICACAO
+        - RESGATE
+        - COME_COTAS
+        - OUTROS
+      example: AMORTIZACAO
+    ResponseErrorMetaSingle:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Specific error code of the endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Human-readable title of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Human-readable description of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          $ref: '#/components/schemas/MetaOnlyRequestDateTime'
+    MetaOnlyRequestDateTime:
+      type: object
+      description: Meta information regarding the requested API.
+      required:
+        - requestDateTime
+      properties:
+        requestDateTime:
+          description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+    ResponseErrorWithAbleAdditionalProperties:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Specific error code of the endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Human-readable title of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Human-readable description of this specific error
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          $ref: '#/components/schemas/MetaWithAbleAdditionalProperties'
+    MetaWithAbleAdditionalProperties:
+      type: object
+      description: Meta information regarding the requested API.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Total number of records in the result
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Total number of pages in the result
+          example: 1
+        requestDateTime:
+          description: 'Date and time of the query, according to RFC-3339 specification, UTC format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+  parameters:
+    InvestmentId:
+      name: investmentId
+      in: path
+      description: Uniquely identifies the client relationship with the fund, maintaining the immutability rules within the transmitting institution.
+      required: true
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+        maxLength: 100
+        example: '92792126019929200000000000000000000000000'
+    SetupID:
+      name: setupId
+      in: header
+      description: |
+          The SetupUUID is the unique identifier in ODR (GUID).
+          It should be used to make all other calls in ODR, such as account search, transactions, etc.
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: '550e8400-e29b-41d4-a716-446655440000'
+    xFapiAuthDate:
+      name: x-fapi-auth-date
+      in: header
+      description: 'Date when the user last logged in with the receiver. Represented according to RFC7231. Example: Sun, 10 Sep 2017 19:43:31 UTC.'
+      required: false
+      schema:
+        type: string
+        pattern: '^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$'
+        minLength: 29
+        maxLength: 29
+    xFapiCustomerIpAddress:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: The IP address of the user if currently logged in with the receiver.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xFapiInteractionId:
+      name: x-fapi-interaction-id
+      in: header
+      description: An RFC4122 UUID used as a correlation ID between request and response. Mandatory field for generation and sending by the receiver (client) and its value must be "mirrored" by the transmitter (server) in the response header.
+      required: false
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+        minLength: 1
+        maxLength: 100
+    xCustomerUserAgent:
+      name: x-customer-user-agent
+      in: header
+      description: Indicates the user-agent that the user uses.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    page:
+      name: page
+      in: query
+      description: Number of the page being requested (the value of the first page is 1).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+        maximum: 2147483647
+        format: int32
+    pageSize:
+      name: page-size
+      in: query
+      description: Total number of records per page. The transmitter must consider input as 25, if a lower value is informed by the receiver. While there are more than 25 records to send, the transmitter must consider the minimum per page as 25. Only the last returned page (or first, in case of single page) may contain fewer than 25 records. More information, access API Specifications > Standards > Pagination.
+      schema:
+        type: integer
+        default: 25
+        minimum: 25
+        format: int32
+        maximum: 1000
+    pagination-key:
+      name: pagination-key
+      in: query
+      description: 'Recall identifier, used to avoid counting calls to the endpoint during pagination.'
+      schema:
+        type: string
+        maxLength: 2048
+        pattern: '[\w\W\s]*'
+    fromTransactionConversionDate:
+      name: fromTransactionConversionDate
+      description: |
+        Initial filtering date.
+
+        [Restriction] Must be sent if the toTransactionConversionDate field is informed. If not informed, the current day must be assumed.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
+    toTransactionConversionDate:
+      name: toTransactionConversionDate
+      description: |
+        Final filtering date.
+
+        [Restriction] Must be sent if the fromTransactionConversionDate field is informed. If not informed, the current day must be assumed.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
+    fromTransactionConversionDateCurrent:
+      name: fromTransactionConversionDate
+      description: |
+        Initial filtering date. The maximum period used in the filter is 7 days inclusive (D-6).
+
+        [Restriction] Must be sent if the toTransactionConversionDate field is informed. If not informed, the current day must be assumed.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
+    toTransactionConversionDateCurrent:
+      name: toTransactionConversionDate
+      description: |
+        Final filtering date. The maximum period used in the filter is 7 days inclusive (D-6).
+
+        [Restriction] Must be sent if the fromTransactionConversionDate field is informed. If not informed, the current day must be assumed.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
+  securitySchemes:
+    OAuth2AuthorizationCode:
+      type: oauth2
+      description: OAuth flow necessary for the receiver to have access to data in the transmitting institution. Requires the user redirection and authentication process to which the data refer.
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://authserver.example/authorization'
+          tokenUrl: 'https://authserver.example/token'
+          scopes:
+            funds: Scope necessary for access to the funds API. Control of specific endpoints is done via permissions.
+  responses:
+    OkResponseFundsProductList:
+      description: Data obtained successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseFundsProductList'
+    OkResponseFundsProductIdentification:
+      description: Investment funds data obtained successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseFundsProductIdentification'
+    ResponseFundsBalances:
+      description: Data obtained successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseFundsBalances'
+    OKResponseFundsTransactions:
+      description: Data obtained successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseFundsTransactions'
+    OKResponseFundsTransactionsCurrent:
+      description: Data obtained successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseFundsTransactionsCurrent'
+    BadRequest:
+      description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    Forbidden:
+      description: The token has incorrect scope or a security policy was violated
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    InternalServerError:
+      description: An error occurred in the API gateway or in the microservice
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    Locked:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    MethodNotAllowed:
+      description: The consumer tried to access the resource with an unsupported method
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    NotAcceptable:
+      description: The request contained an Accept header different from the allowed media types or a character set different from UTF-8
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    NotFound:
+      description: The requested resource does not exist or was not implemented
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    TooManyRequests:
+      description: 'The operation was refused because too many requests were made within a certain period or the global concurrent request limit was reached'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    Unauthorized:
+      description: Missing/invalid authentication header or invalid token
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    UnprocessableEntity:
+      description: 'The request syntax is correct, but it was not possible to process the present instructions.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    BadRequestWithAdditionalProperties:
+      description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    ForbiddenWithAdditionalProperties:
+      description: The token has incorrect scope or a security policy was violated
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    InternalServerErrorWithAdditionalProperties:
+      description: An error occurred in the API gateway or in the microservice
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    LockedWithAdditionalProperties:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    MethodNotAllowedWithAdditionalProperties:
+      description: The consumer tried to access the resource with an unsupported method
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    NotAcceptableWithAdditionalProperties:
+      description: The request contained an Accept header different from the allowed media types or a character set different from UTF-8
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    NotFoundWithAdditionalProperties:
+      description: The requested resource does not exist or was not implemented
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    TooManyRequestsWithAdditionalProperties:
+      description: 'The operation was refused because too many requests were made within a certain period or the global concurrent request limit was reached'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    UnauthorizedWithAdditionalProperties:
+      description: Missing/invalid authentication header or invalid token
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    UnprocessableEntityWithAdditionalProperties:
+      description: 'The request syntax is correct, but it was not possible to process the present instructions.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+            
