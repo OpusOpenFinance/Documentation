@@ -40,17 +40,6 @@ As APIs Internas do OpusTPP permitem o gerenciamento de **metadados das aplicaç
 - **Atualização de `externalClientId`:** só é possível se o `externalClientId` já existir para a aplicação.
 - **Webhook URL:** essa URL **não deve** ser a mesma cadastrada no Diretório de Participantes como Redirect URI. É uma URL interna do cliente que receberá o repasse de notificações.
 
-## Exemplo — Resposta GET
-
-```json
-{
-  "data": {
-    "externalClientId": "externalClientId",
-    "applicationId": "30370c82-db45-4a0d-86a5-4a35cd0b4ab8"
-  }
-}
-```
-
 ## Referências
 
 - Especificação OpenAPI: [`oas-interno.yml`](../anexos/yml/opusTPP-apisInternas.yml) (ver também [API associada][API-Interno])

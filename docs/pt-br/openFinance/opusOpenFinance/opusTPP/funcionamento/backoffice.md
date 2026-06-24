@@ -73,21 +73,6 @@ GET /backoffice/consents/{consentId}/payments
 
 Lista todos os pagamentos associados a um consentimento.
 
-## Padrão de resposta
-
-Todas as respostas seguem a estrutura:
-
-```json
-{
-  "data": [ /* lista de itens do recurso */ ],
-  "meta": {
-    "totalRecords": 100,
-    "totalPages": 4,
-    "requestDateTime": "2026-05-19T10:00:00Z"
-  }
-}
-```
-
 ## Cenários de uso típico
 
 - **Suporte ao cliente final:** consultar o status de um consentimento específico para um cliente que ligou no SAC reclamando da operação.

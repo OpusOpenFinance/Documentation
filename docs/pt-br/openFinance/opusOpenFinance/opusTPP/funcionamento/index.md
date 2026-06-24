@@ -124,27 +124,6 @@ Após a aprovação, o consentimento pode ser utilizado para:
 
 > **Atenção:** Consentimentos de dados e de pagamento são independentes. Um consentimento de leitura de dados **não pode** ser utilizado para criar pagamentos, e vice-versa.
 
-## Paginação em APIs de Proxy
-
-Algumas APIs de proxy retornam links de paginação definidos pela instituição:
-
-```json
-{
-  "data": {},
-  "links": {
-    "self": "https://mtls-api.banco.com.br/open-banking/api/v2/resource?page=2&page-size=25",
-    "first": "https://mtls-api.banco.com.br/open-banking/api/v2/resource?page=2&page-size=25",
-    "prev": "https://mtls-api.banco.com.br/open-banking/api/v2/resource?page=1&page-size=25",
-    "next": "https://mtls-api.banco.com.br/open-banking/api/v2/resource?page=3&page-size=25",
-    "last": "https://mtls-api.banco.com.br/open-banking/api/v2/resource?page=5&page-size=25"
-  }
-}
-```
-
-Para acessar os recursos, substitua o FQDN (domínio) da instituição pelo do **OpusTPP**, mantendo os parâmetros após o caractere `?`.
-
-**Exemplo:** Para acessar a próxima página: `https://opustpp.instituicao.com.br/proxy/open-banking/resources/v2/resources?page=3&page-size=25`
-
 ---
 
 ## Fluxo de Solicitação de Iniciação de Pagamento
@@ -290,49 +269,7 @@ No fluxo de Jornada Otimizada, são gerados **dois consentimentos**:
 - Se o consentimento primário for revogado, o secundário também é revogado automaticamente;
 - Se apenas o consentimento de dados for cancelado, o usuário precisará conceder um novo para que o acesso ao saldo seja restabelecido.
 
-### Passo a Passo
-
-#### 1. Criar Consentimento Secundário (Dados)
-
-**Endpoint:** `POST /opus-open-finance/consents/v1/consents`
-
-Informar no corpo da requisição:
-
-```json
-"isLinked": true
-```
-
-As permissões obrigatórias:
-
-```json
-"permissions": [
-  "ACCOUNTS_READ",
-  "ACCOUNTS_BALANCES_READ",
-  "ACCOUNTS_OVERDRAFT_LIMITS_READ",
-  "RESOURCES_READ"
-]
-```
-
-#### 2. Criar Consentimento Primário (Pagamento ou Vínculo)
-
-**Endpoints:**
-
-- `POST /opus-open-finance/payments/v1/consents` (pagamento)
-- `POST /opus-open-finance/automatic-payments/v1/recurring-consents` (pagamento automático)
-- `POST /opus-open-finance/enrollments/v1/enrollments` (vínculo de dispositivo)
-
-Informar no corpo da requisição:
-
-```json
-"journey": {
-  "isLinked": true,
-  "linkId": "consentId"
-}
-```
-
-Onde `linkId` é o ID do consentimento secundário criado no passo anterior.
-
-#### 3. Fluxo de Autorização
+### Fluxo de Autorização
 
 Quando o usuário aprova o consentimento primário:
 

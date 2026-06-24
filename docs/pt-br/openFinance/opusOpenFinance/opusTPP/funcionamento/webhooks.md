@@ -43,14 +43,6 @@ A API de Webhooks de Pagamentos é o canal pelo qual a Instituição Detentora *
 
 > **Importante:** as notificações trazem **apenas a data da atualização** — nenhuma informa o novo status. Para descobrir o status atualizado, é necessário fazer um GET no recurso correspondente.
 
-```json
-{
-  "data": {
-    "timestamp": "2024-09-02T08:30:00Z"
-  }
-}
-```
-
 Para descobrir o status atualizado:
 
 - `GET /proxy/open-banking/payments/v5/pix/payments/{paymentId}` — para pagamentos PIX
@@ -68,52 +60,6 @@ Para que o OpusTPP saiba para onde reencaminhar as notificações, cada aplicaç
 > **Atenção:** esta URL **não** deve ser a mesma cadastrada no Diretório de Participantes como Redirect URI. Trata-se de uma URL interna do cliente (geralmente em rede privada), que receberá as notificações encaminhadas pelo OpusTPP via POST.
 
 Detalhes da API interna em [APIs Internas](apisInternas.html).
-
-## Payload encaminhado ao cliente
-
-Quando o OpusTPP recebe uma notificação válida da Detentora, ele faz um POST para a URL cadastrada com o seguinte formato (encapsulando o request original):
-
-```json
-{
-  "requestBody": {
-    "data": {
-      "timestamp": "2024-09-02T08:30:00Z"
-    }
-  },
-  "requestHeaders": {
-    "x-webhook-interaction-id": "webhook-interaction-id",
-    "content-type": "application/json",
-    "accept": "*/*",
-    "connection": "keep-alive",
-    "x-fapi-interaction-id": "af113686-b4fd-413e-86a1-dc7eb1b4cc1a"
-  },
-  "requestMethod": "POST"
-}
-```
-
-- `x-webhook-interaction-id`: identificador da notificação. Pode ser usado para idempotência no lado do cliente.
-- `x-fapi-interaction-id`: identificador do fluxo regulatório, útil para rastreabilidade.
-
-## Configuração do processamento assíncrono (Dapr)
-
-O fluxo de processamento das notificações é **assíncrono**. O cliente é responsável por configurar TTL, retry e demais parâmetros do componente Dapr de pub/sub. Independente do ferramental escolhido como state store/message broker, devem ser usados os seguintes nomes-padrão:
-
-| Parâmetro | Valor obrigatório |
-| :-------: | :---------------: |
-| Pubsub Id | `webhook-event-pub-sub` |
-| Pubsub Topic | `opustpp-webhook-topic` |
-
-> **Sem esses nomes exatos, o OpusTPP não consegue publicar/consumir as notificações no canal interno.**
-
-## Cache de webhook
-
-O OpusTPP suporta cache opcional para os dados da funcionalidade de webhook. Por padrão, o cache do webhook vem **desabilitado**.
-
-## Orientações importantes
-
-- Todas as datas seguem **RFC3339** com formato *zulu*.
-- Não há separação funcional entre pessoa natural e pessoa jurídica.
-- Se a URL de webhook do cliente não estiver cadastrada, o OpusTPP retorna sucesso para a Transmissora e apenas registra no log que a notificação foi ignorada.
 
 ## Referências
 

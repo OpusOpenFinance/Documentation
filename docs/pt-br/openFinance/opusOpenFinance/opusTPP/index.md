@@ -12,6 +12,43 @@ alternate_lang:
       lang: "es"
 ---
 
+## Como navegar nesta documentação
+
+A documentação do OpusTPP está organizada em três grandes blocos. Use os links abaixo como ponto de entrada para cada tema:
+
+### [Conceitos](conceitos/)
+
+Fundamentos do ecossistema Open Finance e do funcionamento do OpusTPP. Recomendado para quem está começando.
+
+- [Glossário e Conceitos Fundamentais](conceitos/) — Consentimento, vínculo de dispositivo, jornadas, perfis regulatórios
+
+### [Funcionamento](funcionamento/)
+
+Como o produto opera no dia a dia — fluxos completos, endpoints, payloads, máquinas de estado, regras de negócio e tratamento de erros.
+
+- [Visão geral dos fluxos](funcionamento/) — Consentimento, pagamento, vínculo, jornada otimizada
+- [Recepção de Dados — Open Finance](funcionamento/recepcaoDeDados.html)
+- [Iniciação de Pagamento PIX](funcionamento/iniciacaoDePagamento.html)
+- [Pagamentos Automáticos](funcionamento/pagamentoAutomatico.html)
+- [Vínculo de Dispositivo (FIDO2)](funcionamento/vinculoDeDispositivo.html)
+- [Recepção de Dados — Open Insurance](funcionamento/openInsuranceDados.html)
+- [Redirecionamento App-to-App e Web](funcionamento/redirecionamento.html)
+- [Webhooks de Pagamentos](funcionamento/webhooks.html)
+- [Backoffice API](funcionamento/backoffice.html)
+- [APIs Internas](funcionamento/apisInternas.html)
+
+### [Configuração](configuracao/)
+
+Como configurar, instalar e operar o OpusTPP — do cadastro no Diretório de Participantes ao deploy no Kubernetes.
+
+- [Visão de Configuração](configuracao/) — Etapas em alto nível
+- [Certificados Regulatórios](configuracao/certificadosRegulatorios.html) — BRCAC, BRSEAL, ID_TOKEN_ENC e conversão para JWK
+- [Relatórios Regulatórios](configuracao/relatoriosRegulatorios.html) — Scripts SQL para extração de dados
+
+### Anexos
+
+- [Especificações OpenAPI (OAS)](anexos/yml/) — Contratos oficiais de cada API exposta pelo OpusTPP
+
 ## OpusTPP
 
 O OpusTPP é um middleware especializado que abstrai integralmente as complexidades regulatórias do **Open Finance Brasil**. Ele permite que instituições atuem como Iniciadoras de Pagamento (ITP) e Receptoras de Dados sem lidar diretamente com padrões de segurança, requisitos técnicos ou fluxos regulatórios.
@@ -81,42 +118,3 @@ Ele permite que sua instituição participe do Open Finance sem precisar lidar c
 - Atualizações de padrões técnicos.
 
 O OpusTPP assume toda essa complexidade para que sua equipe possa focar no produto, na experiência do usuário e na estratégia do negócio — não na infraestrutura regulatória subjacente.
-
----
-
-## Como navegar nesta documentação
-
-A documentação do OpusTPP está organizada em três grandes blocos. Use os links abaixo como ponto de entrada para cada tema:
-
-### [Conceitos](conceitos/)
-
-Fundamentos do ecossistema Open Finance e do funcionamento do OpusTPP. Recomendado para quem está começando.
-
-- [Glossário e Conceitos Fundamentais](conceitos/) — Consentimento, vínculo de dispositivo, jornadas, perfis regulatórios
-
-### [Funcionamento](funcionamento/)
-
-Como o produto opera no dia a dia — fluxos completos, endpoints, payloads, máquinas de estado, regras de negócio e tratamento de erros.
-
-- [Visão geral dos fluxos](funcionamento/) — Consentimento, pagamento, vínculo, jornada otimizada
-- [Recepção de Dados — Open Finance](funcionamento/recepcaoDeDados.html)
-- [Iniciação de Pagamento PIX](funcionamento/iniciacaoDePagamento.html)
-- [Pagamentos Automáticos](funcionamento/pagamentoAutomatico.html)
-- [Vínculo de Dispositivo (FIDO2)](funcionamento/vinculoDeDispositivo.html)
-- [Recepção de Dados — Open Insurance](funcionamento/openInsuranceDados.html)
-- [Redirecionamento App-to-App e Web](funcionamento/redirecionamento.html)
-- [Webhooks de Pagamentos](funcionamento/webhooks.html)
-- [Backoffice API](funcionamento/backoffice.html)
-- [APIs Internas](funcionamento/apisInternas.html)
-
-### [Configuração](configuracao/)
-
-Como configurar, instalar e operar o OpusTPP — do cadastro no Diretório de Participantes ao deploy no Kubernetes.
-
-- [Visão de Configuração](configuracao/) — Etapas em alto nível
-- [Certificados Regulatórios](configuracao/certificadosRegulatorios.html) — BRCAC, BRSEAL, ID_TOKEN_ENC e conversão para JWK
-- [Relatórios Regulatórios](configuracao/relatoriosRegulatorios.html) — Scripts SQL para extração de dados
-
-### Anexos
-
-- [Especificações OpenAPI (OAS)](anexos/yml/) — Contratos oficiais de cada API exposta pelo OpusTPP

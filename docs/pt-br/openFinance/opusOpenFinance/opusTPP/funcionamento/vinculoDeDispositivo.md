@@ -57,72 +57,7 @@ Ambos os cenários são executados via `PATCH /enrollments/{enrollmentId}`, mas 
 
 Cabe ao cliente da API distinguir o cenário e informar o motivo adequado no campo `cancellation.reason.rejectionReason`.
 
-## Criação do vínculo
-
-Payload mínimo:
-
-```json
-{
-  "data": {
-    "callbackApplicationUri": "https://client-callback-url.com/",
-    "loggedUser": {
-      "document": { "identification": "11111111111", "rel": "CPF" }
-    },
-    "permissions": ["PAYMENTS_INITIATE"],
-    "businessEntity": {
-      "document": { "identification": "11111111111111", "rel": "CNPJ" }
-    },
-    "debtorAccount": {
-      "ispb": "12345678",
-      "issuer": "1774",
-      "number": "1234567890",
-      "accountType": "CACC"
-    },
-    "enrollmentName": "Nome Dispositivo"
-  }
-}
-```
-
 > **Importante:** Um único vínculo aprova consentimentos de pagamentos **OU** de transferências inteligentes — não os dois. Para suportar ambos os tipos, são necessários **dois vínculos distintos**, com `permissions` separadas.
-
-## Sinais de risco — payload completo
-
-O payload carrega telemetria do dispositivo e do ambiente para análise antifraude pela Detentora.
-
-```json
-{
-  "data": {
-    "deviceId": "00aa11bb22cc33dd",
-    "isRootedDevice": false,
-    "screenBrightness": 255,
-    "elapsedTimeSinceBoot": 6356027,
-    "osVersion": "14",
-    "userTimeZoneOffset": "-03",
-    "language": "pt",
-    "screenDimensions": { "height": 2340, "width": 1080 },
-    "accountTenure": "2023-08-20",
-    "geolocation": {
-      "latitude": -15.738602,
-      "longitude": -47.926498,
-      "type": "FINE"
-    },
-    "isCallingProgress": false,
-    "isDevModeEnabled": false,
-    "isMockGPS": false,
-    "isEmulated": false,
-    "isMonkeyRunner": false,
-    "isCharging": false,
-    "antennaInformation": "CellIdentityLte:{ mCi=2***60 mPci=274 mTac=5***1 mEarfcn=9510 ... }",
-    "isUsbConnected": false,
-    "integrity": {
-      "appRecognitionVerdict": "PLAY_RECOGNIZED",
-      "deviceRecognitionVerdict": "[\"MEETS_DEVICE_INTEGRITY\"]"
-    }
-  }
-}
-```
-
-A resposta contém `data.redirectUrl` — o app deve abrir essa URL para o usuário autenticar na Detentora.
 
 ## Registro FIDO2 (W3C WebAuthn)
 
@@ -131,20 +66,6 @@ Após a autorização do usuário no fluxo OIDC, o app cliente:
 1. **Solicita parâmetros de registro:** `POST /fido-registration-options` informando `rp` (relying party — o domínio do app) e `platform` (`ANDROID` ou `IOS`). A resposta é um JWT que contém `challenge`, `user`, `pubKeyCredParams`, `authenticatorSelection`, etc., compatível com a definição [W3C WebAuthn-2](https://www.w3.org/TR/webauthn-2/#dictionary-makecredentialoptions).
 2. **Apresenta o desafio ao usuário** (biometria/PIN), gerando a credencial FIDO2 no dispositivo.
 3. **Envia a credencial criada:** `POST /fido-registration` com `clientDataJSON` + `attestationObject`.
-
-```json
-{
-  "data": {
-    "id": "dChFBsqJa5Bx8G5vUcNZ14wwA0s",
-    "rawId": "dChFBsqJa5Bx8G5vUcNZ14wwA0s",
-    "response": {
-      "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwi...",
-      "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10..."
-    },
-    "type": "public-key"
-  }
-}
-```
 
 ## Autorização do consentimento via FIDO2
 
