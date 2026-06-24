@@ -103,7 +103,6 @@ Como o produto opera no dia a dia — fluxos completos, endpoints, payloads, má
 - [Iniciação de Pagamento PIX](funcionamento/iniciacaoDePagamento.html)
 - [Pagamentos Automáticos](funcionamento/pagamentoAutomatico.html)
 - [Vínculo de Dispositivo (FIDO2)](funcionamento/vinculoDeDispositivo.html)
-- [Recepção de Dados — Open Insurance](funcionamento/openInsuranceDados.html)
 - [Redirecionamento App-to-App e Web](funcionamento/redirecionamento.html)
 - [Webhooks de Pagamentos](funcionamento/webhooks.html)
 - [Backoffice API](funcionamento/backoffice.html)
