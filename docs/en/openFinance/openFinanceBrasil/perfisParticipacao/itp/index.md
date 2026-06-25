@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "ITP"
-parent: "Participation profiles"
+parent: "Participation Profiles"
 nav_order: 5
 has_children: true
 lang: "en"

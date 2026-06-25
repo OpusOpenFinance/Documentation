@@ -225,11 +225,11 @@ Certificado regulatório utilizado em conexões **mTLS** para identificar a apli
 
 Certificado regulatório utilizado para **assinatura** de mensagens JWS entre a TPP e o servidor de autenticação da Detentora. Possui `use: "sig"` no formato JWK.
 
-> Detalhes operacionais sobre geração e conversão para JWK em [Certificados Regulatórios](../configuracao/certificadosRegulatorios.html).<!--VALIDAR-->
+> Detalhes operacionais sobre geração e conversão para JWK em [Certificados Regulatórios](../configuracao/certificadosRegulatorios.html).
 
 ### FIDO2 / WebAuthn
 
-Padrão da W3C para autenticação baseada em credenciais públicas/privadas armazenadas no dispositivo, ativadas por biometria ou PIN. O OpusTPP usa FIDO2 no fluxo de **Vínculo de Dispositivo** (Pagamento sem Redirecionamento). Detalhes em [Vínculo de Dispositivo](../funcionamento/vinculoDeDispositivo.html).<!--VALIDAR-->
+Padrão da W3C para autenticação baseada em credenciais públicas/privadas armazenadas no dispositivo, ativadas por biometria ou PIN. O OpusTPP usa FIDO2 no fluxo de **Vínculo de Dispositivo** (Pagamento sem Redirecionamento). Detalhes em [Vínculo de Dispositivo](../funcionamento/vinculoDeDispositivo.html).
 
 ### JWS / JWT
 
