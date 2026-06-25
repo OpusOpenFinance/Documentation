@@ -5,9 +5,9 @@ parent: "Consentimento Compartilhado"
 nav_order: 2
 lang: "pt-br"
 alternate_lang: 
-  - path: "/Documentation/en/openFinance/opusOpenFinance/consentimentoCompartilhado/transmissaoDeDados/"
+  - path: "/Documentation/en/openFinance/opusOpenFinance/consentimentoCompartilhado/detentorContasETransmissaoDados/"
     lang: "en"
-  - path: "/Documentation/es/openFinance/opusOpenFinance/consentimentoCompartilhado/transmissaoDeDados/"
+  - path: "/Documentation/es/openFinance/opusOpenFinance/consentimentoCompartilhado/detentorContasETransmissaoDados/"
     lang: "es"
 ---
 
