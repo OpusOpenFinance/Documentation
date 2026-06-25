@@ -22,9 +22,9 @@ A API de Webhooks de Pagamentos é o canal pelo qual a Instituição Detentora *
 
 ## Como funciona
 
-1. A Detentora notifica o OpusTPP via POST nos endpoints públicos `/open-banking/webhook/...`.
-2. O OpusTPP recebe, valida e responde **202 Accepted** à Detentora.
-3. A notificação válida é publicada em um tópico Dapr (`opustpp-webhook-topic`) para processamento assíncrono.
+1. A Detentora notifica o OpusTPP via POST nos endpoints públicos `/open-banking/webhook/...`;
+2. O OpusTPP recebe, valida e responde **202 Accepted** à Detentora;
+3. A notificação válida é publicada em um tópico Dapr (`opustpp-webhook-topic`) para processamento assíncrono;
 4. O OpusTPP repassa o POST recebido para a **URL de webhook do cliente**, previamente cadastrada via API interna.
 
 > **Atenção:** os endpoints abaixo só funcionam após um pagamento ou consentimento ter sido criado pelo usuário no sistema. Notificações sem correspondência são recebidas, ganham resposta de sucesso (para não causar retry desnecessário na Detentora), e são **ignoradas com log informativo**.
@@ -45,9 +45,9 @@ A API de Webhooks de Pagamentos é o canal pelo qual a Instituição Detentora *
 
 Para descobrir o status atualizado:
 
-- `GET /proxy/open-banking/payments/v5/pix/payments/{paymentId}` — para pagamentos PIX
-- `GET /opus-open-finance/payments/v1/consents/{consentId}` — para consentimentos de pagamento
-- `GET /opus-open-finance/enrollments/v1/enrollments/{enrollmentId}` — para vínculos
+- `GET /proxy/open-banking/payments/v5/pix/payments/{paymentId}` — Para pagamentos PIX;
+- `GET /opus-open-finance/payments/v1/consents/{consentId}` — Para consentimentos de pagamento;
+- `GET /opus-open-finance/enrollments/v1/enrollments/{enrollmentId}` — Para vínculos.
 
 ## Cadastro da URL de webhook do cliente
 

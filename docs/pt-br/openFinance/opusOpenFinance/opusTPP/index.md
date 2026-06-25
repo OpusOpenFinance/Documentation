@@ -20,13 +20,13 @@ A documentação do OpusTPP está organizada em três grandes blocos. Use os lin
 
 Fundamentos do ecossistema Open Finance e do funcionamento do OpusTPP. Recomendado para quem está começando.
 
-- [Glossário e Conceitos Fundamentais](conceitos/) — Consentimento, vínculo de dispositivo, jornadas, perfis regulatórios
+- [Glossário e Conceitos Fundamentais](conceitos/): Consentimento, vínculo de dispositivo, jornadas, perfis regulatórios
 
 ### [Funcionamento](funcionamento/)
 
 Como escrever aplicações que fazem Iniciação de Pagamentos e Recepção de Dados
 
-- [Visão geral dos fluxos](funcionamento/) — Consentimento, pagamento, vínculo, jornada otimizada
+- [Visão geral dos fluxos](funcionamento/): Consentimento, pagamento, vínculo, jornada otimizada
 - [Recepção de Dados — Open Finance](funcionamento/recepcaoDeDados.html)
 - [Iniciação de Pagamento PIX](funcionamento/iniciacaoDePagamento.html)
 - [Pagamentos Automáticos](funcionamento/pagamentoAutomatico.html)
@@ -38,14 +38,14 @@ Como escrever aplicações que fazem Iniciação de Pagamentos e Recepção de D
 
 ### [Configuração](configuracao/)
 
-Como configurar, instalar e operar o OpusTPP - @COMPLEMENTAR
+Etapas de configuração e quais certificados digitais são necessários para o funcionamento no ecossistema do Open Finance Brasil.
 
-- [Visão de Configuração](configuracao/) — Etapas em alto nível
-- [Certificados Regulatórios](configuracao/certificadosRegulatorios.html) — BRCAC, BRSEAL, ID_TOKEN_ENC e conversão para JWK
+- [Visão de Configuração](configuracao/): Etapas em alto nível;
+- [Certificados Regulatórios](configuracao/certificadosRegulatorios.html): BRCAC, BRSEAL, ID_TOKEN_ENC e conversão para JWK.
 
 ### Anexos
 
-- [Especificações OpenAPI (OAS)](anexos/yml/) — Contratos oficiais de cada API exposta pelo OpusTPP
+- [Especificações OpenAPI (OAS)](anexos/yml/): Contratos oficiais de cada API exposta pelo OpusTPP
 
 ## OpusTPP
 
@@ -53,7 +53,7 @@ O OpusTPP é um middleware especializado que abstrai integralmente as complexida
 
 Seu objetivo é simples: permitir que desenvolvedores integrem APIs do Open Finance Brasil com a mesma facilidade de integração de APIs REST comuns.
 
-> Enquanto sua aplicação faz chamadas simples em formato REST (HTTP, JSON, token de acesso), o OpusTPP se encarrega de toda a camada regulatória e de segurança exigida pelo Open Finance, como mTLS, FAPI-BR, JWS e consentimentos. Em outras palavras: você se comunica com o OpusTPP como faria com qualquer API tradicional — e ele traduz essas chamadas para o padrão regulatório do Open Finance Brasil, cuidando automaticamente de toda a parte complexa e técnica por trás das integrações.
+> Enquanto sua aplicação faz chamadas simples em formato REST (HTTP, JSON, token de acesso), nossa solução se encarrega de toda a camada regulatória e de segurança exigida pelo Open Finance, como mTLS, FAPI-BR, JWS e consentimentos. Em outras palavras: você se comunica com o OpusTPP como faria com qualquer API tradicional — e ele traduz essas chamadas para o padrão regulatório do Open Finance Brasil, cuidando automaticamente de toda a parte complexa e técnica por trás das integrações.
 
 ## O problema que o OpusTPP resolve
 
@@ -82,10 +82,10 @@ O OpusTPP funciona como um proxy cliente regulatório entre sua aplicação e o 
 
 O produto é composto por módulos que podem ser adquiridos separadamente:
 
-- **Receptor de Dados Cadastrais e Transacionais:**
+- **Receptor de Dados**
   - Permite solicitar e obter dados de clientes, incluindo dados cadastrais, transações, cartões e produtos de crédito.
 
-- **Iniciador de Transação de Pagamento (ITP):**
+- **Iniciador de Transação de Pagamento**
   - Suporta iniciação, execução e acompanhamento de pagamentos, incluindo toda a jornada de consentimento.
 
 ## O que o OpusTPP não faz

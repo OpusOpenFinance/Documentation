@@ -14,7 +14,7 @@ alternate_lang:
 
 ## Objetivo
 
-Detalhar o tratamento do retorno do fluxo OIDC tanto no caminho mobile (App-to-App via Android App Links / iOS Universal Links) quanto no caminho web, incluindo o endpoint `authorization-result`, os formatos de erro padrão OAuth 2.0 e o suporte a múltiplos aplicativos.
+Detalhar o tratamento do retorno do fluxo do OpusTPP tanto no caminho mobile (App-to-App via Android App Links / iOS Universal Links) quanto no caminho web, incluindo o endpoint `authorization-result`, os formatos de erro padrão OAuth 2.0 e o suporte a múltiplos aplicativos.
 
 > Conforme [definido pelo Open Finance Brasil](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378415/Redirecionamento+App-to-App), a comunicação entre o aplicativo da Receptora e o aplicativo da Transmissora deve ser **direta**, sem etapas intermediárias (como páginas web para seleção de aplicativo).
 
@@ -68,7 +68,7 @@ O resultado da autorização é entregue por caminhos diferentes dependendo de *
 | **Aplicativo mobile** | App da Receptora intercepta o redirect via App Links / Universal Links | `POST /authorization-result` |
 | **Browser** | Browser segue o redirect da Transmissora até o OpusTPP | `/redirect-uri` → 302 para `callbackApplicationUri` |
 
-> **Atenção crítica:** mesmo quando o fluxo é iniciado em um app, é **obrigatório** implementar **ambos** os caminhos. A interceptação mobile pode falhar (App Links mal configurados, usuário escolhe abrir com outro app, etc.). Sem o tratamento web como contingência, o usuário fica sem feedback do resultado.
+> **Atenção crítica:** Mesmo quando o fluxo é iniciado em um app, é **obrigatório** implementar **ambos** os caminhos. A interceptação mobile pode falhar (App Links mal configurados, usuário escolhe abrir com outro app, etc.). Sem o tratamento web como contingência, o usuário fica sem feedback do resultado.
 
 ### Caminho 1 — Mobile
 

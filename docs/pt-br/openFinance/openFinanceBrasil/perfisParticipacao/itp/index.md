@@ -14,11 +14,11 @@ alternate_lang:
 
 ## Iniciador de Transação de Pagamentos
 
-O **Iniciador de Transação de Pagamento (ITP)** é o perfil do Open Finance Brasil autorizado a realizar iniciações de pagamento no ecossistema. O ITP conduz jornadas de consentimento — para a realização de pagamentos — junto a instituições participantes do Open Finance que são Detentoras de Conta. Esse perfil possibilita uma série de novos casos de uso, pois o ITP faz a ponte entre a Instituição e o Cliente, não precisando possuir a custódia dos recursos em nenhum momento da transação e não sendo o titular da conta corrente que realizará a liquidação do pagamento.
+O **Iniciador de Transação de Pagamento (ITP)** é o perfil do Open Finance Brasil autorizado a realizar iniciações de pagamento no ecossistema. O ITP conduz jornadas de consentimento para a realização de pagamentos junto a instituições participantes do Open Finance que possuem o perfil Detentoras de Conta. Esse perfil possibilita uma série de novos casos de uso, pois o ITP faz a ponte entre a Instituição e o Cliente, não precisando possuir a custódia dos recursos em nenhum momento da transação e não sendo o titular da conta corrente que realizará a liquidação do pagamento.
 
 ### Ecossistema Open Finance - ITP
 
-O perfil de ITP diz respeito às instituições financeiras autorizadas pelo Banco Central a iniciar pagamentos no *Open Finance Brasil* em nome de seus clientes. Para tanto, o ITP obtém o consentimento do usuário pagador e, com base nesse consentimento, instrui a instituição Detentora de Conta a processar a transação.
+O perfil de ITP diz respeito às Instituições Financeiras autorizadas pelo Banco Central a iniciar pagamentos no *Open Finance Brasil* em nome de seus clientes. Para tanto, o ITP obtém o consentimento do usuário pagador e, com base nesse consentimento, instrui a Instituição Detentora de Conta a processar a transação.
 
 > A norma regulatória estabelece requisitos de certificação e homologação que precisam ser cumpridos antes de uma instituição poder operar como ITP em produção com sua própria licença. O processo completo está descrito na página de [onboarding do ITP][OnboardingITP].
 
@@ -52,7 +52,7 @@ O [portal do desenvolvedor][Portal-Dev] oferece um calendário com as próximas 
 
 | **Descrição** | **Link para o Portal do Desenvolvedor** |
 | :-----------: | :-------------------------------------: |
-| **Iniciação de Pagamento** | [Acesse aqui](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/SV+API+-+Pagamentos) |
+| **Iniciação de Pagamento Simples** | [Acesse aqui](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/SV+API+-+Pagamentos) |
 | **Iniciação de Pagamentos Automáticos** | [Acesse aqui](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/198410569/SV+API+-+Pagamentos+Autom+ticos) |
 | **Iniciação de Pagamento sem Redirecionamento** | [Acesse aqui](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento) |
 
@@ -63,7 +63,7 @@ Para utilizar a **Plataforma Opus Open Finance** no perfil de ITP, é necessári
 1. Completar o processo de [implantação][Setup].
 2. Ter completado toda a homologação do perfil de Detentor de Conta. (recomendamos a avaliação desse critério com o compliance de sua instituição)
 3. Construir a experiência de usuário para que a jornada de consentimento seja possível para os clientes. O [Guia de Experiência do Usuário do Open Finance Brasil][GuiaUX] traz uma descrição detalhada sobre essa jornada.
-4. Completar todo o processo de [onboarding de ITP][OnboardingITP].
+4. Caso utilize sua própria licença, completar todo o processo de [onboarding de ITP][OnboardingITP].
 
 [GuiaUX]: https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01
 [Portal-Dev]: https://openfinancebrasil.atlassian.net/wiki/spaces/DraftOF/calendars

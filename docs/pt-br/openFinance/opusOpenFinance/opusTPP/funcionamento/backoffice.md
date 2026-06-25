@@ -75,9 +75,9 @@ Lista todos os pagamentos associados a um consentimento.
 
 ## Cenários de uso típico
 
-- **Suporte ao cliente final:** consultar o status de um consentimento específico para um cliente que ligou no SAC reclamando da operação.
-- **Auditoria interna:** extrair todos os consentimentos autorizados em um período para reconciliação ou conformidade.
-- **Investigação de incidentes:** filtrar por `consentStatus=REJECTED` em uma janela para análise de causa raiz.
+- **Suporte ao cliente final:** consultar o status de um consentimento específico para um cliente que ligou no SAC reclamando da operação;
+- **Auditoria interna:** extrair todos os consentimentos autorizados em um período para reconciliação ou conformidade;
+- **Investigação de incidentes:** filtrar por `consentStatus=REJECTED` em uma janela para análise de causa raiz;
 - **Relatórios operacionais:** combinar com `tppId` quando o OpusTPP atende múltiplas marcas/instituições.
 
 ## Referências

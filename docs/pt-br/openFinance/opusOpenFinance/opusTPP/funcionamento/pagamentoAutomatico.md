@@ -14,7 +14,7 @@ alternate_lang:
 
 ## Objetivo
 
-A API de Pagamento Automático (Pix Automático / Recurring Payments) permite a criação de **consentimentos recorrentes** que autorizam o débito periódico em conta para finalidades como assinaturas, mensalidades, parcelas e cobranças recorrentes em geral.
+A API de Pagamento Automático permite a criação de **consentimentos recorrentes** que autorizam o débito periódico em conta para finalidades como assinaturas, mensalidades, parcelas e cobranças recorrentes em geral.
 
 O OpusTPP expõe simultaneamente as versões regulatórias **v1** e **v2** do Pix Automático.
 
@@ -47,10 +47,10 @@ Referências:
 
 ## Comportamento esperado
 
-- **Sucesso:** o consentimento permanece em `AUTHORIZED` até atingir os limites globais de transações estabelecidos no payload (quantidade total, valor total, data limite, etc.). Quando esses limites são alcançados, o status transita para `CONSUMED`.
-- **Erro de negócio (HTTP 422):** o status do pagamento individual entra em `REJECTED`. O consentimento permanece ativo (a menos que tenha sido violada uma regra global). Schemas de erro: `422ResponseErrorCreatePixRecurringPayment` e `422ResponseErrorCreateRecurringPaymentsPaymentId`.
-- **Revogação de pagamento individual:** permitida quando o pagamento está em `SCHEDULED` (SCHD) ou `PDNG`.
-- **Revogação de consentimento:** permitida quando o consentimento está em `AUTHORIZED`. Schema de erro: `422ResponseErrorRecurringConsents`.
+- **Sucesso:** O consentimento permanece em `AUTHORIZED` até atingir os limites globais de transações estabelecidos no payload (quantidade total, valor total, data limite, etc.). Quando esses limites são alcançados, o status transita para `CONSUMED`;
+- **Erro de negócio (HTTP 422):** O status do pagamento individual entra em `REJECTED`. O consentimento permanece ativo (a menos que tenha sido violada uma regra global). Schemas de erro: `422ResponseErrorCreatePixRecurringPayment` e `422ResponseErrorCreateRecurringPaymentsPaymentId`;
+- **Revogação de pagamento individual:** Permitida quando o pagamento está em `SCHEDULED` (SCHD) ou `PDNG`;
+- **Revogação de consentimento:** Permitida quando o consentimento está em `AUTHORIZED`. Schema de erro: `422ResponseErrorRecurringConsents`.
 
 ## Referências
 
