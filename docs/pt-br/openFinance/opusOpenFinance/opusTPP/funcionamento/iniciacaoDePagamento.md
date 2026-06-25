@@ -18,6 +18,8 @@ A API de Iniciação de Transação de Pagamento PIX expõe os endpoints para cr
 
 O OpusTPP suporta **simultaneamente as versões regulatórias v4 e v5** das APIs de pagamento, permitindo que a TPP escolha qual versão chamar conforme o que cada Detentora aceita.
 
+<!-- Deixando claro aqui só estamos permitindo a v4 porque estamos em período de convivência -->
+
 > **Pré-requisito:** todos os endpoints de iniciação só funcionam após o consentimento de pagamento ter sido criado e estar em `AUTHORISED` (ver [Funcionamento](./)). Para os possíveis valores de cada chave JSON consulte a [API associada][API-Pagamentos].
 
 [API-Pagamentos]: ../../../../../swagger-ui/index.html?api=otpp-iniciacao_pagamentos

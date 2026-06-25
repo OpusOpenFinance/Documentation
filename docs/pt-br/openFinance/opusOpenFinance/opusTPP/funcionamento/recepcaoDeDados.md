@@ -36,8 +36,8 @@ A API de Recepção de Dados Cadastrais e Transacionais expõe os endpoints que 
 ### Quando usar cada endpoint
 
 - **POST `/consents`** — sempre que iniciar um novo pedido de acesso a dados de um cliente. Retorna `consentId` e `redirectUrl` para redirecionar o usuário à Detentora.
-- **GET `/consents/{id}`** — para acompanhar mudanças de status (`AWAITING_AUTHORISATION` → `AUTHORISED` ou `REJECTED`).
-- **DELETE `/consents/{id}`** — para revogar um consentimento ativo. Pode ser feito pelo Usuário, pela Iniciadora (ITP) ou pela Transmissora.
+- **GET `/consents/{consentId}`** — para acompanhar mudanças de status (`AWAITING_AUTHORISATION` → `AUTHORISED` ou `REJECTED`).
+- **DELETE `/consents/{consentId}`** — para revogar um consentimento ativo. Pode ser feito pelo Usuário, pela Iniciadora (ITP) ou pela Transmissora.
 - **POST `/authorisation-retry`** — quando o fluxo de redirecionamento falhar e ainda houver janela (60 minutos para dados).
 - **POST `/extends`** — renovação de consentimento sem precisar refazer o fluxo de autorização completo (quando suportado pela Detentora).
 

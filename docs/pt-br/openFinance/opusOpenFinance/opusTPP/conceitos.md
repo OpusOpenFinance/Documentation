@@ -14,14 +14,25 @@ alternate_lang:
 
 ## Conceitos Fundamentais
 
-Entender a arquitetura e os fluxos do Open Finance é essencial para a correta implementação do **OpusTPP**. Esta seção apresenta os principais conceitos que norteiam a atuação como Iniciador de Transação de Pagamento (ITP) ou Receptor de Dados.
+Entender a arquitetura e os fluxos do Open Finance é essencial para a compreensão do **OpusTPP**. Esta seção apresenta os principais conceitos que norteiam a atuação como Iniciador de Transação de Pagamento (ITP) ou Receptor de Dados.
+<!-- Essa frase precisa ser reformulada -->
 
 ## Consentimento
 
-Consentimento é a autorização explícita concedida pelo cliente (usuário final) para que a sua Instituição acesse dados ou inicie pagamentos (ITP) em nome dele, junto às [Instituições Detentoras de Conta][Detentoras].
+Consentimento é a autorização explícita concedida pelo usuário final para que a sua Instituição acesse dados ou inicie pagamentos (ITP) em nome dele, junto às [Instituições Detentoras de Conta][Detentoras].
+<!-- Link de detentoras está quebrado -->
 
-- **Solicitar consentimento:** É o processo de redirecionar o usuário para o ambiente da Detentora de Conta para que ele autorize, de forma autenticada, os escopos de serviço requisitados.
+- **Autorizar ou consentimento:** É o processo de redirecionar o usuário para o ambiente da Detentora de Conta para que ele autorize, de forma autenticada, os escopos de serviço requisitados.
 - **Escopo (`permissions`):** É a unidade que define o que a TPP pode fazer. Cada escopo é uma string padronizada pelo regulador (ex.: `ACCOUNTS_READ`, `CREDIT_CARDS_ACCOUNTS_BILLS_READ`, `payments`) que o usuário autoriza explicitamente. O conjunto exato de escopos exigido depende do tipo de dado/operação.
+<!-- 
+No contexto do Open Finance Brasil, é importante distinguir dois conceitos que costumam gerar confusão: permissions e scopes. Embora ambos estejam relacionados à autorização de acesso a dados, eles têm papéis diferentes dentro do ecossistema.
+
+As permissions (ou permissões) são informações declaradas no payload da criação de um consentimento de compartilhamento de dados. Elas especificam quais tipos de dados transacionais o cliente autoriza compartilhar com a instituição receptora. Em outras palavras, definem o escopo de negócios do consentimento. Por exemplo, um consentimento pode permitir o acesso a informações de contas, cartões de crédito, operações de crédito ou investimentos, cada uma representada por uma permission diferente. Essas permissões precisam ser informadas corretamente pelo cliente que está criando o consentimento, seguindo a documentação oficial que define o formato do request.
+
+Os scopes, por outro lado, fazem parte da camada técnica de segurança do protocolo FAPI-BR / OpenID Connect. Eles indicam quais operações um determinado token de acesso está autorizado a realizar dentro da infraestrutura regulada. Cada API do Open Finance possui seu conjunto específico de scopes obrigatórios: por exemplo, a API de criação de consentimentos exige o scope consents, as APIs de pagamentos exigem o scope payments, e as APIs de acesso a dados de contas exigem o scope accounts. Esses scopes são validados durante o fluxo de autenticação e autorização e garantem que o token emitido tenha apenas os privilégios necessários para a operação solicitada.
+
+Enquanto as permissions descrevem quais dados o titular autoriza compartilhar (nível de negócio), os scopes definem como esse acesso é tecnicamente permitido (nível de segurança e comunicação entre sistemas). No caso do OpusTPP, a gestão dos scopes é totalmente automatizada pela plataforma, dispensando configurações adicionais por parte do cliente. Já as permissions devem ser corretamente informadas pelo integrador ao criar o consentimento de compartilhamento, conforme as regras da especificação do Open Finance Brasil.
+-->
 - **Vigência:** O consentimento possui prazo de validade definido na solicitação (`expirationDateTime`, geralmente de 3 a 12 meses ou Indeterminado, dependendo do escopo).
 - **Identificadores:** Após criação, o consentimento é identificado por um `consentId` (URN no formato `urn:<brand>:<uuid>`).
 
@@ -36,6 +47,7 @@ Consentimento é a autorização explícita concedida pelo cliente (usuário fin
 | `PARTIALLY_ACCEPTED` | Múltiplas alçadas — alguns aprovadores ainda pendentes |
 
 > **Janela de retry:** consentimentos em `AWAITING_AUTHORISATION` aceitam nova tentativa de autorização por **5 minutos** (pagamento) ou **60 minutos** (compartilhamento de dados).
+<!-- Isso aqui tem que checar certinho, mas o que tem tempo de 5 min ou 60 min é o link de autorização que pode ser atualizado. O consentimento pode ser aprovado em outro momento qualquer desde que tenha uma link válido para aprovar. -->
 
 ## Revogação de Pagamento vs. Revogação de Consentimento
 
@@ -71,6 +83,7 @@ São dois conceitos distintos, mas complementares na segurança da jornada:
 - **Vínculo de Dispositivo (Enrollment):** É a associação entre um dispositivo específico (identificado por *fingerprint*, token FCM, ou certificado FIDO2) e um consentimento ou usuário.
   - *Utilidade:* Permite que, em Jornadas como a JSR (Jornada Sem Redirecionamento), o sistema reconheça que aquele dispositivo já possui um consentimento ativo, evitando que o usuário precise efetuar o login na Detentora de Conta repetidamente.
   - *Implementação no OpusTPP:* Usa autenticação **FIDO2/WebAuthn** (biometria, PIN) sob coordenação do regulamento de "Pagamento sem Redirecionamento".
+  <!-- Essa parte de Vinculo de Dispositivo eu não manjo muito e talvez vale a pena só mandar para o Ian para ele dar uma olhada, mas precisa ficar claro que o OpusTPP não implementa nada do FIDO2. A única coisa que ele faz é repassar os requests para a detentora através das rotas. Não há lógica de autenticação aqui dedicado especfificamente ao FIDO2. -->
 
 ### Identificadores de Dispositivo e Credenciais
 
@@ -125,9 +138,10 @@ Identificador escolhido pelo aplicativo cliente para o dispositivo (geralmente u
 
 ## Jornada Otimizada
 
-A Jornada Otimizada é um fluxo onde dois cosentimentos de Dados e Pagamentos podem ser criados em uma única interação, combinando dois consenitmentos vinculados:
+A Jornada Otimizada é um fluxo onde dois cosentimentos de Dados e Pagamentos podem ser criados em uma única interação, combinando dois consentimentos vinculados:
 
 - **Primário (pagamento):** Autoriza as operações financeiras em si.
+<!-- O consentimento primário também pode ser um vínculo de dispositivo (ou seja, existe JO com JSR). No caso de consentimento de pagamentos, só existe JO quando for consentimento de transferencia inteligente -->
 - **Secundário (dados):** Autoriza a leitura de saldo da conta para validar a viabilidade do pagamento antes da execução.
 
 ---
