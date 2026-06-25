@@ -5,35 +5,28 @@ parent: "Perfiles de participación"
 nav_order: 5
 has_children: true
 lang: "es"
-alternate_lang:
-  - path: "/Documentation/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/itp/index/"
-    lang: "pt-br"
-  - path: "/Documentation/en/openFinance/openFinanceBrasil/perfisParticipacao/itp/index/"
-    lang: "en"
+alternate_lang: 
+    - path: "/Documentation/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/itp/index/"
+      lang: "pt-br"
+    - path: "/Documentation/en/openFinance/openFinanceBrasil/perfisParticipacao/itp/index/"
+      lang: "en"
 ---
 
 ## Iniciador de Transacción de Pagos
 
-El Iniciador de Transacción de Pago (ITP) es el perfil de Open Finance autorizado para realizar iniciaciones de pago en el ecosistema. El ITP iniciará jornadas de consentimiento (para realizar pagos) en instituciones participantes de Open Finance que son titulares de cuenta. Este perfil posibilita una serie de nuevos casos de uso, ya que el ITP no necesita ser custodio del dinero en ningún momento durante la transacción y tampoco necesita ser el dueño de la cuenta corriente que realizará la liquidación del pago.
+El **Iniciador de Transacción de Pagos (ITP)** es el perfil de Open Finance Brasil autorizado a realizar iniciaciones de pago en el ecosistema. El ITP conduce jornadas de consentimiento — para la realización de pagos — junto a instituciones participantes de Open Finance que son Detentoras de Cuenta. Este perfil posibilita una serie de nuevos casos de uso, pues el ITP hace el puente entre la Institución y el Cliente, sin necesidad de poseer la custodia de los recursos en ningún momento de la transacción y sin ser el titular de la cuenta corriente que realizará la liquidación del pago.
 
-### Medios de Pago en Open Finance
+### Ecosistema Open Finance - ITP
 
-Actualmente, los medios de pago previstos en Open Finance incluyen:
+El perfil de ITP se refiere a las instituciones financieras autorizadas por el Banco Central para iniciar pagos en *Open Finance Brasil* en nombre de sus clientes. Para ello, el ITP obtiene el consentimiento del usuario pagador y, con base en ese consentimiento, instruye a la institución Detentora de Cuenta para que procese la transacción.
 
-- **Pix**;
-- **Boleto**;*
-- **Débito en Cuenta**;*
-- **TED/TEF**;*
-- **Tarjeta de Crédito**.*
-
-{: .nota}
-Los elementos marcados con asterisco aún no están disponibles en Open Finance y no tienen previsión de entrada.
+> La norma regulatoria establece requisitos de certificación y homologación que deben cumplirse antes de que una institución pueda operar como ITP en producción con su propia licencia. El proceso completo está descrito en la página de [onboarding del ITP][OnboardingITP].
 
 ### Jornada de Consentimiento
 
-El proceso de autorización para efectuar pagos se realiza a través de una **jornada completa de consentimiento**. Más detalles pueden ser encontrados [aquí][Jornada-Consentimiento].
+El proceso de autorización para efectuar pagos lo realiza el cliente a través de una **jornada completa de consentimiento**. Más detalles pueden encontrarse [aquí][Jornada-Consentimento].
 
-> Además, el [diagrama de secuencia][Diagrama-Secuencia] ilustra el flujo de consentimiento de acuerdo con cada [API ofrecida por el producto][API-pagos].
+> El [diagrama de secuencia][Diagrama-Sequência] ilustra el flujo de consentimiento de acuerdo con cada modalidad de pago.
 
 ### Roadmap Regulatorio
 
@@ -41,39 +34,40 @@ El proceso de autorización para efectuar pagos se realiza a través de una **jo
 
 - **Pago Pix inmediato**;
 - **Pago Pix programado**;
+- **Pago Pix por aproximación**;
 - **Recurrencia de pagos programados**;
-- **Transferencias automáticas entre cuentas de la misma titularidad** (conocidas como *sweeping accounts*).
+- **Transferencias automáticas entre cuentas de la misma titularidad** (recurso también conocido como *transferencias inteligentes* o *sweeping accounts*);
+- **Pagos sin redireccionamiento** (ausencia del redireccionamiento hacia la Detentora de Cuenta desde la perspectiva del usuario).
 
 #### Funcionalidades previstas
 
 - **Pagos en lote (1:n)**;
-- **Pagos sin redirección** (ausencia de redirección al Titular de Cuenta desde la perspectiva del usuario);
-- **Pagos recurrentes** (Variable Recurring Payment - VRP);
-- **Pix por aproximación**.
+- **Pagos recurrentes** (Variable Recurring Payment - VRP - implementado mediante el *Pix Automático*).
 
 El [portal del desarrollador][Portal-Dev] ofrece un calendario con las próximas entregas.
 
+### APIs Regulatorias
+
+#### APIs Vigentes
+
+| **Descripción** | **Enlace al Portal del Desarrollador** |
+| :-------------: | :------------------------------------: |
+| **Iniciación de Pago** | [Acceda aquí](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/SV+API+-+Pagamentos) |
+| **Iniciación de Pagos Automáticos** | [Acceda aquí](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/198410569/SV+API+-+Pagamentos+Autom+ticos) |
+| **Iniciación de Pago sin Redireccionamiento** | [Acceda aquí](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento) |
+
 ### Plataforma Opus Open Finance
 
-Para iniciar el uso del software, existen algunos pre-requisitos:
+Para utilizar la **Plataforma Opus Open Finance** en el perfil de ITP, es necesario concluir las siguientes etapas:
 
-1. Completar el proceso de [setup (implantación)][Setup];
-
-2. Haber completado toda la homologación del perfil de Titular de Cuenta. (recomendamos la evaluación de este criterio con el compliance de su institución);
-
-3. Crear la experiencia de usuario para que la jornada de consentimiento sea posible para los clientes. El [Guía de Experiencia del Usuario de Open Finance Brasil][GuiaUX] ofrece una descripción detallada sobre esta jornada;
-
+1. Completar el proceso de [implantación][Setup].
+2. Haber completado toda la homologación del perfil de Detentor de Cuenta. (recomendamos la evaluación de este criterio con el compliance de su institución)
+3. Construir la experiencia de usuario para que la jornada de consentimiento sea posible para los clientes. La [Guía de Experiencia del Usuario de Open Finance Brasil][GuiaUX] trae una descripción detallada sobre esta jornada.
 4. Completar todo el proceso de [onboarding de ITP][OnboardingITP].
 
-{: .destaque}
-El módulo de iniciación de pagos de la **Plataforma Opus Open Finance** es completamente autocontenido y no requiere la construcción de una capa de integración. Funcionando de manera autónoma, ofrece APIs que aíslan los detalles específicos de los protocolos de autenticación y seguridad del *Open Finance Brasil* y facilita mucho la construcción de aplicaciones. La descripción de estas APIs puede ser encontrada [aquí (pagos)][API-pagos], [aquí (pagos automáticos)][API-pagos-automáticos] y [aquí (pagos automáticos)][API-pagos-jsr].  
-
-[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil
+[GuiaUX]: https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01
 [Portal-Dev]: https://openfinancebrasil.atlassian.net/wiki/spaces/DraftOF/calendars
 [OnboardingITP]: ./onboardingITP.html
 [Setup]: ../../../opusOpenFinance/implantacaoDaPlataforma/index.html
-[Jornada-Consentimiento]: ../../jornadaConsentimento/index.html
-[Diagrama-Secuencia]: ../anexos/imagens/es-itp-consentSequence.png
-[API-pagos]: ../../../../../swagger-ui/index.html?api=es-oas-itp-pagamentos
-[API-pagos-automáticos]: ../../../../../swagger-ui/index.html?api=es-oas-itp-pagamentos-automaticos
-[API-pagos-jsr]: ../../../../../swagger-ui/index.html?api=es-oas-pagamentos-jsr
+[Jornada-Consentimento]: ../../jornadaConsentimento/index.html
+[Diagrama-Sequência]: ../anexos/imagens/itp-consentSequence.png

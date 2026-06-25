@@ -1,79 +1,73 @@
 ---
 layout: default
-title: "Payment Initiation Service Provider"
-parent: "Participation Profiles"
+title: "ITP"
+parent: "Participation profiles"
 nav_order: 5
 has_children: true
 lang: "en"
-alternate_lang:
+alternate_lang: 
     - path: "/Documentation/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/itp/index/"
       lang: "pt-br"
     - path: "/Documentation/es/openFinance/openFinanceBrasil/perfisParticipacao/itp/index/"
       lang: "es"
 ---
 
-## Payment Initiation Service Provider
+## Payment Transaction Initiator
 
-The Payment Initiation Service Provider (*PISP*) is the *Open Finance Brasil* profile authorized to perform payment initiations within the ecosystem. The Payment Initiation Service Provider will initiate consent journeys (for making payments) in participating *Open Finance Brasil* institutions that are Account Holders. This profile enables a range of new use cases, as the Payment Initiation Service Provider does not need to be the custodian of the money at any point during the transaction and also does not need to be the owner of the bank account that will settle the payment.
+The **Payment Transaction Initiator (ITP)** is the Open Finance Brasil profile authorized to initiate payments within the ecosystem. The ITP conducts consent journeys — for carrying out payments — together with Open Finance participant institutions that are Account Holders. This profile enables a range of new use cases, since the ITP acts as a bridge between the Institution and the Customer, without ever needing to take custody of the funds at any point in the transaction and without being the holder of the checking account that will settle the payment.
 
-### Payment Methods in *Open Finance Brasil*
+### Open Finance Ecosystem - ITP
 
-Currently, the payment methods foreseen in *Open Finance Brasil* include:
+The ITP profile concerns financial institutions authorized by the Central Bank to initiate payments in *Open Finance Brasil* on behalf of their customers. To do so, the ITP obtains the consent of the paying user and, based on that consent, instructs the Account Holder institution to process the transaction.
 
-- **Pix**;
-- **Boleto**;*
-- **Debit in Account**;*
-- **TED/TEF**;*
-- **Credit Card**.*
-
-{: .note}
-The items marked with an asterisk are not yet available in *Open Finance Brasil* and have no scheduled release date.
+> The regulatory standard establishes certification and homologation requirements that must be met before an institution can operate as an ITP in production with its own license. The complete process is described on the [ITP onboarding][OnboardingITP] page.
 
 ### Consent Journey
 
-The authorization process to make payments is done through a **complete consent journey**. More details can be found [right here][Consent-Journey].
+The authorization process for making payments is carried out by the customer through a **complete consent journey**. More details can be found [here][Jornada-Consentimento].
 
-> Additionally, the [sequence diagram][Sequence-Diagram] illustrates the consent flow according to each [API offered by the product][API-pagamentos];
+> The [sequence diagram][Diagrama-Sequência] illustrates the consent flow according to each payment modality.
 
 ### Regulatory Roadmap
 
-#### Available Features
+#### Features already available
 
-- **Instant Pix payment**;
+- **Immediate Pix payment**;
 - **Scheduled Pix payment**;
-- **Recurring scheduled payments**;
-- **Automatic transfers between accounts of the same account holder** (known as *sweeping accounts*).
+- **Pix payment by proximity** (contactless);
+- **Recurrence of scheduled payments**;
+- **Automatic transfers between accounts of the same ownership** (a feature also known as *smart transfers* or *sweeping accounts*);
+- **Payments without redirection** (absence of the redirection to the Account Holder from the user's perspective).
 
-#### Planned Features
+#### Planned features
 
 - **Batch payments (1:n)**;
-- **Payments without redirection** (no redirection to the Account Holder from the user's perspective);
-- **Recurring payments** (Variable Recurring Payment - VRP);
-- **Pix via proximity**.
+- **Recurring payments** (Variable Recurring Payment - VRP - implemented through *Pix Automático*).
 
-The [developer portal][Dev-Portal] offers a calendar with upcoming deliveries.
+The [developer portal][Portal-Dev] offers a calendar with the upcoming deliveries.
+
+### Regulatory APIs
+
+#### Current APIs
+
+| **Description** | **Link to the Developer Portal** |
+| :-------------: | :------------------------------: |
+| **Payment Initiation** | [Access here](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/SV+API+-+Pagamentos) |
+| **Automatic Payments Initiation** | [Access here](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/198410569/SV+API+-+Pagamentos+Autom+ticos) |
+| **Payment Initiation without Redirection** | [Access here](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento) |
 
 ### Opus Open Finance Platform
 
-To start using the software, there are some prerequisites:
+To use the **Opus Open Finance Platform** under the ITP profile, the following steps must be completed:
 
-1. Complete the [setup (deployment)][Setup];
+1. Complete the [setup][Setup] process.
+2. Have completed the entire Account Holder profile homologation. (we recommend evaluating this criterion with your institution's compliance team)
+3. Build the user experience so that the consent journey is possible for customers. The [Open Finance Brasil User Experience Guide][GuiaUX] provides a detailed description of this journey.
+4. Complete the entire [ITP onboarding][OnboardingITP] process.
 
-2. Complete the entire certification of the Account Holder profile. (We recommend evaluating this criterion with your institution’s compliance department);
-
-3. Create the user experience so that the consent journey is possible for customers. The [Open Finance Brazil User Experience Guide][GuiaUX] provides detailed description of this journey.
-
-4. Complete the entire [Payment Initiation Service Provider onboarding process][OnboardingITP]
-
-{: .highlight}
-The Payment Initiation module of **Opus Open Finance Platform** is self-contained and *does not* demand to build an integration layer. It runs autonomously, providing APIs that isolate the specific details of *Open Finance Brasil* authentication and security protocols and facilitate the construction of applications. The description of these APIs can be found [here (payments)][API-pagamentos], [here (automatic payments)][API-pagamentos-automáticos] and [here (payments without redirection)][API-pagamentos-jsr].  
-
-[GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil
-[Dev-Portal]: https://openfinancebrasil.atlassian.net/wiki/spaces/DraftOF/calendars
-[Sequence-Diagram]: ../anexos/imagens/en-itp-consentSequence.png
+[GuiaUX]: https://guia-de-ux-open-finance-brasil.scroll.site/guia-de-experi-ncia-open-finance-brasil/v.22.00.01
+[Portal-Dev]: https://openfinancebrasil.atlassian.net/wiki/spaces/DraftOF/calendars
 [OnboardingITP]: ./onboardingITP.html
 [Setup]: ../../../opusOpenFinance/implantacaoDaPlataforma/index.html
-[Consent-Journey]: ../../jornadaConsentimento/index.html
-[API-pagamentos-jsr]: ../../../../../swagger-ui/index.html?api=en-oas-pagamentos-jsr
-[API-pagamentos]: ../../../../../swagger-ui/index.html?api=en-oas-itp-pagamentos
-[API-pagamentos-automáticos]: ../../../../../swagger-ui/index.html?api=en-oas-itp-pagamentos-automaticos
+[Jornada-Consentimento]: ../../jornadaConsentimento/index.html
+[Diagrama-Sequência]: ../anexos/imagens/itp-consentSequence.png
