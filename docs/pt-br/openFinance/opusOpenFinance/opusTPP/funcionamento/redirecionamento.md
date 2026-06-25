@@ -57,7 +57,7 @@ A query string ou fragment deve ser extraída **as-is** da URL interceptada (tud
 | 204 No Content | Autorização bem sucedida | vazio |
 | 422 Unprocessable Entity | Falha na autorização | `{ "error": "...", "error_description": "..." }` |
 
-> **Recomendação:** chame `/authorization-result` **imediatamente** após interceptar a URL, antes mesmo de exigir autenticação do usuário no app. O *authorization code* retornado pelo fluxo OIDC tem TTL muito curto (definido pela Transmissora — frequentemente menos de 60 segundos).
+> **Recomendação:** chame `/authorization-result` **imediatamente** após interceptar a URL, antes mesmo de exigir autenticação do usuário no app. O *authorization code* retornado pelo fluxo do OpusTPP tem TTL muito curto (definido pela Transmissora — frequentemente menos de 60 segundos).
 
 ## Caminho mobile vs. caminho web
 

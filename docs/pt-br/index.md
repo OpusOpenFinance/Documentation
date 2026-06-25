@@ -72,12 +72,20 @@ Caso utilize a licença própria, o cliente deve realizar o [Onboarding do ITP](
 - Etapa pré-homologatória;
 - Etapa homologatória do Open Finance.
 
-Caso o cliente utilize a licença de um fornecedor, o processo é mais simples, bastando a integração a Plataforma Opus Open Finance.
+Caso o cliente utilize a licença de um fornecedor, o processo de onboarding não é necessário.
 
 #### 4. Tipos de pagamento suportados
 
-- [Iniciação de Pagamento Pix](openFinance/opusOpenFinance/opusTPP/funcionamento/iniciacaoDePagamento.html) — pagamento imediato e agendado. Detalha os endpoints de consentimento e de pagamento, o comportamento esperado em caso de sucesso e erro, e os códigos de erro mais comuns.
-- [Pagamento Automático (Pix Automático)](openFinance/opusOpenFinance/opusTPP/funcionamento/pagamentoAutomatico.html) — consentimentos recorrentes para débitos periódicos (assinaturas, mensalidades, parcelas). Suporta as versões v1 e v2 da API regulatória.
+- [Iniciação de Pagamento Pix](openFinance/opusOpenFinance/opusTPP/funcionamento/iniciacaoDePagamento.html):
+  - Pagamento imediato;
+  - Pagamento agendado.
+- [Pagamento Automático (Pix Automático)](openFinance/opusOpenFinance/opusTPP/funcionamento/pagamentoAutomatico.html) — consentimentos recorrentes para débitos periódicos (assinaturas, mensalidades, parcelas):
+  - PIX automático
+  - Transferências inteligentes;
+  ... 
+- **ADICIONAR VÍNCULO DE DISPOSITIVO**
+  - JSR - Jornada sem redirecionamento - DESCRIÇÃO CURTA
+  ...
 - [Cenários de pagamento](openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/cenariosPagamentos.html) — casos de uso práticos e combinações de tipos de pagamento.
 
 #### 5. Fluxos técnicos e redirecionamento
@@ -86,7 +94,7 @@ Caso o cliente utilize a licença de um fornecedor, o processo é mais simples, 
 - [Redirecionamento App-to-App e Web](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html) — como o usuário é enviado à Detentora de Conta para autorizar o pagamento e retorna ao ambiente do ITP.
 - [Webhooks de pagamentos](openFinance/opusOpenFinance/opusTPP/funcionamento/webhooks.html) — como receber notificações assíncronas sobre mudanças de status dos pagamentos.
 
-#### 6. Implantação e integração
+#### 6. Implantação e integração -- REVISAR
 
 - [Implantação da Plataforma](openFinance/opusOpenFinance/implantacaoDaPlataforma/index.html) — o roadmap de implantação conduzido pela Opus: kickoff, configuração de ambientes, certificação OpenID, integração das telas da jornada de consentimento e layer de integração.
 - [Integração de Pagamentos](openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/index.html) — detalhes técnicos da integração da camada de pagamentos com os sistemas de retaguarda.
@@ -95,7 +103,7 @@ Caso o cliente utilize a licença de um fornecedor, o processo é mais simples, 
 
 ### Receptor de Dados
 
-O Receptor de Dados é o perfil que permite à sua instituição solicitar e obter dados financeiros de clientes de outras instituições (Transmissoras de Dados), com o consentimento do próprio cliente. Casos de uso típicos incluem agregadores financeiros, plataformas de crédito e gestão de patrimônio.
+O Receptor de Dados é o perfil que permite à sua instituição obter dados financeiros de clientes em outras instituições (Transmissoras de Dados), com o consentimento do próprio cliente.
 
 #### 1. Entendendo o perfil e os dados disponíveis
 
@@ -107,30 +115,18 @@ O Receptor de Dados é o perfil que permite à sua instituição solicitar e obt
 
 - [Certificações e Certificados](openFinance/openFinanceBrasil/certificacoesECertificados.html) — assim como o ITP, o Receptor precisa da **certificação OpenID RP** (*Relying Parties*) e do **Certificado de Autenticação**. A tabela de necessidade de certificados por perfil ajuda a identificar exatamente o que contratar.
 
-#### 3. Licença própria vs. licença compartilhada
-
-Um ponto decisivo para novos clientes é a escolha entre usar sua própria licença ou utilizar a licença de um fornecedor.
-
-Caso utilize a licença própria, o cliente deve realizar o [Onboarding do ITP](openFinance/openFinanceBrasil/perfisParticipacao/itp/onboardingITP.html), composto por:
-
-- Autorização pelo Banco Central;
-- Etapa pré-homologatória;
-- Etapa homologatória do Open Finance.
-
-Caso o cliente utilize a licença de um fornecedor, o processo é mais simples, bastando a integração a Plataforma Opus Open Finance.
-
-#### 4. Dados disponíveis para recepção
+#### 3. Dados disponíveis para recepção
 
 - [Recepção de Dados — funcionamento e endpoints](openFinance/opusOpenFinance/opusTPP/funcionamento/recepcaoDeDados.html) — endpoints de consentimento (criação, consulta, revogação, renovação) e os aproximadamente 78 proxies regulatórios organizados por família: clientes, contas, cartão de crédito, operações de crédito, câmbio e investimentos.
 - [Compartilhamento de Dados — visão de integração](openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/index.html) — como os dados recebidos se organizam, por produto financeiro.
 - [Consentimento Compartilhado — Recepção de Dados](openFinance/opusOpenFinance/consentimentoCompartilhado/recepcaoDeDados.html) — gestão do ciclo de vida dos consentimentos de dados na perspectiva do produto.
 
-#### 5. Fluxos técnicos e redirecionamento
+#### 4. Fluxos técnicos e redirecionamento
 
 - [Funcionamento geral do OpusTPP](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — os fluxos de consentimento de dados seguem a mesma lógica geral do ITP (listagem de participantes → criação → redirecionamento → consulta), com diferenças nos escopos e na vigência.
 - [Redirecionamento App-to-App e Web](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html) — como o usuário é enviado à Transmissora para autorizar o compartilhamento e retorna ao ambiente do Receptor.
 
-#### 6. Implantação e integração
+#### 5. Implantação e integração - REVISAR
 
 - [Implantação da Plataforma](openFinance/opusOpenFinance/implantacaoDaPlataforma/index.html) — o processo de implantação é o mesmo descrito para o ITP. Destaca-se que para o perfil Receptor **não é necessário construir uma camada de integração com sistemas de retaguarda** — a integração ocorre apenas nas telas da jornada de consentimento.
 
