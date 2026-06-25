@@ -35,15 +35,15 @@ A API de Recepção de Dados Cadastrais e Transacionais expõe os endpoints que 
 
 ### Quando usar cada endpoint
 
-- **POST `/consents`** — sempre que iniciar um novo pedido de acesso a dados de um cliente. Retorna `consentId` e `redirectUrl` para redirecionar o usuário à Detentora.
-- **GET `/consents/{consentId}`** — para acompanhar mudanças de status (`AWAITING_AUTHORISATION` → `AUTHORISED` ou `REJECTED`).
-- **DELETE `/consents/{consentId}`** — para revogar um consentimento ativo. Pode ser feito pelo Usuário, pela Iniciadora (ITP) ou pela Transmissora.
-- **POST `/authorisation-retry`** — quando o fluxo de redirecionamento falhar e ainda houver janela (60 minutos para dados).
-- **POST `/extends`** — renovação de consentimento sem precisar refazer o fluxo de autorização completo (quando suportado pela Detentora).
+- **POST `/consents`**: Sempre que iniciar um novo pedido de acesso a dados de um cliente. Retorna `consentId` e `redirectUrl` para redirecionar o usuário à Detentora;
+- **GET `/consents/{consentId}`**: Para acompanhar mudanças de status (`AWAITING_AUTHORISATION` → `AUTHORISED` ou `REJECTED`);
+- **DELETE `/consents/{consentId}`**: Para revogar um consentimento ativo. Pode ser feito pelo Usuário, pela Iniciadora (ITP) ou pela Transmissora;
+- **POST `/authorisation-retry`**: Quando o fluxo de redirecionamento falhar e ainda houver janela (60 minutos para dados);
+- **POST `/extends`**: Renovação de consentimento sem precisar refazer o fluxo de autorização completo (quando suportado pela Detentora).
 
 ## Proxies para obtenção de dados
 
-Após o consentimento estar em `AUTHORISED`, a TPP pode chamar os **proxies regulatórios** expostos pelo OpusTPP. São aproximadamente **78 rotas** organizadas pelas seguintes famílias:
+Após o consentimento estar em `AUTHORISED`, a ITP pode chamar os **proxies regulatórios** expostos pelo OpusTPP. São aproximadamente **78 rotas** organizadas pelas seguintes famílias:
 
 | Família | Recursos |
 | :-----: | :------: |
@@ -86,7 +86,7 @@ A Detentora aplica esta lógica ao receber o `POST /consents`:
 | Algumas permissões removidas (produto não suportado pela Transmissora) | HTTP 201 Created com subconjunto retornado |
 | Nenhuma permissão funcional restante | HTTP 422 Unprocessable Entity |
 
-> **Implicação prática:** sempre inspecione o `permissions` da **resposta** — pode estar menor que o solicitado.
+> **Implicação prática:** Sempre inspecione o `permissions` da **resposta** — pode estar menor que o solicitado.
 
 ## Referências
 

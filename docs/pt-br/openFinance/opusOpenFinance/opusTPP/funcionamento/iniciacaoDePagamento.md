@@ -52,9 +52,9 @@ Referências oficiais:
 
 ## Comportamento esperado
 
-- **Sucesso (201 Created):** o consentimento associado transita para `CONSUMED`. O pagamento entra em uma máquina de estados própria (definida pela Detentora) — é necessário fazer **polling** no GET para acompanhar a liquidação efetiva.
-- **Erro de negócio (422 Unprocessable Entity):** o consentimento transita para `REJECTED`. O corpo retornado é um **JWT** (não JSON puro) contendo o objeto de erro padrão do Open Finance Brasil.
-- **Revogação:** só é permitida quando o pagamento está em `SCHEDULED` (SCHD) ou retido para análise (`PDNG`).
+- **Sucesso (201 Created):** O consentimento associado transita para `CONSUMED`. O pagamento entra em uma máquina de estados própria (definida pela Detentora) — é necessário fazer **polling** no GET para acompanhar a liquidação efetiva.
+- **Erro de negócio (422 Unprocessable Entity):** O consentimento transita para `REJECTED`. O corpo retornado é um **JWT** (não JSON puro) contendo o objeto de erro padrão do Open Finance Brasil.
+- **Revogação:** Só é permitida quando o pagamento está em `SCHEDULED` (SCHD) ou retido para análise (`PDNG`).
 
 ## Códigos de erro mais comuns
 
@@ -67,8 +67,8 @@ A lista completa de códigos está no schema `422ResponseErrorCreatePixPayment` 
 
 ## Orientações importantes
 
-- Todas as datas seguem **RFC3339** com formato *zulu*.
-- A máquina de estados completa do pagamento está documentada nas referências oficiais v4 e v5.
+- Todas as datas seguem **RFC3339** com formato *zulu*;
+- A máquina de estados completa do pagamento está documentada nas referências oficiais v4 e v5;
 - Para a especificação completa de payload e schemas de resposta, consulte [`oas-pagamentos.yml`](../anexos/yml/opusTPP-iniciacaoPagamentos.yml) ou a [API associada][API-Pagamentos].
 
 ## Referências
