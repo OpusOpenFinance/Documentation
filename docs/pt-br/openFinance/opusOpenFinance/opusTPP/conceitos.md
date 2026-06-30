@@ -18,7 +18,7 @@ Entender a arquitetura e os fluxos do Open Finance é essencial para a compreens
 
 ## Consentimento
 
-Consentimento é a autorização explícita concedida pelo usuário final para que a sua Instituição acesse dados ou inicie pagamentos (ITP) em nome dele, junto às [Instituições Detentoras de Conta][Detentor de Conta].
+Consentimento é a autorização explícita concedida pelo usuário final para que a sua Instituição acesse dados ou inicie pagamentos (ITP) em nome dele, junto às [Instituições Detentoras de Conta][Detentoras].
 
 - **Autorizar o consentimento:** É o processo de redirecionar o usuário para o ambiente da Detentora de Conta para que ele autorize, de forma autenticada, os escopos de serviço requisitados.
 - **Escopo (`permissions`):** É a unidade que define o que a TPP pode fazer. Cada escopo é uma string padronizada pelo regulador (ex.: `ACCOUNTS_READ`, `CREDIT_CARDS_ACCOUNTS_BILLS_READ`, `payments`) que o usuário autoriza explicitamente. O conjunto exato de escopos exigido depende do tipo de dado/operação.
@@ -178,11 +178,11 @@ Identificador único de cada **marca** (brand) que uma instituição opera no Op
 
 Mecanismo pelo qual a Instituição Detentora de Conta **notifica** o OpusTPP de mudanças em pagamentos, consentimentos ou vínculos. O OpusTPP recebe a notificação (apenas a data — não o novo status), reenvia para a URL de webhook cadastrada pelo cliente e publica em um tópico Dapr para processamento assíncrono.
 
-Detalhes em [Webhooks](../funcionamento/webhooks.html).
+Detalhes em [Webhooks][Webhooks].
 
 ### Backoffice
 
-Interface administrativa do OpusTPP que expõe operações de **consulta** sobre consentimentos, vínculos e pagamentos. Voltada para times de suporte, ops e backoffice — não substitui a UI do cliente. Detalhes em [Backoffice](../funcionamento/backoffice.html).
+Interface administrativa do OpusTPP que expõe operações de **consulta** sobre consentimentos, vínculos e pagamentos. Voltada para times de suporte, ops e backoffice — não substitui a UI do cliente. Detalhes em [Backoffice][Backoffice].
 
 ### Permissions vs. Scopes
 
@@ -195,6 +195,9 @@ Em resumo: Enquanto as permissions descrevem quais dados o titular autoriza comp
 
 ---
 
-> **Nota:** Para detalhes técnicos sobre a implementação desses conceitos (endpoints, payloads, e fluxos de fallback), consulte a seção de [Funcionamento](../funcionamento/).
+> **Nota:** Para detalhes técnicos sobre a implementação desses conceitos (endpoints, payloads, e fluxos de fallback), consulte a seção de [Funcionamento][Funcionamento].
 
 [Detentoras]: ../../openFinanceBrasil/perfisParticipacao/detentorDeContas.html
+[Webhooks]: ./funcionamento/webhooks.html
+[Backoffice]: ./funcionamento/backoffice.html
+[Funcionamento]: ./funcionamento/
