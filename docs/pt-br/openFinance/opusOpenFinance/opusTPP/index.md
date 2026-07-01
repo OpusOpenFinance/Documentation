@@ -16,11 +16,11 @@ alternate_lang:
 
 A documentação do Módulo de Iniciação de Pagamentos está organizada em três grandes blocos. Use os links abaixo como ponto de entrada para cada tema:
 
-### [Conceitos](conceitos/)
+### [Conceitos](conceitos.html)
 
 Fundamentos do ecossistema Open Finance e do funcionamento do Módulo de Iniciação de Pagamentos. Recomendado para quem está começando.
 
-- [Glossário e Conceitos Fundamentais](conceitos/): Consentimento, vínculo de dispositivo, jornadas, perfis regulatórios
+- [Glossário e Conceitos Fundamentais](conceitos.html): Consentimento, vínculo de dispositivo, jornadas, perfis regulatórios
 
 ### [Funcionamento](funcionamento/)
 
