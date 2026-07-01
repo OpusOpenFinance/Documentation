@@ -16,7 +16,7 @@ alternate_lang:
 
 Detalhar os certificados regulatórios exigidos para a operação no Open Finance Brasil e suas finalidades.
 
-> **:warning: ATENÇÃO:** Jamais disponibilize suas chaves privadas em serviços da internet. A conversão deve ser feita exclusivamente em ambiente local controlado.
+> **ATENÇÃO:** Jamais disponibilize suas chaves privadas em serviços da internet. A conversão deve ser feita exclusivamente em ambiente local controlado.
 
 ## Certificados exigidos
 

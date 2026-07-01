@@ -20,10 +20,10 @@ Este documento descreve, em alto nível, os principais fluxos de negócio suport
 
 O consentimento é a autorização concedida pelo usuário para que uma instituição Iniciadora de Pagamento (ITP) possa acessar seus dados ou realizar pagamentos em seu nome. O fluxo de solicitação é similar para ambas as finalidades (recepção de dados e iniciação de pagamento), diferenciando-se apenas em uma chamada específica.
 
-<!--### Diagrama de Sequência - Open Finance
+### Diagrama de Sequência - Open Finance
 
 ![Diagrama de sequência](../anexos/imagens/funcionamento-consentSequenceFinance.png)
--->
+
 ### Etapas do Fluxo
 
 #### 1. Listagem das Instituições Participantes
@@ -130,8 +130,8 @@ Após a aprovação, o consentimento pode ser utilizado para:
 
 A iniciação do pagamento deve ocorrer **após** a autorização do consentimento de pagamento. Este fluxo utiliza as APIs de proxy para efetivar a transação.
 
-<!--![Diagrama de sequência](../anexos/imagens/funcionamento-paymentSequence.png)
--->
+![Diagrama de sequência](../anexos/imagens/funcionamento-paymentSequenceFinance.png)
+
 Para detalhes técnicos (versões v4 e v5, códigos de erro JWT, exemplos de payload), consulte a documentação específica de [Iniciação de Pagamento](iniciacaoDePagamento.html) e [Pagamento Automático](pagamentoAutomatico.html).
 
 ---
@@ -139,9 +139,9 @@ Para detalhes técnicos (versões v4 e v5, códigos de erro JWT, exemplos de pay
 ## Fluxo de Solicitação de Vínculo de Dispositivo
 
 O vínculo de dispositivo permite que o usuário autorize um dispositivo (ex.: celular, computador) para aprovar transações utilizando autenticação FIDO2 (biometria, PIN), proporcionando maior segurança e praticidade.
-<!--
-![Diagrama de sequência](../anexos/imagens/funcionamento-enrollmentSequence.png)
--->
+
+![Diagrama de sequência](../anexos/imagens/funcionamento-enrollmentSequenceFinance.png)
+
 ### Etapas do Fluxo de Solicitação de Vínculo de Dispositivo
 
 #### 1. Listagem das Instituições Participantes do Fluxo de Solicitação de Vínculo de Dispositivo

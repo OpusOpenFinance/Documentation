@@ -52,7 +52,7 @@ São exigidos pelo Open Finance Brasil:
 - MTLS;
 - Servidor EV.
 
-Para mais detalhes, acesse [link para Certificados Regulatórios]
+Para mais detalhes, acesse [Certificados Regulatórios](./certificadosRegulatorios.html).
 
 ### 5. Fornecer informações ao time técnico - Responsabilidade da Instituição Cliente
 
