@@ -20,11 +20,12 @@ Detalhar os certificados regulatórios exigidos para a operação no Open Financ
 
 ## Certificados exigidos
 
-| Certificado | JWK `use` | Finalidade |
-| :---------: | :-------: | :--------: |
-| **BRCAC** | `"use": "enc"` | Conexões mTLS — identificação da aplicação cliente e criptografia da comunicação entre as partes |
-| **BRSEAL** | `"use": "sig"` | Assinatura de mensagens entre a aplicação TPP e o servidor de autenticação, e assinatura de tokens JWS |
-| **ID_TOKEN_ENC** | `"use": "enc"` | Criptografia de `id_token` — utilizado em testes de certificação OpenID (opcional, mas necessário para certificação completa) |
+| Certificado | Finalidade |
+| :---------: | :--------: |
+| **BRCAC** | Conexões mTLS — identificação da aplicação cliente e criptografia da comunicação entre as partes |
+| **BRSEAL** | Assinatura de mensagens entre a aplicação TPP e o servidor de autenticação, e assinatura de tokens JWS |
+| **MTLS** | Autenticação mútua em conexões TLS de APIs privadas: identificação e validação tanto do servidor quanto do cliente na comunicação entre instituições |
+| **Servidor EV** | Habilitação do canal HTTPS em APIs públicas: protege a conexão sem exigir autenticação mútua, emitido por Autoridade Certificadora comercial reconhecida |
 
 ## Referências
 
