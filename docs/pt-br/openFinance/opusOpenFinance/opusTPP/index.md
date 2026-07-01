@@ -14,11 +14,11 @@ alternate_lang:
 
 ## Como navegar nesta documentação
 
-A documentação do OpusTPP está organizada em três grandes blocos. Use os links abaixo como ponto de entrada para cada tema:
+A documentação do Módulo de Iniciação de Pagamentos está organizada em três grandes blocos. Use os links abaixo como ponto de entrada para cada tema:
 
 ### [Conceitos](conceitos/)
 
-Fundamentos do ecossistema Open Finance e do funcionamento do OpusTPP. Recomendado para quem está começando.
+Fundamentos do ecossistema Open Finance e do funcionamento do Módulo de Iniciação de Pagamentos. Recomendado para quem está começando.
 
 - [Glossário e Conceitos Fundamentais](conceitos/): Consentimento, vínculo de dispositivo, jornadas, perfis regulatórios
 
@@ -45,17 +45,17 @@ Etapas de configuração e quais certificados digitais são necessários para o 
 
 ### Anexos
 
-- [Especificações OpenAPI (OAS)](anexos/yml/): Contratos oficiais de cada API exposta pelo OpusTPP
+- [Especificações OpenAPI (OAS)](anexos/yml/): Contratos oficiais de cada API exposta pelo Módulo de Iniciação de Pagamentos
 
-## OpusTPP
+## Módulo de Iniciação de Pagamentos
 
-O OpusTPP é um middleware especializado que abstrai integralmente as complexidades regulatórias do **Open Finance Brasil**. Ele permite que instituições atuem como Iniciadoras de Pagamento (ITP) e Receptoras de Dados sem lidar diretamente com padrões de segurança, requisitos técnicos ou fluxos regulatórios.
+O Módulo de Iniciação de Pagamentos é um middleware especializado que abstrai integralmente as complexidades regulatórias do **Open Finance Brasil**. Ele permite que instituições atuem como Iniciadoras de Pagamento (ITP) e Receptoras de Dados sem lidar diretamente com padrões de segurança, requisitos técnicos ou fluxos regulatórios.
 
 Seu objetivo é simples: permitir que desenvolvedores integrem APIs do Open Finance Brasil com a mesma facilidade de integração de APIs REST comuns.
 
-> Enquanto sua aplicação faz chamadas simples em formato REST (HTTP, JSON, token de acesso), nossa solução se encarrega de toda a camada regulatória e de segurança exigida pelo Open Finance, como mTLS, FAPI-BR, JWS e consentimentos. Em outras palavras: você se comunica com o OpusTPP como faria com qualquer API tradicional — e ele traduz essas chamadas para o padrão regulatório do Open Finance Brasil, cuidando automaticamente de toda a parte complexa e técnica por trás das integrações.
+> Enquanto sua aplicação faz chamadas simples em formato REST (HTTP, JSON, token de acesso), nossa solução se encarrega de toda a camada regulatória e de segurança exigida pelo Open Finance, como mTLS, FAPI-BR, JWS e consentimentos. Em outras palavras: você se comunica com o Módulo de Iniciação de Pagamentos como faria com qualquer API tradicional — e ele traduz essas chamadas para o padrão regulatório do Open Finance Brasil, cuidando automaticamente de toda a parte complexa e técnica por trás das integrações.
 
-## O problema que o OpusTPP resolve
+## O problema que o Módulo de Iniciação de Pagamentos resolve
 
 O Open Finance oferece um ecossistema rico em dados e serviços, mas apresentam desafios técnicos e regulatórios significativos:
 
@@ -68,9 +68,9 @@ O Open Finance oferece um ecossistema rico em dados e serviços, mas apresentam 
 - Alta complexidade para atender aos requisitos de ITP e Receptor de Dados;
 - Custos elevados e necessidade constante de equipe especializada.
 
-## O que o OpusTPP faz
+## O que o Módulo de Iniciação de Pagamentos faz
 
-O OpusTPP funciona como um proxy cliente regulatório entre sua aplicação e o ecossistema do Open Finance Brasil. Ele:
+O Módulo de Iniciação de Pagamentos funciona como um proxy cliente regulatório entre sua aplicação e o ecossistema do Open Finance Brasil. Ele:
 
 - Garante aderência completa aos padrões técnicos e de segurança exigidos;
 - Gerencia tokens, autenticações e renovações de forma transparente;
@@ -88,9 +88,9 @@ O produto é composto por módulos que podem ser adquiridos separadamente:
 - **Iniciador de Transação de Pagamento**
   - Suporta iniciação, execução e acompanhamento de pagamentos, incluindo toda a jornada de consentimento.
 
-## O que o OpusTPP não faz
+## O que o Módulo de Iniciação de Pagamentos não faz
 
-Para evitar expectativas incorretas, é importante esclarecer o que o OpusTPP não se propõe a fazer:
+Para evitar expectativas incorretas, é importante esclarecer o que o Módulo de Iniciação de Pagamentos não se propõe a fazer:
 
 - Não atua como instituição regulada — a responsabilidade regulatória permanece com a Instituição Cliente;
 - Não substitui sistemas internos, cores bancários, plataformas de seguradoras ou lógica de negócio;
@@ -99,11 +99,11 @@ Para evitar expectativas incorretas, é importante esclarecer o que o OpusTPP n�
 - Não executa análises, interpreta ou transforma dados financeiros ou de seguros;
 - Não realiza conciliação, liquidação financeira ou processamento próprio de transações.
 
-O foco do OpusTPP é garantir conformidade, segurança e padronização — não substituir as decisões ou responsabilidades da Instituição Cliente.
+O foco do Módulo de Iniciação de Pagamentos é garantir conformidade, segurança e padronização — não substituir as decisões ou responsabilidades da Instituição Cliente.
 
 ## A proposta central
 
-Em essência, o OpusTPP transforma APIs regulatórias complexas em integrações simples, estáveis e escaláveis.
+Em essência, o Módulo de Iniciação de Pagamentos transforma APIs regulatórias complexas em integrações simples, estáveis e escaláveis.
 
 Ele permite que sua instituição participe do Open Finance sem precisar lidar com:
 
@@ -111,4 +111,4 @@ Ele permite que sua instituição participe do Open Finance sem precisar lidar c
 - Gestão de tokens e certificados;
 - Chamadas heterogêneas entre instituições.
 
-O OpusTPP assume toda essa complexidade para que sua equipe possa focar no produto, na experiência do usuário e na estratégia do negócio — não na infraestrutura regulatória subjacente.
+O Módulo de Iniciação de Pagamentos assume toda essa complexidade para que sua equipe possa focar no produto, na experiência do usuário e na estratégia do negócio — não na infraestrutura regulatória subjacente.

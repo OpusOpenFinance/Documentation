@@ -14,7 +14,7 @@ alternate_lang:
 
 ## Objetivo
 
-A API de Webhooks de Pagamentos é o canal pelo qual a Instituição Detentora **notifica** o OpusTPP de mudanças de status em pagamentos, consentimentos e vínculos. O OpusTPP recebe a notificação, a valida e a encaminha para a URL interna do cliente, permitindo que a ITP reaja em tempo quase real às mudanças de estado.
+A API de Webhooks de Pagamentos é o canal pelo qual a Instituição Detentora **notifica** o Módulo de Iniciação de Pagamentos de mudanças de status em pagamentos, consentimentos e vínculos. O Módulo de Iniciação de Pagamentos recebe a notificação, a valida e a encaminha para a URL interna do cliente, permitindo que a ITP reaja em tempo quase real às mudanças de estado.
 
 > Para os possíveis valores de cada chave JSON consulte a [API associada][API-Webhook].
 
@@ -22,14 +22,14 @@ A API de Webhooks de Pagamentos é o canal pelo qual a Instituição Detentora *
 
 ## Como funciona
 
-1. A Detentora notifica o OpusTPP via POST nos endpoints públicos `/open-banking/webhook/...`;
-2. O OpusTPP recebe, valida e responde **202 Accepted** à Detentora;
+1. A Detentora notifica o Módulo de Iniciação de Pagamentos via POST nos endpoints públicos `/open-banking/webhook/...`;
+2. O Módulo de Iniciação de Pagamentos recebe, valida e responde **202 Accepted** à Detentora;
 3. A notificação válida é publicada em um tópico Dapr (`opustpp-webhook-topic`) para processamento assíncrono;
-4. O OpusTPP repassa o POST recebido para a **URL de webhook do cliente**, previamente cadastrada via API interna.
+4. O Módulo de Iniciação de Pagamentos repassa o POST recebido para a **URL de webhook do cliente**, previamente cadastrada via API interna.
 
 > **Atenção:** os endpoints abaixo só funcionam após um pagamento ou consentimento ter sido criado pelo usuário no sistema. Notificações sem correspondência são recebidas, ganham resposta de sucesso (para não causar retry desnecessário na Detentora), e são **ignoradas com log informativo**.
 
-## Endpoints expostos pelo OpusTPP
+## Endpoints expostos pelo Módulo de Iniciação de Pagamentos
 
 | Tipo | Endpoint | Descrição | Sucesso |
 | :--: | :------: | :-------: | :-----: |
@@ -51,13 +51,13 @@ Para descobrir o status atualizado:
 
 ## Cadastro da URL de webhook do cliente
 
-Para que o OpusTPP saiba para onde reencaminhar as notificações, cada aplicação cliente precisa ter sua URL de webhook cadastrada via API interna:
+Para que o Módulo de Iniciação de Pagamentos saiba para onde reencaminhar as notificações, cada aplicação cliente precisa ter sua URL de webhook cadastrada via API interna:
 
 | Método | Endpoint | Descrição |
 | :----: | :------: | :-------: |
 | PATCH | `/opus-open-finance/application/v1/application/{applicationId}/webhook-url` | Criação ou atualização da URL de webhook |
 
-> **Atenção:** esta URL **não** deve ser a mesma cadastrada no Diretório de Participantes como Redirect URI. Trata-se de uma URL interna do cliente (geralmente em rede privada), que receberá as notificações encaminhadas pelo OpusTPP via POST.
+> **Atenção:** esta URL **não** deve ser a mesma cadastrada no Diretório de Participantes como Redirect URI. Trata-se de uma URL interna do cliente (geralmente em rede privada), que receberá as notificações encaminhadas pelo Módulo de Iniciação de Pagamentos via POST.
 
 Detalhes da API interna em [APIs Internas](apisInternas.html).
 

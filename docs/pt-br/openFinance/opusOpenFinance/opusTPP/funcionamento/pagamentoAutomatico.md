@@ -16,7 +16,7 @@ alternate_lang:
 
 A API de Pagamento Automático permite a criação de **consentimentos recorrentes** que autorizam o débito periódico em conta para finalidades como assinaturas, mensalidades, parcelas e cobranças recorrentes em geral.
 
-O OpusTPP expõe simultaneamente as versões regulatórias **v1** e **v2** do Pix Automático.
+O Módulo de Iniciação de Pagamentos expõe simultaneamente as versões regulatórias **v1** e **v2** do Pix Automático.
 
 > Para os possíveis valores de cada chave JSON consulte a [API associada][API-Auto].
 

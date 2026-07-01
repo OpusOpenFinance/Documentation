@@ -16,7 +16,7 @@ alternate_lang:
 
 A API de Iniciação de Transação de Pagamento PIX expõe os endpoints para criar, consultar e revogar consentimentos de pagamento, e para iniciar e gerenciar pagamentos PIX propriamente ditos.
 
-O OpusTPP suporta **simultaneamente as versões regulatórias v4 e v5** das APIs de pagamento, permitindo que a TPP escolha qual versão chamar conforme o que cada Detentora aceita durante o período de convivência.
+O Módulo de Iniciação de Pagamentos suporta **simultaneamente as versões regulatórias v4 e v5** das APIs de pagamento, permitindo que a TPP escolha qual versão chamar conforme o que cada Detentora aceita durante o período de convivência.
 
 > **Pré-requisito:** todos os endpoints de iniciação só funcionam após o consentimento de pagamento ter sido criado e estar em `AUTHORISED` (ver [Funcionamento](./)). Para os possíveis valores de cada chave JSON consulte a [API associada][API-Pagamentos].
 

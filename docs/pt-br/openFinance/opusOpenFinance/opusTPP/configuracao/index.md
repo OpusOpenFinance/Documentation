@@ -16,14 +16,7 @@ alternate_lang:
 
 > **Importante:** Caso surja alguma dúvida acerca de algum termo utilizado, consulte a página de [**Conceitos**](../conceitos.html).
 
-### 1. Obter certificados regulatórios - Opus + Instituição Cliente
-
-São exigidos pelo Open Finance Brasil:
-
-- Certificado de transporte (**BRCAC**) — para autenticação mTLS;
-- Certificado de assinatura (**BRSEAL**) — para assinar mensagens entre a TPP e a Detentora.
-
-### 2. Registrar a instituição e o aplicativo no Diretório Central - Responsabilidade Opus
+### 1. Registrar a instituição e o aplicativo no Diretório Central - Responsabilidade Opus
 
 São dois cadastros:
 
@@ -32,7 +25,7 @@ São dois cadastros:
 
 Esses IDs são essenciais para o funcionamento do produto.
 
-### 3. Definir URLs de redirecionamento - Responsabilidade da Instituição Cliente
+### 2. Definir URLs de redirecionamento - Responsabilidade da Instituição Cliente
 
 São utilizadas pelas instituições para redirecionar usuários após consentimentos e autorizações.
 
@@ -44,13 +37,20 @@ Exemplos comuns:
 
 Essas URLs devem ser cadastradas no Software Statement de cada aplicação. Quando a instituição tem mais de um app, cada URL precisa carregar um `redirect_identifier` único — ver [Redirecionamento](../funcionamento/redirecionamento.html).
 
-### 4. Disponibilizar o ambiente de execução - Responsabilidade Opus
+### 3. Disponibilizar o ambiente de execução - Responsabilidade Opus
 
 A Opus realizará a configuração de um ambiente de execução - COMPLEMENTAR. <!--VALIDAR-->
 
+### 4. Obter certificados regulatórios - Opus + Instituição Cliente
+
+São exigidos pelo Open Finance Brasil:
+
+- Certificado de transporte (**BRCAC**) — para autenticação mTLS;
+- Certificado de assinatura (**BRSEAL**) — para assinar mensagens entre a TPP e a Detentora.
+
 ### 5. Fornecer informações ao time técnico - Responsabilidade da Instituição Cliente
 
-Os técnicos irão configurar o OpusTPP, mas precisam receber:
+Os técnicos irão configurar o Módulo de Iniciação de Pagamentos, mas precisam receber:
 
 - Certificados e respectivas chaves privadas (BRCAC, BRSEAL, ID_TOKEN_ENC quando aplicável);
 - Redirect URIs cadastradas no Diretório;
@@ -64,9 +64,9 @@ Os técnicos irão configurar o OpusTPP, mas precisam receber:
 
 A configuração em alto nível se resume a:
 
-1. Ter certificados regulatórios;
-2. Ter registro no Diretório Central (OF);
-3. Escolher URLs e domínio;
+1. Ter registro no Diretório Central (OF);
+2. Escolher URLs e domínio;
+3. Ter certificados regulatórios;
 4. Prover esses dados ao time técnico.
 
 > **Nota:** Todo o restante pertence à descrição mais técnica e ao procedimento operacional.

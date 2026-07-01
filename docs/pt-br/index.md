@@ -89,7 +89,7 @@ Caso o cliente utilize a licença de um fornecedor, o processo de onboarding nã
 
 #### 5. Fluxos técnicos e redirecionamento
 
-- [Funcionamento geral do OpusTPP](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html): Visão dos fluxos de negócio: listagem de participantes, criação de consentimento, redirecionamento e consulta de status;
+- [Funcionamento geral do Módulo de Iniciação de Pagamentos](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html): Visão dos fluxos de negócio: listagem de participantes, criação de consentimento, redirecionamento e consulta de status;
 - [Redirecionamento App-to-App e Web](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html): Como o usuário é enviado à Detentora de Conta para autorizar o pagamento e retorna ao ambiente do ITP;
 - [Webhooks de pagamentos](openFinance/opusOpenFinance/opusTPP/funcionamento/webhooks.html): Como receber notificações assíncronas sobre mudanças de status dos pagamentos.
 
@@ -117,7 +117,7 @@ O Receptor de Dados é o perfil que permite à sua instituição obter dados fin
 
 #### 4. Fluxos técnicos e redirecionamento
 
-- [Funcionamento geral do OpusTPP](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html): Fluxos de consentimento de dados seguem a mesma lógica geral do ITP (listagem de participantes → criação → redirecionamento → consulta), com diferenças nos escopos e na vigência;
+- [Funcionamento geral do Módulo de Recepção de Dados](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html): Fluxos de consentimento de dados seguem a mesma lógica geral do ITP (listagem de participantes → criação → redirecionamento → consulta), com diferenças nos escopos e na vigência;
 - [Redirecionamento App-to-App e Web](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html): Como o usuário é enviado à Transmissora para autorizar o compartilhamento e retorna ao ambiente do Receptor.
 
 ---

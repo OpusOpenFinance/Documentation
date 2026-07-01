@@ -12,9 +12,9 @@ alternate_lang:
       lang: "es"
 ---
 
-## Funcionamento do OpusTPP
+## Funcionamento do Módulo de Iniciação de Pagamentos
 
-Este documento descreve, em alto nível, os principais fluxos de negócio suportados pelo OpusTPP para integração com o ecossistema do Open Finance Brasil. Cada fluxo tem uma página dedicada com detalhes técnicos, payloads e códigos de erro — use os links ao longo do texto.
+Este documento descreve, em alto nível, os principais fluxos de negócio suportados pelo Módulo de Iniciação de Pagamentos para integração com o ecossistema do Open Finance Brasil. Cada fluxo tem uma página dedicada com detalhes técnicos, payloads e códigos de erro — use os links ao longo do texto.
 
 ## Fluxo de Solicitação de Consentimento
 
@@ -98,7 +98,7 @@ Em casos de falha no redirecionamento (ex.: timeout, erro 500 do servidor), o BA
 
 #### 4. Retorno do Resultado da Autorização
 
-Após o redirecionamento, a aplicação ITP encaminha o resultado ao OpusTPP.
+Após o redirecionamento, a aplicação ITP encaminha o resultado ao Módulo de Iniciação de Pagamentos.
 
 **Possíveis resultados:**
 
@@ -108,7 +108,7 @@ Após o redirecionamento, a aplicação ITP encaminha o resultado ao OpusTPP.
 | Rejeição | **REJECTED** | Fluxo encerrado |
 | Aguardando | **AWAITING_AUTHORISATION** | Permite nova tentativa |
 
-Os tokens gerados são gerenciados pelo OpusTPP e utilizados de forma transparente nas etapas de utilização do consentimento.
+Os tokens gerados são gerenciados pelo Módulo de Iniciação de Pagamentos e utilizados de forma transparente nas etapas de utilização do consentimento.
 
 ---
 
@@ -186,7 +186,7 @@ O usuário é redirecionado para a Instituição Destino, onde poderá:
 
 #### 5. Retorno do Resultado da Autorização
 
-Após a confirmação (ou rejeição), o resultado é processado pelo OpusTPP, que:
+Após a confirmação (ou rejeição), o resultado é processado pelo Módulo de Iniciação de Pagamentos, que:
 
 - Gerencia o retorno do fluxo OIDC;
 - Realiza o callback para geração de tokens;

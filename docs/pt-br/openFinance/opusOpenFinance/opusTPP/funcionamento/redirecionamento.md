@@ -14,7 +14,7 @@ alternate_lang:
 
 ## Objetivo
 
-Detalhar o tratamento do retorno do fluxo do OpusTPP tanto no caminho mobile (App-to-App via Android App Links / iOS Universal Links) quanto no caminho web, incluindo o endpoint `authorization-result`, os formatos de erro padrão OAuth 2.0 e o suporte a múltiplos aplicativos.
+Detalhar o tratamento do retorno do fluxo do Módulo de Iniciação de Pagamentos tanto no caminho mobile (App-to-App via Android App Links / iOS Universal Links) quanto no caminho web, incluindo o endpoint `authorization-result`, os formatos de erro padrão OAuth 2.0 e o suporte a múltiplos aplicativos.
 
 > Conforme [definido pelo Open Finance Brasil](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378415/Redirecionamento+App-to-App), a comunicação entre o aplicativo da Receptora e o aplicativo da Transmissora deve ser **direta**, sem etapas intermediárias (como páginas web para seleção de aplicativo).
 
@@ -30,7 +30,7 @@ O `<OOC-FQDN>` é o FQDN configurado na linha da tabela `application` correspond
 
 ## Arquivos Asset Links e Apple App Site Association
 
-Esses arquivos permitem que o sistema operacional do dispositivo reconheça quais apps são autorizados a interceptar cada URL. O OpusTPP serve esses arquivos nas seguintes rotas:
+Esses arquivos permitem que o sistema operacional do dispositivo reconheça quais apps são autorizados a interceptar cada URL. O Módulo de Iniciação de Pagamentos serve esses arquivos nas seguintes rotas:
 
 | Plataforma | Rota |
 | :--------: | :--: |
@@ -41,7 +41,7 @@ A configuração do conteúdo desses arquivos é feita via variáveis de ambient
 
 ## Endpoint `authorization-result`
 
-Após interceptar a URL de retorno, o app deve enviar o resultado OIDC ao OpusTPP via este endpoint:
+Após interceptar a URL de retorno, o app deve enviar o resultado OIDC ao Módulo de Iniciação de Pagamentos via este endpoint:
 
 | Verbo | URL | Payload |
 | :---: | :-: | :-----: |
@@ -57,7 +57,7 @@ A query string ou fragment deve ser extraída **as-is** da URL interceptada (tud
 | 204 No Content | Autorização bem sucedida | vazio |
 | 422 Unprocessable Entity | Falha na autorização | `{ "error": "...", "error_description": "..." }` |
 
-> **Recomendação:** chame `/authorization-result` **imediatamente** após interceptar a URL, antes mesmo de exigir autenticação do usuário no app. O *authorization code* retornado pelo fluxo do OpusTPP tem TTL muito curto (definido pela Transmissora — frequentemente menos de 60 segundos).
+> **Recomendação:** chame `/authorization-result` **imediatamente** após interceptar a URL, antes mesmo de exigir autenticação do usuário no app. O *authorization code* retornado pelo fluxo do Módulo de Iniciação de Pagamentos tem TTL muito curto (definido pela Transmissora — frequentemente menos de 60 segundos).
 
 ## Caminho mobile vs. caminho web
 
@@ -66,7 +66,7 @@ O resultado da autorização é entregue por caminhos diferentes dependendo de *
 | Origem | O que acontece no retorno | Caminho técnico |
 | :----: | :-----------------------: | :-------------: |
 | **Aplicativo mobile** | App da Receptora intercepta o redirect via App Links / Universal Links | `POST /authorization-result` |
-| **Browser** | Browser segue o redirect da Transmissora até o OpusTPP | `/redirect-uri` → 302 para `callbackApplicationUri` |
+| **Browser** | Browser segue o redirect da Transmissora até o Módulo de Iniciação de Pagamentos | `/redirect-uri` → 302 para `callbackApplicationUri` |
 
 > **Atenção crítica:** Mesmo quando o fluxo é iniciado em um app, é **obrigatório** implementar **ambos** os caminhos. A interceptação mobile pode falhar (App Links mal configurados, usuário escolhe abrir com outro app, etc.). Sem o tratamento web como contingência, o usuário fica sem feedback do resultado.
 
@@ -79,7 +79,7 @@ O app intercepta o redirect, extrai a query string ou fragment, e chama `POST /a
 
 ### Caminho 2 — Web
 
-Quando o browser segue o redirect da Transmissora até a rota `/redirect-uri` do OpusTPP, o OpusTPP realiza um **HTTP 302** para a `callbackApplicationUri` cadastrada no consentimento, acrescentando os seguintes parâmetros de consulta:
+Quando o browser segue o redirect da Transmissora até a rota `/redirect-uri` do Módulo de Iniciação de Pagamentos, o Módulo de Iniciação de Pagamentos realiza um **HTTP 302** para a `callbackApplicationUri` cadastrada no consentimento, acrescentando os seguintes parâmetros de consulta:
 
 **Sucesso:**
 
@@ -101,7 +101,7 @@ Quando o browser segue o redirect da Transmissora até a rota `/redirect-uri` do
 
 ### Sobre os parâmetros de erro
 
-Em ambos os caminhos, `error` e `error_description` são **padrão OAuth 2.0** (RFC 6749): são gerados pela Transmissora e repassados pelo OpusTPP. O parâmetro `result` (presente apenas no caminho via `callbackApplicationUri`) é o único acrescentado pelo OpusTPP, para facilitar a detecção do resultado sem precisar verificar a ausência de `error`.
+Em ambos os caminhos, `error` e `error_description` são **padrão OAuth 2.0** (RFC 6749): são gerados pela Transmissora e repassados pelo Módulo de Iniciação de Pagamentos. O parâmetro `result` (presente apenas no caminho via `callbackApplicationUri`) é o único acrescentado pela nossa solução, para facilitar a detecção do resultado sem precisar verificar a ausência de `error`.
 
 ## Suporte a múltiplos aplicativos
 

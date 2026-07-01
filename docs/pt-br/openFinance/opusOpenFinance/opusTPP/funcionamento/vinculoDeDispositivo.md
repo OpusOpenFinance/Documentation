@@ -16,7 +16,7 @@ alternate_lang:
 
 O Vínculo de Dispositivo (Enrollment) é a base do fluxo de **Pagamento sem Redirecionamento** do Open Finance Brasil. Ele permite que o usuário autorize transações futuras (pagamentos ou transferências inteligentes) usando apenas a autenticação biométrica do seu dispositivo, sem precisar refazer login na Detentora a cada operação.
 
-O OpusTPP implementa o vínculo com **FIDO2/WebAuthn** — o padrão W3C de autenticação por credencial pública/privada.
+O Módulo de Iniciação de Pagamentos implementa o vínculo com **FIDO2/WebAuthn** — o padrão W3C de autenticação por credencial pública/privada.
 
 > Para os possíveis valores de cada chave JSON consulte a [API associada][API-SemRedirect].
 
