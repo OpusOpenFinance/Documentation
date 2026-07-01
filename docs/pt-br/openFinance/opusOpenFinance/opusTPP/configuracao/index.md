@@ -35,7 +35,6 @@ Exemplos comuns:
 
 - `/opus-open-finance/consents/redirect-uri`
 - `/opus-open-finance/payments/redirect-uri`
-- `/opus-open-insurance/consents/redirect-uri`
 
 Essas URLs devem ser cadastradas no Software Statement de cada aplicação. Quando a instituição tem mais de um app, cada URL precisa carregar um `redirect_identifier` único — ver [Redirecionamento](../funcionamento/redirecionamento.html).
 
