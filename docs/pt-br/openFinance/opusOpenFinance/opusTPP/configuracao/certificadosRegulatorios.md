@@ -29,4 +29,4 @@ Detalhar os certificados regulatórios exigidos para a operação no Open Financ
 ## Referências
 
 - [Guia para TPP — Open Finance Brasil](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/240648607)
-- [Guia de Operação do Diretório Central — Open Finance](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378602)
+- [Guia de Operação do Diretório Central — Open Finance](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/941817857/Guia+de+Opera+o+do+Diret+rio+Central.)

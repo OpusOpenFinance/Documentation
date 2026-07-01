@@ -16,17 +16,17 @@ alternate_lang:
 
 Detalhar o tratamento do retorno do fluxo do Módulo de Iniciação de Pagamentos tanto no caminho mobile (App-to-App via Android App Links / iOS Universal Links) quanto no caminho web, incluindo o endpoint `authorization-result`, os formatos de erro padrão OAuth 2.0 e o suporte a múltiplos aplicativos.
 
-> Conforme [definido pelo Open Finance Brasil](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378415/Redirecionamento+App-to-App), a comunicação entre o aplicativo da Receptora e o aplicativo da Transmissora deve ser **direta**, sem etapas intermediárias (como páginas web para seleção de aplicativo).
+> Conforme [definido pelo Open Finance Brasil](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/240650297/Redirecionamento+App-to-App), a comunicação entre o aplicativo da Receptora e o aplicativo da Transmissora deve ser **direta**, sem etapas intermediárias (como páginas web para seleção de aplicativo).
 
 ## URLs que o aplicativo deve interceptar
 
 | Descrição | URL |
 | :-------: | :-: |
-| Consentimento de dados (OOFC) | `https://<OOC-FQDN>/opus-open-finance/consents/redirect-uri` |
-| Consentimento de pagamentos (OOFC) | `https://<OOC-FQDN>/opus-open-finance/payments/redirect-uri` |
-| Consentimento de dados (OOIC) | `https://<OOC-FQDN>/opus-open-insurance/consents/redirect-uri` |
+| Consentimento de dados | `https://<FQDN>/opus-open-finance/consents/redirect-uri` |
+| Consentimento de pagamentos | `https://<FQDN>/opus-open-finance/payments/redirect-uri` |
+| Consentimento de dados  | `https://<FQDN>/opus-open-insurance/consents/redirect-uri` |
 
-O `<OOC-FQDN>` é o FQDN configurado na linha da tabela `application` correspondente.
+O `<FQDN>` é o FQDN configurado na linha da tabela `application` correspondente.
 
 ## Arquivos Asset Links e Apple App Site Association
 
@@ -34,8 +34,8 @@ Esses arquivos permitem que o sistema operacional do dispositivo reconheça quai
 
 | Plataforma | Rota |
 | :--------: | :--: |
-| Android | `GET https://<OOC-FQDN>/.well-known/assetlinks.json` |
-| iOS | `GET https://<OOC-FQDN>/.well-known/apple-app-site-association` |
+| Android | `GET https://<FQDN>/.well-known/assetlinks.json` |
+| iOS | `GET https://<FQDN>/.well-known/apple-app-site-association` |
 
 A configuração do conteúdo desses arquivos é feita via variáveis de ambiente do deploy (`config.androidAssetLinksFile` e `config.appleAppSiteAssociationFile`).
 
@@ -45,8 +45,8 @@ Após interceptar a URL de retorno, o app deve enviar o resultado OIDC ao Módul
 
 | Verbo | URL | Payload |
 | :---: | :-: | :-----: |
-| POST | `https://<OOC-FQDN>/opus-open-finance/authorization-result` | `{ "data": "<query string ou fragment>" }` |
-| POST | `https://<OOC-FQDN>/opus-open-insurance/authorization-result` | idem |
+| POST | `https://<FQDN>/opus-open-finance/authorization-result` | `{ "data": "<query string ou fragment>" }` |
+| POST | `https://<FQDN>/opus-open-insurance/authorization-result` | idem |
 
 A query string ou fragment deve ser extraída **as-is** da URL interceptada (tudo o que vem depois de `?` ou `#`).
 
@@ -95,7 +95,7 @@ Quando o browser segue o redirect da Transmissora até a rota `/redirect-uri` do
 
 | Parâmetro | Quem define | Valores possíveis |
 | :-------: | :---------: | :---------------: |
-| `result` | Opus Open Client | `success` ou `error` |
+| `result` | Módulo de Iniciação de Pagamentos | `success` ou `error` |
 | `error` | Transmissora (OAuth 2.0) | Código padrão [RFC 6749 §4.1.2.1](https://www.rfc-editor.org/rfc/rfc6749#section-4.1.2.1). Exemplos: `access_denied` (usuário negou), `invalid_grant` (código de autorização inválido/expirado) |
 | `error_description` | Transmissora (OAuth 2.0) | Texto livre, varia por implementação de cada Transmissora |
 
