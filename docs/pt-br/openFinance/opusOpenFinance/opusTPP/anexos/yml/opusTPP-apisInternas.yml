@@ -1,0 +1,138 @@
+openapi: 3.0.0
+info:
+  title: OpusTPP - APIs Internas
+  description: |-
+    OpusTPP - Core de gestão de informações
+
+    # Gestão de informações internas
+
+  version: 1.0.0
+tags:
+  - name: Applications
+    description: |-
+      Endpoints de gestão de external client id
+servers:
+  - url: https://open-finance-core.instituicao.com.br
+paths:
+  /opus-open-finance/application/v1/external-client/{id}:
+    get:
+      tags:
+        - Applications
+      operationId: oofcApplicationGetExternalClientId
+      description: Método para obtenção do external client id de uma aplicação
+      summary: Obter external client id
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetsExternalClientIdResponse'
+  /opus-open-finance/application/v1/application/{applicationId}/external-client/{id}:
+    patch:
+      tags:
+        - Applications
+      operationId: oofcApplicationPatchExternalClientId
+      description: Método para criação ou atualização do external client id de uma aplicação
+      summary: Criar ou atualizar external client id
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/id'
+      responses:
+        '204':
+          description: External client id criado ou atualizado com sucesso.
+  /opus-open-finance/application/v1/application/{applicationId}/webhook-url:
+    patch:
+      tags:
+        - Applications
+      operationId: oofcApplicationPatchWebhookUrl
+      description: Método para criação ou atualização do webhook url de uma aplicação cliente, chamada durante o processo de notificação de mudança de status de um pagamento.
+      summary: Criar ou atualizar webhook url
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchWebhookUrlRequest'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+      responses:
+        '204':
+          description: Webhook Url criada ou atualizada com sucesso.
+        '404':
+          description: Nenhuma aplicação encontrada com o applicationId informado.
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+components:
+  schemas:
+    GetsExternalClientIdResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          properties:
+            externalClientId:
+              type: string
+              example: '123456'
+            applicationId:
+              type: string
+              example: '123e4567-e89b-12d3-a456-426614174000'
+    PatchWebhookUrlRequest:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          properties:
+            webhookUrl:
+              type: string
+              example: 'https://client.instituicao.com.br/webhook'
+    EnumOriginError:
+      type: string
+      enum:
+        - opus-tpp
+        - participant
+        - directory
+        - unknown
+      example: opus-tpp
+      description: |
+        Origem do erro reportado:
+        - **opus-tpp**: erro originado no Opus TPP.
+        - **participant**: erro originado na instituição transmissora ou detentora.
+        - **directory**: erro originado no Diretório de Participantes.
+        - **unknown**: origem não identificada.
+  headers:
+    xOriginError:
+      description: Indica a origem do erro.
+      schema:
+        $ref: '#/components/schemas/EnumOriginError'
+      required: false
+    xErrorSourceUrl:
+      description: URL da chamada que originou o erro, presente apenas quando `x-origin-error` = `participant`.
+      schema:
+        type: string
+      required: false
+  parameters:
+    applicationId:
+      name: applicationId
+      in: path
+      description: Id da aplicação
+      required: true
+      schema:
+        type: string
+        example: '123e4567-e89b-12d3-a456-426614174000'
+    id:
+      name: id
+      in: path
+      description: External client id da aplicação
+      required: true
+      schema:
+        type: string
+        example: '123456'
