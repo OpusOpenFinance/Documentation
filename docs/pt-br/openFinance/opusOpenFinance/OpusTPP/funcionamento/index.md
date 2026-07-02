@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Funcionamento
-parent: "OpusTPP"
+parent: "Módulo de Iniciação de Pagamentos"
 nav_order: 3
 has_children: true
 lang: "pt-br"

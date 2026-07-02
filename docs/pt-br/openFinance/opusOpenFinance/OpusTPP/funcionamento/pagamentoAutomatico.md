@@ -2,7 +2,7 @@
 layout: default
 title: Pagamento Automático
 parent: "Funcionamento"
-grand_parent: "OpusTPP"
+grand_parent: "Módulo de Iniciação de Pagamentos"
 nav_order: 3
 lang: "pt-br"
 alternate_lang:

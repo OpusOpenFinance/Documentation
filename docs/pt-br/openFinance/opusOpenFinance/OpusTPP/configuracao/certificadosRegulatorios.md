@@ -2,7 +2,7 @@
 layout: default
 title: Certificados Regulatórios
 parent: "Configuração"
-grand_parent: "OpusTPP"
+grand_parent: "Módulo de Iniciação de Pagamentos"
 nav_order: 3
 lang: "pt-br"
 alternate_lang:

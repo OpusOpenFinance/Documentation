@@ -2,7 +2,7 @@
 layout: default
 title: Redirecionamento App-to-App e Web
 parent: "Funcionamento"
-grand_parent: "OpusTPP"
+grand_parent: "Módulo de Iniciação de Pagamentos"
 nav_order: 6
 lang: "pt-br"
 alternate_lang:

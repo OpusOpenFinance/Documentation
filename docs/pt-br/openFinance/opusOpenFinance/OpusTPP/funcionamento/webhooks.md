@@ -2,7 +2,7 @@
 layout: default
 title: Webhooks de Pagamentos
 parent: "Funcionamento"
-grand_parent: "OpusTPP"
+grand_parent: "Módulo de Iniciação de Pagamentos"
 nav_order: 7
 lang: "pt-br"
 alternate_lang:
