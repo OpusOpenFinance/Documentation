@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Conceitos
-parent: "OpusTPP"
+parent: "Módulo de Iniciação de Pagamentos"
 nav_order: 1
 has_children: true
 lang: "pt-br"

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: OpusTPP
+title: Módulo de Iniciação de Pagamentos
 parent: "Opus Open Finance"
 nav_order: 6
 has_children: true
