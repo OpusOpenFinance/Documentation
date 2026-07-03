@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Funcionamento
-parent: "Módulo de Iniciação de Pagamentos"
+parent: "Iniciação de Pagamentos e Recepção de Dados"
 nav_order: 3
 has_children: true
 lang: "pt-br"
@@ -12,9 +12,9 @@ alternate_lang:
       lang: "es"
 ---
 
-## Funcionamento do Módulo de Iniciação de Pagamentos
+## Funcionamento: Iniciação de Pagamentos e Recepção de Dados
 
-Este documento descreve, em alto nível, os principais fluxos de negócio suportados pelo Módulo de Iniciação de Pagamentos para integração com o ecossistema do Open Finance Brasil. Cada fluxo tem uma página dedicada com detalhes técnicos, payloads e códigos de erro — use os links ao longo do texto.
+Este documento descreve, em alto nível, os principais fluxos de negócio suportados pelo Módulo de Iniciação de Pagamentos e pelo Módulo de Recepção de Dados para integração com o ecossistema do Open Finance Brasil. Cada fluxo tem uma página dedicada com detalhes técnicos, payloads e códigos de erro — use os links ao longo do texto.
 
 ## Fluxo de Solicitação de Consentimento
 
@@ -56,7 +56,7 @@ As instituições são classificadas por suas funções:
 
 | Finalidade | Endpoint |
 | :--------: | :------: |
-| Compartilhamento de Dados (Open Finance) | `POST /opus-open-finance/consents/v1/consents` |
+| Recepção de Dados | `POST /opus-open-finance/consents/v1/consents` |
 | Iniciação de Pagamento | `POST /opus-open-finance/payments/v1/consents` |
 | Iniciação de Pagamento Automático | `POST /opus-open-finance/automatic-payments/v1/recurring-consents` |
 
@@ -67,7 +67,7 @@ As instituições são classificadas por suas funções:
 - O payload retorna o `consentId`, identificador único do consentimento;
 - Status inicial: **AWAITING_AUTHORISATION** (aguardando autorização do usuário).
 
-> Para detalhes do payload, veja [Recepção de Dados — Open Finance](recepcaoDeDados.html).
+> Para detalhes do payload, veja [Recepção de Dados](recepcaoDeDados.html).
 
 #### 3. Redirecionamento para Autorização
 
@@ -91,7 +91,7 @@ Em casos de falha no redirecionamento (ex.: timeout, erro 500 do servidor), o BA
 
 | Finalidade | Endpoint |
 | :--------: | :------: |
-| Compartilhamento de Dados | `POST /opus-open-finance/consents/v1/consents/{consentId}/authorisation-retry` |
+| Recepção de Dados | `POST /opus-open-finance/consents/v1/consents/{consentId}/authorisation-retry` |
 | Iniciação de Pagamento | `POST /opus-open-finance/payments/v1/consents/{consentId}/authorisation-retry` |
 
 > **Prazo para nova tentativa:** Disponível enquanto o status for **AWAITING_AUTHORISATION** (5 minutos para pagamento, 60 minutos para compartilhamento de dados).
@@ -118,7 +118,7 @@ Após a aprovação, o consentimento pode ser utilizado para:
 
 | Tipo de Consentimento | Finalidade | Página de detalhes |
 | :-------------------: | :--------: | :----------------: |
-| Compartilhamento de Dados | Obtenção de dados cadastrais e transacionais | [Recepção de Dados — OF](recepcaoDeDados.html) |
+| Recepção de Dados | Obtenção de dados cadastrais e transacionais | [Recepção de Dados](recepcaoDeDados.html) |
 | Iniciação de Pagamento | Criação e execução de pagamentos | [Iniciação de Pagamento](iniciacaoDePagamento.html) |
 | Pagamento Automático | Criação e gestão de pagamentos recorrentes | [Pagamento Automático](pagamentoAutomatico.html) |
 
