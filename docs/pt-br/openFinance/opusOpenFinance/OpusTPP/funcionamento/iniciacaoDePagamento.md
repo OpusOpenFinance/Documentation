@@ -2,7 +2,7 @@
 layout: default
 title: Iniciação de Pagamento
 parent: "Funcionamento"
-grand_parent: "Módulo de Iniciação de Pagamentos"
+grand_parent: "Iniciação de Pagamentos e Recepção de Dados"
 nav_order: 2
 lang: "pt-br"
 alternate_lang:

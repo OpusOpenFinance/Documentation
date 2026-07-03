@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Recepção de Dados — Open Finance
+title: Recepção de Dados
 parent: "Funcionamento"
-grand_parent: "OpusTPP"
+grand_parent: "Iniciação de Pagamentos e Recepção de Dados"
 nav_order: 1
 lang: "pt-br"
 alternate_lang:
@@ -14,7 +14,7 @@ alternate_lang:
 
 ## Objetivo
 
-A API de Recepção de Dados Cadastrais e Transacionais expõe os endpoints que permitem à ITP **gerenciar consentimentos** (criar, consultar, revogar e renovar) e **obter os dados consentidos** através de uma camada de proxy aderente ao padrão regulatório do Open Finance Brasil.
+O Módulo de Recepção de Dados Cadastrais e Transacionais expõe os endpoints que permitem à ITP **gerenciar consentimentos** (criar, consultar, revogar e renovar) e **obter os dados consentidos** através de uma camada de proxy aderente ao padrão regulatório do Open Finance Brasil.
 
 > **Pré-requisito:** Os endpoints de utilização só podem ser invocados após o fluxo de autorização descrito no [Funcionamento](./). Para os possíveis valores de cada chave JSON consulte a [API associada][API-OF-Dados].
 
