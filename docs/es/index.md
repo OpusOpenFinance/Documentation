@@ -82,14 +82,9 @@ En caso de que el cliente utilice la licencia de un proveedor, el proceso es má
 
 #### 5. Flujos técnicos y redireccionamiento
 
-- [Funcionamiento general del OpusTPP](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — visión de los flujos de negocio: listado de participantes, creación de consentimiento, redireccionamiento y consulta de estado.
+- [Funcionamiento general de la iniciación de pagos y la recepción de datos.](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — visión de los flujos de negocio: listado de participantes, creación de consentimiento, redireccionamiento y consulta de estado.
 - [Redireccionamiento App-to-App y Web](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html) — cómo el usuario es enviado a la Detentora de Cuenta para autorizar el pago y retorna al entorno del ITP.
 - [Webhooks de pagos](openFinance/opusOpenFinance/opusTPP/funcionamento/webhooks.html) — cómo recibir notificaciones asíncronas sobre cambios de estado de los pagos.
-
-#### 6. Implantación e integración
-
-- [Implantación de la Plataforma](openFinance/opusOpenFinance/implantacaoDaPlataforma/index.html) — el roadmap de implantación conducido por Opus: kickoff, configuración de entornos, certificación OpenID, integración de las pantallas de la jornada de consentimiento y capa de integración.
-- [Integración de Pagos](openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/index.html) — detalles técnicos de la integración de la capa de pagos con los sistemas de retaguardia.
 
 ---
 
@@ -107,32 +102,16 @@ El Receptor de Datos es el perfil que permite a su institución solicitar y obte
 
 - [Certificaciones y Certificados](openFinance/openFinanceBrasil/certificacoesECertificados.html) — al igual que el ITP, el Receptor necesita la **certificación OpenID RP** (*Relying Parties*) y el **Certificado de Autenticación**. La tabla de necesidad de certificados por perfil ayuda a identificar exactamente qué contratar.
 
-#### 3. Licencia propia vs. licencia compartida
-
-Un punto decisivo para nuevos clientes es la elección entre usar su propia licencia o utilizar la licencia de un proveedor.
-
-En caso de utilizar la licencia propia, el cliente debe realizar el [Onboarding del ITP](openFinance/openFinanceBrasil/perfisParticipacao/itp/onboardingITP.html), compuesto por:
-
-- Autorización por el Banco Central;
-- Etapa prehomologatoria;
-- Etapa homologatoria del Open Finance.
-
-En caso de que el cliente utilice la licencia de un proveedor, el proceso es más simple, bastando la integración con la Plataforma Opus Open Finance.
-
-#### 4. Datos disponibles para recepción
+#### 3. Datos disponibles para recepción
 
 - [Recepción de Datos — funcionamiento y endpoints](openFinance/opusOpenFinance/opusTPP/funcionamento/recepcaoDeDados.html) — endpoints de consentimiento (creación, consulta, revocación, renovación) y los aproximadamente 78 proxies regulatorios organizados por familia: clientes, cuentas, tarjeta de crédito, operaciones de crédito, cambio e inversiones.
 - [Compartición de Datos — visión de integración](openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/index.html) — cómo se organizan los datos recibidos, por producto financiero.
 - [Consentimiento Compartido — Recepción de Datos](openFinance/opusOpenFinance/consentimentoCompartilhado/recepcaoDeDados.html) — gestión del ciclo de vida de los consentimientos de datos desde la perspectiva del producto.
 
-#### 5. Flujos técnicos y redireccionamiento
+#### 4. Flujos técnicos y redireccionamiento
 
-- [Funcionamiento general del OpusTPP](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — los flujos de consentimiento de datos siguen la misma lógica general del ITP (listado de participantes → creación → redireccionamiento → consulta), con diferencias en los alcances y en la vigencia.
+- [Funcionamiento general de la iniciación de pagos y la recepción de datos.](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — los flujos de consentimiento de datos siguen la misma lógica general del ITP (listado de participantes → creación → redireccionamiento → consulta), con diferencias en los alcances y en la vigencia.
 - [Redireccionamiento App-to-App y Web](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html) — cómo el usuario es enviado a la Transmisora para autorizar la compartición y retorna al entorno del Receptor.
-
-#### 6. Implantación e integración
-
-- [Implantación de la Plataforma](openFinance/opusOpenFinance/implantacaoDaPlataforma/index.html) — el proceso de implantación es el mismo descrito para el ITP. Cabe destacar que para el perfil Receptor **no es necesario construir una capa de integración con sistemas de retaguardia** — la integración ocurre solamente en las pantallas de la jornada de consentimiento.
 
 ---
 

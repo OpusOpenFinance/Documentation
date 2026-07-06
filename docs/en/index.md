@@ -82,14 +82,9 @@ If the client uses a vendor's license, the process is simpler, requiring only th
 
 #### 5. Technical flows and redirection
 
-- [General operation of OpusTPP](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — view of the business flows: listing of participants, consent creation, redirection and status query.
+- [General operation of payment initiation and data receipt](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — view of the business flows: listing of participants, consent creation, redirection and status query.
 - [App-to-App and Web Redirection](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html) — how the user is sent to the Account Holder to authorize the payment and returns to the ITP environment.
 - [Payment webhooks](openFinance/opusOpenFinance/opusTPP/funcionamento/webhooks.html) — how to receive asynchronous notifications about payment status changes.
-
-#### 6. Deployment and integration
-
-- [Platform Deployment](openFinance/opusOpenFinance/implantacaoDaPlataforma/index.html) — the deployment roadmap conducted by Opus: kickoff, environment configuration, OpenID certification, integration of the consent journey screens and integration layer.
-- [Payments Integration](openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/index.html) — technical details of the integration of the payments layer with the back-office systems.
 
 ---
 
@@ -107,32 +102,16 @@ The Data Receiver is the profile that allows your institution to request and obt
 
 - [Certifications and Certificates](openFinance/openFinanceBrasil/certificacoesECertificados.html) — just like the ITP, the Receiver requires the **OpenID RP certification** (*Relying Parties*) and the **Authentication Certificate**. The table of certificate requirements by profile helps identify exactly what to contract.
 
-#### 3. Own license vs. shared license
-
-A decisive point for new clients is the choice between using their own license or using a vendor's license.
-
-If using their own license, the client must carry out the [ITP Onboarding](openFinance/openFinanceBrasil/perfisParticipacao/itp/onboardingITP.html), composed of:
-
-- Authorization by the Central Bank;
-- Pre-certification stage;
-- Open Finance certification stage.
-
-If the client uses a vendor's license, the process is simpler, requiring only the integration with the Opus Open Finance Platform.
-
-#### 4. Data available for reception
+#### 3. Data available for reception
 
 - [Data Reception — operation and endpoints](openFinance/opusOpenFinance/opusTPP/funcionamento/recepcaoDeDados.html) — consent endpoints (creation, query, revocation, renewal) and the approximately 78 regulatory proxies organized by family: customers, accounts, credit card, credit operations, foreign exchange and investments.
 - [Data Sharing — integration view](openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/index.html) — how the received data is organized, by financial product.
 - [Shared Consent — Data Reception](openFinance/opusOpenFinance/consentimentoCompartilhado/recepcaoDeDados.html) — management of the life cycle of data consents from the product perspective.
 
-#### 5. Technical flows and redirection
+#### 4. Technical flows and redirection
 
-- [General operation of OpusTPP](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — the data consent flows follow the same general logic as the ITP (listing of participants → creation → redirection → query), with differences in the scopes and in the validity.
+- [General operation of payment initiation and data receipt](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — the data consent flows follow the same general logic as the ITP (listing of participants → creation → redirection → query), with differences in the scopes and in the validity.
 - [App-to-App and Web Redirection](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html) — how the user is sent to the Transmitter to authorize the sharing and returns to the Receiver environment.
-
-#### 6. Deployment and integration
-
-- [Platform Deployment](openFinance/opusOpenFinance/implantacaoDaPlataforma/index.html) — the deployment process is the same described for the ITP. It is worth noting that for the Receiver profile **it is not necessary to build an integration layer with back-office systems** — the integration occurs only in the consent journey screens.
 
 ---
 

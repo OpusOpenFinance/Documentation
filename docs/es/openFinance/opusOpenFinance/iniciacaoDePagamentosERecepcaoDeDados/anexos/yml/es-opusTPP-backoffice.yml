@@ -1,0 +1,570 @@
+openapi: 3.0.0
+info:
+  title: Backoffice API
+  description: |-
+    OpusTPP - Backoffice Endpoints
+
+    Endpoints para operaciones de backoffice (gestión interna) en OpusTPP.
+  version: 1.0.0-beta.1
+tags:
+  - name: Consents
+    description: |-
+      Endpoints para la gestión de consentimientos
+  - name: Enrollments
+    description: |-
+      Endpoints para la gestión de enrollments
+  - name: Payments
+    description: |-
+      Endpoints para la gestión de pagos
+servers:
+  - url: https://client.qa.oofc.opus-software.com.br
+paths:
+  /backoffice/consents:
+    get:
+      tags:
+        - Consents
+      operationId: getBackofficeConsents
+      summary: Listar consentimientos con filtros
+      description: |-
+        Retorna una lista de consentimientos de acuerdo con los filtros especificados.
+        Admite paginación, ordenamiento y múltiples criterios de búsqueda.
+      parameters:
+        - $ref: '#/components/parameters/cnpj'
+        - $ref: '#/components/parameters/cpf'
+        - $ref: '#/components/parameters/createdOnBegin'
+        - $ref: '#/components/parameters/createdOnEnd'
+        - $ref: '#/components/parameters/expiresOn'
+        - $ref: '#/components/parameters/searchKey'
+        - $ref: '#/components/parameters/searchKeys'
+        - $ref: '#/components/parameters/tppId'
+        - $ref: '#/components/parameters/consentStatus'
+        - $ref: '#/components/parameters/consentStatusList'
+        - $ref: '#/components/parameters/consentId'
+        - $ref: '#/components/parameters/consentIdList'
+        - $ref: '#/components/parameters/consentStatusList'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/orderType'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/applicationId'
+      responses:
+        '200':
+          description: Lista de consentimientos retornada con éxito
+          headers:
+            x-correlation-id:
+              description: ID único para correlacionar solicitudes
+              schema:
+                type: string
+                format: uuid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBackofficeConsentsResponse'
+  /backoffice/enrollments:
+    get:
+      tags:
+        - Enrollments
+      operationId: getBackofficeEnrollments
+      summary: Listar enrollments con filtros
+      description: |-
+        Retorna una lista de enrollments de acuerdo con los filtros especificados.
+        Admite paginación, ordenamiento y múltiples criterios de búsqueda.
+      parameters:
+        - $ref: '#/components/parameters/cnpj'
+        - $ref: '#/components/parameters/cpf'
+        - $ref: '#/components/parameters/createdOnBegin'
+        - $ref: '#/components/parameters/createdOnEnd'
+        - $ref: '#/components/parameters/expiresOn'
+        - $ref: '#/components/parameters/tppId'
+        - $ref: '#/components/parameters/enrollmentId'
+        - $ref: '#/components/parameters/enrollmentIdList'
+        - $ref: '#/components/parameters/enrollmentStatus'
+        - $ref: '#/components/parameters/enrollmentStatusList'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/orderType'
+        - $ref: '#/components/parameters/applicationId'
+      responses:
+        '200':
+          description: Lista de enrollments retornada con éxito
+          headers:
+            x-correlation-id:
+              description: ID único para correlacionar solicitudes
+              schema:
+                type: string
+                format: uuid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBackofficeEnrollmentsResponse'
+  /backoffice/consents/{consentId}/payments:
+    get:
+      tags:
+        - Payments
+      operationId: getBackofficeConsentPayments
+      summary: Listar pagos de un consentimiento específico
+      description: |-
+        Retorna una lista de pagos asociados a un consentimiento específico.
+        Admite paginación y ordenamiento.
+      parameters:
+        - $ref: '#/components/parameters/consentId'
+      responses:
+        '200':
+          description: Lista de pagos retornada con éxito
+          headers:
+            x-correlation-id:
+              description: ID único para correlacionar solicitudes
+              schema:
+                type: string
+                format: uuid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBackofficePaymentsResponse'
+components:
+  parameters:
+    tppId:
+      name: brandId
+      in: query
+      description: Identificador interno de OpusTPP de la marca asociada al recurso
+      schema:
+        $ref: '#/components/schemas/TppId'
+    cnpj:
+      name: cnpj
+      in: query
+      description: CNPJ de la empresa a la cual pertenece el recurso
+      schema:
+        $ref: '#/components/schemas/CNPJ'
+    cpf:
+      name: cpf
+      in: query
+      description: CPF del usuario al cual pertenece el recurso
+      schema:
+        $ref: '#/components/schemas/CPF'
+    createdOnBegin:
+      name: createdOnBegin
+      in: query
+      description: |-
+        Fecha mínima de creación del recurso (ISO 8601).
+        Se considerará el intervalo entre createdOnBegin y createdOnEnd.
+      schema:
+        $ref: '#/components/schemas/DateTime'
+    createdOnEnd:
+      name: createdOnEnd
+      in: query
+      description: |-
+        Fecha máxima de creación del recurso (ISO 8601).
+        Se considerará el intervalo entre createdOnBegin y createdOnEnd.
+      schema:
+        $ref: '#/components/schemas/DateTime'
+    expiresOn:
+      name: expiresOn
+      in: query
+      description: Fecha de expiración del recurso, si existe (ISO 8601)
+      schema:
+        $ref: '#/components/schemas/DateTime'
+    searchKey:
+      name: searchKey
+      in: query
+      description: |-
+        Identificador usado para encontrar un recurso de forma rápida por criterios ya mapeados durante la creación del recurso.
+        Se considerará la unión con searchKeys.
+      schema:
+        $ref: '#/components/schemas/SearchKey'
+    searchKeys:
+      name: searchKeys
+      in: query
+      description: |-
+        Lista de identificadores usados para encontrar recursos de forma rápida por criterios ya mapeados durante la creación del recurso, separados por coma.
+        Se considerará la unión con searchKey.
+      schema:
+        $ref: '#/components/schemas/SearchKeys'
+    page:
+      name: page
+      in: query
+      description: Número de la página a retornar (para paginación de los resultados)
+      schema:
+        $ref: '#/components/schemas/PageNumber'
+    pageSize:
+      name: pageSize
+      in: query
+      description: Cantidad máxima de registros por página
+      schema:
+        $ref: '#/components/schemas/PageSize'
+    orderType:
+      name: orderType
+      in: query
+      description: Ordenamiento de los resultados por la fecha de creación
+      schema:
+        $ref: '#/components/schemas/OrderType'
+    applicationId:
+      name: x-application-id
+      in: header
+      description: |-
+        Identificador de la aplicación cliente que está solicitando a OpusTPP.
+      required: true
+      schema:
+        $ref: '#/components/schemas/ApplicationId'
+    enrollmentId:
+      name: enrollmentId
+      in: query
+      description: |-
+        Identificador único del enrollment.
+        Se considerará la unión con enrollmentIdList.
+      schema:
+        $ref: '#/components/schemas/UUID'
+    enrollmentIdList:
+      name: enrollmentIdList
+      in: query
+      description: |-
+        Lista de identificadores de enrollment separados por coma.
+        Se considerará la unión con enrollmentId.
+      schema:
+        $ref: '#/components/schemas/UUIDList'
+    consentId:
+      name: consentId
+      in: query
+      description: |-
+        Identificador único del consentimiento.
+        Se considerará la unión con consentIdList.
+      schema:
+        $ref: '#/components/schemas/UUID'
+    consentIdList:
+      name: consentIdList
+      in: query
+      description: |-
+        Lista de identificadores de consentimiento separados por coma.
+        Se considerará la unión con consentId.
+      schema:
+        $ref: '#/components/schemas/UUIDList'
+    consentStatus:
+      name: status
+      in: query
+      description: |-
+        Estado del consentimiento.
+        Se considerará la unión con statusList.
+      schema:
+        $ref: '#/components/schemas/ConsentStatus'
+    consentStatusList:
+      name: statusList
+      in: query
+      description: |-
+        Lista de estados posibles para la búsqueda, separados por coma.
+        Se considerará la unión con status.
+      schema:
+        $ref: '#/components/schemas/ConsentStatusList'
+    enrollmentStatus:
+      name: status
+      in: query
+      description: |-
+        Estado del enrollment.
+        Se considerará la unión con statusList.
+      schema:
+        $ref: '#/components/schemas/EnrollmentStatus'
+    enrollmentStatusList:
+      name: statusList
+      in: query
+      description: |-
+        Lista de estados posibles para la búsqueda, separados por coma.
+        Se considerará la unión con status.
+      schema:
+        $ref: '#/components/schemas/EnrollmentStatusList'
+  schemas:
+    TppId:
+      type: string
+      format: uuid
+      description: Identificador interno de la marca de OpusTPP
+      example: 'abc123'
+    TppLogo:
+      type: string
+      format: uri
+      description: Logo de la tpp
+      example: 'https://example.com/logo.png'
+    TppName:
+      type: string
+      description: Nombre de la tpp
+      example: 'Amazing Bank'
+    CNPJ:
+      type: string
+      pattern: '^[A-Za-z0-9]{14}$'
+      description: CNPJ de la empresa (14 caracteres alfanuméricos)
+      example: 'AB12CD34EF56GH'
+    CPF:
+      type: string
+      pattern: '^[A-Za-z0-9]{11}$'
+      description: CPF del usuario (11 caracteres alfanuméricos)
+      example: 'A1B2C3D4E5F'
+    SearchKey:
+      type: string
+      description: Identificador usado para encontrar un recurso de forma rápida por criterios ya mapeados durante la creación del recurso.
+      example: 'cpf:98765432100'
+    SearchKeys:
+      type: string
+      description: Lista de identificadores usados para encontrar recursos de forma rápida por criterios ya mapeados durante la creación del recurso, separados por coma.
+      example: 'cpf:98765432100,cnpj:12345678000199'
+    DateTime:
+      type: string
+      format: date-time
+      description: Fecha y hora en formato ISO 8601
+      example: '2024-01-01T00:00:00Z'
+    PageNumber:
+      type: integer
+      minimum: 1
+      default: 1
+      description: Número de la página para paginación
+      example: 1
+    PageSize:
+      type: integer
+      minimum: 1
+      maximum: 100
+      default: 25
+      description: Cantidad máxima de registros por página
+      example: 25
+    OrderType:
+      type: string
+      enum:
+        - ASC
+        - DESC
+      default: DESC
+      description: Ordenamiento de los resultados (ASC para ascendente, DESC para descendente) con base en la fecha de creación del recurso
+      example: DESC
+    ApplicationId:
+      type: string
+      format: uuid
+      description: Identificador único de la aplicación cliente
+      example: 'b9334f6e-a2ad-42ee-86c9-946ee0f0bb54'
+    UUID:
+      type: string
+      format: uuid
+      description: Identificador único del recurso
+      example: 'urn:amazingbank:5b39e7c2-0f6d-42e1-9a0a-fc6e33d82f70'
+    UUIDList:
+      type: string
+      format: uuid
+      description: Lista de identificadores de recursos separados por coma
+      example: 'urn:amazingbank:5b39e7c2-0f6d-42e1-9a0a-fc6e33d82f70,urn:amazingbank:e14aa78c-6d94-4462-85a6-7d8ecf8af99b'
+    ConsentStatus:
+      type: string
+      description: Estado del consentimiento. Los estados de consentimiento se describen en la documentación https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369335/DC+API+-+Consentimento
+      example: AUTHORISED
+    ConsentStatusList:
+      type: string
+      description: Lista de estados posibles para la búsqueda, separados por coma. Los estados de consentimiento se describen en la documentación https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369335/DC+API+-+Consentimento
+      example: 'AUTHORISED,AWAITING_RISK_SIGNALS'
+    EnrollmentStatus:
+      type: string
+      description: Estado del enrollment. Los estados de enrollment se describen en la documentación https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+      example: AUTHORISED
+    EnrollmentStatusList:
+      type: string
+      description: Lista de estados posibles para la búsqueda, separados por coma. Los estados de enrollment se describen en la documentación https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+      example: 'AUTHORISED,AWAITING_RISK_SIGNALS'
+    Meta:
+      type: object
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          description: Total de registros encontrados
+        totalPages:
+          type: integer
+          description: Total de páginas disponibles
+        requestDateTime:
+          type: string
+          format: date-time
+          description: Fecha y hora de la solicitud UTC
+          example: '2024-06-15T10:30:45.123Z'
+    TppData:
+      type: object
+      required:
+        - internalTppId
+        - tppName
+        - tppLogo
+      description: Información de la tpp asociada al recurso
+      properties:
+        internalTppId:
+          $ref: '#/components/schemas/TppId'
+        tppName:
+          $ref: '#/components/schemas/TppName'
+        tppLogo:
+          $ref: '#/components/schemas/TppLogo'
+    RegulatoryEnrollmentData:
+      type: object
+      description: |-
+        Todo el contenido del objeto `data` que viene en el retorno regulatorio de los siguientes endpoints relacionados al enrollment:
+        - POST /open-banking/enrollments/v*/enrollment
+        - GET /open-banking/enrollments/v*/enrollment/{enrollmentId}
+
+        El contenido ya decodificado y serializado en objeto JSON.
+
+        Enlace a la documentación regulatoria: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+    RegulatoryConsentData:
+      type: object
+      description: |-
+        Todo el contenido del objeto `data` que viene en el retorno regulatorio de los siguientes endpoints relacionados al consentimiento de transmisión de datos:
+        - POST /open-banking/consents/v*/consents
+        - GET /open-banking/consents/v*/consents/{consentId}
+
+        Enlace a la documentación regulatoria: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369335/DC+API+-+Consentimento
+    RegulatoryPaymentConsentData:
+      type: object
+      description: |-
+        Todo el contenido del objeto `data` que viene en el retorno regulatorio de los siguientes endpoints relacionados al consentimiento de pagos:
+        - POST /open-banking/payments/v*/consents
+        - GET /open-banking/payments/v*/consents/{consentId}
+
+        El contenido ya decodificado y serializado en objeto JSON.
+
+        Enlace a la documentación regulatoria: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/SV+API+-+Pagamentos
+    RegulatoryRecurringConsentData:
+      type: object
+      description: |-
+        Todo el contenido del objeto `data` que viene en el retorno regulatorio de los siguientes endpoints relacionados al consentimiento de pagos recurrentes:
+        - POST /open-banking/automatic-payments/v*/recurring-consents
+        - GET /open-banking/automatic-payments/v*/recurring-consents/{recurringConsentId}
+
+        El contenido ya decodificado y serializado en objeto JSON.
+
+        Enlace a la documentación regulatoria: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/198410569/SV+API+-+Pagamentos+Autom+ticos
+    RegulatoryPaymentData:
+      type: object
+      description: |-
+        Todo el contenido del objeto `data` que viene en el retorno regulatorio de los siguientes endpoints relacionados al pago:
+        - POST /open-banking/payments/v*/pix/payments
+        - GET /open-banking/payments/v*/pix/payments/{paymentId}
+
+        El contenido ya decodificado y serializado en objeto JSON.
+
+        Enlace a la documentación regulatoria: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17375943/SV+API+-+Pagamentos
+    RegulatoryRecurringPaymentData:
+      type: object
+      description: |-
+        Todo el contenido del objeto `data` que viene en el retorno regulatorio de los siguientes endpoints relacionados al pago recurrente:
+        - POST /open-banking/automatic-payments/v*/pix/recurring-payments
+        - GET /open-banking/automatic-payments/v*/pix/recurring-payments/{recurringPaymentId}
+
+        El contenido ya decodificado y serializado en objeto JSON.
+
+        Enlace a la documentación regulatoria: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/198410569/SV+API+-+Pagamentos+Autom+ticos
+    GetBackofficeEnrollmentsResponse:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          description: Lista de enrollments con datos regulatorios y adicionales
+          items:
+            $ref: '#/components/schemas/EnrollmentSummary'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    EnrollmentSummary:
+      type: object
+      required:
+        - regulatoryEnrollmentData
+        - additionalData
+      properties:
+        regulatoryEnrollmentData:
+          $ref: '#/components/schemas/RegulatoryEnrollmentData'
+        additionalData:
+          type: object
+          required:
+            - tppData
+            - regulatoryLinkedConsentData
+          properties:
+            tppData:
+              $ref: '#/components/schemas/TppData'
+            regulatoryLinkedConsentData:
+              allOf:
+                - $ref: '#/components/schemas/RegulatoryConsentData'
+              description: Retorna datos del consentimiento secundario aprobado asociado al enrollment,
+                en caso de que exista y aún se encuentre con estado AUTHORISED.
+    GetBackofficeConsentsResponse:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          description: Lista de consentimientos con datos regulatorios y adicionales
+          items:
+            $ref: '#/components/schemas/BackofficeConsentSummary'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    BackofficeConsentSummary:
+      type: object
+      description: |-
+        Estructura temporal específica del endpoint /backoffice/consents.
+        Puede evolucionar en el futuro para converger con el estándar de las demás respuestas.
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+        type:
+          type: string
+          description: Tipo de consentimiento
+          nullable: true
+          example: DATA_SHARING
+          enum:
+            - DATA_SHARING
+            - PAYMENT
+        status:
+          $ref: '#/components/schemas/ConsentStatus'
+        createdOn:
+          $ref: '#/components/schemas/DateTime'
+        expiresOn:
+          allOf:
+            - $ref: '#/components/schemas/DateTime'
+          nullable: true
+          description: Fecha de expiración del consentimiento, cuando aplique
+        brandId:
+          $ref: '#/components/schemas/TppId'
+        tppLogo:
+          $ref: '#/components/schemas/TppLogo'
+        tppName:
+          $ref: '#/components/schemas/TppName'
+        modalityType:
+          type: string
+          description: Tipo de modalidad de consentimiento de pago, cuando aplique.
+          example: IMMEDIATE
+          enum:
+            - IMMEDIATE
+            - SWEEPING
+            - SCHEDULED
+            - AUTOMATIC
+        authorisationServerId:
+          $ref: '#/components/schemas/UUID'
+          description: Identificador del servidor de autorización
+    GetBackofficePaymentsResponse:
+        type: object
+        required:
+          - data
+          - meta
+        properties:
+          data:
+            type: array
+            description: Lista de pagos asociados a un consentimiento específico
+            items:
+              $ref: '#/components/schemas/PaymentSummary'
+          meta:
+            $ref: '#/components/schemas/Meta'
+    PaymentSummary:
+      type: object
+      description: |-
+        Estructura temporal específica del endpoint /backoffice/consents/{consentId}/payments.
+        Puede evolucionar en el futuro para converger con el estándar de las demás respuestas.
+      required:
+        - regulatoryData
+      properties:
+        regulatoryData:
+          type: object
+          required:
+            - paymentData
+          properties:
+            paymentData:
+              oneOf:
+                - $ref: '#/components/schemas/RegulatoryPaymentData'
+                - $ref: '#/components/schemas/RegulatoryRecurringPaymentData'

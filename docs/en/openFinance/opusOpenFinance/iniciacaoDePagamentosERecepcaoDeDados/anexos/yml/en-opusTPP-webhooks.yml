@@ -1,0 +1,233 @@
+openapi: 3.0.0
+info:
+  title: OpusTPP - Webhooks
+  version: 1.0.0
+  description: |2-
+     Opus Open Client - Information management core
+    # Payment webhooks
+
+tags:
+  - name: Webhooks de Pagamentos
+    description: |-
+      Endpoints to receive notifications of status changes for users' payments and
+      payment consents. Official ([Open Finance - API
+      Webhooks
+      Payment](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/105021457/Webhook))
+paths:
+  /open-banking/webhook/v1/payments/{versionApi}/pix/payments/{paymentId}:
+    post:
+      tags:
+        - Webhooks
+      summary: Notify Pix payment status changes
+      description: |-
+        Method to receive notifications of status changes for Pix
+        payments
+      operationId: oofcWebhookPostPixPayments
+      parameters:
+        - name: versionApi
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: paymentId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: x-webhook-interaction-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          description: Accepted
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/webhookRequest'
+  /open-banking/webhook/v1/automatic-payments/{versionApi}/pix/recurring-payments/{recurringPaymentId}:
+    post:
+      tags:
+        - Webhooks
+      summary: Notify Pix automatic payment status changes
+      description: |-
+        Method to receive notifications of status changes for automatic Pix
+        payments
+      operationId: oofcWebhookPostPixRecurringPayments
+      parameters:
+        - name: versionApi
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: recurringPaymentId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: x-webhook-interaction-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          description: Accepted
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/webhookRequest'
+  /open-banking/webhook/v1/payments/{versionApi}/consents/{consentId}:
+    post:
+      tags:
+        - Webhooks
+      summary: Notify Pix payment consent status changes
+      description: |-
+        Method to receive notifications of status changes for Pix payment
+        consents
+      operationId: oofcWebhookPostConsentPixPayments
+      parameters:
+        - name: versionApi
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: consentId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: x-webhook-interaction-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          description: Accepted
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/webhookRequest'
+  /open-banking/webhook/v1/automatic-payments/{versionApi}/recurring-consents/{recurringConsentId}:
+    post:
+      tags:
+        - Webhooks
+      summary: |-
+        Notify status changes for automatic Pix payment
+        consents
+      description: |-
+        Method to receive notifications of status changes for automatic Pix
+        payment consents
+      operationId: oofcWebhookPostConsentPixRecurringPayments
+      parameters:
+        - name: versionApi
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: recurringConsentId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: x-webhook-interaction-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          description: Accepted
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/webhookRequest'
+  /open-banking/webhook/v1/enrollments/{versionApi}/enrollments/{enrollmentId}:
+    post:
+      tags:
+        - Webhooks
+      summary: |-
+        Notify account enrollment status changes
+      description: |-
+        Method to receive notifications of account enrollment status changes
+      operationId: oofcWebhookPostEnrollments
+      parameters:
+        - name: versionApi
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: enrollmentId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: x-webhook-interaction-id
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: x-authorization-server-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          description: Accepted
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/webhookRequest'
+components:
+  schemas:
+    webhookRequest:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              example: '2024-09-02T08:30:00Z'
+            eventType:
+              $ref: '#/components/schemas/EventType'
+          required:
+            - timestamp
+            - eventType
+      required:
+        - data
+    webhookResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              example: '2024-09-02T08:30:00Z'
+          required:
+            - timestamp
+      required:
+        - data
+    EventType:
+      type: string
+      enum:
+        - STATE_CHANGED
+        - DATA_CHANGED
+      description:  |
+        Type of event that triggered the webhook notification.
+        - STATE_CHANGED: Indicates that the state of the consent, the payment, or the device enrollment has changed.
+        - DATA_CHANGED: Indicates that data of the consent or the device enrollment has changed.
