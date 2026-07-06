@@ -24,7 +24,6 @@ Detalhar o tratamento do retorno do fluxo do Módulo de Iniciação de Pagamento
 | :-------: | :-: |
 | Consentimento de dados | `https://<FQDN>/opus-open-finance/consents/redirect-uri` |
 | Consentimento de pagamentos | `https://<FQDN>/opus-open-finance/payments/redirect-uri` |
-| Consentimento de dados  | `https://<FQDN>/opus-open-insurance/consents/redirect-uri` |
 
 O `<FQDN>` é o FQDN configurado na linha da tabela `application` correspondente.
 
@@ -46,7 +45,6 @@ Após interceptar a URL de retorno, o app deve enviar o resultado OIDC ao Módul
 | Verbo | URL | Payload |
 | :---: | :-: | :-----: |
 | POST | `https://<FQDN>/opus-open-finance/authorization-result` | `{ "data": "<query string ou fragment>" }` |
-| POST | `https://<FQDN>/opus-open-insurance/authorization-result` | idem |
 
 A query string ou fragment deve ser extraída **as-is** da URL interceptada (tudo o que vem depois de `?` ou `#`).
 
@@ -115,10 +113,8 @@ Exemplo — dois apps, `id-app-a` e `id-app-b`, com FQDNs *ooc-appA.instituicao.
 | :-----: | :-: | :----------------------------: |
 | OF Dados | id-app-a | `https://ooc-appA.instituicao.com.br/opus-open-finance/consents/redirect-uri/id-app-a` |
 | OF Pagamento | id-app-a | `https://ooc-appA.instituicao.com.br/opus-open-finance/payments/redirect-uri/id-app-a` |
-| OI Dados | id-app-a | `https://ooc-appA.instituicao.com.br/opus-open-insurance/consents/redirect-uri/id-app-a` |
 | OF Dados | id-app-b | `https://ooc-appB.instituicao.com.br/opus-open-finance/consents/redirect-uri/id-app-b` |
 | OF Pagamento | id-app-b | `https://ooc-appB.instituicao.com.br/opus-open-finance/payments/redirect-uri/id-app-b` |
-| OI Dados | id-app-b | `https://ooc-appB.instituicao.com.br/opus-open-insurance/consents/redirect-uri/id-app-b` |
 
 > **Importante:** Todas as URIs de redirecionamento utilizadas pela instituição devem estar registradas no Software Statement do Diretório de Participantes (ver [Configuração](../configuracao/)).
 
