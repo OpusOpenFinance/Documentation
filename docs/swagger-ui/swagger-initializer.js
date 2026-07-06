@@ -77,13 +77,14 @@ window.onload = () => {
     "odr-investments_funds": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/investments_funds_oas.yml`,
     "odr-exchanges": `${base}/pt-br/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/exchanges_oas.yml`,
     // OpusTPP
-    "otpp-apis_internas": `${base}/pt-br/openFinance/opusOpenFinance/opusTPP/anexos/yml/opusTPP-apisInternas.yml`,
-    "otpp-backoffice": `${base}/pt-br/openFinance/opusOpenFinance/opusTPP/anexos/yml/opusTPP-backoffice.yml`,
-    "otpp-iniciacao_pagamentos": `${base}/pt-br/openFinance/opusOpenFinance/opusTPP/anexos/yml/opusTPP-iniciacaoPagamentos.yml`,
-    "otpp-pagamentos_automaticos": `${base}/pt-br/openFinance/opusOpenFinance/opusTPP/anexos/yml/opusTPP-pagamentosAutomaticos.yml`,
-    "otpp-recepcao_dados_of": `${base}/pt-br/openFinance/opusOpenFinance/opusTPP/anexos/yml/opusTPP-recepcaoDadosOf.yml`,
-    "otpp-pagamentos_sem_redirecionamento": `${base}/pt-br/openFinance/opusOpenFinance/opusTPP/anexos/yml/opusTPP-pagamentosSR.yml`,
-    "otpp-webhooks": `${base}/pt-br/openFinance/opusOpenFinance/opusTPP/anexos/yml/opusTPP-webhooks.yml`,
+    "otpp-apis_internas": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-apisInternas.yml`,
+    "otpp-backoffice": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-backoffice.yml`,
+    "otpp-iniciacao_pagamentos": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-iniciacaoPagamentos.yml`,
+    "otpp-pagamentos_automaticos": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-pagamentosAutomaticos.yml`,
+    "otpp-recepcao_dados_of": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-recepcaoDadosOf.yml`,
+    "otpp-recepcao_dados_oi": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-recepcaoDadosOi.yml`,
+    "otpp-pagamentos_sem_redirecionamento": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-pagamentosSR.yml`,
+    "otpp-webhooks": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-webhooks.yml`,
 
     // =====================================================
     // EN
@@ -148,7 +149,16 @@ window.onload = () => {
     "en-odr-investments_variable_incomes": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/en-investments_variable_incomes_oas.yml`,
     "en-odr-investments_treasure_titles": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/en-investments_treasure_titles_oas.yml`,
     "en-odr-investments_funds": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/en-investments_funds_oas.yml`,
-    "en-odr-exchanges": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/en-exchanges_oas.yml`, 
+    "en-odr-exchanges": `${base}/en/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/en-exchanges_oas.yml`,
+    // OpusTPP
+    "en-otpp-apis_internas": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-apisInternas.yml`,
+    "en-otpp-backoffice": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-backoffice.yml`,
+    "en-otpp-iniciacao_pagamentos": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-iniciacaoPagamentos.yml`,
+    "en-otpp-pagamentos_automaticos": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-pagamentosAutomaticos.yml`,
+    "en-otpp-recepcao_dados_of": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-recepcaoDadosOf.yml`,
+    "en-otpp-recepcao_dados_oi": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-recepcaoDadosOi.yml`,
+    "en-otpp-pagamentos_sem_redirecionamento": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-pagamentosSR.yml`,
+    "en-otpp-webhooks": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-webhooks.yml`,
 
     // =====================================================
     // ES
@@ -204,7 +214,7 @@ window.onload = () => {
     "es-odr-creditcard": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-creditcard_oas.yml`,
     "es-odr-customer": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-customer_oas.yml`,
     "es-odr-credit_financing": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-credit_financing_oas.yml`,
-    "es-odr-credit_loans": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/en-credit_loans_oas.yml`,
+    "es-odr-credit_loans": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-credit_loans_oas.yml`,
     "es-odr-credit-invoice-financing": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-credit_invoice_financing_oas.yml`,
     "es-odr-credit-unarranged-accounts": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-credit_unarranged_accounts_overdraft_oas.yml`,
     "es-odr-investments_bank_fixed_income": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-investments_bank_fixed_income_oas.yml`,
@@ -212,7 +222,16 @@ window.onload = () => {
     "es-odr-investments_variable_incomes": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-investments_variable_incomes_oas.yml`,
     "es-odr-investments_treasure_titles": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-investments_treasure_titles_oas.yml`,
     "es-odr-investments_funds": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-investments_funds_oas.yml`,
-    "es-odr-exchanges": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-exchanges_oas.yml`, 
+    "es-odr-exchanges": `${base}/es/Open-Finance/Plataforma-OpusOpenFinance/opusDataReceiver/anexos/yml/es-exchanges_oas.yml`,
+    // OpusTPP
+    "es-otpp-apis_internas": `${base}/es/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/es-opusTPP-apisInternas.yml`,
+    "es-otpp-backoffice": `${base}/es/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/es-opusTPP-backoffice.yml`,
+    "es-otpp-iniciacao_pagamentos": `${base}/es/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/es-opusTPP-iniciacaoPagamentos.yml`,
+    "es-otpp-pagamentos_automaticos": `${base}/es/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/es-opusTPP-pagamentosAutomaticos.yml`,
+    "es-otpp-recepcao_dados_of": `${base}/es/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/es-opusTPP-recepcaoDadosOf.yml`,
+    "es-otpp-recepcao_dados_oi": `${base}/es/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/es-opusTPP-recepcaoDadosOi.yml`,
+    "es-otpp-pagamentos_sem_redirecionamento": `${base}/es/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/es-opusTPP-pagamentosSR.yml`,
+    "es-otpp-webhooks": `${base}/es/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/es-opusTPP-webhooks.yml`,
   };
 
   const apiUrl =

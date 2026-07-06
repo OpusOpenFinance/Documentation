@@ -117,7 +117,7 @@ O Receptor de Dados é o perfil que permite à sua instituição obter dados fin
 
 #### 4. Fluxos técnicos e redirecionamento
 
-- [Funcionamento geral do Módulo de Recepção de Dados](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html): Fluxos de consentimento de dados seguem a mesma lógica geral do ITP (listagem de participantes → criação → redirecionamento → consulta), com diferenças nos escopos e na vigência;
+- [Funcionamento geral da Iniciação de Pagamentos e Recepção de Dados](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html): Fluxos de consentimento de dados seguem a mesma lógica geral do ITP (listagem de participantes → criação → redirecionamento → consulta), com diferenças nos escopos e na vigência;
 - [Redirecionamento App-to-App e Web](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html): Como o usuário é enviado à Transmissora para autorizar o compartilhamento e retorna ao ambiente do Receptor.
 
 ---
