@@ -68,7 +68,7 @@ O método de redirecionamento do usuário para autenticação na detentora de co
 São dois conceitos distintos, mas complementares na segurança da jornada:
 
 - **Consentimento:** É a autorização legal e técnica da detentora de conta. É um registro no ecossistema (geralmente associado ao *userId* ou *CPF*);
-- **Vínculo de Dispositivo (Enrollment):** É a associação entre um dispositivo específico (identificado por *fingerprint*, token FCM, ou certificado FIDO2) e um consentimento ou usuário:
+- **Vínculo de Dispositivo (Enrollment):** É a associação entre um dispositivo específico (identificado por *fingerprint* e certificado FIDO2) e um consentimento ou usuário:
   - *Utilidade:* Permite que, em Jornadas como a JSR (Jornada Sem Redirecionamento), o sistema reconheça que aquele dispositivo já possui um consentimento ativo, evitando que o usuário precise efetuar o login na Detentora de Conta repetidamente;
   - *No Módulo de Iniciação de Pagamentos:* O Módulo pode realizar a criação de vínculos de JSR, repassando os requests para o **FIDO Server** da Detentora de Conta (o Serviço FIDO Server da Plataforma Opus Open Finance pode ser contratado separadamente para essa finalidade).
 
@@ -82,13 +82,6 @@ Assinatura única do dispositivo calculada automaticamente a partir de suas cara
 
 - **Quando aparece:** análise antifraude da Detentora, no payload de `risk-signals`;
 - **Não confundir com:** biometria (impressão do dedo). O nome vem por analogia, é a "impressão digital do dispositivo".
-
-#### Token FCM (Firebase Cloud Messaging)
-
-Identificador emitido pelo serviço de notificações push do Google (FCM) que identifica uma instalação específica de um aplicativo em um dispositivo Android. Cada vez que o app é instalado, atualizado ou os dados de notificação são limpos, um novo token FCM é gerado.
-
-- **Quando aparece:** para vincular um dispositivo Android a um consentimento, garantindo que notificações de mudança de status cheguem ao aparelho correto;
-- **Equivalente em iOS:** APNs Device Token (Apple Push Notification service).
 
 #### Credencial FIDO2
 
@@ -109,7 +102,6 @@ Identificador escolhido pelo aplicativo cliente para o dispositivo (geralmente u
 | Identificador | Quem gera | Onde fica armazenado | Muda quando |
 | :-----------: | :-------: | :------------------: | :---------: |
 | Device Fingerprint | Calculado pela própria TPP/Detentora | Não persistido — recalculado a cada análise | Características do dispositivo mudam (ex.: SO atualizado) |
-| Token FCM | Google (FCM) / Apple (APNs) | No app cliente + servidor de push | App reinstalado, dados limpos, ou expiração |
 | Credencial FIDO2 | Dispositivo do usuário (chip seguro) | Chip seguro do dispositivo (privada) + Detentora (pública) | Vínculo revogado/rejeitado ou dispositivo resetado |
 | `deviceId` | Aplicativo cliente | App + payloads enviados | App reinstalado |
 
