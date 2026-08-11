@@ -85,6 +85,8 @@ window.onload = () => {
     "otpp-recepcao_dados_oi": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-recepcaoDadosOi.yml`,
     "otpp-pagamentos_sem_redirecionamento": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-pagamentosSR.yml`,
     "otpp-webhooks": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-webhooks.yml`,
+    // Opus FIDO Server
+    "oas-fido-server": `${base}/pt-br/openFinance/opusOpenFinance/opusFidoServer/anexos/yml/opusFidoServer-oas.yaml`,
 
     // =====================================================
     // EN
