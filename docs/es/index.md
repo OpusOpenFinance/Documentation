@@ -76,15 +76,15 @@ En caso de que el cliente utilice la licencia de un proveedor, el proceso es má
 
 #### 4. Tipos de pago soportados
 
-- [Iniciación de Pago Pix](openFinance/opusOpenFinance/opusTPP/funcionamento/iniciacaoDePagamento.html) — pago inmediato y programado. Detalla los endpoints de consentimiento y de pago, el comportamiento esperado en caso de éxito y error, y los códigos de error más comunes.
-- [Pago Automático (Pix Automático)](openFinance/opusOpenFinance/opusTPP/funcionamento/pagamentoAutomatico.html) — consentimientos recurrentes para débitos periódicos (suscripciones, mensualidades, cuotas). Soporta las versiones v1 y v2 de la API regulatoria.
+- [Iniciación de Pago Pix](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/iniciacaoDePagamento.html) — pago inmediato y programado. Detalla los endpoints de consentimiento y de pago, el comportamiento esperado en caso de éxito y error, y los códigos de error más comunes.
+- [Pago Automático (Pix Automático)](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/pagamentoAutomatico.html) — consentimientos recurrentes para débitos periódicos (suscripciones, mensualidades, cuotas). Soporta las versiones v1 y v2 de la API regulatoria.
 - [Escenarios de pago](openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/cenariosPagamentos.html) — casos de uso prácticos y combinaciones de tipos de pago.
 
 #### 5. Flujos técnicos y redireccionamiento
 
-- [Funcionamiento general de la iniciación de pagos y la recepción de datos.](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — visión de los flujos de negocio: listado de participantes, creación de consentimiento, redireccionamiento y consulta de estado.
-- [Redireccionamiento App-to-App y Web](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html) — cómo el usuario es enviado a la Detentora de Cuenta para autorizar el pago y retorna al entorno del ITP.
-- [Webhooks de pagos](openFinance/opusOpenFinance/opusTPP/funcionamento/webhooks.html) — cómo recibir notificaciones asíncronas sobre cambios de estado de los pagos.
+- [Funcionamiento general de la iniciación de pagos y la recepción de datos.](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/index.html) — visión de los flujos de negocio: listado de participantes, creación de consentimiento, redireccionamiento y consulta de estado.
+- [Redireccionamiento App-to-App y Web](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/redirecionamento.html) — cómo el usuario es enviado a la Detentora de Cuenta para autorizar el pago y retorna al entorno del ITP.
+- [Webhooks de pagos](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/webhooks.html) — cómo recibir notificaciones asíncronas sobre cambios de estado de los pagos.
 
 ---
 
@@ -104,14 +104,14 @@ El Receptor de Datos es el perfil que permite a su institución solicitar y obte
 
 #### 3. Datos disponibles para recepción
 
-- [Recepción de Datos — funcionamiento y endpoints](openFinance/opusOpenFinance/opusTPP/funcionamento/recepcaoDeDados.html) — endpoints de consentimiento (creación, consulta, revocación, renovación) y los aproximadamente 78 proxies regulatorios organizados por familia: clientes, cuentas, tarjeta de crédito, operaciones de crédito, cambio e inversiones.
+- [Recepción de Datos — funcionamiento y endpoints](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/recepcaoDeDados.html) — endpoints de consentimiento (creación, consulta, revocación, renovación) y los aproximadamente 78 proxies regulatorios organizados por familia: clientes, cuentas, tarjeta de crédito, operaciones de crédito, cambio e inversiones.
 - [Compartición de Datos — visión de integración](openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/index.html) — cómo se organizan los datos recibidos, por producto financiero.
 - [Consentimiento Compartido — Recepción de Datos](openFinance/opusOpenFinance/consentimentoCompartilhado/recepcaoDeDados.html) — gestión del ciclo de vida de los consentimientos de datos desde la perspectiva del producto.
 
 #### 4. Flujos técnicos y redireccionamiento
 
-- [Funcionamiento general de la iniciación de pagos y la recepción de datos.](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — los flujos de consentimiento de datos siguen la misma lógica general del ITP (listado de participantes → creación → redireccionamiento → consulta), con diferencias en los alcances y en la vigencia.
-- [Redireccionamiento App-to-App y Web](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html) — cómo el usuario es enviado a la Transmisora para autorizar la compartición y retorna al entorno del Receptor.
+- [Funcionamiento general de la iniciación de pagos y la recepción de datos.](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/index.html) — los flujos de consentimiento de datos siguen la misma lógica general del ITP (listado de participantes → creación → redireccionamiento → consulta), con diferencias en los alcances y en la vigencia.
+- [Redireccionamiento App-to-App y Web](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/redirecionamento.html) — cómo el usuario es enviado a la Transmisora para autorizar la compartición y retorna al entorno del Receptor.
 
 ---
 
