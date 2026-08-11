@@ -1,0 +1,87 @@
+sequenceDiagram
+    autonumber
+    
+    participant U as Usuário
+    participant A as App ITP
+    participant B as Backend ITP
+    participant D as Backend Detentora
+    participant AS as Authorization Server Detentora
+    participant F as Opus FIDO Server
+    
+    Note over B,AS: Pré-condição:<br/>DCR/DCM no AS-FAPI com FIDO Origins<br/>Consentimento de vínculo de dispositivo
+    
+    rect rgb(245, 245, 255)
+        Note over U,F: Iniciação do Pagamento
+        
+        U->>A: Seleciona conta usada para pagamento<br/>sem redirecionamento (debtorAccount)
+        A-->>B: 
+        
+        B->>D: POST /token<br/>(grant_type=client_credentials)
+        D-->>B: access_token
+        
+        B->>D: POST /consents<br/>{ ...creditor, payment, debtorAccount, ... }<br/>Authorization: Bearer access_token
+        D<<-->>AS: 
+        D-->>B: 201 Created<br/>{ ... status: AWAITING_AUTHORISATION, consentId }
+    end
+    
+    rect rgb(255, 245, 245)
+        Note over U,F: Preparação da Assinatura FIDO2
+        
+        B->>D: POST /enrollments/{enrollmentId}/fido-sign-options<br/>Authorization: Bearer access_token<br/>{ ... consentId }
+        D<<-->>AS:
+        
+        D->>F: POST /assertion/options<br/>Body: AssertionOptionsRequest
+        F-->>D: 200 OK<br/>AssertionOptionsResponse<br/>{ challenge, ... }
+        
+        D-->>B: 201<br/>{ fidoChallenge, ... }
+    end
+    
+    rect rgb(245, 255, 245)
+        Note over U,F: Autenticação FIDO2
+        
+        B->>A: Requisita assinatura FIDO2<br/>{ fidoChallenge, ... }
+        A->>U: Solicita gesto de autenticação para o usuário
+        U->>A: Realiza gesto<br/>(ex.: biometria, PIN)
+        
+        A->>B: Envia fidoAssertion<br/>{ signature, authenticatorData,<br/>clientDataJSON, ... }<br/>+ Extração de sinais de risco do dispositivo
+    end
+    
+    rect rgb(255, 255, 245)
+        Note over U,F: Autorização do Consentimento
+        
+        B->>D: POST /token<br/>(grant_type=refresh_token,<br/>refresh_token=enrollment_refresh_token)
+        AS<<-->>D: 
+        D->>B: 201<br/>{ payment_access_token, payment_refresh_token }
+        
+        B->>D: POST /consents/{consentId}/authorise<br/>Authorization: Bearer payment_access_token<br/>{ riskSignals, fidoAssertion, ... }
+        
+        D<<-->>AS:
+        
+        D->>F: POST /assertion/result<br/>Body: AssertionResultRequest
+        F-->>D: 200 OK<br/>ResponseStatus
+        
+        activate D
+        D->>D: Consentimento de pagamentos<br/>transita para AUTHORISED
+        deactivate D
+        
+        D->>B: 204 No Content
+    end
+    
+    rect rgb(240, 255, 240)
+        Note over U,F: Execução do Pagamento
+        
+        B->>D: POST /pix/payments<br/>{ ... consentId }<br/>Authorization: Bearer payment_access_token
+        D<<-->>AS:
+        AS-->>D: OK
+        D-->>B: 201 Created<br/>{ ... status: RCVD, paymentId }
+        
+        activate D
+        D->>D: Executa pagamento
+        deactivate D
+        
+        B->>D: GET /pix/payments/{paymentId}<br/>Authorization: Bearer access_token
+        D<<-->>AS: 
+        D-->>B: 200 OK<br/>{ ... status: ACSC }
+        
+        B-->>U: Success
+    end
