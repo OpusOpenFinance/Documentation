@@ -1,0 +1,17 @@
+sequenceDiagram
+    autonumber
+    
+    participant B as ITP Backend
+    participant D as Holder
+    participant AS as Holder Authorization Server
+    participant F as Opus FIDO Server
+  
+    B->>AS: DCR/DCM (OAuth/OIDC client registration/management)<br/>client metadata, jwks/jwks_uri, redirect_uris, grant_types...
+    activate AS
+    
+    AS->>F: PUT /relying-party
+    Note right of F: Create or update relying party<br/>triggered on DCR/DCM
+    F-->>AS: 200 OK / 204 No Content
+    AS-->>B: client_id / registered metadata
+    
+    deactivate AS

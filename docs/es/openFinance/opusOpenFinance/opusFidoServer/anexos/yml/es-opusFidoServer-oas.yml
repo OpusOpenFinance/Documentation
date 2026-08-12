@@ -1,0 +1,434 @@
+openapi: 3.0.3
+info:
+  title: OOF FIDO Server API
+  description: |
+    Especificación OpenAPI del Opus Open Finance FIDO Server
+  version: 1.0.0
+
+servers:
+  - url: http://oof-fido-server
+    description: FIDO Server predeterminado
+
+tags:
+  - name: Relying Party
+    description: Gestión del relying party
+  - name: Attestation
+    description: Flujo de registro WebAuthn (attestation)
+  - name: Assertion
+    description: Flujo de autenticación WebAuthn (assertion)
+
+paths:
+  /relying-party:
+    put:
+      tags: [Relying Party]
+      summary: Crear o actualizar el relying party
+      description: |
+        **Gancho de aprovisionamiento para el onboarding de Open Finance Brasil.**
+
+        Este endpoint debe ser llamado siempre que ocurra un **DCR (Dynamic Client Registration)** o
+        **DCM (Dynamic Client Management)**, para que el FIDO Server pueda **aprovisionar o
+        actualizar la configuración del Relying Party (RP)** (p. ej., rpId, rpName, orígenes permitidos)
+        antes de las ceremonias de attestation/assertion.
+      operationId: putRelyingParty
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelyingPartyRequest'
+      responses:
+        '200':
+          description: Éxito (el cliente ignora el cuerpo)
+        '204':
+          description: Sin contenido
+        '400':
+          $ref: '#/components/responses/ClientError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+
+  /attestation/options:
+    post:
+      tags: [Attestation]
+      summary: Obtener las opciones de attestation (registro)
+      operationId: postAttestationOptions
+      parameters:
+        - $ref: '#/components/parameters/XRpId'
+        - $ref: '#/components/parameters/XBrandId'
+        - $ref: '#/components/parameters/XIdempotencyKey'
+        - $ref: '#/components/parameters/XCorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttestationOptionsRequest'
+      responses:
+        '200':
+          description: Opciones de attestation para el registro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttestationOptionsResponse'
+        '400':
+          $ref: '#/components/responses/ClientError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+
+  /attestation/result:
+    post:
+      tags: [Attestation]
+      summary: Enviar el resultado de attestation (registro)
+      operationId: postAttestationResult
+      parameters:
+        - $ref: '#/components/parameters/XRpId'
+        - $ref: '#/components/parameters/XBrandId'
+        - $ref: '#/components/parameters/XIdempotencyKey'
+        - $ref: '#/components/parameters/XCorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttestationResultRequest'
+      responses:
+        '200':
+          description: Éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseStatus'
+        '400':
+          $ref: '#/components/responses/ClientError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+
+  /assertion/options:
+    post:
+      tags: [Assertion]
+      summary: Obtener las opciones de assertion (inicio de sesión)
+      operationId: postAssertionOptions
+      parameters:
+        - $ref: '#/components/parameters/XRpId'
+        - $ref: '#/components/parameters/XBrandId'
+        - $ref: '#/components/parameters/XIdempotencyKey'
+        - $ref: '#/components/parameters/XCorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssertionOptionsRequest'
+      responses:
+        '200':
+          description: Opciones de assertion para la autenticación
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssertionOptionsResponse'
+        '400':
+          $ref: '#/components/responses/ClientError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+
+  /assertion/result:
+    post:
+      tags: [Assertion]
+      summary: Enviar el resultado de assertion (inicio de sesión)
+      operationId: postAssertionResult
+      parameters:
+        - $ref: '#/components/parameters/XRpId'
+        - $ref: '#/components/parameters/XBrandId'
+        - $ref: '#/components/parameters/XIdempotencyKey'
+        - $ref: '#/components/parameters/XCorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssertionResultRequest'
+      responses:
+        '200':
+          description: Éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseStatus'
+        '400':
+          $ref: '#/components/responses/ClientError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+
+components:
+  parameters:
+    XRpId:
+      name: x-rp-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: ID del relying party
+    XBrandId:
+      name: x-brand-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: ID de la marca (ID del Authorization Server OFB)
+    XIdempotencyKey:
+      name: x-idempotency-key
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Clave de idempotencia
+    XCorrelationId:
+      name: x-correlation-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: ID de correlación para trazabilidad
+
+  responses:
+    ClientError:
+      description: Error del cliente
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseStatus'
+    ServerError:
+      description: Error del servidor
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseStatus'
+    UnexpectedError:
+      description: Error inesperado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseStatus'
+
+  schemas:
+    RelyingPartyRequest:
+      type: object
+      properties:
+        relyingPartyId:
+          type: string
+        relyingPartyName:
+          type: string
+        relyingPartyOrigins:
+          type: array
+          items:
+            type: string
+        brandId:
+          type: string
+          description: ID del Authorization Server OFB
+
+    AttestationOptionsRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        displayName:
+          type: string
+        authenticatorSelection:
+          $ref: '#/components/schemas/AuthenticatorSelection'
+        attestation:
+          type: string
+        extensions:
+          type: object
+          additionalProperties: true
+
+    AttestationOptionsResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResponseStatus'
+        - type: object
+          properties:
+            rp:
+              $ref: '#/components/schemas/RP'
+            user:
+              $ref: '#/components/schemas/AttestationUser'
+            challenge:
+              type: string
+            pubKeyCredParams:
+              type: array
+              items:
+                $ref: '#/components/schemas/PublicKeyCredentialParams'
+            timeout:
+              type: integer
+              format: int64
+            excludeCredentials:
+              type: array
+              items:
+                $ref: '#/components/schemas/ExcludeCredentials'
+            authenticatorSelection:
+              $ref: '#/components/schemas/AuthenticatorSelection'
+            attestation:
+              type: string
+            extensions:
+              type: object
+              additionalProperties: true
+
+    AttestationResultRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        rawId:
+          type: string
+        response:
+          $ref: '#/components/schemas/Attestation'
+        getClientExtensionResults:
+          type: object
+          additionalProperties: true
+        authenticatorAttachment:
+          type: string
+        type:
+          type: string
+
+    AssertionOptionsRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        userVerification:
+          type: string
+        extensions:
+          type: object
+          additionalProperties: true
+          description: Payload de extensión (map/object)
+
+    AssertionOptionsResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResponseStatus'
+        - type: object
+          properties:
+            challenge:
+              type: string
+            timeout:
+              type: integer
+              format: int64
+            rpId:
+              type: string
+            allowCredentials:
+              type: array
+              items:
+                $ref: '#/components/schemas/ExternalPublicKeyCredentialDescriptor'
+            userVerification:
+              type: string
+            extensions:
+              type: object
+              additionalProperties: true
+
+    AssertionResultRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        rawId:
+          type: string
+        response:
+          $ref: '#/components/schemas/Assertion'
+        getClientExtensionResults:
+          type: object
+          additionalProperties: true
+        type:
+          type: string
+
+    ResponseStatus:
+      type: object
+      properties:
+        status:
+          type: string
+        errorMessage:
+          type: string
+          description: Presente en respuestas de error (4xx/5xx)
+
+    RP:
+      type: object
+      properties:
+        name:
+          type: string
+
+    AttestationUser:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+
+    AuthenticatorSelection:
+      type: object
+      properties:
+        authenticatorAttachment:
+          type: string
+        userVerification:
+          type: string
+        residentKey:
+          type: string
+        requireResidentKey:
+          type: boolean
+
+    PublicKeyCredentialParams:
+      type: object
+      properties:
+        type:
+          type: string
+        alg:
+          type: integer
+          format: int64
+
+    ExcludeCredentials:
+      type: object
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+
+    Attestation:
+      type: object
+      properties:
+        clientDataJSON:
+          type: string
+        attestationObject:
+          type: string
+
+    Assertion:
+      type: object
+      properties:
+        authenticatorData:
+          type: string
+        signature:
+          type: string
+        userHandle:
+          type: string
+        clientDataJSON:
+          type: string
+
+    ExternalPublicKeyCredentialDescriptor:
+      type: object
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        transport:
+          type: array
+          items:
+            type: string
