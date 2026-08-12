@@ -76,15 +76,15 @@ If the client uses a vendor's license, the process is simpler, requiring only th
 
 #### 4. Supported payment types
 
-- [Pix Payment Initiation](openFinance/opusOpenFinance/opusTPP/funcionamento/iniciacaoDePagamento.html) — immediate and scheduled payment. Details the consent and payment endpoints, the expected behavior in case of success and error, and the most common error codes.
-- [Automatic Payment (Pix Automático)](openFinance/opusOpenFinance/opusTPP/funcionamento/pagamentoAutomatico.html) — recurring consents for periodic debits (subscriptions, monthly fees, installments). Supports versions v1 and v2 of the regulatory API.
+- [Pix Payment Initiation](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/iniciacaoDePagamento.html) — immediate and scheduled payment. Details the consent and payment endpoints, the expected behavior in case of success and error, and the most common error codes.
+- [Automatic Payment (Pix Automático)](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/pagamentoAutomatico.html) — recurring consents for periodic debits (subscriptions, monthly fees, installments). Supports versions v1 and v2 of the regulatory API.
 - [Payment scenarios](openFinance/opusOpenFinance/integracaoDaPlataforma/pagamentos/cenariosPagamentos.html) — practical use cases and combinations of payment types.
 
 #### 5. Technical flows and redirection
 
-- [General operation of payment initiation and data receipt](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — view of the business flows: listing of participants, consent creation, redirection and status query.
-- [App-to-App and Web Redirection](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html) — how the user is sent to the Account Holder to authorize the payment and returns to the ITP environment.
-- [Payment webhooks](openFinance/opusOpenFinance/opusTPP/funcionamento/webhooks.html) — how to receive asynchronous notifications about payment status changes.
+- [General operation of payment initiation and data receipt](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/index.html) — view of the business flows: listing of participants, consent creation, redirection and status query.
+- [App-to-App and Web Redirection](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/redirecionamento.html) — how the user is sent to the Account Holder to authorize the payment and returns to the ITP environment.
+- [Payment webhooks](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/webhooks.html) — how to receive asynchronous notifications about payment status changes.
 
 ---
 
@@ -104,14 +104,14 @@ The Data Receiver is the profile that allows your institution to request and obt
 
 #### 3. Data available for reception
 
-- [Data Reception — operation and endpoints](openFinance/opusOpenFinance/opusTPP/funcionamento/recepcaoDeDados.html) — consent endpoints (creation, query, revocation, renewal) and the approximately 78 regulatory proxies organized by family: customers, accounts, credit card, credit operations, foreign exchange and investments.
+- [Data Reception — operation and endpoints](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/recepcaoDeDados.html) — consent endpoints (creation, query, revocation, renewal) and the approximately 78 regulatory proxies organized by family: customers, accounts, credit card, credit operations, foreign exchange and investments.
 - [Data Sharing — integration view](openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/index.html) — how the received data is organized, by financial product.
 - [Shared Consent — Data Reception](openFinance/opusOpenFinance/consentimentoCompartilhado/recepcaoDeDados.html) — management of the life cycle of data consents from the product perspective.
 
 #### 4. Technical flows and redirection
 
-- [General operation of payment initiation and data receipt](openFinance/opusOpenFinance/opusTPP/funcionamento/index.html) — the data consent flows follow the same general logic as the ITP (listing of participants → creation → redirection → query), with differences in the scopes and in the validity.
-- [App-to-App and Web Redirection](openFinance/opusOpenFinance/opusTPP/funcionamento/redirecionamento.html) — how the user is sent to the Transmitter to authorize the sharing and returns to the Receiver environment.
+- [General operation of payment initiation and data receipt](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/index.html) — the data consent flows follow the same general logic as the ITP (listing of participants → creation → redirection → query), with differences in the scopes and in the validity.
+- [App-to-App and Web Redirection](openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/funcionamento/redirecionamento.html) — how the user is sent to the Transmitter to authorize the sharing and returns to the Receiver environment.
 
 ---
 

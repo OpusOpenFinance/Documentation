@@ -1,0 +1,106 @@
+sequenceDiagram
+    autonumber
+    
+    participant U as Usuário
+    participant A as App ITP
+    participant B as Backend ITP
+    participant D as Detentora
+    participant AS as Authorization Server Detentora
+    participant F as Opus FIDO Server
+    
+    Note over B,AS: Pré-condição:<br/>DCR/DCM no AS com software_origin_uris
+    
+    rect rgb(245, 245, 245)
+        Note over U,F: Pré-vínculo / enrollment + risk signals
+        
+        U->>A: Seleção da detentora da conta
+        A-->>B: 
+        
+        B->>D: POST /token<br/>grant_type=client_credentials
+        D-->>B: access_token, refresh_token
+        
+        B->>D: POST /enrollments<br/>{ permissions:[PAYMENT_INITIATE,<br/>RECURRING_PAYMENT_INITIATE] }<br/>Authorization: Bearer access_token
+        
+        D<<-->>AS: 
+        
+        activate D
+        D->>D: Armazena vínculo de dispositivo<br/>Status = AWAITING_RISK_SIGNALS
+        D-->>B: 201 Created<br/>{ enrollmentId, ..., status }
+        deactivate D
+        
+        A->>B: Sinais de risco
+        B->>D: POST /enrollments/{enrollmentId}/risk-signals<br/>{ riskSignals }<br/>Authorization: Bearer access_token
+        
+        activate D
+        D->>D: Altera status do vínculo para<br/>AWAITING_ACCOUNT_HOLDER_VALIDATION
+        deactivate D
+    end
+    
+    rect rgb(240, 248, 255)
+        Note over U,F: Jornada na detentora (FAPI hybrid flow)
+        
+        U->>D: Redirecionamento p/ ambiente da detentora<br/>(FAPI hybrid flow)
+        D<<-->>AS: 
+        D->>U: Solicita autorização para o vínculo
+        U->>D: Autentica, seleciona o detentor de conta e confirma vínculo
+        D<<-->>AS: 
+        
+        activate D
+        D->>D: Armazena o debtorAccount selecionado<br/>no objeto de vínculo do dispositivo
+        deactivate D
+        
+        activate D
+        D->>D: Estabelece status do vínculo como<br/>AWAITING_ENROLLMENT
+        deactivate D
+        
+        D->>B: Redirect para ambiente do ITP (authorization code "1234")
+        B-->>U: 
+        
+        U-->>A:
+        A-->>B:
+    end
+    
+    rect rgb(248, 255, 248)
+        Note over U,F: Troca por tokens + challenge FIDO2
+        
+        B->>D: POST /token<br/>grant_type=authorization_code<br/>code="1234"
+        D<<-->>AS: 
+        D-->>B: 201 OK<br/>{ refreshToken: enrollment_refresh_token,<br/>accessToken: enrollment_access_token }
+        
+        B->>D: POST /enrollments/{enrollmentId}/fido-registration-options<br/>Authorization: Bearer enrollment_access_token
+        
+        D<<-->>AS: 
+        
+        D->>F: POST /attestation/options<br/>Body: AttestationOptionsRequest
+        F-->>D: 200 OK<br/>AttestationOptionsResponse
+        
+        D-->>B: 201 OK<br/>{ fidoChallenge, ... }
+    end
+    
+    rect rgb(255, 248, 248)
+        Note over U,F: Criação da credencial + registro
+        
+        B->>A: Requisita a criação da credencial FIDO2 {fidoChallenge...}
+        A-->>U: Requisita um challenge FIDO2 para o usuário
+        U->>A: Realiza gesto de autenticação<br/>(ex.: biometria, PIN)
+        
+        activate A
+        A->>A: Cria a credencial FIDO2
+        deactivate A
+        
+        A->>B: Envia credencial pública<br/>{ attestationObject, clientDataJson }
+        
+        B->>D: POST /enrollments/{enrollmentId}/fido-registration<br/>Authorization: Bearer enrollment_access_token<br/>{ credential }
+        
+        D<<-->>AS: 
+        
+        D->>F: POST /attestation/result<br/>Body: AttestationResultRequest
+        F-->>D: 200 OK<br/>ResponseStatus
+        
+        D->>D: Valida e armazena a credencial
+        D->>D: Altera status do vínculo para AUTHORISED
+        D->>B: 204 OK
+        
+        B<<-->>A: 
+        A<<-->>U: 
+    end

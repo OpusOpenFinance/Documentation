@@ -85,6 +85,8 @@ window.onload = () => {
     "otpp-recepcao_dados_oi": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-recepcaoDadosOi.yml`,
     "otpp-pagamentos_sem_redirecionamento": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-pagamentosSR.yml`,
     "otpp-webhooks": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-webhooks.yml`,
+    // Opus FIDO Server
+    "oas-fido-server": `${base}/pt-br/openFinance/opusOpenFinance/opusFidoServer/anexos/yml/opusFidoServer-oas.yaml`,
 
     // =====================================================
     // EN
@@ -159,6 +161,8 @@ window.onload = () => {
     "en-otpp-recepcao_dados_oi": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-recepcaoDadosOi.yml`,
     "en-otpp-pagamentos_sem_redirecionamento": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-pagamentosSR.yml`,
     "en-otpp-webhooks": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-webhooks.yml`,
+    // Opus FIDO Server
+    "en-oas-fido-server": `${base}/en/openFinance/opusOpenFinance/opusFidoServer/anexos/yml/en-opusFidoServer-oas.yaml`,
 
     // =====================================================
     // ES
@@ -232,6 +236,8 @@ window.onload = () => {
     "es-otpp-recepcao_dados_oi": `${base}/es/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/es-opusTPP-recepcaoDadosOi.yml`,
     "es-otpp-pagamentos_sem_redirecionamento": `${base}/es/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/es-opusTPP-pagamentosSR.yml`,
     "es-otpp-webhooks": `${base}/es/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/es-opusTPP-webhooks.yml`,
+    // Opus FIDO Server
+    "es-oas-fido-server": `${base}/es/openFinance/opusOpenFinance/opusFidoServer/anexos/yml/es-opusFidoServer-oas.yaml`,
   };
 
   const apiUrl =
