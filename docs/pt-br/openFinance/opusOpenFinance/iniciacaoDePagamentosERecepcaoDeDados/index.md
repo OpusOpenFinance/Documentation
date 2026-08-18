@@ -45,7 +45,7 @@ Etapas de configuração e quais certificados digitais são necessários para o 
 
 ### Anexos
 
-- [Especificações OpenAPI (OAS)](anexos/yml/): Contratos oficiais de cada API exposta pelo Módulo de Iniciação de Pagamentos
+- [Especificações OpenAPI (OAS)](./anexos/yml/): Contratos oficiais de cada API exposta pelo Módulo de Iniciação de Pagamentos
 
 ## Módulo de Iniciação de Pagamentos
 
