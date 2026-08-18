@@ -43,10 +43,6 @@ Etapas de configuração e quais certificados digitais são necessários para o 
 - [Visão de Configuração](configuracao/): Etapas em alto nível;
 - [Certificados Regulatórios](configuracao/certificadosRegulatorios.html): BRCAC, BRSEAL, ID_TOKEN_ENC e conversão para JWK.
 
-### Anexos
-
-- [Especificações OpenAPI (OAS)](./anexos/yml/): Contratos oficiais de cada API exposta pelo Módulo de Iniciação de Pagamentos
-
 ## Módulo de Iniciação de Pagamentos
 
 O Módulo de Iniciação de Pagamentos é um middleware especializado que abstrai integralmente as complexidades regulatórias do **Open Finance Brasil**. Ele permite que instituições atuem como Iniciadoras de Pagamento (ITP) e Receptoras de Dados sem lidar diretamente com padrões de segurança, requisitos técnicos ou fluxos regulatórios.
