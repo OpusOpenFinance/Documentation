@@ -87,8 +87,4 @@ Com o vínculo em `AUTHORISED`, para autorizar um consentimento de pagamento:
 - [W3C WebAuthn-2 — makeCredentialOptions](https://www.w3.org/TR/webauthn-2/#dictionary-makecredentialoptions)
 - Especificação OpenAPI: [`oas-pagamentos-sem-redirecionamento.yaml`](../anexos/yml/opusTPP-pagamentosSR.yml) (ver também [API associada][API-SemRedirect])
 
-<!--Original
 [API-SemRedirect]: ../../../../../swagger-ui/index.html?api=otpp-pagamentos_sem_redirecionamento
--->
-<!--Teste-->
-[API-SemRedirect]: ../../../../../swagger-ui/index.html?api=otpp-pagamentos_sem_redirecionamento_att
