@@ -20,8 +20,6 @@ O Módulo de Iniciação de Pagamentos suporta **simultaneamente as versões reg
 
 > **Pré-requisito:** todos os endpoints de iniciação só funcionam após o consentimento de pagamento ter sido criado e estar em `AUTHORISED` (ver [Funcionamento](./)). Para os possíveis valores de cada chave JSON consulte a [API associada][API-Pagamentos].
 
-[API-Pagamentos]: ../../../../../swagger-ui/index.html?api=otpp-iniciacao_pagamentos
-
 ## Endpoints de consentimento de pagamento
 
 | Tipo | Endpoint | Descrição | Sucesso |
@@ -76,3 +74,9 @@ A lista completa de códigos está no schema `422ResponseErrorCreatePixPayment` 
 - [SV Pagamentos v4.0.0 — Open Finance Brasil][SV-Pagamentos-v4]
 - [SV Pagamentos v5.0.0-rc.1 — Open Finance Brasil][SV-Pagamentos-v5]
 - [Pagamento Automático (Pix Automático)](pagamentoAutomatico.html) — para pagamentos recorrentes
+
+<!--Original
+[API-Pagamentos]: ../../../../../swagger-ui/index.html?api=otpp-iniciacao_pagamentos
+-->
+<!--Teste-->
+[API-Pagamentos]: ../../../../../swagger-ui/index.html?api=otpp-iniciacao_pagamentos_att
