@@ -21,7 +21,7 @@ Entender a arquitetura e os fluxos do Open Finance é essencial para a compreens
 Consentimento é a autorização explícita concedida pelo usuário final para que a sua Instituição acesse dados ou inicie pagamentos (ITP) em nome dele, junto às [Instituições Detentoras de Conta][Detentoras].
 
 - **Autorizar o consentimento:** É o processo de redirecionar o usuário para o ambiente da Detentora de Conta para que ele autorize, de forma autenticada, os escopos de serviço requisitados.
-- **Escopo (`permissions`):** É a unidade que define o que a TPP pode fazer. Cada escopo é uma string padronizada pelo regulador (ex.: `ACCOUNTS_READ`, `CREDIT_CARDS_ACCOUNTS_BILLS_READ`, `payments`) que o usuário autoriza explicitamente. O conjunto exato de escopos exigido depende do tipo de dado/operação.
+- **Escopo (`permissions`):** É a unidade que define o que a ITP pode fazer. Cada escopo é uma string padronizada pelo regulador (ex.: `ACCOUNTS_READ`, `CREDIT_CARDS_ACCOUNTS_BILLS_READ`, `payments`) que o usuário autoriza explicitamente. O conjunto exato de escopos exigido depende do tipo de dado/operação.
 - **Vigência:** O consentimento possui prazo de validade definido na solicitação (`expirationDateTime`, geralmente de 3 a 12 meses ou Indeterminado, dependendo do escopo).
 - **Identificadores:** Após criação, o consentimento é identificado por um `consentId` (URN no formato `urn:<brand>:<uuid>`).
 
@@ -43,12 +43,12 @@ Consentimento é a autorização explícita concedida pelo usuário final para q
 
 - **Revogação de Pagamento:**
   - **Ocorre:** Antes da liquidação financeira;
-  - **Quem realiza:** O cliente autenticado (ou a TPP, se o fluxo permitir);
+  - **Quem realiza:** O cliente autenticado (ou a ITP, se o fluxo permitir);
   - **Efeito:** Cancela a transação de pagamento específica. O consentimento continua válido para novas transações.
 - **Revogação de Consentimento:**
   - **Ocorre:** A qualquer momento;
   - **Quem realiza:** Exclusivamente o cliente junto à Detentora de Conta;
-  - **Efeito:** Invalida **todos** os acessos e permissões associados àquele consentimento. A TPP não consegue mais iniciar pagamentos ou acessar dados até que um novo consentimento seja solicitado e autorizado.
+  - **Efeito:** Invalida **todos** os acessos e permissões associados àquele consentimento. A ITP não consegue mais iniciar pagamentos ou acessar dados até que um novo consentimento seja solicitado e autorizado.
 
 ## Jornadas de Iniciação (App-to-App, App-to-Web, Web-to-App)
 
@@ -101,7 +101,7 @@ Identificador escolhido pelo aplicativo cliente para o dispositivo (geralmente u
 
 | Identificador | Quem gera | Onde fica armazenado | Muda quando |
 | :-----------: | :-------: | :------------------: | :---------: |
-| Device Fingerprint | Calculado pela própria TPP/Detentora | Não persistido — recalculado a cada análise | Características do dispositivo mudam (ex.: SO atualizado) |
+| Device Fingerprint | Calculado pela própria ITP/Detentora | Não persistido — recalculado a cada análise | Características do dispositivo mudam (ex.: SO atualizado) |
 | Credencial FIDO2 | Dispositivo do usuário (chip seguro) | Chip seguro do dispositivo (privada) + Detentora (pública) | Vínculo revogado/rejeitado ou dispositivo resetado |
 | `deviceId` | Aplicativo cliente | App + payloads enviados | App reinstalado |
 
@@ -130,7 +130,7 @@ Um dos principais motivos de falha em transações de pagamento no Open Finance 
 
 ### Diretório de Participantes (Diretório Central)
 
-Repositório oficial mantido pelo Banco Central que registra todas as instituições autorizadas a operar no Open Finance Brasil. Toda TPP precisa estar cadastrada no Diretório para:
+Repositório oficial mantido pelo Banco Central que registra todas as instituições autorizadas a operar no Open Finance Brasil. Toda ITP precisa estar cadastrada no Diretório para:
 
 - Receber seus **certificados regulatórios** (BRCAC, BRSEAL);
 - Publicar seu **Software Statement** (declaração da aplicação);
@@ -138,7 +138,7 @@ Repositório oficial mantido pelo Banco Central que registra todas as instituiç
 
 ### Software Statement (SSA — Software Statement Assertion)
 
-Documento JWS emitido pelo Diretório de Participantes que descreve uma aplicação específica da TPP. Cada SSA tem:
+Documento JWS emitido pelo Diretório de Participantes que descreve uma aplicação específica da ITP. Cada SSA tem:
 
 - Um `softwareStatementId` (UUID);
 - Um `client_id` associado;
@@ -156,7 +156,7 @@ Ao buscar instituições no Diretório (`GET /participants`), elas vêm classifi
 | `DADOS` | Compartilhamento de dados cadastrais e transacionais |
 | `PAGTO` | Iniciação de pagamentos (PIX) |
 | `CONTA` | Operações em conta corrente |
-| `CCORR` | Câmbio (Conta de Pagamento Pré-paga / Crédito ao Cliente — `[ANNA: confirmar definição exata de CCORR]`) |
+| `CCORR` | Câmbio (Conta de Pagamento Pré-paga / Crédito ao Cliente) |
 
 ### `AuthorisationServerId`
 

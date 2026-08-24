@@ -18,8 +18,6 @@ A API de Pagamento Automático permite a criação de **consentimentos recorrent
 
 > Para os possíveis valores de cada chave JSON consulte a [API associada][API-Auto].
 
-[API-Auto]: ../../../../../swagger-ui/index.html?api=otpp-pagamentos_automaticos
-
 ## Consentimento recorrente
 
 | Tipo | Endpoint | Descrição | Sucesso |
@@ -29,14 +27,14 @@ A API de Pagamento Automático permite a criação de **consentimentos recorrent
 | PATCH | `/opus-open-finance/automatic-payments/v1/recurring-consents/{recurringConsentId}` | Revogação de consentimento | 200 |
 | POST | `/opus-open-finance/automatic-payments/v1/recurring-consents/{recurringConsentId}/authorisation-retry` | Nova tentativa de autorização | 200 |
 
-## Pagamentos recorrentes 
+## Pagamentos recorrentes
 
 | Método | Endpoint v2 | Descrição | Sucesso |
 | :----: | :---------: | :-------: | :-----: |
-| POST   | `/proxy/open-banking/automatic-payments/v2/pix/recurring-payments` | Criação de pagamento automático | 201 |
-| GET    | `/proxy/open-banking/automatic-payments/v2/pix/recurring-payments` | Consulta de todos pagamentos do consentimento | 200 |
-| GET    | `/proxy/open-banking/automatic-payments/v2/pix/recurring-payments/{recurringPaymentId}` | Consulta de pagamento individual | 200 |
-| PATCH  | `/proxy/open-banking/automatic-payments/v2/pix/recurring-payments/{recurringPaymentId}` | Revogação de pagamento | 200 |
+| POST | `/proxy/open-banking/automatic-payments/v2/pix/recurring-payments` | Criação de pagamento automático | 201 |
+| GET | `/proxy/open-banking/automatic-payments/v2/pix/recurring-payments` | Consulta de todos pagamentos do consentimento | 200 |
+| GET | `/proxy/open-banking/automatic-payments/v2/pix/recurring-payments/{recurringPaymentId}` | Consulta de pagamento individual | 200 |
+| PATCH | `/proxy/open-banking/automatic-payments/v2/pix/recurring-payments/{recurringPaymentId}` | Revogação de pagamento | 200 |
 
 Referências:
 
@@ -53,3 +51,9 @@ Referências:
 
 - [Máquina de Estados v2.0.0 — Pagamentos Automáticos](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/931037243/M+quina+de+Estados+-+v2.1.0+-+SV+Pagamentos+Autom+ticos)
 - Especificação OpenAPI: [`oas-pagamentos-automaticos.yml`](../anexos/yml/opusTPP-pagamentosAutomaticos.yml) (ver também [API associada][API-Auto])
+
+<!-- Original
+[API-Auto]: ../../../../../swagger-ui/index.html?api=otpp-pagamentos_automaticos
+-->
+<!--Teste-->
+[API-Auto]: ../../../../../swagger-ui/index.html?api=otpp-pagamentos_automaticos_att

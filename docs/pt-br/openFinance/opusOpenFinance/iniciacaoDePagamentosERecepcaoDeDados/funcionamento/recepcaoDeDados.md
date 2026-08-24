@@ -18,8 +18,6 @@ O Módulo de Recepção de Dados Cadastrais e Transacionais expõe os endpoints 
 
 > **Pré-requisito:** Os endpoints de utilização só podem ser invocados após o fluxo de autorização descrito no [Funcionamento](./). Para os possíveis valores de cada chave JSON consulte a [API associada][API-OF-Dados].
 
-[API-OF-Dados]: ../../../../../swagger-ui/index.html?api=otpp-recepcao_dados_of
-
 ## Endpoints de consentimento
 
 | Tipo | Endpoint | Descrição | Sucesso |
@@ -94,3 +92,8 @@ A Detentora aplica esta lógica ao receber o `POST /consents`:
 - Especificação OpenAPI: [`oas-dados-of.yml`](../anexos/yml/opusTPP-recepcaoDadosOf.yml) (ver também [API associada][API-OF-Dados])
 
 [API-Consents]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369335/API+-+Consentimento
+<!--Original
+[API-OF-Dados]: ../../../../../swagger-ui/index.html?api=otpp-recepcao_dados_of
+-->
+<!--Teste-->
+[API-OF-Dados]: ../../../../../swagger-ui/index.html?api=otpp-recepcao_dados_of_att

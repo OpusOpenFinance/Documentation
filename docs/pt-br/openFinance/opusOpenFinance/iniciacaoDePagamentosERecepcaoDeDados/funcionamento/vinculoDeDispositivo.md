@@ -20,8 +20,6 @@ O Módulo de Iniciação de Pagamentos implementa o vínculo com **FIDO2/WebAuth
 
 > Para os possíveis valores de cada chave JSON consulte a [API associada][API-SemRedirect].
 
-[API-SemRedirect]: ../../../../../swagger-ui/index.html?api=otpp-pagamentos_sem_redirecionamento
-
 ## Endpoints
 
 | Tipo | Endpoint | Descrição | Sucesso |
@@ -88,3 +86,9 @@ Com o vínculo em `AUTHORISED`, para autorizar um consentimento de pagamento:
 - [SV Vínculo de Dispositivo v2.2.0 — Open Finance Brasil](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1436516353/v2.2.0+-+SV+V+nculo+de+dispositivo)
 - [W3C WebAuthn-2 — makeCredentialOptions](https://www.w3.org/TR/webauthn-2/#dictionary-makecredentialoptions)
 - Especificação OpenAPI: [`oas-pagamentos-sem-redirecionamento.yaml`](../anexos/yml/opusTPP-pagamentosSR.yml) (ver também [API associada][API-SemRedirect])
+
+<!--Original
+[API-SemRedirect]: ../../../../../swagger-ui/index.html?api=otpp-pagamentos_sem_redirecionamento
+-->
+<!--Teste-->
+[API-SemRedirect]: ../../../../../swagger-ui/index.html?api=otpp-pagamentos_sem_redirecionamento_att
