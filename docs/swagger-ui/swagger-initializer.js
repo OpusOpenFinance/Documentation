@@ -17,7 +17,7 @@ window.onload = () => {
     // =====================================================
     // Open Finance Brasil
     // Perfis de Participação
-    "oas-receptor": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPDados.yml`,
+    "oas-receptor": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPDadosAtt.yml`,
     "oas-itp-pagamentos": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentos.yml`,
     "oas-itp-pagamentos-automaticos": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentosAutomaticos.yml`,
     "oas-back-dados": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOOFDados.yml`,
@@ -79,17 +79,12 @@ window.onload = () => {
     // OpusTPP
     "otpp-apis_internas": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-apisInternas.yml`,
     "otpp-backoffice": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-backoffice.yml`,
-    "otpp-iniciacao_pagamentos": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-iniciacaoPagamentos.yml`,
-    "otpp-pagamentos_automaticos": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-pagamentosAutomaticos.yml`,
-    "otpp-recepcao_dados_of": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-recepcaoDadosOf.yml`,
     "otpp-recepcao_dados_oi": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-recepcaoDadosOi.yml`,
-    "otpp-pagamentos_sem_redirecionamento": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-pagamentosSR.yml`,
     "otpp-webhooks": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-webhooks.yml`,
-    // Testes OpusTPP
-    "otpp-iniciacao_pagamentos_att": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-iniciacaoPagamentosAtt.yml`,
-    "otpp-pagamentos_automaticos_att": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-pagamentosAutomaticosAtt.yml`,
-    "otpp-recepcao_dados_of_att": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-recepcaoDadosOfAtt.yml`,
-    "otpp-pagamentos_sem_redirecionamento_att": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-pagamentosSRAtt.yml`,
+    "otpp-iniciacao_pagamentos": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-iniciacaoPagamentosAtt.yml`,
+    "otpp-pagamentos_automaticos": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-pagamentosAutomaticosAtt.yml`,
+    "otpp-recepcao_dados_of": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-recepcaoDadosOfAtt.yml`,
+    "otpp-pagamentos_sem_redirecionamento": `${base}/pt-br/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/opusTPP-pagamentosSRAtt.yml`,
     // Opus FIDO Server
     "oas-fido-server": `${base}/pt-br/openFinance/opusOpenFinance/opusFidoServer/anexos/yml/opusFidoServer-oas.yml`,
 

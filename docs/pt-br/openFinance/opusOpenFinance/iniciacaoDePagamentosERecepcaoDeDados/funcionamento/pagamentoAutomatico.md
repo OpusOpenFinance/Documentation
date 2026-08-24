@@ -52,8 +52,4 @@ Referências:
 - [Máquina de Estados v2.0.0 — Pagamentos Automáticos](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/931037243/M+quina+de+Estados+-+v2.1.0+-+SV+Pagamentos+Autom+ticos)
 - Especificação OpenAPI: [`oas-pagamentos-automaticos.yml`](../anexos/yml/opusTPP-pagamentosAutomaticos.yml) (ver também [API associada][API-Auto])
 
-<!-- Original
 [API-Auto]: ../../../../../swagger-ui/index.html?api=otpp-pagamentos_automaticos
--->
-<!--Teste-->
-[API-Auto]: ../../../../../swagger-ui/index.html?api=otpp-pagamentos_automaticos_att

@@ -75,8 +75,4 @@ A lista completa de códigos está no schema `422ResponseErrorCreatePixPayment` 
 - [SV Pagamentos v5.0.0-rc.1 — Open Finance Brasil][SV-Pagamentos-v5]
 - [Pagamento Automático (Pix Automático)](pagamentoAutomatico.html) — para pagamentos recorrentes
 
-<!--Original
 [API-Pagamentos]: ../../../../../swagger-ui/index.html?api=otpp-iniciacao_pagamentos
--->
-<!--Teste-->
-[API-Pagamentos]: ../../../../../swagger-ui/index.html?api=otpp-iniciacao_pagamentos_att
