@@ -14,7 +14,7 @@ alternate_lang:
 
 ## Objetivo
 
-A API de Webhooks de Pagamentos é o canal pelo qual a Instituição Detentora **notifica** o Módulo de Iniciação de Pagamentos de mudanças de status em pagamentos, consentimentos e vínculos. O Módulo de Iniciação de Pagamentos recebe a notificação, a valida e a encaminha para a URL interna do cliente, permitindo que a ITP reaja em tempo quase real às mudanças de estado.
+A API de Webhooks de Pagamentos é o canal pelo qual a Instituição Detentora notifica o Módulo de Iniciação de Pagamentos de mudanças de status em pagamentos, consentimentos e vínculos. O Módulo de Iniciação de Pagamentos recebe a notificação, a valida e a encaminha para a URL interna do cliente, permitindo que a ITP reaja em tempo quase real às mudanças de estado.
 
 > Para os possíveis valores de cada chave JSON consulte a [API associada][API-Webhook].
 
