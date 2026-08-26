@@ -168,7 +168,7 @@ Identificador único de cada **marca** (brand) que uma instituição opera no Op
 
 ### Webhook
 
-Mecanismo pelo qual a Instituição Detentora de Conta **notifica** o Módulo de Iniciação de Pagamentos de mudanças em pagamentos, consentimentos ou vínculos. O Módulo recebe a notificação (apenas a data — não o novo status), reenvia para a URL de webhook cadastrada pelo cliente e publica em um tópico Dapr para processamento assíncrono.
+Mecanismo pelo qual a Instituição Detentora de Conta **notifica** o Módulo de Iniciação de Pagamentos de mudanças de status em pagamentos, consentimentos e vínculos. O Módulo recebe a notificação (apenas a data — não o novo status) e reenvia para a URL de webhook cadastrada pela Instituição Cliente que consome este módulo.
 
 Detalhes em [Webhooks][Webhooks].
 
