@@ -155,11 +155,11 @@ window.onload = () => {
     // OpusTPP
     "en-otpp-apis_internas": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-apisInternas.yml`,
     "en-otpp-backoffice": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-backoffice.yml`,
-    "en-otpp-iniciacao_pagamentos": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-iniciacaoPagamentos.yml`,
-    "en-otpp-pagamentos_automaticos": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-pagamentosAutomaticos.yml`,
-    "en-otpp-recepcao_dados_of": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-recepcaoDadosOf.yml`,
+    "en-otpp-iniciacao_pagamentos": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-iniciacaoPagamentosAtt.yml`,
+    "en-otpp-pagamentos_automaticos": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-pagamentosAutomaticosAtt.yml`,
+    "en-otpp-recepcao_dados_of": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-recepcaoDadosOfAtt.yml`,
     "en-otpp-recepcao_dados_oi": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-recepcaoDadosOi.yml`,
-    "en-otpp-pagamentos_sem_redirecionamento": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-pagamentosSR.yml`,
+    "en-otpp-pagamentos_sem_redirecionamento": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-pagamentosSRAtt.yml`,
     "en-otpp-webhooks": `${base}/en/openFinance/opusOpenFinance/iniciacaoDePagamentosERecepcaoDeDados/anexos/yml/en-opusTPP-webhooks.yml`,
     // Opus FIDO Server
     "en-oas-fido-server": `${base}/en/openFinance/opusOpenFinance/opusFidoServer/anexos/yml/en-opusFidoServer-oas.yml`,

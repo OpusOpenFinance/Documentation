@@ -1,0 +1,2852 @@
+openapi: 3.0.0
+info:
+  title: OpusTPP - Payments without Redirect 
+  description: |-
+    OpusTPP - Core for managing devices linked to accounts
+
+    # Payment Transaction Initiation without redirect
+
+    API family enabling payment without redirect via Open Finance Brasil.
+    It supports both the management of the devices linked to accounts and the authorisation of consents created through the flow without redirect.
+
+  version: 1.0.0
+tags:
+  - name: Device Enrollment
+    description: |-
+      Management of the devices linked to accounts
+  - name: Consent
+    description: |-
+      Authorisation of consents created through the flow without redirect.
+  - name: Automatic Pix
+    description: |-
+      Authorisation of Automatic Pix consents created through the flow without redirect.
+servers:
+  - url: https://open-finance-core.instituicao.com.br
+paths:
+  /opus-open-finance/enrollments/v1/enrollments:
+    post:
+      tags:
+        - Device Enrollment
+      operationId: postEnrollments
+      description: Method for creating a new account enrollment. Returns an enrollment with status AWAITING_RISK_SIGNALS.
+      summary: Create account enrollment.
+      externalDocs:
+        description: Open Finance - API Enrollments for Payment Initiation
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEnrollmentRequest'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/regulatoryV'
+      responses:
+        '502':
+          description: Error in Opus Open Client while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '201':
+          description: Account enrollment data successfully retrieved.
+          headers:
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateEnrollmentResponse'
+        '400':
+          description: Error returned by the account holder institution, following the standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Error returned by the account holder institution, following the standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /opus-open-finance/enrollments/v1/enrollments/{enrollmentId}:
+    get:
+      tags:
+        - Device Enrollment
+      operationId: getEnrollment
+      description: Method for querying an account enrollment for payment initiation without redirect.
+      summary: Query account enrollment.
+      externalDocs:
+        description: Open Finance - API Enrollments for Payment Initiation
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/enrollmentId'
+        - $ref: '#/components/parameters/regulatoryV'
+      responses:
+        '502':
+          description: Error in Opus Open Client while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '200':
+          description: Account enrollment data successfully retrieved.
+          headers:
+              x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEnrollmentResponse'
+        '400':
+          description: Error returned by the account holder institution, following the standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Error returned by the account holder institution, following the standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+    patch:
+      tags:
+        - Device Enrollment
+      operationId: deleteEnrollment
+      description: |
+        Method for revoking or rejecting an account enrollment. After the successful execution of this irreversible method, the account enrollment
+        can no longer be used for authentication or for authorisation of payment initiations.
+        The concepts of revocation and rejection are associated with the account enrollment state machine\:
+
+        • Revocation: Cancellation of an account enrollment with status "AUTHORISED";
+
+        • Rejection: Cancellation of the account enrollment with status "AWATING_RISK_SIGNALS", "AWATING_ENROLLMENT" and "AWAITING_ACCOUNT_HOLDER_VALIDATION"
+
+        It is up to the client of this API to distinguish between the two scenarios in order to determine the appropriate reason.
+      summary: Revoke or reject account enrollment.
+      externalDocs:
+        description: Open Finance - API Enrollments for Payment Initiation
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchEnrollmentRequest'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/enrollmentId'
+      responses:
+        '502':
+          description: Error in Opus Open Client while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '204':
+          description: Account enrollment successfully revoked.
+          headers:
+              x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+        '400':
+          description: Error returned by the account holder institution, following the standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Error returned by the account holder institution, following the standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /opus-open-finance/enrollments/v1/enrollments/{enrollmentId}/risk-signals:
+    post:
+      tags:
+        - Device Enrollment
+      operationId: riskSignals
+      description: Submission of risk signals to initiate the device enrollment; the enrollment status must be `AWAITING_RISK_SIGNALS`. After the signals are successfully received, the enrollment status must transition to `AWAITING_ACCOUNT_HOLDER_VALIDATION`.
+      summary: Submission of risk signals to initiate the device enrollment
+      externalDocs:
+        description: Open Finance - API Enrollments for Payment Initiation
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RiskSignalsEnrollmentRequest'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/enrollmentId'
+        - $ref: '#/components/parameters/regulatoryV'
+      responses:
+        '502':
+          description: Error in Opus Open Client while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '201':
+          description: Account enrollment data successfully retrieved.
+          headers:
+              x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskSignalsEnrollmentResponse'
+        '400':
+          description: Error returned by the account holder institution, following the standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Error returned by the account holder institution, following the standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /opus-open-finance/enrollments/v1/enrollments/{enrollmentId}/fido-sign-options:
+    post:
+      tags:
+        - Device Enrollment
+      operationId: enrollmentCreateFidoSigningOptions
+      description: Method for obtaining the parameters for authentication using a previously registered FIDO2 credential. A new challenge must be created on each call. The response parameters must be compatible with the [W3C definition](https://www.w3.org/TR/webauthn-2/#dictionary-assertion-options).
+      summary: Obtain parameters for FIDO2 authentication
+      externalDocs:
+        description: Open Finance - API Enrollments for Payment Initiation
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FidoSignOptionsRequest'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/enrollmentId'
+        - $ref: '#/components/parameters/regulatoryV'
+      responses:
+        '502':
+          description: Error in Opus Open Client while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '201':
+          description: Account enrollment data successfully retrieved.
+          headers:
+              x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnrollmentFidoSignOptionsResponse'
+        '400':
+          description: Error returned by the account holder institution, following the standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        default:
+          description: Error returned by the account holder institution, following the standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /proxy/open-banking/enrollments/v2/enrollments/{enrollmentId}/fido-registration-options:
+    post:
+      tags:
+        - Device Enrollment
+      operationId: enrollmentCreateFidoRegistrationOptions
+      description: |
+        Method for obtaining the parameters for creating a new FIDO2 credential. A new challenge must be created on each call.
+        The response parameters must be compatible with the [W3C](https://www.w3.org/TR/webauthn-2/#dictionary-makecredentialoptions) definition
+      summary: Obtain parameters for creating FIDO2 credentials.
+      externalDocs:
+        description: Open Finance - API Enrollments for Payment Initiation
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnrollmentFidoOptionsRequest'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/enrollmentId'
+        - $ref: '#/components/parameters/authorizationHeader'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/xIdempotencyKey'
+      responses:
+        '502':
+          description: Error in Opus Open Client while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '201':
+          description: Data for creating a new FIDO2 credential.
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/xFapiInteractionIdResponse'
+            x-v:
+              $ref: '#/components/headers/xV'
+            x-selected-regulatory-v:
+              $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnrollmentFidoRegistrationOptions'
+        '400':
+          description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+              $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '422':
+          description: 'The request was well-formed but could not be processed due to business logic specific to the request.'
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+              $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/422ResponseErrorFidoRegistrationOptions'
+        default:
+          description: Follows the response standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /proxy/open-banking/enrollments/v2/enrollments/{enrollmentId}/fido-registration:
+    post:
+      tags:
+        - Device Enrollment
+      operationId: enrollmentRegisterFidoCredential
+      description: |
+        The account enrollment must have status "AWAITING_ENROLLMENT".
+        After successful registration, the account enrollment must transition to status "AUTHORISED".
+        Failure to verify the FIDO2 credential must cause the account holder institution to reject the account enrollment, since the same "challenge" cannot be reused for more than one registration.
+      summary: Association of the FIDO2 credential with the account enrollment.
+      externalDocs:
+        description: Open Finance - API Enrollments for Payment Initiation
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnrollmentFidoRegistration'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/enrollmentId'
+        - $ref: '#/components/parameters/authorizationHeader'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/xIdempotencyKey'
+      responses:
+        '502':
+          description: Error in Opus Open Client while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '204':
+          description: FIDO2 credentials validated and associated with the account enrollment.
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/xFapiInteractionIdResponse'
+            x-v:
+              $ref: '#/components/headers/xV'
+            x-selected-regulatory-v:
+              $ref: '#/components/headers/xSelectedRegulatoryV'
+        '400':
+          description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+              $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '422':
+          description: |
+            The request was well-formed but could not be processed due to business logic specific to the request.
+            Failure to verify the FIDO2 credential must cause the account holder institution to reject the account enrollment, since the same "challenge" cannot be reused for more than one registration.
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+              $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/422ResponseErrorFidoRegistration'
+        default:
+          description: Follows the response standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /proxy/open-banking/enrollments/v2/consents/{consentId}/authorise:
+    post:
+      tags:
+        - Consent
+      operationId: authorizeConsent
+      description: |
+        Authorisation of a payment consent with status `AWAITING_AUTHORISATION` using the access_token issued by the journey without redirect and the submission of risk signals.
+        For payments with a single approval level, the payment consent must transition to status `AUTHORISED` upon successful execution of this method.
+        For payments with multiple approval levels, the payment consent will remain in `PARTIALLY_ACCEPTED` until all approvers have authorised it.
+        In the event of a business failure (HTTP Status Code 422), the payment consent must transition to status `REJECTED` and follow the rejection reasons present in the payments API.
+        If the account holder institution identifies that the debtor account informed by the initiator when creating the consent differs from the debtor account linked to the device, the holder must return HTTP error 422 with code `CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO` and reject the consent with the reason `CONTA_NAO_PERMITE_PAGAMENTO`.
+        If the initiator omits the debtor account when creating the consent, the holder must consider the debtor account associated with the enrollment when filling in the `/data/debtorAccount` object present in the consent, after its authorisation.
+        The limits related to the enrollment must be validated only at the time of payment settlement, regardless of whether it is scheduled or immediate.
+      summary: Authorisation of a payment consent in the journey without redirect
+      externalDocs:
+        description: Open Finance - API Enrollments for Payment Initiation
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsentAuthorization'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/consentId'
+        - $ref: '#/components/parameters/authorizationHeader'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/xIdempotencyKey'
+        - $ref: '#/components/parameters/xBcbNfc'
+      responses:
+        '502':
+          description: Error in Opus Open Client while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '204':
+          description: Risk signals successfully received.
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/xFapiInteractionIdResponse'
+            x-v:
+              $ref: '#/components/headers/xV'
+            x-selected-regulatory-v:
+              $ref: '#/components/headers/xSelectedRegulatoryV'
+        '400':
+          description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+              $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '422':
+          description: 'The request was well-formed but could not be processed due to business logic specific to the request.'
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+              $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/422ResponseConsentsAuthorization'
+        default:
+          description: Follows the response standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /proxy/open-banking/enrollments/v2/recurring-consents/{recurringConsentId}/authorise:
+
+    post:
+      tags:
+        - Automatic Pix
+      operationId: authorizeRecurringConsent
+      description: |
+        Authorisation of an Automatic Pix consent with status AWAITING_AUTHORISATION using the access_token issued by the journey without redirect and the submission of risk signals. Consents with a single approval level must transition to status AUTHORISED upon successful execution of this method. For consents with multiple approval levels, the consent must remain in PARTIALLY_ACCEPTED until all approvers have authorised it. In the event of a business failure (HTTP Status Code 422), the payment consent must transition to status REJECTED and follow the rejection reasons present in the Automatic payments API.
+        If the account holder institution identifies that the debtor account informed by the initiator when creating the consent differs from the debtor account linked to the device, the holder must return HTTP error 422 in this method with code CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO and reject the consent with the reason CONTA_NAO_PERMITE_PAGAMENTO.
+        If the initiator omits the debtor account when creating the consent, the holder must consider the debtor account associated with the authorised enrollment when filling in the /data/debtorAccount object present in the consent.
+        The limits related to the enrollment must not be validated during the authorisation process of this consent nor during its life cycle.
+      summary: Authorisation of an Automatic Pix consent in the journey without redirect
+      externalDocs:
+        description: Open Finance - API Enrollments for Payment Initiation
+        url: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsentAuthorization'
+      parameters:
+        - $ref: '#/components/parameters/applicationId'
+        - $ref: '#/components/parameters/authorisationServerId'
+        - $ref: '#/components/parameters/recurringConsentId'
+        - $ref: '#/components/parameters/authorizationHeader'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/xIdempotencyKey'
+      responses:
+        '502':
+          description: Error in Opus Open Client while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '504':
+          description: Connection timeout exceeded while communicating with the account holder institution
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '204':
+          description: Risk signals successfully received.
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/xFapiInteractionIdResponse'
+            x-v:
+              $ref: '#/components/headers/xV'
+            x-selected-regulatory-v:
+              $ref: '#/components/headers/xSelectedRegulatoryV'
+        '400':
+          description: 'The request was malformed, omitting mandatory attributes, either in the payload or through attributes in the URL.'
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+              $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        '422':
+          description: 'The request was well-formed but could not be processed due to business logic specific to the request.'
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+              $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/422ResponseRecurringConsentsAuthorization'
+        default:
+          description: Follows the response standard defined by BACEN
+          headers:
+            x-origin-error:
+              $ref: '#/components/headers/xOriginError'
+            x-error-source-url:
+              $ref: '#/components/headers/xErrorSourceUrl'
+            x-selected-regulatory-v:
+                $ref: '#/components/headers/xSelectedRegulatoryV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+components:
+  schemas:
+    UUID:
+      format: uuid
+      pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+      type: string
+      example: '556392bd-b4c2-4cc0-9abe-f2c77a5c5d8f'
+    ResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Endpoint-specific error code
+                type: string
+                pattern: '[\w\W\s]*'
+                example: '4XX'
+                maxLength: 255
+              title:
+                description: Human-readable title of this specific error
+                type: string
+                example: 'Título legível por humanos deste erro específico'
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Human-readable description of this specific error
+                type: string
+                example: 'Descrição legível por humanos deste erro específico'
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+            additionalProperties: false
+        meta:
+          $ref: '#/components/schemas/Meta'
+      additionalProperties: false
+    LoggedUser:
+      type: object
+      description: User (natural person) who is logged in at the initiating institution.
+      required:
+        - document
+      properties:
+        document:
+          type: object
+          required:
+            - identification
+            - rel
+          properties:
+            identification:
+              type: string
+              maxLength: 11
+              description: Number of the user's official identification document.
+              example: '11111111111'
+              pattern: '^\d{11}$'
+            rel:
+              type: string
+              maxLength: 3
+              description: Type of the user's official identification document.
+              example: CPF
+              pattern: '^[A-Z]{3}$'
+    EnumEnrollmentPermission:
+      type: string
+      enum:
+        - PAYMENTS_INITIATE
+        - RECURRING_PAYMENTS_INITIATE
+      example: PAYMENTS_INITIATE
+      description: |
+        Permissions assigned to the account enrollment:
+        • PAYMENTS_INITIATE: Allows the enrollment to be used for payment initiation without redirect in the “payments-consents” and “payments-pix” API families.
+        • RECURRING_PAYMENTS_INITIATE: Allows the enrollment to be used for Automatic Pix initiation without redirect in the "payments-recurring-consents-automatic" and "payments-pix-recurring-payments-automatic" API families.
+    EnumEnrollmentCancelledFrom:
+      type: string
+      enum:
+        - INICIADORA
+        - DETENTORA
+      description: |
+        Field used to indicate the channel through which the account enrollment was cancelled. Possible values:
+
+          INICIADORA - Account enrollment in the initiating institution's channels.
+
+          DETENTORA - Account enrollment in the account holder institution's channels.
+    DebtorAccount:
+      type: object
+      description: |
+        Object containing the identification of the payer's source account.
+        The information regarding the payer's source account may be provided in the enrollment to the account holder institution, if the initiating institution has collected this information from the customer. Otherwise, it will be collected at the account holder institution and provided to the initiating institution as the response to the creation of the enrollment.
+      required:
+        - ispb
+        - number
+        - accountType
+      properties:
+        ispb:
+          type: string
+          minLength: 8
+          maxLength: 8
+          pattern: '^[0-9A-Z]{8}$'
+          example: '12345678'
+          description: |
+            Must be filled in with the ISPB (Brazilian Payment System Identifier) of the SPI (instant payment system) participant, using numbers only.
+        issuer:
+          type: string
+          minLength: 1
+          maxLength: 4
+          pattern: '^[0-9]{1,4}$'
+          example: '1774'
+          description: |
+            Code of the branch where the account was opened, without the check digit.
+            (A branch is the unit intended for serving customers, the general public and credit union members,
+            in the exercise of the institution's activities, and may not be mobile or temporary).
+            [Restriction] Mandatory for the following account types: CACC (CONTA_DEPOSITO_A_VISTA) and SVGS (CONTA_POUPANCA).
+        number:
+          type: string
+          minLength: 1
+          maxLength: 20
+          pattern: '^[0-9]{1,20}$'
+          example: '1234567890'
+          description: |
+            Must be filled in with the number of the paying user's transactional account, including the check digit (if one exists);
+            if there is an alphanumeric value, it must be converted to 0.
+        accountType:
+          $ref: '#/components/schemas/EnumAccountPaymentsType'
+    EnumAccountPaymentsType:
+      type: string
+      enum:
+        - CACC
+        - SVGS
+        - TRAN
+      example: CACC
+      description: |
+        Types of accounts used for payment via Pix.
+        Traditional types provided for by Resolution 4,753, not covering linked accounts,
+        accounts of persons domiciled abroad, accounts in foreign currencies and electronic money correspondent accounts.
+        Below is the description of each ENUM value within the scope of Pix.
+        CACC - Current - Current account.
+        SVGS - Savings - Savings account.
+        TRAN - TransactingAccount - Prepaid payment account.
+    BusinessEntity:
+      type: object
+      description: 'User (legal entity) who is logged in at the initiating institution. [Restriction] Mandatory if the user logged in at the initiating institution is a CNPJ (legal entity).'
+      required:
+        - document
+      properties:
+        document:
+          type: object
+          required:
+            - identification
+            - rel
+          properties:
+            identification:
+              type: string
+              maxLength: 14
+              description: Number of the official identification document of the legal entity data owner.
+              example: '11111111111111'
+              pattern: '^[0-9A-Z]{12}[0-9]{2}$'
+            rel:
+              type: string
+              maxLength: 4
+              description: Type of the official identification document of the legal entity data owner.
+              example: CNPJ
+              pattern: '^[A-Z]{4}$'
+    Meta:
+      type: object
+      description: Meta information regarding the requested API.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Total number of records in the result
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Total number of pages in the result
+          example: 1
+        requestDateTime:
+          description: 'Date and time of the query, in accordance with the RFC-3339 specification, UTC format.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+      additionalProperties: false
+    CreateEnrollmentRequest:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Object containing the information for creating an account enrollment in accordance with the standard defined by BACEN - https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento
+          required:
+            - callbackApplicationUri
+            - loggedUser
+            - permissions
+          properties:
+            callbackApplicationUri:
+                type: string
+                format: uri
+                maxLength: 2000
+                description: Callback URI of the application after the authentication process of the account enrollment initiation (post risk-signals)
+                example: 'https://aplicativo.instituicao.com.br'
+                pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+            loggedUser:
+              $ref: '#/components/schemas/LoggedUser'
+            permissions:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/EnumEnrollmentPermission'
+            businessEntity:
+              $ref: '#/components/schemas/BusinessEntity'
+            debtorAccount:
+              $ref: '#/components/schemas/DebtorAccount'
+            journey:
+              $ref: '#/components/schemas/EnrollmentJourney'
+            enrollmentName:
+              description: |
+                [Restriction] Must be filled in whenever the paying user enters any information in the name of the enrollment/device, both at the initiating institution and at the account holder institution
+              type: string
+              pattern: '[\w\W\s]*'
+              maxLength: 140
+              example: Nome Dispositivo
+    CreateEnrollmentResponse:
+      description: Account enrollment successfully created.
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - enrollmentId
+            - enrollment
+          properties:
+            enrollmentId:
+              $ref: '#/components/parameters/enrollmentId'
+            enrollment:
+              description: JWT containing the account enrollment object returned by the account holder institution in accordance with the standard defined by BACEN - https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento.
+              $ref: '#/components/schemas/ResponseCreateEnrollmentJWT'
+    GetEnrollmentResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - enrollment
+          properties:
+            enrollment:
+              description: JWT containing the account enrollment object returned by the account holder institution in accordance with the standard defined by BACEN - https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento.
+              $ref: '#/components/schemas/ResponseEnrollmentJWT'
+            enrollmentId:
+              $ref: '#/components/parameters/enrollmentId'
+    PatchEnrollmentRequest:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Object grouping the information on which logged-in user requested the cancellation of the account enrollment. For information on the fields, it follows the request standard defined in the official documentation ([Open Finance - API Enrollments for Payment Initiation](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/141557761/SV+API+-+Pagamentos+sem+Redirecionamento)).
+          required:
+            - cancellation
+          properties:
+            cancellation:
+              type: object
+              required:
+                - reason
+              properties:
+                cancelledBy:
+                  type: object
+                  description: |
+                    Information related to the paying user who requested the cancellation of the account enrollment.
+                    It may be absent in scenarios where automated processes carry out the cancellation of the enrollment, for example, due to an expiration date.
+                  required:
+                    - document
+                  properties:
+                    document:
+                      type: object
+                      description: Object consolidating the document data of the user who requested the cancellation.
+                      required:
+                        - identification
+                        - rel
+                      properties:
+                        identification:
+                          type: string
+                          maxLength: 11
+                          description: Document number of the user responsible for cancelling the account enrollment.
+                          example: '11111111111'
+                          pattern: '^\d{11}$'
+                        rel:
+                          type: string
+                          maxLength: 3
+                          description: Document type of the user responsible for cancelling the account enrollment.
+                          example: CPF
+                          pattern: '^[A-Z]{3}$'
+                reason:
+                  oneOf:
+                    - type: object
+                      required:
+                      - rejectionReason
+                      description: Reason for the rejection of the account enrollment.
+                      properties:
+                        rejectionReason:
+                          $ref: '#/components/schemas/EnrollmentRejectionReason'
+                    - type: object
+                      required:
+                      - revocationReason
+                      description: Reason for the revocation of the account enrollment.
+                      properties:
+                        revocationReason:
+                          $ref: '#/components/schemas/EnrollmentRevocationReason'
+                additionalInformation:
+                  type: string
+                  pattern: '[\w\W\s]*'
+                  example: Contrato entre iniciadora e detentora interrompido
+                  maxLength: 2048
+    EnrollmentRejectionReason:
+      type: string
+      enum:
+        - REJEITADO_TITULARIDADE_DIVERGENTE
+        - REJEITADO_TEMPO_EXPIRADO_RISK_SIGNALS
+        - REJEITADO_TEMPO_EXPIRADO_ACCOUNT_HOLDER_VALIDATION
+        - REJEITADO_TEMPO_EXPIRADO_ENROLLMENT
+        - REJEITADO_MAXIMO_CHALLENGES_ATINGIDO
+        - REJEITADO_MANUALMENTE
+        - REJEITADO_DISPOSITIVO_INCOMPATIVEL
+        - REJEITADO_FALHA_INFRAESTRUTURA
+        - REJEITADO_FALHA_HYBRID_FLOW
+        - REJEITADO_FALHA_FIDO
+        - REJEITADO_SEGURANCA_INTERNA
+        - REJEITADO_OUTRO
+      description: |
+        Indicates the reason for the cancellation of the account enrollment. Possible values:
+
+        • REJEITADO_TITULARIDADE_DIVERGENTE: The ownership of the user logged in at the account holder institution is incompatible with the one informed when the enrollment was created
+
+        • REJEITADO_TEMPO_EXPIRADO_RISK_SIGNALS: Automatic expiration due to timeout in status "AWAITING_RISK_SIGNALS". The submission of risk signals was not completed.
+
+        • REJEITADO_TEMPO_EXPIRADO_ACCOUNT_HOLDER_VALIDATION: Automatic expiration due to timeout in status "AWAITING_ACCOUNT_HOLDER_VALIDATION". The redirect process was not completed successfully.
+
+        • REJEITADO_TEMPO_EXPIRADO_ENROLLMENT: Automatic expiration due to timeout in status "AWAITING_ENROLLMENT". The process of creating and submitting FIDO2 credentials was not completed successfully.
+
+        • REJEITADO_MAXIMO_CHALLENGES_ATINGIDO: Account enrollment rejected due to several failed enrollment attempts.
+
+        • REJEITADO_MANUALMENTE: Manual cancellation, explicitly at the user's request.
+
+        • REJEITADO_DISPOSITIVO_INCOMPATIVEL: The device does not support the FIDO protocol.
+
+        • REJEITADO_FALHA_INFRAESTRUTURA: Infrastructure failure at the account holder institution.
+
+        • REJEITADO_SEGURANCA_INTERNA: Account enrollment rejected due to the security policy of the account holder or initiating institution considering the analysis of the risk signals.
+
+        • REJEITADO_FALHA_HYBRID_FLOW: Account enrollment rejected due to a technical failure in the redirect process (for example: exchanging the authorization code for an access token in the FAPI Hybrid flow)
+
+        • REJEITADO_FALHA_FIDO: Account enrollment rejected due to a technical failure in the process of validating or associating the FIDO public credential.
+
+        • REJEITADO_OUTRO: Other reasons not described by the previous ones. In this case, indicate the reason in "additionalInformation".
+    EnrollmentRevocationReason:
+      type: string
+      enum:
+        - REVOGADO_MANUALMENTE
+        - REVOGADO_VALIDADE_EXPIRADA
+        - REVOGADO_FALHA_INFRAESTRUTURA
+        - REVOGADO_SEGURANCA_INTERNA
+        - REVOGADO_OUTRO
+      description: |
+        Indicates the reason for the cancellation of the account enrollment. Possible values:
+
+        • REVOGADO_MANUALMENTE: Manual cancellation, explicitly at the user's request.
+
+        • REVOGADO_VALIDADE_EXPIRADA: Automatic expiration upon reaching the account enrollment's deadline.
+
+        • REVOGADO_FALHA_INFRAESTRUTURA: Infrastructure failure at the account holder institution.
+
+        • REVOGADO_SEGURANCA_INTERNA: Account enrollment rejected due to the security policies of either the initiating or the account holder institution.
+
+        • REVOGADO_OUTRO: Other reasons not described by the previous ones. In this case, indicate the reason in "additionalInformation".
+    RiskSignalsEnrollmentResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - redirectUrl
+          properties:
+            redirectUrl:
+              type: string
+              format: uri
+              maxLength: 2000
+              description: Redirect URI to the transmitting institution's authorisation Server in order to request approval of the start of the account enrollment
+              example: 'https://authorisation-server.transmissora.com.br/'
+              pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    RiskSignalsEnrollmentRequest:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Reports the integrity of the device and the app
+          required:
+            - deviceId
+            - osVersion
+            - userTimeZoneOffset
+            - language
+            - screenDimensions
+            - accountTenure
+          properties:
+            deviceId:
+              type: string
+              description: |
+                Unique ID of the device generated by the platform.
+
+                The system property that identifies the combination of logged-in user, application signing key and device is used.
+
+                [Android] Information obtained through this [link](https://developer.android.com/reference/android/provider/Settings.Secure#ANDROID_ID).
+
+                [iOS] Information obtained through this [link](https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor/).
+              example: 00aa11bb22cc33dd
+            isRootedDevice:
+              type: boolean
+              description: |
+                Indicates whether the device currently has “root” permission.
+
+                [Restriction] Fields whose submission is mandatory when the operating system used by the user during the account enrollment or the execution of the payment is Android or iOS.
+              example: false
+            screenBrightness:
+              type: number
+              format: double
+              description: |
+               Indicates the brightness level of the device screen.
+
+               [Android] The value is an integer, typically between 0 and 255, and the range of values may vary depending on the mobile phone manufacturer. Reference at this [link](https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS).
+
+               [iOS] The value is a floating point between “0.0” and “1.0”. Reference at this [link](https://developer.apple.com/documentation/uikit/uiscreen/).
+
+               [Restriction] Fields whose submission is mandatory when the operating system used by the user during the account enrollment or the execution of the payment is Android or iOS.
+              example: 255
+            elapsedTimeSinceBoot:
+              type: integer
+              format: int64
+              description: |
+                Indicates for how long (in milliseconds) the device has been switched on.
+
+                [Android] Information obtained through this [link](https://developer.android.com/reference/android/os/SystemClock#elapsedRealtime%28%29).
+
+                [iOS] Information obtained through this [link](https://developer.apple.com/documentation/kernel/kern/).
+
+                [Restriction] Fields whose submission is mandatory when the operating system used by the user during the account enrollment or the execution of the payment is Android or iOS.
+              example: 6356027
+            osVersion:
+              type: string
+              description: |
+                Operating system version.
+
+                [Android] Information obtained through this [link](https://developer.android.com/reference/android/os/Build.VERSION#RELEASE).
+                [iOS] - Information obtained through this [link](https://developer.apple.com/documentation/uikit/uidevice/1620043-systemversion/).
+              example: "14"
+            userTimeZoneOffset:
+              type: string
+              description: |
+                Indicates the time zone setting of the user's device, in the UTC offset format: ±hh[:mm]. The specified format allows the omission of the minutes part when its value is zero. Thus, both the values '-03:00' and '-03' are valid and represent the same time zone.
+
+                [Android] Information obtained through this [link](https://developer.android.com/reference/java/time/ZonedDateTime#getOffset()) or, for versions earlier than 8.0, this [link](https://developer.android.com/reference/java/util/TimeZone#getOffset(long)).
+
+                [iOS] Information obtained through this [link](https://developer.apple.com/documentation/foundation/timezone/).
+              example: '-03'
+            language:
+              type: string
+              description: |
+                Indicates the language of the device in the ISO 639-1 format.
+
+                [Android] Information obtained through this [link](https://developer.android.com/reference/java/util/Locale#getLanguage()).
+                [iOS] - Information obtained through this [link](https://developer.apple.com/documentation/foundation/locale/languagecode/).
+              example: 'pt'
+            screenDimensions:
+              type: object
+              description: |
+                Dimensions that the application occupies on the device screen.
+
+                [Android] Information obtained through this [link](https://developer.android.com/reference/android/view/WindowMetrics#getBounds()), or, for versions earlier than 11, this [link](https://developer.android.com/reference/android/util/DisplayMetrics).
+
+                [iOS] - Information obtained through this [link](https://developer.apple.com/documentation/metal/mtlrasterizationratemap/3088873-screensize/).
+              required:
+                - height
+                - width
+              properties:
+                height:
+                  type: integer
+                  description: Screen height, in pixels.
+                  example: 2340
+                width:
+                  type: integer
+                  description: Screen width, in pixels.
+                  example: 1080
+            accountTenure:
+              type: string
+              format: date
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              description: Date on which the customer was registered at the initiating institution.
+              example: "2023-08-20"
+            geolocation:
+              type: object
+              description: |
+                User's location, obtained with their consent.
+
+                [Android] Information obtained through this [link](https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient#public-abstract-tasklocation-getlastlocation) considering the required permissions.
+
+                [iOS] Information obtained through this [link](https://developer.apple.com/documentation/corelocation/).
+
+                [Restriction] The ITP must ask the user for permission to share their location. This field may be omitted if the GPS is unavailable, that is, without a signal, or on devices without the necessary hardware; or if the user denies consent.
+              properties:
+                latitude:
+                  type: number
+                  example: -15.738602
+                longitude:
+                  type: number
+                  example: -47.926498
+                type:
+                  type: string
+                  enum:
+                    - COARSE
+                    - FINE
+                    - INFERRED
+                  example: FINE
+            isCallingProgress:
+              type: boolean
+              description: |
+                Indicates an active call at the time of the enrollment.
+
+                [Android] Information obtained through this [link](https://developer.android.com/reference/android/media/AudioManager#getMode()).
+
+                [iOS] Information obtained through this [link](https://developer.apple.com/documentation/callkit/).
+
+                [Restriction] If the risk signal is available (the customer allowed it to be collected), it must be submitted
+              example: false
+            isDevModeEnabled:
+              type: boolean
+              description: Indicates whether the device is in developer mode.
+              example: false
+            isMockGPS:
+              type: boolean
+              description: |
+                Indicates whether the device is using a fake GPS. It must be submitted whenever the geolocation field with type `COARSE` or `FINE` is present.
+
+                [Android] Information obtained through this [link](https://developer.android.com/reference/android/location/Location.html#isMock()) or, for versions earlier than 12, this [link](https://developer.android.com/reference/android/location/Location.html#isFromMockProvider()).
+
+                [iOS] Information obtained through the links:
+                sourceInformation, [link](https://developer.apple.com/documentation/corelocation/cllocation/3861803-sourceinformation).
+                isSimulatedBySoftware, [link](https://developer.apple.com/documentation/corelocation/cllocationsourceinformation/3861807-issimulatedbysoftware).
+              example: false
+            isEmulated:
+              type: boolean
+              description: Indicates whether the device is emulated or real.
+              example: false
+            isMonkeyRunner:
+              type: boolean
+              description: Indicates the use of MonkeyRunner.
+              example: false
+            isCharging:
+              type: boolean
+              description: |
+                Indicates whether the device battery is charging.
+
+                [Android] Information obtained through this [link](https://developer.android.com/reference/android/os/BatteryManager).
+
+                [iOS] Information obtained through this [link](https://developer.apple.com/documentation/uikit/uidevice/1620045-batterymonitoringenabled/).
+              example: false
+            antennaInformation:
+              type: string
+              description: Indicates which antenna the device is connected to.
+              example: "CellIdentityLte:{ mCi=2******60 mPci=274 mTac=5***1 mEarfcn=9510 mBands=[28] mBandwidth=2147483647 mMcc=724 mMnc=10 mAlphaLong=VIVO mAlphaShort=VIVO mAdditionalPlmns={} mCsgInfo=null}, CellIdentityLte:{ mCi=1*****01 mPci=361 mTac=3***6 mEarfcn=9410 mBands=[28] mBandwidth=2147483647 mMcc=724 mMnc=03 mAlphaLong=TIMBRASIL mAlphaShort=TIMBRASIL mAdditionalPlmns={} mCsgInfo=null}"
+            isUsbConnected:
+              type: boolean
+              description: Indicates whether the device is connected to another device via USB.
+              example: false
+            integrity:
+              type: object
+              description: |
+                Reports the integrity of the device and the app.
+
+                [Android] In accordance with the Play API Integrity documentation, [link](https://developer.android.com/google/play/integrity/overview?hl=pt-br).
+
+                [iOS] In accordance with the App Attest documentation, [link](https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity).
+              properties:
+                appRecognitionVerdict:
+                  type: string
+                  description: Reports the integrity of the app
+                  example: "PLAY_RECOGNIZED"
+                deviceRecognitionVerdict:
+                  type: string
+                  description: Reports the integrity of the device
+                  example: '[\"MEETS_DEVICE_INTEGRITY\"]'
+    ResponseCreateEnrollmentJWT:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          description: Object containing the response information for the creation of the account enrollment.
+          required:
+            - enrollmentId
+            - creationDateTime
+            - status
+            - statusUpdateDateTime
+            - permissions
+            - loggedUser
+          properties:
+            enrollmentId:
+              $ref: '#/components/parameters/enrollmentId'
+            creationDateTime:
+              type: string
+              format: date-time
+              example: '2023-07-12T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+              description: The moment at which the account enrollment was created in the account holder institution's environment.
+            status:
+              $ref: '#/components/schemas/EnumEnrollmentStatus'
+            statusUpdateDateTime:
+              type: string
+              format: date-time
+              example: '2023-07-12T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+              description: The moment at which the last status change of the account enrollment occurred.
+            permissions:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/EnumEnrollmentPermission'
+            expirationDateTime:
+              type: string
+              format: date-time
+              example: '2023-07-12T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+              description: |
+                Date and time defined by the user on which the device enrollment must expire, losing its validity.
+
+                [Restriction] Mandatory field that must be returned when the device enrollment is in or passes through the AUTHORISED state;
+            loggedUser:
+              $ref: '#/components/schemas/LoggedUser'
+            businessEntity:
+              $ref: '#/components/schemas/BusinessEntity'
+            debtorAccount:
+              $ref: '#/components/schemas/DebtorAccount'
+            enrollmentName:
+              description: |
+                [Restriction] Must be filled in whenever the paying user enters any information in the name of the enrollment/device, both at the initiating institution and at the account holder institution
+              type: string
+              pattern: '[\w\W\s]*'
+              maxLength: 140
+              example: Nome Dispositivo
+        links:
+          $ref: '#/components/schemas/LinkSingle'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseEnrollmentJWT:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          description: Object grouping the account enrollment information, including cancellation data and limits where applicable.
+          required:
+            - enrollmentId
+            - creationDateTime
+            - status
+            - statusUpdateDateTime
+            - permissions
+            - loggedUser
+          properties:
+            enrollmentId:
+              $ref: '#/components/parameters/enrollmentId'
+            creationDateTime:
+              type: string
+              format: date-time
+              example: '2023-07-12T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+              description: The moment at which the account enrollment was created in the account holder institution's environment.
+            status:
+              $ref: '#/components/schemas/EnumEnrollmentStatus'
+            statusUpdateDateTime:
+              type: string
+              format: date-time
+              example: '2023-07-12T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+              description: The moment at which the last status change of the account enrollment occurred.
+            permissions:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/EnumEnrollmentPermission'
+            expirationDateTime:
+              type: string
+              format: date-time
+              example: '2023-07-12T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+              description: |
+                Date and time when the permission expires. It reflects the enrollment's validity deadline.
+                A string with date and time in accordance with the RFC-3339 specification, always using the UTC timezone (UTC time format).
+
+                [Restriction] Mandatory in cases where there is a defined validity period.
+                In the case of an enrollment with an indefinite term, the field must not be filled in.
+            loggedUser:
+              $ref: '#/components/schemas/LoggedUser'
+            businessEntity:
+              $ref: '#/components/schemas/BusinessEntity'
+            debtorAccount:
+              allOf:
+                - $ref: '#/components/schemas/DebtorAccount'
+                - type: object
+                  description: |
+                    Object containing the identification of the payer's source account.
+                    The information regarding the payer's source account may be provided in the enrollment to the account holder institution, if the initiating institution has collected this information from the customer. Otherwise, it will be collected at the account holder institution and provided to the initiating institution as the response to the creation of the enrollment.
+
+                    [ Restriction ] It must be filled in for the statuses AWAITING_ENROLLMENT, AUTHORISED and REVOKED and must not be changed.
+            journey:
+              $ref: '#/components/schemas/EnrollmentJourney'
+            cancellation:
+              type: object
+              required:
+                - cancelledFrom
+                - reason
+              properties:
+                cancelledBy:
+                  type: object
+                  description: |
+                    Information related to the paying user who requested the cancellation of the account enrollment.
+                    It may be absent in scenarios where automated processes carry out the cancellation of the enrollment, for example, due to an expiration date.
+                  required:
+                    - document
+                  properties:
+                    document:
+                      type: object
+                      description: Object consolidating the document data of the user who requested the cancellation.
+                      required:
+                        - identification
+                        - rel
+                      properties:
+                        identification:
+                          type: string
+                          maxLength: 11
+                          description: Document number of the user responsible for cancelling the account enrollment.
+                          example: '11111111111'
+                          pattern: '^\d{11}$'
+                        rel:
+                          type: string
+                          maxLength: 3
+                          description: Document type of the user responsible for cancelling the account enrollment.
+                          example: CPF
+                          pattern: '^[A-Z]{3}$'
+                reason:
+                  oneOf:
+                    - type: object
+                      required:
+                      - rejectionReason
+                      description: Reason for the rejection of the account enrollment.
+                      properties:
+                        rejectionReason:
+                          $ref: '#/components/schemas/EnrollmentRejectionReason'
+                    - type: object
+                      required:
+                      - revocationReason
+                      description: Reason for the revocation of the account enrollment.
+                      properties:
+                        revocationReason:
+                          $ref: '#/components/schemas/EnrollmentRevocationReason'
+                additionalInformation:
+                  type: string
+                  pattern: '[\w\W\s]*'
+                  example: Contrato entre iniciadora e detentora interrompido
+                  maxLength: 2048
+                cancelledFrom:
+                  $ref: '#/components/schemas/EnumEnrollmentCancelledFrom'
+                rejectedAt:
+                  type: string
+                  format: date-time
+                  example: '2023-07-12T08:30:00Z'
+                  pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+                  maxLength: 20
+                  description: The moment of the rejection of the account enrollment in the account holder institution's environment.
+            transactionLimit:
+              type: string
+              minLength: 4
+              maxLength: 19
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              example: '100000.12'
+              description: |
+                Maximum amount per transaction allowed for this account enrollment. This limit does not guarantee the authorisation of payment initiations;
+                it serves as a reference for the initiating institution to avoid creating consents for amounts that are certain not to be authorised.
+
+                [Restriction] Field that must be filled in by the participants when the `status` field is filled in with the values `AUTHORISED` or `AWAITING_ENROLLMENT`.
+            dailyLimit:
+              type: string
+              minLength: 4
+              maxLength: 19
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              example: '100000.12'
+              description: |
+                Cumulative daily limit for this account enrollment. This limit does not guarantee the authorisation of payment initiations;
+                it serves as a reference for the initiating institution to avoid creating consents for amounts that are certain not to be authorised.
+                This field will only be present when the user, during the authorisation of the enrollment, defines a maximum daily amount different from their available Pix limit for the day.
+            enrollmentName:
+              description: |
+                [Restriction] Must be filled in whenever the paying user enters any information in the name of the enrollment/device, both at the initiating institution and at the account holder institution
+              type: string
+              pattern: '[\w\W\s]*'
+              maxLength: 140
+              example: Nome Dispositivo
+        links:
+          $ref: '#/components/schemas/LinkSingle'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    LinkSingle:
+      type: object
+      description: References to other resources of the requested API.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: url
+          maxLength: 2000
+          description: Full URI that generated the current response.
+          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
+    EnumEnrollmentStatus:
+      type: string
+      enum:
+        - AWAITING_RISK_SIGNALS
+        - AWAITING_ACCOUNT_HOLDER_VALIDATION
+        - AWAITING_ENROLLMENT
+        - AUTHORISED
+        - REVOKED
+        - REJECTED
+      description: |
+        Status of the account enrollment:
+
+        • AWAITING_RISK_SIGNALS: Account enrollment created and awaiting the submission of the risk signals to the account holder institution.
+
+        • AWAITING_ACCOUNT_HOLDER_VALIDATION: Account enrollment awaiting authorisation in the account holder institution's environment.
+
+        • AWAITING_ENROLLMENT: Account enrollment authorised in the account holder institution's environment and awaiting the enrollment of credentials (FIDO2).
+
+        • AUTHORISED: Account enrollment ready for use.
+
+        • REVOKED: Account enrollment revoked.
+
+        • REJECTED: Account enrollment rejected.
+    FidoSignOptionsRequest:
+      type: object
+      description: Payload for authentication using a previously registered FIDO2 credential.
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: |
+            Object containing the information about the Relying Party and the platform on which the user is using the initiating institution's service for the use of FIDO2.
+          oneOf:
+            - required:
+              - rp
+              - platform
+              - consentId
+              properties:
+                rp:
+                  type: string
+                  description: Unique identifier of the Relying Party, which corresponds to the CN value of the initiating institution's transport certificate.
+                platform:
+                  type: string
+                  description: |
+                    Indicates the platform on which the user will create the new FIDO2 credential.
+                    This field allows the FIDO server to include extensions according to the platform used.
+                  enum:
+                    - ANDROID
+                    - BROWSER
+                    - CROSS_PLATFORM
+                    - IOS
+                consentId:
+                  $ref: '#/components/schemas/consentId'
+            - required:
+              - rp
+              - platform
+              - recurringConsentId
+              properties:
+                rp:
+                  type: string
+                  description: Unique identifier of the Relying Party, which corresponds to the CN value of the initiating institution's transport certificate.
+                platform:
+                  type: string
+                  description: |
+                    Indicates the platform on which the user will create the new FIDO2 credential.
+                    This field allows the FIDO server to include extensions according to the platform used.
+                  enum:
+                    - ANDROID
+                    - BROWSER
+                    - CROSS_PLATFORM
+                    - IOS
+                recurringConsentId:
+                  $ref: '#/components/schemas/recurringConsentIdSignOptions'
+    EnrollmentFidoSignOptionsResponse:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: object
+          description: Object containing the information required for signing with a previously registered FIDO2 credential.
+          required:
+            - challenge
+          properties:
+            challenge:
+              type: string
+              format: byte
+              description: Sequence of random bytes generated by the FIDO2 server. It must be the value in base64url format without padding.
+            timeout:
+              type: integer
+              format: int32
+              description: Expiration, in milliseconds, of the challenge.
+            rpId:
+              type: string
+              description: Identifier of the Relying Party.
+            allowCredentials:
+              type: array
+              items:
+                $ref: '#/components/schemas/FidoPublicKeyCredentialDescriptor'
+            userVerification:
+              type: string
+              example: required, preferred, discouraged
+            extensions:
+              type: object
+              description: Extension field with options that vary by platform.
+              additionalProperties: true
+        meta:
+          $ref: '#/components/schemas/RegulatoryMeta'
+    FidoPublicKeyCredentialDescriptor:
+      type: object
+      required:
+        - id
+        - type
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the credential.
+        type:
+          type: string
+          description: Identifier of the credential type.
+          example: public-key
+    EnrollmentFidoOptionsRequest:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: |
+            Object containing the information about the Relying Party and the platform on which the user is using the initiating institution's service for the use of FIDO2.
+          required:
+            - rp
+            - platform
+          properties:
+            rp:
+              type: string
+              description: Unique identifier of the Relying Party, which corresponds to the CN value of the initiating institution's transport certificate.
+            platform:
+              type: string
+              description: |
+                Indicates the platform on which the user is using the FIDO2 credential.
+                This field allows the FIDO server to include extensions according to the platform used.
+              enum:
+                - ANDROID
+                - BROWSER
+                - CROSS_PLATFORM
+                - IOS
+    EnrollmentFidoRegistrationOptions:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: object
+          description: Object containing the information required for registering a new FIDO2 credential.
+          required:
+            - enrollmentId
+            - rp
+            - user
+            - challenge
+            - pubKeyCredParams
+          properties:
+            enrollmentId:
+              $ref: '#/components/schemas/enrollmentId'
+            rp:
+              $ref: '#/components/schemas/FidoRelyingParty'
+            user:
+              $ref: '#/components/schemas/FidoUser'
+            challenge:
+              type: string
+              format: byte
+              description: Sequence of random bytes generated by the FIDO2 server. It must be the value in base64url format without padding.
+            pubKeyCredParams:
+              type: array
+              items:
+                $ref: '#/components/schemas/FidoPublicKeyCredentialCreationOptions'
+            timeout:
+              type: integer
+              description: |
+                Represents, in milliseconds, the validity period of the challenge for registering the FIDO2 credential. The value of this field must be 300000, representing 5 minutes. This value was defined based on the enrollment state machine and on the webAuthn protocol documentation.
+            excludeCredentials:
+              type: array
+              description: |
+                List of IDs of credentials that already exist for this user and authenticator. It is used to avoid creating multiple credentials for the same user on the same authenticator. If submitted, the initiating institution may reject the registration of one of the credentials that already exist on the device, or proceed with the creation, either replacing the existing enrollment or not.
+              items:
+                $ref: '#/components/schemas/FidoPublicKeyCredentialDescriptor'
+            authenticatorSelection:
+              $ref: '#/components/schemas/FidoAuthenticatorSelectionCriteria'
+            attestation:
+              type: string
+              description: Indicates the type of attestation that the authenticator may use.
+              example: none, indirect, direct, enterprise
+            attestationFormats:
+              type: array
+              description: Indicates the format preferences for the attestation field.
+              items:
+                type: string
+                example: packed, tpm, android-key, android-safetynet, fido-u2f, apple, none
+            extensions:
+              type: object
+              description: Extension field with options that vary by platform.
+              additionalProperties: true
+        meta:
+          $ref: '#/components/schemas/RegulatoryMeta'
+    FidoAuthenticatorSelectionCriteria:
+      type: object
+      description: Additional restrictions on the types of authenticators allowed for the registration.
+      properties:
+        authenticatorAttachment:
+          type: string
+          description: 'Indicates the supported authenticator types (e.g. Operating System or Cross-Platform such as a USB key)'
+          example: platform, cross-platform
+        userVerification:
+          type: string
+          description: Indicates the type of "discoverability" of the credential.
+          example: discouraged, preferred, required
+        requireResidentKey:
+          type: boolean
+          description: Indicates the user verification requirement.
+        residentKey:
+          type: string
+          description: Indicates the user verification requirement.
+    FidoRelyingParty:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the Relying Party. This field must be filled in with the value that is sent in the request in the /data/rp field.
+        name:
+          type: string
+          description: Friendly name of the Relying Party for display to users. It must be obtained through the Software Statement Assertion, attribute software_client_name.
+    FidoUser:
+      type: object
+      required:
+        - id
+        - name
+        - displayName
+      properties:
+        id:
+          type: string
+          description: |
+            Unique identifier of the user being registered, in base64 format. The conversion of this value to the original format (BufferSource or ArrayBuffer) must not exceed 64 bytes.
+            The unique identifier must be opaque, that is, it must not carry personal data about the user; for example (non-exhaustive), an RFC4122 UUID meets the requirements of this field
+        name:
+          type: string
+          description: Human-readable identifier of the user.
+        displayName:
+          type: string
+          description: Identifier of the user for display purposes. It must be formed by the social name, if one exists, or by the first and last name in the customer's registration at the account holder institution.
+    FidoPublicKeyCredentialCreationOptions:
+      type: object
+      required:
+        - alg
+        - type
+      properties:
+        alg:
+          type: integer
+          description: Identifier of the algorithm (COSE)
+          example: -7
+        type:
+          type: string
+          description: Identifier of the credential type.
+          example: public-key
+    EnrollmentFidoRegistration:
+      type: object
+      description: Object containing the response to the creation of a new FIDO2 credential.
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - id
+            - rawId
+            - response
+          properties:
+            id:
+              type: string
+              description: Identifier of the credential. It must be the base64url-format value of the rawId field of the public key created in the device registration process.
+            rawId:
+              type: string
+              description: Identifier of the credential. For submission to the account holder institution, the value of this attribute must be identical to the value of the id attribute.
+            response:
+              type: object
+              required:
+                - clientDataJSON
+                - attestationObject
+              properties:
+                clientDataJSON:
+                  type: string
+                  format: bytes
+                  description: Aggregates the information of the application that generated the credential. It must be submitted in base64url format to the account holder institution.
+                  example: eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiTVRBeU16azRhMkZxYUhOclpHcG9ZV3R6Iiwib3JpZ2luIjoiaHR0cHM6Ly93d3cudzMub3JnIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ==
+                attestationObject:
+                  type: string
+                  format: bytes
+                  description: Aggregates the information of the credential's public key. It must be submitted in base64url format to the account holder institution.
+                  example: o2NmbXRoZmlkby11MmZnYXR0U3RtdKJjc2lnWEcwRQIgZyUMtm43lCCqzoIbSDeoCUpJzh/VSchwQNxFR2UM/DsCIQDWpp4+/nklI7G2HPVZCIqw08R9omcn9kJrKPsuIO5k22N4NWOBWQFIMIIBRDCB6qADAgECAgkBcwb/////QwMwCgYIKoZIzj0EAwIwGzEZMBcGA1UEAxMQR251YmJ5IEhTTSBDQSAwMDAiGA8yMDEyMDYwMTAwMDAwMFoYDzIwNjIwNTMxMjM1OTU5WjAwMRkwFwYDVQQDExBHb29nbGUgR251YmJ5IHYwMRMwEQYDVQQtAwoAAXMG/////0MDMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAELuWVatmVMfAOr53T6fh7X/iIgqKz5SCnKTBUnFo3FtbbslUGi8Qetr1nbyr6BVqGHqcJiXyvF6rVbj5fZqbiBTAKBggqhkjOPQQDAgNJADBGAiEA5GaaFxllkOr24b5s6Qu/4ch3ZgU+3GIAv/D8kj4EGMgCIQDXYfaVAMe7Jzht3ra4TaCKKpaUxp+nRkIO/SKiQZPjgmhhdXRoRGF0YVjEIYvQ2gJvAWdQFFLPcpStJJWLnFoQO0f5vT1T51P/rm5BAAAAAAAAAAAAAAAAAAAAAAAAAAAAQCJ8iR8CqPctr4tz/YAICs6bDwVqhDzdt3oohVVWRQruy+E1AFeEWgPMWsIS4UU0n+sRGW3m2K90z1d9ujtFPxylAQIDJiABIVggaUaH0XDx9F2UOrT0ao02wL+xjGR/BxnCB4WOU2w0H8YiWCATuK2PUWGPophwPsfNIC3CZw4TGlCMEq1R15cw1w5KDg==
+            authenticatorAttachment:
+              type: string
+              description: Indicates the form of communication with the authenticator.
+              example: platform, cross-platform
+            type:
+              type: string
+              description: Credential type
+              example: public-key
+            clientExtensionResults:
+              type: object
+              description: Credential extensions, platform-specific
+              additionalProperties: true
+    ConsentAuthorization:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Object containing risk signals and the id of the account enrollment for the assessment of the authorisation of a payment consent.
+          required:
+            - enrollmentId
+            - riskSignals
+            - fidoAssertion
+          properties:
+            enrollmentId:
+              $ref: '#/components/parameters/enrollmentId'
+            riskSignals:
+              type: object
+              required:
+                - deviceId
+                - osVersion
+                - userTimeZoneOffset
+                - language
+                - screenDimensions
+                - accountTenure
+              description: |
+                Set of signals extracted from the user's device for the activation of the payment consent.
+                Whether the information is mandatory varies according to the platform used.
+              properties:
+                deviceId:
+                  type: string
+                  description: |
+                    Unique ID of the device generated by the platform.
+
+                    The system property that identifies the combination of logged-in user, application signing key and device is used.
+
+                    [Android] Information obtained through this [link](https://developer.android.com/reference/android/provider/Settings.Secure#ANDROID_ID).
+
+                    [iOS] Information obtained through this [link](https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor/).
+                isRootedDevice:
+                  type: boolean
+                  description: |
+                    Indicates whether the device currently has “root” permission.
+
+                    [Restriction] Fields whose submission is mandatory when the operating system used by the user during the account enrollment or the execution of the payment is Android or iOS.
+                screenBrightness:
+                  type: number
+                  format: double
+                  description: |
+                    Indicates the brightness level of the device screen.
+
+                    [Android] The value is an integer, typically between 0 and 255, and the range of values may vary depending on the mobile phone manufacturer. Reference at this [link](https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS).
+
+                    [iOS] The value is a floating point between “0.0” and “1.0”. Reference at this [link](https://developer.apple.com/documentation/uikit/uiscreen/).
+
+                    [Restriction] Fields whose submission is mandatory when the operating system used by the user during the account enrollment or the execution of the payment is Android or iOS.
+                elapsedTimeSinceBoot:
+                  type: integer
+                  format: int64
+                  description: |
+                    Indicates for how long (in milliseconds) the device has been switched on.
+
+                    [Android] Information obtained through this [link](https://developer.android.com/reference/android/os/SystemClock#elapsedRealtime%28%29).
+
+                    [iOS] Information obtained through this [link](https://developer.apple.com/documentation/kernel/kern/).
+
+                    [Restriction] Fields whose submission is mandatory when the operating system used by the user during the account enrollment or the execution of the payment is Android or iOS.
+                osVersion:
+                  type: string
+                  description: |
+                    Operating system version.
+
+                    [Android] Information obtained through this [link](https://developer.android.com/reference/android/os/Build.VERSION#RELEASE).
+                    [iOS] - Information obtained through this [link](https://developer.apple.com/documentation/uikit/uidevice/1620043-systemversion/).
+                userTimeZoneOffset:
+                  type: string
+                  description: |
+                    Indicates the time zone setting of the user's device, in the UTC offset format: ±hh[:mm]. The specified format allows the omission of the minutes part when its value is zero. Thus, both the values '-03:00' and '-03' are valid and represent the same time zone.
+
+                    [Android] Information obtained through this [link](https://developer.android.com/reference/java/time/ZonedDateTime#getOffset()) or, for versions earlier than 8.0, this [link](https://developer.android.com/reference/java/util/TimeZone#getOffset(long)).
+
+                    [iOS] Information obtained through this [link](https://developer.apple.com/documentation/foundation/timezone/).
+                  example: '-03'
+                language:
+                  type: string
+                  description: |
+                    Indicates the language of the device in the ISO 639-1 format.
+
+                    [Android] Information obtained through this [link](https://developer.android.com/reference/java/util/Locale#getLanguage()).
+                    [iOS] - Information obtained through this [link](https://developer.apple.com/documentation/foundation/locale/languagecode/).
+                  example: 'pt'
+                screenDimensions:
+                  type: object
+                  description: |
+                    Dimensions that the application occupies on the device screen.
+
+                    [Android] Information obtained through this [link](https://developer.android.com/reference/android/view/WindowMetrics#getBounds()), or, for versions earlier than 11, this [link](https://developer.android.com/reference/android/util/DisplayMetrics).
+
+                    [iOS] - Information obtained through this [link](https://developer.apple.com/documentation/metal/mtlrasterizationratemap/3088873-screensize/).
+                  required:
+                    - height
+                    - width
+                  properties:
+                    height:
+                      type: integer
+                      description: Screen height, in pixels.
+                    width:
+                      type: integer
+                      description: Screen width, in pixels.
+                accountTenure:
+                  type: string
+                  format: date
+                  pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+                  description: Date on which the customer was registered at the initiating institution.
+                  example: 2023-09-01
+                geolocation:
+                  type: object
+                  description: |
+                    User's location, obtained with their consent.
+
+                    [Android] Information obtained through this [link](https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient#public-abstract-tasklocation-getlastlocation) considering the required permissions.
+
+                    [iOS] Information obtained through this [link](https://developer.apple.com/documentation/corelocation/).
+
+                    [Restriction] The ITP must ask the user for permission to share their location. This field may be omitted if the GPS is unavailable, that is, without a signal, or on devices without the necessary hardware; or if the user denies consent.
+                  properties:
+                    latitude:
+                      type: number
+                    longitude:
+                      type: number
+                    type:
+                      type: string
+                      enum:
+                        - COARSE
+                        - FINE
+                        - INFERRED
+                isCallInProgress:
+                  type: boolean
+                  description: |
+                    Indicates an active call at the time of the enrollment.
+
+                    [Android] Information obtained through this [link](https://developer.android.com/reference/android/media/AudioManager#getMode()).
+
+                    [iOS] Information obtained through this [link](https://developer.apple.com/documentation/callkit/).
+
+                    [Restriction] If the risk signal is available (the customer allowed it to be collected), it must be submitted
+                isDevModeEnabled:
+                  type: boolean
+                  description: Indicates whether the device is in developer mode.
+                isMockGPS:
+                  type: boolean
+                  description: |
+                    Indicates whether the device is using a fake GPS. It must be submitted whenever the geolocation field with type `COARSE` or `FINE` is present.
+
+                    [Android] Information obtained through this [link](https://developer.android.com/reference/android/location/Location.html#isMock()) or, for versions earlier than 12, this [link](https://developer.android.com/reference/android/location/Location.html#isFromMockProvider()).
+
+                    [iOS] Information obtained through the links:
+                    sourceInformation, [link](https://developer.apple.com/documentation/corelocation/cllocation/3861803-sourceinformation).
+                    isSimulatedBySoftware, [link](https://developer.apple.com/documentation/corelocation/cllocationsourceinformation/3861807-issimulatedbysoftware).
+                isEmulated:
+                  type: boolean
+                  description: Indicates whether the device is emulated or real.
+                isMonkeyRunner:
+                  type: boolean
+                  description: Indicates the use of MonkeyRunner.
+                isCharging:
+                  type: boolean
+                  description: |
+                    Indicates whether the device battery is charging.
+
+                    [Android] Information obtained through this [link](https://developer.android.com/reference/android/os/BatteryManager).
+
+                    [iOS] Information obtained through this [link](https://developer.apple.com/documentation/uikit/uidevice/1620045-batterymonitoringenabled/).
+                antennaInformation:
+                  type: string
+                  description: Indicates which antenna the device is connected to.
+                isUsbConnected:
+                  type: boolean
+                  description: Indicates whether the device is connected to another device via USB.
+                integrity:
+                  type: object
+                  description: |
+                    Reports the integrity of the device and the app.
+
+                    [Android] In accordance with the Play API Integrity documentation, [link](https://developer.android.com/google/play/integrity/overview?hl=pt-br).
+
+                    [iOS] In accordance with the App Attest documentation, [link](https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity).
+                  properties:
+                    appRecognitionVerdict:
+                      type: string
+                      description: Reports the integrity of the app
+                    deviceRecognitionVerdict:
+                      type: string
+                      description: Reports the integrity of the device
+            fidoAssertion:
+              type: object
+              description: Assertion data
+              required:
+                - id
+                - rawId
+                - type
+                - response
+              properties:
+                id:
+                  type: string
+                  description: Identifier of the credential. It must be the base64url-format value of the rawId field of the public key used in the authentication process.
+                rawId:
+                  type: string
+                  description: Identifier of the credential. For submission to the account holder institution, the value of this attribute must be identical to the value of the id attribute.
+                type:
+                  type: string
+                  description: Credential type.
+                response:
+                  type: object
+                  description: Provides the information of the response to the assertion.
+                  required:
+                    - clientDataJSON
+                    - authenticatorData
+                    - signature
+                    - userHandle
+                  properties:
+                    clientDataJSON:
+                      type: string
+                      format: bytes
+                      description: Aggregates the information of the application that generated the credential. It must be submitted in base64url format to the account holder institution.
+                    authenticatorData:
+                      type: string
+                      format: bytes
+                      description: Represents the authenticator's data structure. It must be submitted in base64url format to the account holder institution.
+                    signature:
+                      type: string
+                      format: bytes
+                      description: Sequence of bytes containing the signature. It must be submitted in base64url format to the account holder institution.
+                    userHandle:
+                      type: string
+                      format: bytes
+                      description: |
+                        User name that was submitted during the creation of the credential. It must be submitted in base64url format to the account holder institution.
+                        If the FIDO2 authenticator does not return this field, the initiating institution must send an empty string to the account holder institution.
+                clientExtensionResults:
+                  type: object
+                  description: Structure for the extension of results
+                  additionalProperties: true
+    enrollmentId:
+      type: string
+      maxLength: 256
+      pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+      example: 'urn:bancoex:C1DD33123'
+      description: |
+        Unique identifier of the account enrollment created for the requested payment initiation. It must be a URN - Uniform Resource Name.
+        A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+        Identifier - URI - assigned under the "urn" URI scheme and a specific URN namespace, with the intention that the URN
+        be a persistent, location-independent resource identifier.
+        Taking the string urn:bancoex:C1DD33123 as an example of an enrollmentId, we have:
+        - the namespace (urn)
+        - the identifier associated with the namespace of the account holder institution (bancoex)
+        - the specific identifier within the namespace (C1DD33123).
+        More detailed information about the construction of namespaces should be consulted in [RFC8141](https://tools.ietf.org/html/rfc8141).
+    recurringConsentIdSignOptions:
+      type: string
+      pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+      maxLength: 256
+      description: |
+        Unique identifier of the long-lived consent created for the requested payment initiation. It must be a URN - Uniform Resource Name.
+        A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+        Identifier - URI - assigned under the "urn" URI scheme and a specific URN namespace, with the intention that the URN
+        be a persistent, location-independent resource identifier.
+        Taking the string urn:bancoex:C1DD33123 as an example of a `recurringConsentId`, we have:
+        - the namespace (urn)
+        - the identifier associated with the namespace of the transmitting institution (bancoex)
+        - the specific identifier within the namespace (C1DD33123).
+        More detailed information about the construction of namespaces should be consulted in [RFC8141](https://tools.ietf.org/html/rfc8141).
+    consentId:
+      type: string
+      maxLength: 256
+      pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+      description: |
+        The consentId is the unique identifier of the consent and must be a URN - Uniform Resource Name.
+        A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+        Identifier - URI - assigned under the "urn" URI scheme and a specific URN namespace, with the intention that the URN
+        be a persistent, location-independent resource identifier.
+        Taking the string urn:bancoex:C1DD33123 as an example of a consentId, we have:
+        - the namespace (urn)
+        - the identifier associated with the namespace of the account holder institution (bancoex)
+        - the specific identifier within the namespace (C1DD33123).
+    EnrollmentJourney:
+      type: object
+      required:
+        - isLinked
+        - linkId
+      description: |
+        Additional information about the Optimized Journey context.
+        [RESTRICTION] Object whose submission is mandatory when the user expresses consent to the sharing of balance through the Optimized Journey, regardless of the status of the data consent”
+      properties:
+        isLinked:
+          type: boolean
+          example: false
+          description: |
+            Field for identifying a consent initiated in the Optimized Journey.
+        linkId:
+          type: string
+          pattern: ^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$
+          maxLength: 256
+          example: urn:bancoex:C1DD331237
+          description: |
+            Identifier of the data consent to which this consent is linked.
+    EnumOriginError:
+      type: string
+      enum:
+        - opus-tpp
+        - participant
+        - directory
+        - unknown
+      example: opus-tpp
+      description: |
+        Origin of the reported error:
+        - **opus-tpp**: error originating in Opus TPP.
+        - **participant**: error originating in the transmitting or account holder institution.
+        - **directory**: error originating in the Participants Directory.
+        - **unknown**: origin not identified.
+    RegulatoryVersion:
+        type: string
+        description: |
+          Regulatory version desired for the call to the participant (available only in non-proxy routes).
+
+          **Behaviour:**
+          - If not sent: the most current version available at the participant will be used.
+          - If sent with an exact existing version: the requested version is used.
+          - If sent with a non-existent version: the most recent version of the same major will be used, if available. Otherwise, the most current version available will be used.
+
+          **Accepted format:** It is valid to use the full version (e.g. "4.0.0") or only the major (e.g. "4").
+
+          **Note:** This header is not accepted in proxy routes. In proxy routes, the version will always be the most current one of the major indicated in the OpusTPP endpoint.
+        example: '4.0.0'
+    SelectedRegulatoryVersion:
+      type: string
+      description: |
+        Regulatory version actually used in the request to the participant.
+
+        This header is returned in all responses (proxy and non-proxy routes) to indicate which version of the participant's endpoint was used to process the request.
+      example: '4.0.0'
+    RegulatoryMeta:
+      type: object
+      description: Meta information regarding the requested API.
+      required:
+        - requestDateTime
+      properties:
+        requestDateTime:
+          description: 'Date and time of the query, in accordance with the RFC-3339 specification, UTC timezone (UTC time format).'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2023-07-12T08:30:00Z'
+    XFapiInteractionId:
+      type: string
+      format: uuid
+      minLength: 1
+      maxLength: 36
+      pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+      example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+    XV:
+      description: 'Header indicating the version of the API implemented by the financial institution to fulfil the request. It must be filled in completely, for example: x-v : 1.0.2.'
+      type: string
+      pattern: '^\d+\.\d+\.\d+$'
+      example: 1.0.0
+    422ResponseErrorFidoRegistrationOptions:
+      type: object
+      required:
+        - errors
+        - meta
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                type: string
+                enum:
+                  - RP_INVALIDA
+                  - STATUS_VINCULO_INVALIDO
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
+                  - MAXIMO_CHALLENGES_ATINGIDO
+                example: STATUS_VINCULO_INVALIDO
+                description: |
+                  Expected error codes:
+                  - RP_INVALIDA: The Relying Party identifier informed cannot be verified.
+                  - STATUS_VINCULO_INVALIDO: The status of the account enrollment is such that it does not allow the registration of a new credential.
+                  - PARAMETRO_NAO_INFORMADO: Parameter not informed.
+                  - PARAMETRO_INVALIDO: Invalid parameter.
+                  - ERRO_IDEMPOTENCIA: Idempotency error.
+                  - MAXIMO_CHALLENGES_ATINGIDO: FIDO signature parameters have already been generated for the specified enrollmentId.
+              title:
+                type: string
+                maxLength: 255
+                pattern: '[\w\W\s]*'
+                example: Permissões inválidas
+                description: |
+                  Specific title of the reported error, according to the code sent:
+                  - RP_INVALIDA: Invalid relying party.
+                  - STATUS_VINCULO_INVALIDO: Invalid account enrollment status.
+                  - PARAMETRO_NAO_INFORMADO: Parameter not informed.
+                  - PARAMETRO_INVALIDO: Invalid parameter.
+                  - ERRO_IDEMPOTENCIA: Idempotency error.
+                  - MAXIMO_CHALLENGES_ATINGIDO: FIDO signature parameters have already been generated for the specified enrollmentId.
+              detail:
+                type: string
+                maxLength: 2048
+                pattern: '[\w\W\s]*'
+                example: 'Permissões inválidas'
+                description: |
+                  Specific description of the error according to the reported code:
+                  - RP_INVALIDA: The Relying Party identifier informed cannot be verified.
+                  - STATUS_VINCULO_INVALIDO: The status of the account enrollment is such that it does not allow the registration of a new credential.
+                  - PARAMETRO_NAO_INFORMADO: Mandatory parameter [nome_campo] not informed.
+                  - PARAMETRO_INVALIDO: Parameter [nome_campo] does not comply with the expected formatting rules.
+                  - ERRO_IDEMPOTENCIA: The content of the message (claim data) differs from the content associated with this idempotency key (x-idempotency-key).
+                  - MAXIMO_CHALLENGES_ATINGIDO: FIDO signature parameters have already been generated for the specified enrollmentId.
+        meta:
+          $ref: '#/components/schemas/RegulatoryMeta'
+    422ResponseErrorFidoRegistration:
+      type: object
+      required:
+        - errors
+        - meta
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                type: string
+                enum:
+                  - STATUS_VINCULO_INVALIDO
+                  - ORIGEM_FIDO_INVALIDA
+                  - RP_ID_HASH_INVALIDO
+                  - CHALLENGE_INVALIDO
+                  - PUBLIC_KEY_INVALIDA
+                  - EXTENSION_INVALIDA
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
+                example: STATUS_VINCULO_INVALIDO
+                description: |
+                  Expected error codes:
+                  - STATUS_VINCULO_INVALIDO: The status of the account enrollment is such that it does not allow the registration of a new credential.
+                  - ORIGEM_FIDO_INVALIDA: The value contained in the [response.clientDataJSON.origin](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) field cannot be verified.
+                  - RP_INVALIDA: The value contained in the [data.response.attestationObject.authData.rpIdHash](https://www.w3.org/TR/webauthn-2/#sctn-authenticator-data) field cannot be verified.
+                  - CHALLENGE_INVALIDO: The [response.clientDataJSON.challenge](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) field has an encoded value different from the value generated by the server.
+                  - PUBLIC_KEY_INVALIDA: The public key submitted is incompatible with the FIDO2 server definitions.
+                  - EXTENSION_INVALIDA: The extensions extracted are incompatible with the security guidelines of the FIDO2 server.
+                  - PARAMETRO_NAO_INFORMADO: Parameter not informed.
+                  - PARAMETRO_INVALIDO: Invalid parameter.
+                  - ERRO_IDEMPOTENCIA: Idempotency error.
+              title:
+                type: string
+                maxLength: 255
+                pattern: '[\w\W\s]*'
+                example: Permissões inválidas
+                description: |
+                  Specific title of the reported error, according to the code sent:
+                  - STATUS_VINCULO_INVALIDO: Invalid account enrollment status.
+                  - ORIGEM_FIDO_INVALIDA: "Origin" cannot be verified.
+                  - RP_INVALIDA: "RpIdHash" cannot be verified.
+                  - CHALLENGE_INVALIDO: Invalid challenge.
+                  - PUBLIC_KEY_INVALIDA: Invalid public key.
+                  - EXTENSION_INVALIDA: Invalid extensions.
+                  - PARAMETRO_NAO_INFORMADO: Parameter not informed.
+                  - PARAMETRO_INVALIDO: Invalid parameter.
+                  - ERRO_IDEMPOTENCIA: Idempotency error.
+              detail:
+                type: string
+                maxLength: 2048
+                pattern: '[\w\W\s]*'
+                example: 'Permissões inválidas'
+                description: |
+                  Specific description of the error according to the reported code:
+                  - STATUS_VINCULO_INVALIDO: The status of the account enrollment is such that it does not allow the registration of a new credential.
+                  - ORIGEM_FIDO_INVALIDA: The value contained in the [response.clientDataJSON.origin](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) field cannot be verified.
+                  - RP_INVALIDA: The value contained in the [response.attestationObject.authData.rpIdHash](https://www.w3.org/TR/webauthn-2/#sctn-authenticator-data) field cannot be verified.
+                  - CHALLENGE_INVALIDO: The [response.clientDataJSON.challenge](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) field has an encoded value different from the value generated by the server.
+                  - PUBLIC_KEY_INVALIDA: The public key submitted is incompatible with the FIDO2 server definitions.
+                  - EXTENSION_INVALIDA: The extensions extracted are incompatible with the security guidelines of the FIDO2 server.
+                  - PARAMETRO_NAO_INFORMADO: Mandatory parameter [nome_campo] not informed.
+                  - PARAMETRO_INVALIDO: Parameter [nome_campo] does not comply with the expected formatting rules.
+                  - ERRO_IDEMPOTENCIA: The content of the message (claim data) differs from the content associated with this idempotency key (x-idempotency-key).
+        meta:
+          $ref: '#/components/schemas/RegulatoryMeta'
+    422ResponseConsentsAuthorization:
+      type: object
+      required:
+        - errors
+        - meta
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                type: string
+                enum:
+                  - STATUS_VINCULO_INVALIDO
+                  - STATUS_CONSENTIMENTO_INVALIDO
+                  - RISCO
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA
+                  - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
+                  - ORIGEM_FIDO_INVALIDA
+                example: STATUS_VINCULO_INVALIDO
+                description: |
+                  Expected error codes:
+
+                  - STATUS_VINCULO_INVALIDO: The account enrollment does not have status AUTHORISED.
+                  - STATUS_CONSENTIMENTO_INVALIDO: The payment consent does not have status AWAITING_AUTHORISATION.
+                  - RISCO: Synchronous validation of the risk signals prevented the activation of the consent.
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: The signals that are mandatory for the user's platform were not submitted in full.
+                  - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO: The debtor account informed by the initiator does not match the debtor account linked to the device.
+                  - PARAMETRO_NAO_INFORMADO: Parameter not informed.
+                  - PARAMETRO_INVALIDO: Invalid parameter.
+                  - ERRO_IDEMPOTENCIA: Idempotency error.
+                  - ORIGEM_FIDO_INVALIDA: The value contained in the ```fidoAssertion.response.clientDataJSON.origin``` field cannot be verified.
+              title:
+                type: string
+                maxLength: 255
+                pattern: '[\w\W\s]*'
+                example: Permissões inválidas
+                description: |
+                  Specific title of the reported error, according to the code sent:
+
+                  - STATUS_VINCULO_INVALIDO: Invalid account enrollment status.
+                  - STATUS_CONSENTIMENTO_INVALIDO: Invalid consent status.
+                  - RISCO: Synchronous validation of the risk signals prevented the activation of the consent.
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Lack of signals that are mandatory for the user's platform.
+                  - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO: The debtor account informed by the initiator does not match the debtor account linked to the device.
+                  - PARAMETRO_NAO_INFORMADO: Parameter not informed.
+                  - PARAMETRO_INVALIDO: Invalid parameter.
+                  - ERRO_IDEMPOTENCIA: Idempotency error.
+                  - ORIGEM_FIDO_INVALIDA: "Origin" cannot be verified.
+              detail:
+                type: string
+                maxLength: 2048
+                pattern: '[\w\W\s]*'
+                example: 'Permissões inválidas'
+                description: |
+                  Specific description of the error according to the reported code:
+
+                  - STATUS_VINCULO_INVALIDO: The account enrollment does not have status AUTHORISED.
+                  - STATUS_CONSENTIMENTO_INVALIDO: The payment consent does not have status AWAITING_AUTHORISATION.
+                  - RISCO: Synchronous validation of the risk signals prevented the activation of the consent.
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: The signals that are mandatory for the user's platform were not submitted in full.
+                  - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO: The debtor account informed by the initiator does not match the debtor account linked to the device.
+                  - PARAMETRO_NAO_INFORMADO: Mandatory parameter [nome_campo] not informed.
+                  - PARAMETRO_INVALIDO: Parameter [nome_campo] does not comply with the expected formatting rules.
+                  - ERRO_IDEMPOTENCIA: The content of the message (claim data) differs from the content associated with this idempotency key (x-idempotency-key).
+                  - ORIGEM_FIDO_INVALIDA: The value contained in the ```fidoAssertion.response.clientDataJSON.origin``` field cannot be verified.
+        meta:
+          $ref: '#/components/schemas/RegulatoryMeta'
+    422ResponseRecurringConsentsAuthorization:
+      type: object
+      required:
+        - errors
+        - meta
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                type: string
+                enum:
+                  - STATUS_VINCULO_INVALIDO
+                  - STATUS_CONSENTIMENTO_INVALIDO
+                  - ORIGEM_FIDO_INVALIDA
+                  - RISCO
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA
+                  - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
+                example: STATUS_VINCULO_INVALIDO
+                description: |
+                  Expected error codes:
+
+                  - STATUS_VINCULO_INVALIDO: The account enrollment does not have status AUTHORISED.
+                  - STATUS_CONSENTIMENTO_INVALIDO: The payment consent does not have status AWAITING_AUTHORISATION.
+                  - ORIGEM_FIDO_INVALIDA: The value contained in the ```fidoAssertion.response.clientDataJSON.origin``` field cannot be verified.
+                  - RISCO: Synchronous validation of the risk signals prevented the activation of the consent.
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: The signals that are mandatory for the user's platform were not submitted in full.
+                  - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO: The debtor account informed by the initiator does not match the debtor account linked to the device.
+                  - PARAMETRO_NAO_INFORMADO: Parameter not informed.
+                  - PARAMETRO_INVALIDO: Invalid parameter.
+                  - ERRO_IDEMPOTENCIA: Idempotency error.
+              title:
+                type: string
+                maxLength: 255
+                pattern: '[\w\W\s]*'
+                example: Permissões inválidas
+                description: |
+                  Specific title of the reported error, according to the code sent:
+
+                  - STATUS_VINCULO_INVALIDO: Invalid account enrollment status.
+                  - STATUS_CONSENTIMENTO_INVALIDO: Invalid consent status.
+                  - ORIGEM_FIDO_INVALIDA: "Origin" cannot be verified.
+                  - RISCO: Synchronous validation of the risk signals prevented the activation of the consent.
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Lack of signals that are mandatory for the user's platform.
+                  - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO: The debtor account informed by the initiator does not match the debtor account linked to the device.
+                  - PARAMETRO_NAO_INFORMADO: Parameter not informed.
+                  - PARAMETRO_INVALIDO: Invalid parameter.
+                  - ERRO_IDEMPOTENCIA: Idempotency error.
+              detail:
+                type: string
+                maxLength: 2048
+                pattern: '[\w\W\s]*'
+                example: 'Permissões inválidas'
+                description: |
+                  Specific description of the error according to the reported code:
+
+                  - STATUS_VINCULO_INVALIDO: The account enrollment does not have status AUTHORISED.
+                  - STATUS_CONSENTIMENTO_INVALIDO: The payment consent does not have status AWAITING_AUTHORISATION.
+                  - RISCO: Synchronous validation of the risk signals prevented the activation of the consent.
+                  - ORIGEM_FIDO_INVALIDA: The value contained in the [response.clientDataJSON.origin](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) field cannot be verified.
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: The signals that are mandatory for the user's platform were not submitted in full.
+                  - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO: The debtor account informed by the initiator does not match the debtor account linked to the device.
+                  - PARAMETRO_NAO_INFORMADO: Mandatory parameter [nome_campo] not informed.
+                  - PARAMETRO_INVALIDO: Parameter [nome_campo] does not comply with the expected formatting rules.
+                  - ERRO_IDEMPOTENCIA: The content of the message (claim data) differs from the content associated with this idempotency key (x-idempotency-key).
+        meta:
+          $ref: '#/components/schemas/RegulatoryMeta'
+  headers:
+    xOriginError:
+      description: Indicates the origin of the error.
+      schema:
+        $ref: '#/components/schemas/EnumOriginError'
+      required: false
+    xErrorSourceUrl:
+      description: URL of the call that originated the error, present only when `x-origin-error` = `participant`.
+      schema:
+        type: string
+      required: false
+    xRegulatoryV:
+      description: Regulatory version desired for the call to the participant (available only in non-proxy routes).
+      schema:
+        $ref: '#/components/schemas/RegulatoryVersion'
+      required: false
+    xSelectedRegulatoryV:
+      description: Regulatory version actually used in the request to the participant.
+      schema:
+        $ref: '#/components/schemas/SelectedRegulatoryVersion'
+      required: true
+    xFapiInteractionIdResponse:
+      description: |
+        A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. Field whose generation and submission is mandatory for the initiating institution (client) and whose value must be "mirrored" by the account holder institution (server) in the response header.
+      schema:
+        $ref: '#/components/schemas/XFapiInteractionId'
+      required: true
+    xV:
+      description: 'Header indicating the version of the API implemented by the financial institution to fulfil the request. It must be filled in completely, for example: x-v : 1.0.2.'
+      required: true
+      schema:
+        $ref: '#/components/schemas/XV'
+  parameters:
+    applicationId:
+      name: x-application-id
+      in: header
+      required: true
+      description: Identifier of the application making the request
+      schema:
+        $ref: '#/components/schemas/UUID'
+    authorisationServerId:
+      name: x-authorisation-server-id
+      required: true
+      description: Identifier of the Authorisation Server of the consent's transmitting institution, obtained by querying the participants list
+      in: header
+      schema:
+        $ref: '#/components/schemas/UUID'
+    enrollmentId:
+      name: enrollmentId
+      in: path
+      required: true
+      description: |
+        Unique identifier of the account enrollment created for the requested payment initiation. It must be a URN - Uniform Resource Name.
+        A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+        Identifier - URI - assigned under the "urn" URI scheme and a specific URN namespace, with the intention that the URN
+        be a persistent, location-independent resource identifier.
+        Taking the string urn:bancoex:C1DD33123 as an example of an enrollmentId, we have:
+        - the namespace (urn)
+        - the identifier associated with the namespace of the account holder institution (bancoex)
+        - the specific identifier within the namespace (C1DD33123).
+        More detailed information about the construction of namespaces should be consulted in [RFC8141](https://tools.ietf.org/html/rfc8141).
+      schema:
+        $ref: '#/components/schemas/enrollmentId'
+    consentId:
+      name: consentId
+      in: path
+      description: |
+        The consentId is the unique identifier of the consent and must be a URN - Uniform Resource Name.
+        A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+        Identifier - URI - assigned under the "urn" URI scheme and a specific URN namespace, with the intention that the URN
+        be a persistent, location-independent resource identifier.
+        Taking the string urn:bancoex:C1DD33123 as an example of a consentId, we have:
+        - the namespace (urn)
+        - the identifier associated with the namespace of the account holder institution (bancoex)
+        - the specific identifier within the namespace (C1DD33123).
+        More detailed information about the construction of namespaces should be consulted in [RFC8141](https://tools.ietf.org/html/rfc8141).
+      required: true
+      schema:
+        type: string
+        pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+        maxLength: 256
+    recurringConsentId:
+      name: recurringConsentId
+      in: path
+      description: |
+        The `recurringConsentId` is the unique identifier of the long-lived consent and must be a URN - Uniform Resource Name.
+        A URN, as defined in [RFC8141](https://tools.ietf.org/html/rfc8141), is a Uniform Resource
+        Identifier - URI - assigned under the "urn" URI scheme and a specific URN namespace, with the intention that the URN
+        be a persistent, location-independent resource identifier.
+        Taking the string urn:bancoex:C1DD33123 as an example of a `recurringConsentId`, we have:
+        - the namespace (urn)
+        - the identifier associated with the namespace of the account holder institution (bancoex).
+        - the specific identifier within the namespace (C1DD33123).
+        More detailed information about the construction of namespaces should be consulted in [RFC8141](https://tools.ietf.org/html/rfc8141).
+      required: true
+      schema:
+        type: string
+        pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+        maxLength: 256
+    regulatoryV:
+        name: x-regulatory-v
+        required: false
+        description: Regulatory version desired for the call to the participant (available only in non-proxy routes).
+        in: header
+        schema:
+          $ref: '#/components/schemas/RegulatoryVersion'
+    authorizationHeader:
+      name: Authorization
+      in: header
+      description: Standard HTTP header. It allows credentials to be provided depending on the type of resource requested
+      required: true
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        maxLength: 2048
+    xCustomerUserAgent:
+      name: x-customer-user-agent
+      in: header
+      description: Indicates the user-agent used by the user.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xFapiAuthDate:
+      name: x-fapi-auth-date
+      in: header
+      description: 'Date on which the user last logged in with the initiating institution. Represented in accordance with [RFC7231](https://tools.ietf.org/html/rfc7231). Example: Sun, 10 Sep 2017 19:43:31 UTC'
+      required: false
+      schema:
+        type: string
+        pattern: '^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$'
+        minLength: 29
+        maxLength: 29
+    xFapiCustomerIpAddress:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: The user's IP address if currently logged in with the initiating institution.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xFapiInteractionId:
+      name: x-fapi-interaction-id
+      in: header
+      description: A UUID [RFC4122](https://tools.ietf.org/html/rfc4122) used as a correlation ID between request and response. Field whose generation and submission is mandatory for the initiating institution (client) and whose value must be "mirrored" by the account holder institution (server) in the response header. If it is not received, or if an invalid value is received, the account holder institution must generate an x-fapi-interaction-id and return it in the response with HTTP status code 400. The initiating institution must accept the value received from the account holder institution.
+      required: true
+      schema:
+        type: string
+        format: uuid
+        minLength: 1
+        maxLength: 36
+        pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+        example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+    xIdempotencyKey:
+      name: x-idempotency-key
+      in: header
+      description: Custom HTTP header. Unique request identifier to support idempotency.
+      required: true
+      schema:
+        type: string
+        maxLength: 40
+        pattern: ^(?!\s)(.*)(\S)$
+    xBcbNfc:
+      name: x-bcb-nfc
+      in: header
+      description: The field represents a transaction initiated via NFC. Submitting this field is mandatory in this scenario. Account holder institutions must store the information and correlate it with the consent and the resulting payment.
+      required: false
+      schema:
+        type: boolean
+

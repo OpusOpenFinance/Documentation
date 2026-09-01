@@ -70,4 +70,4 @@ To use the **Opus Open Finance Platform** under the ITP profile, the following s
 [OnboardingITP]: ./onboardingITP.html
 [Setup]: ../../../opusOpenFinance/implantacaoDaPlataforma/index.html
 [Jornada-Consentimento]: ../../jornadaConsentimento/index.html
-[Diagrama-Sequência]: ../anexos/imagens/itp-consentSequence.png
+[Diagrama-Sequência]: ../anexos/imagens/en-itp-consentSequence.png
