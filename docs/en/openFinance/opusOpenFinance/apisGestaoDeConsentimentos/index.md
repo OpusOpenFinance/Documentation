@@ -5,9 +5,9 @@ parent: "Opus Open Finance Brazil"
 nav_order: 2
 lang: "en"
 alternate_lang: 
-    - path: "/Documentation/pt-br/openFinance/opusOpenFinance/apisGestaoDeConsentimentos/"
+    - path: "/Documentation/pt-br/openFinance/opusOpenFinance/apisGestaoDeConsentimentos/index/"
       lang: "pt-br"
-    - path: "/Documentation/es/openFinance/opusOpenFinance/apisGestaoDeConsentimentos/"
+    - path: "/Documentation/es/openFinance/opusOpenFinance/apisGestaoDeConsentimentos/index/"
       lang: "es"
 ---
  
@@ -226,4 +226,4 @@ This endpoint must be used to cancel, at the request of the paying customer, tra
 - If a 422 is received, the initiator must make a GET request on the payment to check its current situation, as well as the associated details.
 Payment cancellation must be sent by 23:59 (Brasília time) on the day before the payment's settlement date.
 
-[API-backoffice]: ../../../swagger-ui/index.html?api=en-oas-back-dados
+[API-backoffice]: ../../../../swagger-ui/index.html?api=en-oas-back-dados
