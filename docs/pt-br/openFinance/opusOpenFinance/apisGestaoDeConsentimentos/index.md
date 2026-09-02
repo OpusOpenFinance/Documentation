@@ -5,9 +5,9 @@ parent: "Opus Open Finance"
 nav_order: 2
 lang: "pt-br"
 alternate_lang: 
-    - path: "/Documentation/en/openFinance/opusOpenFinance/apisGestaoDeConsentimentos/"
+    - path: "/Documentation/en/openFinance/opusOpenFinance/apisGestaoDeConsentimentos/index/"
       lang: "en"
-    - path: "/Documentation/es/openFinance/opusOpenFinance/apisGestaoDeConsentimentos/"
+    - path: "/Documentation/es/openFinance/opusOpenFinance/apisGestaoDeConsentimentos/index/"
       lang: "es"
 ---
  
@@ -226,4 +226,4 @@ Esse endpoint deve ser usado para cancelar, a pedido do cliente pagador, as tran
 - Caso receba um 422, a iniciadora deve fazer uma requisição GET no pagamento para verificar a situação atual dele, bem como detalhes associados.
 O cancelamento de pagamento deve ser enviado até 23:59 (horário de Brasília) do dia anterior à data de efetivação do pagamento.
 
-[API-backoffice]: ../../../swagger-ui/index.html?api=oas-back-dados
+[API-backoffice]: ../../../../swagger-ui/index.html?api=oas-back-dados

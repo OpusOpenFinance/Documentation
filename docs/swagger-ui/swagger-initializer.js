@@ -17,12 +17,11 @@ window.onload = () => {
     // =====================================================
     // Open Finance Brasil
     // Perfis de Participação
-    "oas-receptor": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPDadosAtt.yml`,
-    "oas-itp-pagamentos": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentos.yml`,
-    "oas-itp-pagamentos-automaticos": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOpusTPPPagamentosAutomaticos.yml`,
-    "oas-back-dados": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasOOFDados.yml`,
-    "oas-pagamentos-jsr": `${base}/pt-br/openFinance/openFinanceBrasil/perfisParticipacao/anexos/yml/oasPagamentosJSR.yaml`,
+    //  Receptor de Dados -> Referenciado em OpusTPP
+    //
     // Opus Open finance
+    // Apis Gestão De Consentimentos
+    "oas-back-dados": `${base}/pt-br/openFinance/opusOpenFinance/apisGestaoDeConsentimentos/anexos/yml/oasOOFDados.yml`,
     // Integração -> Compartilhamento de Dados
     "cambio": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/exchange-1-0-0.yml`,
     "dados-cadastrais": `${base}/pt-br/openFinance/opusOpenFinance/integracaoDaPlataforma/compartilhamentoDeDados/anexos/yml/customers-2-2-0.yml`,
