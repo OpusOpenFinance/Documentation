@@ -29,7 +29,7 @@ Módulo para la Recepción de Datos de Registro y Transaccionales expone los end
 | DELETE | `/opus-open-finance/consents/v1/consents/{consentId}` | Revocación del consentimiento | 204 |
 | POST | `/opus-open-finance/consents/v1/consents/{consentId}/authorisation-retry` | Nuevo intento de autorización | 200 |
 | POST | `/opus-open-finance/consents/v1/consents/{consentId}/extends` | Renovación del consentimiento | 201 |
-| GET | `/opus-open-finance/consents/v1/consents/{consentId}/extends` | Consulta de los datos de renovación | 200 |
+| GET | `/opus-open-finance/consents/v1/consents/{consentId}/extensions` | Consulta de los datos de renovación | 200 |
 | GET | `/opus-open-finance/dcm` | Obtención de los datos de DCM de los *brand clients* | 200 |
 | PUT | `/opus-open-finance/dcm` | Actualización de los datos de DCM de los *brand clients* | 200 |
 
