@@ -29,7 +29,7 @@ The Registration and Transactional Data Reception Module exposes the endpoints t
 | DELETE | `/opus-open-finance/consents/v1/consents/{consentId}` | Consent revocation | 204 |
 | POST | `/opus-open-finance/consents/v1/consents/{consentId}/authorisation-retry` | New authorization attempt | 200 |
 | POST | `/opus-open-finance/consents/v1/consents/{consentId}/extends` | Consent renewal | 201 |
-| GET | `/opus-open-finance/consents/v1/consents/{consentId}/extends` | Query of the renewal data | 200 |
+| GET | `/opus-open-finance/consents/v1/consents/{consentId}/extensions` | Query of the renewal data | 200 |
 | GET | `/opus-open-finance/dcm` | Obtaining the DCM data of the *brand clients* | 200 |
 | PUT | `/opus-open-finance/dcm` | Updating the DCM data of the *brand clients* | 200 |
 
