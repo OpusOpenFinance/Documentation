@@ -89,4 +89,4 @@ Para iniciar el uso del software, existen algunos pre-requisitos:
 
 [DiagramaSecuencia]: ./anexos/imagens/es-itp-consentSequence.png
 [GuiaUX]: https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1477279745/v.19.00.01+Guia+de+Experi+ncia+do+Usu+rio+Open+Finance+Brasil
-[API-Recepción]: ../../../../swagger-ui/index.html?api=es-oas-receptor
+[API-Recepción]: ../../../../swagger-ui/index.html?api=es-otpp-recepcao_dados_of
